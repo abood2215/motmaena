@@ -224,7 +224,7 @@
 
             // Scroll Reveal Animation
             function reveal() {
-                var reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+                var reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
                 for (var i = 0; i < reveals.length; i++) {
                     var windowHeight = window.innerHeight;
                     var elementTop = reveals[i].getBoundingClientRect().top;
