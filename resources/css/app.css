@@ -399,4 +399,61 @@
     .animate-float {
         animation: float 5s ease-in-out infinite;
     }
+
+    /* ── Course Thumbnail Animations ────────────── */
+    @keyframes thumb-badge {
+        from { opacity: 0; transform: translateY(-10px) scale(0.85); }
+        to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    }
+    @keyframes thumb-title {
+        from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+        to   { opacity: 1; transform: translateY(0);   filter: blur(0);   }
+    }
+    @keyframes thumb-line {
+        from { transform: scaleX(0) translateX(8px); opacity: 0; }
+        to   { transform: scaleX(1) translateX(0);   opacity: 1; }
+    }
+    @keyframes thumb-center {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0);  }
+    }
+    @keyframes thumb-img-enter {
+        from { opacity: 0; transform: translateX(20px) scale(1.04); }
+        to   { opacity: 1; transform: translateX(0)    scale(1);    }
+    }
+    @keyframes thumb-shimmer {
+        0%   { background-position: 200% center; }
+        100% { background-position: -200% center; }
+    }
+
+    /* ── Course Card Premium Interactions ────────────── */
+    @keyframes card-shine-sweep {
+        0%   { transform: translateX(-250%) skewX(-20deg); }
+        100% { transform: translateX(350%)  skewX(-20deg); }
+    }
+
+    @keyframes live-dot-pulse {
+        0%, 100% { opacity: 1;   transform: scale(1);   }
+        50%       { opacity: 0.3; transform: scale(1.7); }
+    }
+
+    .card-shine-inner {
+        position: absolute;
+        top: -50%;
+        left: -5%;
+        width: 30%;
+        height: 200%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        transform: translateX(-250%) skewX(-20deg);
+        pointer-events: none;
+        z-index: 30;
+    }
+
+    .group:hover .card-shine-inner {
+        animation: card-shine-sweep 0.7s ease-out forwards;
+    }
+
+    .badge-live-dot {
+        animation: live-dot-pulse 2.5s ease-in-out infinite;
+    }
 }

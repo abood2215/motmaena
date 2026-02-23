@@ -33,36 +33,140 @@
 
     <!-- Course Grid -->
     @if($courses->count() > 0)
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 lg:gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
         @foreach($courses as $course)
-        <div class="card-premium group p-3 reveal" style="transition-delay: {{ $loop->index * 0.1 }}s">
-            <div class="relative h-48 sm:h-56 md:h-64 rounded-xl overflow-hidden mb-4 sm:mb-6">
-                <img src="{{ $course->image ?? 'https://placehold.co/600x400/b04141/white?text=' . urlencode($course->title) }}"
-                    alt="{{ $course->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                @if($course->is_new)
-                <div class="absolute top-3 left-3 glass-effect px-3 py-1 rounded-full text-xs font-bold text-primary shadow-lg border-primary/20">{{ __('New') }}</div>
-                @endif
+        {{-- Reveal wrapper: handles staggered entrance, no hover interference --}}
+        <div class="reveal-scale h-full" style="transition-delay: {{ $loop->index * 0.08 }}s">
 
-                <div class="absolute bottom-3 {{ app()->getLocale() == 'ar' ? 'right-3' : 'left-3' }} bg-white/90 dark:bg-dark-surface/90 backdrop-blur px-2.5 py-1 rounded-lg text-xs font-bold text-gray-900 dark:text-white border border-white/20">
-                    {{ __($course->level) }}
+            {{-- Card: handles hover effects with no delay --}}
+            <div class="group relative flex flex-col h-full bg-white dark:bg-dark-surface rounded-[2rem] overflow-hidden cursor-pointer
+                        border border-[#f0eaea] dark:border-dark-border
+                        transition-all duration-500
+                        hover:-translate-y-2
+                        hover:border-primary/20
+                        hover:shadow-[0_28px_65px_-12px_rgba(176,65,65,0.22),_0_8px_22px_-4px_rgba(176,65,65,0.10)]"
+                 style="box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+
+                {{-- Shine sweep on hover --}}
+                <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-[2rem] z-30">
+                    <div class="card-shine-inner"></div>
                 </div>
-            </div>
-            <div class="px-3 sm:px-4 pb-3 sm:pb-4">
-                <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors duration-300 leading-snug">{{ $course->title }}</h3>
-                <p class="text-[var(--muted-color)] text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed line-clamp-2">{{ $course->description }}</p>
-                <div class="flex justify-between items-center pt-4 sm:pt-5 border-t border-gray-100 dark:border-dark-border">
-                    <div>
-                        <span class="text-[10px] sm:text-xs text-[var(--muted-color)] block mb-0.5 sm:mb-1">{{ __('Current Price') }}</span>
-                        <span class="text-lg sm:text-xl md:text-2xl font-black text-primary">{{ number_format($course->price) }} <small class="text-[10px] sm:text-xs font-bold opacity-70">{{ __('SAR') }}</small></span>
+
+                {{-- Top accent bar: slides in from right on hover --}}
+                <div class="h-[3px] bg-gradient-to-l from-primary via-primary-light to-primary/20
+                            origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out shrink-0"></div>
+
+                <!-- TOP SECTION: Presentation Graphic -->
+                <div class="relative h-52 overflow-hidden">
+                    {{-- Warm gradient background --}}
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#fff4f4] via-[#fef8f5] to-[#fafafa]
+                                dark:from-[#201818] dark:via-[#1e1a18] dark:to-[#1a1a1a]
+                                transition-all duration-700 group-hover:from-[#ffeeee]"></div>
+
+                    {{-- Dot pattern --}}
+                    <div class="absolute inset-0 opacity-[0.07] pointer-events-none z-10"
+                         style="background-image: radial-gradient(#b04141 1.5px, transparent 1.5px); background-size: 16px 16px;"></div>
+
+                    {{-- Fade to card bg at bottom --}}
+                    <div class="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-white dark:from-dark-surface to-transparent z-20 pointer-events-none"></div>
+
+                    {{-- Decorative circle (top right, expands on hover) --}}
+                    <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-primary/5 dark:bg-primary/10
+                                transition-all duration-700 group-hover:scale-[1.7] group-hover:bg-primary/8"></div>
+
+                    {{-- Small warm accent circle (bottom left) --}}
+                    <div class="absolute -left-4 bottom-0 w-20 h-20 rounded-full bg-amber-50/70 dark:bg-dark-border/20
+                                transition-all duration-700 group-hover:scale-125"></div>
+
+                    {{-- Profile image (circular, glows on hover) --}}
+                    <div class="absolute bottom-3 left-4 z-20">
+                        <div class="relative w-28 h-28 rounded-full overflow-hidden
+                                    border-[3px] border-white dark:border-dark-surface shadow-lg
+                                    transition-all duration-500
+                                    group-hover:scale-105
+                                    group-hover:shadow-[0_8px_28px_rgba(176,65,65,0.22)]">
+                            <img src="{{ (isset($course->image) && file_exists(public_path($course->image))) ? asset($course->image) : asset('courses/dr-tariq.png') }}"
+                                 alt="{{ $course->title }}"
+                                 class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-112">
+                        </div>
                     </div>
-                    <a href="{{ route('course.show', $course) }}" class="btn-motmaena text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5">{{ __('Register Now') }}</a>
+
+                    {{-- Course label + title (right side) --}}
+                    <div class="absolute top-5 right-5 z-20 text-right" style="max-width: 57%">
+                        {{-- Pill badge with live dot --}}
+                        <span class="inline-flex items-center gap-1.5 bg-primary/8 border border-primary/25 text-primary
+                                     text-[10px] font-bold px-3 py-1 rounded-full mb-2.5 tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary badge-live-dot shrink-0"></span>
+                            {{ app()->getLocale() == 'ar' ? 'دورة' : 'COURSE' }}
+                        </span>
+                        {{-- Title --}}
+                        <h4 class="text-xl sm:text-2xl font-black text-[#5a4a42] dark:text-white leading-[1.2] line-clamp-3
+                                   transition-colors duration-300 group-hover:text-primary">
+                            {{ $course->title }}
+                        </h4>
+                    </div>
                 </div>
+
+                <!-- BOTTOM SECTION: Academic Details -->
+                <div class="flex-1 p-5 flex flex-col bg-white dark:bg-dark-surface border-t border-[#f8eeee] dark:border-dark-border">
+                    <div class="flex flex-col items-end text-right w-full">
+                        {{-- "Recorded" badge with live dot --}}
+                        <span class="inline-flex items-center gap-1.5 bg-[#fff0f0] dark:bg-primary/10 text-primary
+                                     text-[10px] font-black px-3 py-1 rounded-lg mb-3 self-end">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary badge-live-dot shrink-0"></span>
+                            {{ app()->getLocale() == 'ar' ? 'مسجلة' : 'Recorded' }}
+                        </span>
+
+                        {{-- Title (detail row) --}}
+                        <h3 class="text-[16px] font-black text-[#5a4a42] dark:text-white mb-1 leading-tight line-clamp-2
+                                   transition-colors duration-300 group-hover:text-[#3d2e28] dark:group-hover:text-white">
+                            {{ $course->title }}
+                        </h3>
+
+                        {{-- Instructor --}}
+                        <span class="text-xs font-semibold text-gray-400 mb-3 block">أ.د طارق الحبيب</span>
+
+                        {{-- 5-Star Rating --}}
+                        <div class="flex items-center gap-0.5 text-[#f59e0b] mb-4">
+                            @for($i = 0; $i < 5; $i++)
+                            <svg class="w-3.5 h-3.5 fill-current transition-transform duration-300 group-hover:scale-110"
+                                 style="transition-delay: {{ $i * 0.05 }}s" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            @endfor
+                        </div>
+                    </div>
+
+                    <!-- Footer: CTA Button -->
+                    <div class="mt-auto pt-4 border-t border-gray-50 dark:border-dark-border">
+                        <a href="{{ $course->external_url ?? '#' }}" target="_blank"
+                           class="flex items-center justify-center gap-2 w-full
+                                  bg-primary/8 hover:bg-primary
+                                  border border-primary/30 hover:border-primary
+                                  text-primary hover:text-white
+                                  text-sm font-black
+                                  px-5 py-2.5 rounded-xl
+                                  transition-all duration-300
+                                  hover:shadow-lg hover:shadow-primary/25
+                                  hover:-translate-y-0.5
+                                  group/btn">
+                            <span>{{ app()->getLocale() == 'ar' ? 'سجل الآن' : 'Enroll Now' }}</span>
+                            <svg class="w-4 h-4 transition-transform duration-300
+                                        {{ app()->getLocale() == 'ar' ? 'rotate-180 group-hover/btn:-translate-x-1' : 'group-hover/btn:translate-x-1' }}"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
+
         @endforeach
     </div>
+
     @else
     <div class="py-14 sm:py-20 text-center animate-fade-in-up">
         <div class="w-16 h-16 sm:w-24 sm:h-24 bg-gray-50 dark:bg-dark-surface rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">

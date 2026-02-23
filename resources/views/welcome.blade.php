@@ -60,7 +60,7 @@
                 </div>
                 <div class="w-px bg-gray-200 dark:bg-dark-border self-stretch shrink-0"></div>
                 <div class="{{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} animate-stat-pop" style="animation-delay: 0.95s;">
-                    <div class="text-lg sm:text-2xl lg:text-3xl font-black text-gray-900 dark:text-white">50+</div>
+                    <div class="text-lg sm:text-2xl lg:text-3xl font-black text-gray-900 dark:text-white">55+</div>
                     <div class="text-[10px] sm:text-sm text-[var(--muted-color)] mt-0.5">{{ app()->getLocale() == 'ar' ? 'دورة متخصصة' : 'Courses' }}</div>
                 </div>
                 <div class="w-px bg-gray-200 dark:bg-dark-border self-stretch shrink-0"></div>
@@ -84,32 +84,49 @@
                     <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-primary-light/30 rounded-full blur-[60px] animate-float"></div>
                 </div>
 
-                {{-- The Central Wellness Core (The Hub) --}}
+                {{-- Central Doctor Profile Card --}}
                 <div class="relative z-20 group">
-                    {{-- Decorative Rings --}}
-                    <div class="absolute inset-0 -m-8 border border-primary/20 rounded-full animate-spin-slow pointer-events-none"></div>
-                    <div class="absolute inset-0 -m-16 border border-primary/10 rounded-full animate-spin-reverse-slow pointer-events-none opacity-50"></div>
 
-                    {{-- Main Symbolic Card --}}
-                    <div class="relative glass-effect-heavy rounded-[4rem] p-10 sm:p-14 border border-white/40 dark:border-white/10 shadow-[0_50px_100px_-20px_rgba(176,65,65,0.4)] transition-all duration-700 hover:shadow-[0_60px_120px_-20px_rgba(176,65,65,0.5)] flex flex-col items-center">
-                        
-                        {{-- Professional Symbol (Wellness Lotus/Compass) --}}
-                        <div class="w-24 h-24 sm:w-32 sm:h-32 mb-8 relative">
-                            <div class="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:blur-3xl transition-all"></div>
-                            <div class="relative w-full h-full bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center text-white shadow-2xl">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 sm:w-16 sm:h-16 animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                </svg>
-                            </div>
+                    {{-- Decorative slow-spin border ring --}}
+                    <div class="absolute -inset-6 sm:-inset-10 border border-primary/15 rounded-[3.5rem] animate-spin-slow pointer-events-none" style="animation-duration:22s;"></div>
+                    <div class="absolute -inset-12 sm:-inset-16 border border-primary/8 rounded-[4.5rem] animate-spin-reverse-slow pointer-events-none" style="animation-duration:30s;"></div>
+
+                    {{-- Portrait Card --}}
+                    <div class="relative overflow-hidden
+                                w-[185px] h-[255px] sm:w-[225px] sm:h-[305px]
+                                rounded-[2.5rem]
+                                border-2 border-white/80 dark:border-white/10
+                                shadow-[0_35px_80px_-10px_rgba(176,65,65,0.45),_0_8px_25px_-5px_rgba(0,0,0,0.14)]
+                                transition-all duration-700
+                                hover:shadow-[0_48px_100px_-10px_rgba(176,65,65,0.55),_0_10px_30px_-5px_rgba(0,0,0,0.18)]
+                                hover:-translate-y-1.5">
+
+                        {{-- Doctor Photo --}}
+                        <img src="{{ asset('courses/dr-tariq.png') }}"
+                             alt="أ.د طارق الحبيب"
+                             class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
+
+                        {{-- Bottom gradient info strip --}}
+                        <div class="absolute bottom-0 inset-x-0 pt-16 pb-4 px-4 text-center"
+                             style="background: linear-gradient(to top, rgba(100,30,30,0.95) 0%, rgba(176,65,65,0.75) 55%, transparent 100%)">
+                            <h3 class="text-white font-black text-[14px] sm:text-[15px] leading-snug mb-0.5">
+                                {{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq' }}
+                            </h3>
+                            <p class="text-white/70 text-[9px] sm:text-[10px] font-semibold tracking-wide mb-2">
+                                {{ app()->getLocale() == 'ar' ? 'استشاري الطب النفسي' : 'Consultant Psychiatrist' }}
+                            </p>
+                            <div class="flex justify-center gap-px text-yellow-300 text-[11px]">★★★★★</div>
                         </div>
 
-                        {{-- Branding --}}
-                        <div class="text-center">
-                            <h3 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-2 leading-none uppercase tracking-tighter">{{ app()->getLocale() == 'ar' ? 'مركز مطمئنة' : 'Motmaena' }}</h3>
-                            <div class="h-1 w-12 bg-primary mx-auto rounded-full mb-4"></div>
-                            <p class="text-[var(--muted-color)] text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'تحت إشراف أ.د طارق الحبيب' : 'Under Supervision of Prof. Tariq' }}</p>
+                        {{-- Top pill badge --}}
+                        <div class="absolute top-3.5 {{ app()->getLocale() == 'ar' ? 'left-3.5' : 'right-3.5' }}
+                                    bg-white/92 dark:bg-dark-surface/90 backdrop-blur-sm
+                                    text-primary text-[9px] font-black
+                                    px-2.5 py-1 rounded-full
+                                    shadow-md border border-primary/20">
+                            {{ app()->getLocale() == 'ar' ? 'استشاري' : 'Consultant' }}
                         </div>
+
                     </div>
                 </div>
 
@@ -176,8 +193,8 @@
                 <div class="relative">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-primary-light/10 rounded-3xl blur-2xl pointer-events-none"></div>
                     <div class="relative bg-gradient-to-br from-primary to-primary-dark rounded-3xl p-8 sm:p-12 shadow-2xl text-center">
-                        <div class="w-28 h-28 sm:w-36 sm:h-36 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center backdrop-blur">
-                            <span class="text-5xl sm:text-6xl text-white font-black">د.ط</span>
+                        <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white/30 shadow-xl">
+                            <img src="{{ asset('courses/dr-tariq.png') }}" alt="أ.د طارق الحبيب" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl sm:text-2xl font-black text-white mb-2">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</h3>
                         <p class="text-white/70 text-sm">{{ app()->getLocale() == 'ar' ? 'استشاري الطب النفسي' : 'Consultant Psychiatrist' }}</p>
@@ -187,7 +204,7 @@
                                 <div class="text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Years Exp.' }}</div>
                             </div>
                             <div class="bg-white/15 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
-                                <div class="text-lg font-black text-white">+50</div>
+                                <div class="text-lg font-black text-white">+55</div>
                                 <div class="text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'دورة' : 'Courses' }}</div>
                             </div>
                             <div class="bg-white/15 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
@@ -240,7 +257,261 @@
     </div>
 </section>
 
-{{-- ════════════════ COURSES SECTION ════════════════ --}}
+{{-- ════════════════ CHILDREN SPECIALISED PACKAGES SECTION ════════════════ --}}
+<section id="packages" class="py-16 sm:py-24 md:py-32 bg-secondary dark:bg-dark-surface relative overflow-hidden">
+
+    {{-- Dot-grid pattern --}}
+    <div class="absolute inset-0 pointer-events-none opacity-[0.035] dark:opacity-[0.02]" style="background-image: radial-gradient(#b04141 1px, transparent 1px); background-size: 26px 26px;"></div>
+
+    {{-- Top fade from prev section --}}
+    <div class="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white dark:from-dark-bg to-transparent pointer-events-none"></div>
+
+    {{-- Ambient glows --}}
+    <div class="absolute top-1/4 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[200px] pointer-events-none"></div>
+    <div class="absolute bottom-1/4 -left-32 w-[500px] h-[500px] bg-primary/4 rounded-full blur-[180px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-4 relative z-10">
+
+        {{-- ─── Section Header ─── --}}
+        <div class="text-center mb-14 sm:mb-20 reveal">
+
+            {{-- Partnership pill --}}
+            <div class="inline-flex items-center gap-2.5 bg-white dark:bg-dark-bg border border-gray-100 dark:border-dark-border px-4 sm:px-5 py-2 sm:py-2.5 rounded-2xl shadow-sm mb-7 sm:mb-10">
+                <img src="{{ asset('logo-clinic.png') }}" alt="Motmaena" class="h-4 sm:h-5 dark:brightness-110">
+                <div class="w-px h-4 bg-gray-200 dark:bg-dark-border"></div>
+                <span class="text-primary font-black text-base sm:text-lg tracking-tighter leading-none">deema</span>
+                <div class="w-px h-4 bg-gray-200 dark:bg-dark-border hidden sm:block"></div>
+                <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">{{ app()->getLocale() == 'ar' ? 'برامج متخصصة' : 'Specialized Programs' }}</span>
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black text-gray-900 dark:text-white mb-5 leading-[1.15]">
+                {{ app()->getLocale() == 'ar' ? 'باقات متخصصة' : 'Specialized Packages' }}<br>
+                <span class="gradient-text">{{ app()->getLocale() == 'ar' ? 'لدعم نمو طفلك وتطوره' : "for Your Child's Growth & Development" }}</span>
+            </h2>
+
+            <p class="text-sm sm:text-base text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed">
+                {{ app()->getLocale() == 'ar'
+                    ? 'برامج علاجية وتنموية متكاملة تشمل دعم السلوك والمهارات والنمو الشامل عند الأطفال'
+                    : 'Comprehensive therapeutic & developmental programs covering behavior, skills, and holistic growth in children' }}
+            </p>
+        </div>
+
+        {{-- ─── Packages Grid ─── --}}
+        @php
+            $pkgColors = [
+                ['g' => 'linear-gradient(135deg,#0ea5e9,#0284c7)', 'sh' => 'rgba(14,165,233,.4)',  'hex' => '#0ea5e9'],
+                ['g' => 'linear-gradient(135deg,#8b5cf6,#7c3aed)', 'sh' => 'rgba(139,92,246,.4)', 'hex' => '#8b5cf6'],
+                ['g' => 'linear-gradient(135deg,#f59e0b,#d97706)', 'sh' => 'rgba(245,158,11,.4)', 'hex' => '#d97706'],
+                ['g' => 'linear-gradient(135deg,#10b981,#059669)', 'sh' => 'rgba(16,185,129,.4)',  'hex' => '#059669'],
+                ['g' => 'linear-gradient(135deg,#6366f1,#4f46e5)', 'sh' => 'rgba(99,102,241,.4)', 'hex' => '#6366f1'],
+                ['g' => 'linear-gradient(135deg,#f97316,#ea580c)', 'sh' => 'rgba(249,115,22,.4)', 'hex' => '#ea580c'],
+                ['g' => 'linear-gradient(135deg,#ec4899,#db2777)', 'sh' => 'rgba(236,72,153,.4)', 'hex' => '#db2777'],
+                ['g' => 'linear-gradient(135deg,#b04141,#7f1d1d)', 'sh' => 'rgba(176,65,65,.4)',  'hex' => '#b04141'],
+                ['g' => 'linear-gradient(135deg,#06b6d4,#0891b2)', 'sh' => 'rgba(6,182,212,.4)',  'hex' => '#0891b2'],
+                ['g' => 'linear-gradient(135deg,#22c55e,#16a34a)', 'sh' => 'rgba(34,197,94,.4)',  'hex' => '#16a34a'],
+                ['g' => 'linear-gradient(135deg,#a855f7,#9333ea)', 'sh' => 'rgba(168,85,247,.4)', 'hex' => '#9333ea'],
+                ['g' => 'linear-gradient(135deg,#14b8a6,#0d9488)', 'sh' => 'rgba(20,184,166,.4)', 'hex' => '#0d9488'],
+            ];
+
+            $packages = [
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'التوحد' : 'Autism',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a2 2 0 01-2 2 2 2 0 01-2-2V4zm-3 8a3 3 0 01-3-3V7a3 3 0 013-3h.5a3 3 0 013 3v2a3 3 0 01-3 3H8zm10-5a3 3 0 00-3 3v2a3 3 0 003 3h.5a3 3 0 003-3V7a3 3 0 00-3-3H18zM6 20a1 1 0 01-1-1v-1a5 5 0 015-5h4a5 5 0 015 5v1a1 1 0 01-1 1H6z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['تنمية التواصل اللفظي والبصري', 'تحسين المهارات الاجتماعية', 'دعم السلوك وتعديله']
+                        : ['Verbal & Visual Communication', 'Social Skills Enhancement', 'Behavior Support & Modification'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'صعوبات التعلم' : 'Learning Disabilities',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['تنمية مهارات القراءة والكتابة', 'تحسين الانتباه والتركيز', 'خطط تعليمية فردية مخصصة']
+                        : ['Reading & Writing Skills', 'Attention & Focus Improvement', 'Personalized Learning Plans'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'نقص الثقة بالنفس' : 'Lack of Confidence',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['تعزيز الشخصية الإيجابية', 'رفع مستوى الثقة بالنفس', 'دعم مهارات التعبير الذاتي']
+                        : ['Positive Personality Boost', 'Self-Confidence Raising', 'Self-Expression Skills'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'الذكاء وتنمية القدرات' : 'Intelligence & Abilities',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['اختبارات الذكاء والكفاءات', 'برامج تنمية التفكير الإبداعي', 'مهارات حل المشكلات']
+                        : ['IQ & Aptitude Assessments', 'Creative Thinking Programs', 'Problem Solving Skills'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'الصمت الاختياري' : 'Selective Mutism',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['علاج تدريجي ومنظم للتواصل', 'تقليل القلق الاجتماعي', 'تدريب لفظي ومهاري متخصص']
+                        : ['Gradual Communication Therapy', 'Social Anxiety Reduction', 'Verbal & Skill Training'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'الخوف والقلق' : 'Fear & Anxiety',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['علاج مخاوف النوم والظلام', 'قلق المدرسة والانفصال', 'تنظيم القلق والمشاعر']
+                        : ['Sleep & Darkness Fear Therapy', 'School Separation Anxiety', 'Anxiety & Emotion Regulation'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'التأتأة' : 'Stuttering',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['جلسات النطق والتواصل الفعّال', 'تحسين الطلاقة اللغوية', 'تقنيات تخفيف التوتر والقلق']
+                        : ['Speech & Communication Sessions', 'Language Fluency Improvement', 'Tension Reduction Techniques'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'فرط الحركة (ADHD)' : 'ADHD',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['تنظيم السلوك والطاقة الزائدة', 'تحسين التركيز والانتباه', 'خطط متابعة مدرسية شاملة']
+                        : ['Behavior & Energy Management', 'Focus & Attention Improvement', 'Comprehensive School Plans'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'الاختبارات النفسية' : 'Psychological Tests',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['اختبارات الذكاء والسلوك المعتمدة', 'تقييمات تربوية ومدرسية', 'تقييم نفسي شامل ودقيق']
+                        : ['Accredited IQ & Behavior Tests', 'Educational & School Evaluations', 'Comprehensive Mental Assessment'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'السلوكيات' : 'Behaviors',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['علاج السلوك العدواني والانفجاري', 'إدارة الغضب والعناد', 'ضبط الانفعالات وتوجيهها']
+                        : ['Aggressive Behavior Therapy', 'Anger & Stubbornness Management', 'Emotional Control & Guidance'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'المهارات' : 'Skills',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['مهارات حياتية وتواصل فعّال', 'ضبط المشاعر والسلوك', 'مهارات اجتماعية وتفاعلية']
+                        : ['Life & Communication Skills', 'Emotion & Behavior Regulation', 'Social & Interactive Skills'],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'الإعاقة الذهنية' : 'Intellectual Disability',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['تنمية المهارات المعرفية الأساسية', 'مهارات الحياة اليومية المستقلة', 'تدريب أكاديمي مبسط ومنظم']
+                        : ['Core Cognitive Skills Development', 'Independent Daily Life Skills', 'Structured Academic Training'],
+                ],
+            ];
+        @endphp
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            @foreach($packages as $index => $package)
+            @php $c = $pkgColors[$index % count($pkgColors)]; @endphp
+            <div class="group relative bg-white dark:bg-dark-bg rounded-[1.75rem] overflow-hidden border border-gray-100 dark:border-dark-border shadow-sm hover:shadow-[0_28px_64px_-12px_rgba(0,0,0,0.14)] hover:-translate-y-2.5 transition-all duration-500 reveal" style="animation-delay:{{ $index * 0.06 }}s;">
+
+                {{-- Colored top stripe --}}
+                <div class="h-1.5 w-full" style="background: {{ $c['g'] }};"></div>
+
+                <div class="p-6 sm:p-7 relative">
+                    {{-- Large number watermark --}}
+                    <div class="absolute {{ app()->getLocale() == 'ar' ? 'left-3' : 'right-3' }} top-3 font-black text-gray-100 dark:text-dark-border/60 select-none pointer-events-none leading-none" style="font-size: 5rem; letter-spacing: -0.05em; line-height: 1; font-family: 'Inter', sans-serif;">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
+
+                    <div class="relative z-10">
+                        {{-- Gradient icon --}}
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-5 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 p-3.5"
+                             style="background: {{ $c['g'] }}; box-shadow: 0 12px 32px -6px {{ $c['sh'] }};">
+                            {!! $package['icon'] !!}
+                        </div>
+
+                        {{-- Title --}}
+                        <h3 class="text-[1.1rem] sm:text-[1.15rem] font-black text-gray-900 dark:text-white mb-4 leading-snug group-hover:text-primary transition-colors duration-300">
+                            {{ $package['title'] }}
+                        </h3>
+
+                        {{-- Feature list --}}
+                        <ul class="space-y-2.5 mb-6">
+                            @foreach($package['tags'] as $tag)
+                            <li class="flex items-center gap-2.5 text-[0.8rem] sm:text-sm text-[var(--muted-color)]">
+                                <span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
+                                      style="background: {{ $c['g'] }}; box-shadow: 0 4px 12px -2px {{ $c['sh'] }};">
+                                    <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </span>
+                                <span>{{ $tag }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+
+                        {{-- Divider --}}
+                        <div class="h-px bg-gray-100 dark:bg-dark-border mb-4"></div>
+
+                        {{-- CTA link --}}
+                        <a href="https://wa.me/96555665161" target="_blank"
+                           class="inline-flex items-center gap-1.5 text-sm font-black transition-all duration-300"
+                           style="color: {{ $c['hex'] }};">
+                            {{ app()->getLocale() == 'ar' ? 'اكتشف الباقة' : 'Explore Package' }}
+                            <svg class="w-4 h-4 transition-transform duration-300 {{ app()->getLocale() == 'ar' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        {{-- ─── Deema Installment Banner ─── --}}
+        <div class="mt-10 sm:mt-16 reveal">
+            <div class="relative rounded-[2rem] overflow-hidden border border-gray-100 dark:border-dark-border shadow-xl">
+
+                {{-- Background --}}
+                <div class="absolute inset-0 bg-gradient-to-br from-white via-white to-blue-50/50 dark:from-dark-bg dark:via-dark-bg dark:to-dark-surface pointer-events-none"></div>
+                <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'right-0 translate-x-1/2' : 'left-0 -translate-x-1/2' }} w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none -translate-y-1/2"></div>
+
+                <div class="relative z-10 p-7 sm:p-10 flex flex-col lg:flex-row items-center gap-7 lg:gap-10">
+
+                    {{-- Deema logo --}}
+                    <div class="shrink-0 flex flex-col items-center gap-2">
+                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'بالتعاون مع' : 'In collaboration with' }}</span>
+                        <div class="bg-white border border-gray-100 dark:border-dark-border rounded-2xl p-3 shadow-sm h-14 w-36 sm:h-16 sm:w-44 flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset('deema-logo.png') }}" alt="Deema" class="h-full w-full object-contain">
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:block w-px self-stretch bg-gray-100 dark:bg-dark-border"></div>
+
+                    {{-- Text --}}
+                    <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-center lg:text-right' : 'text-center lg:text-left' }}">
+                        <h4 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-3 leading-tight">
+                            {{ app()->getLocale() == 'ar' ? 'قسّط مع deema على 4 دفعات ميسّرة' : 'Installments with deema over 4 easy payments' }}
+                        </h4>
+                        <div class="flex flex-wrap items-center justify-center {{ app()->getLocale() == 'ar' ? 'lg:justify-end' : 'lg:justify-start' }} gap-2">
+                            <span class="inline-flex items-center gap-1.5 bg-green-500/10 text-green-600 dark:text-green-400 px-3 py-1.5 rounded-full border border-green-500/20 text-[10px] font-black uppercase tracking-widest">
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                {{ app()->getLocale() == 'ar' ? 'بدون رسوم إضافية' : 'Zero Extra Fees' }}
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-full border border-blue-500/20 text-[10px] font-black uppercase tracking-widest">
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                {{ app()->getLocale() == 'ar' ? 'موافقة فورية' : 'Instant Approval' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- CTA --}}
+                    <div class="shrink-0">
+                        <a href="https://wa.me/96555665161" target="_blank"
+                           class="btn-motmaena px-7 sm:px-9 py-3.5 rounded-xl shadow-lg shadow-primary/25 flex items-center gap-2.5 font-bold text-sm hover:gap-3.5 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            {{ app()->getLocale() == 'ar' ? 'تواصل معنا' : 'Contact Us' }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
 <section id="courses" class="py-14 sm:py-20 md:py-24 bg-secondary dark:bg-dark-surface relative overflow-hidden reveal">
     <livewire:course-grid />
 </section>
@@ -256,7 +527,7 @@
                 <div class="text-white/70 text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'متدرب مسجل' : 'Registered Trainees' }}</div>
             </div>
             <div class="text-center reveal">
-                <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="50">0</div>
+                <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="55">0</div>
                 <div class="w-10 h-1 bg-white/30 rounded-full mx-auto mb-2"></div>
                 <div class="text-white/70 text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'دورة متخصصة' : 'Specialized Courses' }}</div>
             </div>

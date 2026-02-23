@@ -5,7 +5,11 @@
       "Bash(cd:*)",
       "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && php artisan config:clear && php artisan view:clear 2>&1)",
       "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && npm run build 2>&1)",
-      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && npm run build 2>&1 && php artisan config:clear && php artisan view:clear 2>&1)"
+      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && npm run build 2>&1 && php artisan config:clear && php artisan view:clear 2>&1)",
+      "Bash(ls not:*)",
+      "Bash(tail:*)",
+      "Bash(cd /c/Users/abd-allah/Desktop/motmaena_kw && php artisan view:clear 2>&1 && php artisan route:list --name=sessions 2>&1)",
+      "Bash(head:*)"
     ]
   }
 }
