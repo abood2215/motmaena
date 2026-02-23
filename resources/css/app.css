@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -100,7 +102,7 @@
 
     .card-premium {
         @apply bg-[var(--surface-color)] rounded-2xl border border-[var(--border-color)] shadow-sm transition-all duration-500 hover:-translate-y-2;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     .card-premium:hover {
@@ -108,11 +110,11 @@
     }
 
     .dark .card-premium {
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
     .dark .card-premium:hover {
-        box-shadow: 0 12px 32px -6px rgba(176, 65, 65, 0.2), 0 4px 8px -2px rgba(0,0,0,0.3);
+        box-shadow: 0 12px 32px -6px rgba(176, 65, 65, 0.2), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
     }
 }
 
@@ -220,39 +222,77 @@
     .glass-effect {
         @apply backdrop-blur-md;
         background: rgba(253, 250, 250, 0.75);
-        border: 1px solid rgba(255,255,255,0.3);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .dark .glass-effect {
         background: rgba(26, 26, 26, 0.80);
-        border: 1px solid rgba(255,255,255,0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     /* ── Premium Text & Page Animations ────────────── */
     @keyframes blur-fade-in {
-        from { opacity: 0; transform: translateY(24px); filter: blur(10px); }
-        to   { opacity: 1; transform: translateY(0);    filter: blur(0);    }
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+            filter: blur(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
     }
 
     @keyframes word-reveal {
-        from { opacity: 0; transform: translateY(80%); }
-        to   { opacity: 1; transform: translateY(0);   }
+        from {
+            opacity: 0;
+            transform: translateY(80%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @keyframes text-shimmer {
-        0%   { background-position: 0%   center; }
-        100% { background-position: 200% center; }
+        0% {
+            background-position: 0% center;
+        }
+
+        100% {
+            background-position: 200% center;
+        }
     }
 
     @keyframes slide-down-menu {
-        from { opacity: 0; transform: translateY(-10px); }
-        to   { opacity: 1; transform: translateY(0);     }
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @keyframes count-up-pop {
-        0%   { opacity: 0; transform: scale(0.7) translateY(10px); }
-        70%  { transform: scale(1.05) translateY(-2px); }
-        100% { opacity: 1; transform: scale(1) translateY(0); }
+        0% {
+            opacity: 0;
+            transform: scale(0.7) translateY(10px);
+        }
+
+        70% {
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
     }
 
     .animate-blur-in {
@@ -265,14 +305,12 @@
     }
 
     .gradient-text {
-        background: linear-gradient(
-            135deg,
-            var(--color-primary) 0%,
-            var(--color-primary-light) 28%,
-            #e8a0a0 52%,
-            var(--color-primary-light) 75%,
-            var(--color-primary) 100%
-        );
+        background: linear-gradient(135deg,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 28%,
+                #e8a0a0 52%,
+                var(--color-primary-light) 75%,
+                var(--color-primary) 100%);
         background-size: 300% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -286,5 +324,24 @@
 
     .animate-stat-pop {
         animation: count-up-pop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ── Preloader Animation ────────────── */
+    @keyframes preloader-pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.08);
+            opacity: 0.8;
+        }
+    }
+
+    .preloader-logo {
+        animation: preloader-pulse 1.5s ease-in-out infinite;
     }
 }

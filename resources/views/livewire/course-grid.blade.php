@@ -57,7 +57,7 @@
                         <span class="text-[10px] sm:text-xs text-[var(--muted-color)] block mb-0.5 sm:mb-1">{{ __('Current Price') }}</span>
                         <span class="text-lg sm:text-xl md:text-2xl font-black text-primary">{{ number_format($course->price) }} <small class="text-[10px] sm:text-xs font-bold opacity-70">{{ __('SAR') }}</small></span>
                     </div>
-                    <a href="#" class="btn-motmaena text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5">{{ __('Register Now') }}</a>
+                    <a href="{{ route('course.show', $course) }}" class="btn-motmaena text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5">{{ __('Register Now') }}</a>
                 </div>
             </div>
         </div>

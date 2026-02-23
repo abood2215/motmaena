@@ -3,6 +3,22 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta name="keywords" content="مطمئنة, دورات نفسية, طارق الحبيب, استشارات نفسية, تطوير الذات, الكويت">
+        <meta name="author" content="Motmaena Center">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
+        <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta property="og:image" content="{{ asset('logo-clinic.png') }}">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
+        <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta name="twitter:image" content="{{ asset('logo-clinic.png') }}">
 
         <title>@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))</title>
 
@@ -24,7 +40,35 @@
         </script>
     </head>
     <body class="bg-[var(--bg-color)] text-[var(--text-color)] antialiased transition-colors duration-300">
+
+        <!-- ═══════ PRELOADER ═══════ -->
+        <div id="preloader" class="fixed inset-0 z-[9999] bg-[var(--bg-color)] flex items-center justify-center transition-opacity duration-700">
+            <div class="flex flex-col items-center gap-6">
+                <div class="preloader-logo">
+                    <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-20 md:h-24">
+                </div>
+                <div class="flex gap-1.5">
+                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0s"></span>
+                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
+                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="min-h-screen flex flex-col">
+
+            <!-- ═══════ ANNOUNCEMENT BANNER ═══════ -->
+            <div id="announcement-bar" class="bg-gradient-to-r from-primary via-primary-dark to-primary text-white text-center py-2.5 px-4 text-xs sm:text-sm font-bold relative z-[51] transition-all duration-300">
+                <div class="container mx-auto flex items-center justify-center gap-3">
+                    <span class="animate-pulse">🔥</span>
+                    <span>{{ app()->getLocale() == 'ar' ? 'خصم 20% على جميع الدورات لفترة محدودة!' : '20% off all courses for a limited time!' }}</span>
+                    <a href="#courses" class="bg-white/20 hover:bg-white/30 px-3 py-0.5 rounded-full text-[10px] sm:text-xs transition-all border border-white/20">{{ app()->getLocale() == 'ar' ? 'تسوّق الآن' : 'Shop Now' }}</a>
+                    <button onclick="document.getElementById('announcement-bar').style.display='none'" class="absolute {{ app()->getLocale() == 'ar' ? 'left-3' : 'right-3' }} top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
             <header class="bg-[var(--bg-color)]/90 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--border-color)] shadow-sm">
                 <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center gap-8 md:gap-12">
@@ -101,7 +145,7 @@
             <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] py-16 mt-auto">
                 <div class="container mx-auto px-4">
                     <div class="flex flex-col items-center gap-8 text-center">
-                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:invert dark:brightness-110">
+                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
                         
                         <div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
                             <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>
@@ -125,6 +169,20 @@
                             <a href="https://www.tiktok.com/@motmaena_kw" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all hover:-translate-y-1 shadow-sm" title="TikTok">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
                             </a>
+                        </div>
+
+                        <div class="h-px w-24 bg-primary/20"></div>
+
+                        <!-- Google Maps -->
+                        <div class="w-full max-w-2xl mx-auto">
+                            <h4 class="text-sm font-bold text-[var(--text-color)] mb-4">{{ app()->getLocale() == 'ar' ? '📍 موقعنا' : '📍 Our Location' }}</h4>
+                            <div class="rounded-2xl overflow-hidden border border-[var(--border-color)] shadow-lg">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8!2d47.9907505!3d29.3901935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf85ac7308d461%3A0x108f7b378447d243!2z2YXYsdmD2LIg2YXYt9mF2KbZhtipINmE2YTYp9iz2KrYtNin2LHYp9iqINin2YTZhtmB2LPZitipIHwg2KXYtNix2KfZgSDYoy7YryDYt9in2LHZgiDYp9mE2K3YqNmK2Kg!5e0!3m2!1sar!2skw!4v1700000000000!5m2!1sar!2skw"
+                                    width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    class="w-full"></iframe>
+                            </div>
                         </div>
 
                         <div class="h-px w-24 bg-primary/20"></div>
@@ -179,6 +237,94 @@
 
             window.addEventListener("scroll", reveal);
             window.addEventListener("load", reveal);
+
+            // ═══════ PRELOADER ═══════
+            window.addEventListener('load', function() {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        preloader.style.pointerEvents = 'none';
+                        setTimeout(() => preloader.remove(), 700);
+                    }, 800);
+                }
+            });
+
+            // ═══════ BACK TO TOP ═══════
+            const backToTop = document.getElementById('back-to-top');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) {
+                        backToTop.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+                        backToTop.classList.add('opacity-100', 'translate-y-0');
+                    } else {
+                        backToTop.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+                        backToTop.classList.remove('opacity-100', 'translate-y-0');
+                    }
+                });
+                backToTop.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // ═══════ PARALLAX ═══════
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                document.querySelectorAll('[data-parallax]').forEach(el => {
+                    const speed = parseFloat(el.dataset.parallax) || 0.3;
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+
+            // ═══════ FAQ TOGGLE ═══════
+            function toggleFaq(btn) {
+                const item = btn.closest('.faq-item');
+                const content = item.querySelector('.faq-content');
+                const icon = item.querySelector('.faq-icon');
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                // Close all others
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.querySelector('.faq-content').style.maxHeight = '0px';
+                    faq.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                });
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            }
+
+            // ═══════ COUNTER ANIMATION ═══════
+            function animateCounter(el) {
+                const target = parseFloat(el.dataset.counter);
+                const isDecimal = el.dataset.decimal === 'true';
+                const duration = 2000;
+                const start = performance.now();
+                const suffix = target >= 1000 ? '+' : (isDecimal ? '' : '+');
+                function update(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    let current = eased * target;
+                    if (isDecimal) {
+                        el.textContent = current.toFixed(1) + suffix;
+                    } else if (target >= 1000) {
+                        el.textContent = Math.floor(current / 1000) + 'K' + suffix;
+                    } else {
+                        el.textContent = Math.floor(current) + suffix;
+                    }
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            }
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            document.querySelectorAll('[data-counter]').forEach(el => counterObserver.observe(el));
         </script>
         <!-- Floating WhatsApp Button -->
         <a href="https://wa.me/96555665161" target="_blank" 
@@ -197,6 +343,13 @@
                 </div>
             </div>
         </a>
+
+        <!-- ═══════ BACK TO TOP BUTTON ═══════ -->
+        <button id="back-to-top" class="fixed bottom-8 {{ app()->getLocale() == 'ar' ? 'right-8' : 'left-8' }} z-[60] bg-primary/90 hover:bg-primary text-white p-3 rounded-full shadow-2xl opacity-0 translate-y-5 pointer-events-none transition-all duration-500 hover:scale-110 active:scale-95 backdrop-blur" title="{{ app()->getLocale() == 'ar' ? 'العودة للأعلى' : 'Back to top' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/>
+            </svg>
+        </button>
 
         @livewireScripts
     </body>

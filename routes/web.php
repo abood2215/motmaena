@@ -15,3 +15,6 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
+Route::get('/course/{course}', function (Course $course) {
+    return view('course-details', compact('course'));
+})->name('course.show');
