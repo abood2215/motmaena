@@ -366,4 +366,37 @@
     .preloader-logo {
         animation: preloader-pulse 1.5s ease-in-out infinite;
     }
+
+    /* ── V3 Wellness Core Animations ────────────── */
+    @keyframes spin-slow {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin-reverse-slow {
+        from {
+            transform: rotate(360deg);
+        }
+
+        to {
+            transform: rotate(0deg);
+        }
+    }
+
+    .animate-spin-slow {
+        animation: spin-slow 15s linear infinite;
+    }
+
+    .animate-spin-reverse-slow {
+        animation: spin-reverse-slow 20s linear infinite;
+    }
+
+    .animate-float {
+        animation: float 5s ease-in-out infinite;
+    }
 }
