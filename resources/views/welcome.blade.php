@@ -74,103 +74,104 @@
             </div>
         </div>
 
-        {{-- ─── Hero Visual ─── --}}
+        {{-- ─── Hero Visual (Premium Redesign) ─── --}}
         <div class="w-full lg:w-1/2 flex justify-center pb-10 sm:pb-14 lg:pb-0 animate-blur-in" style="animation-delay: 0.18s;">
-            <div class="relative w-full max-w-md lg:max-w-lg">
+            <div class="relative w-full max-w-[500px] lg:max-w-none aspect-square lg:aspect-auto lg:h-[600px] flex items-center justify-center">
 
-                {{-- Background glow --}}
-                <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-primary-light/10 rounded-[3rem] blur-[60px] pointer-events-none animate-float" style="animation-duration: 6s;"></div>
+                {{-- Dynamic Background Atmosphere --}}
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[100px] animate-pulse" style="animation-duration: 4s;"></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary-light/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 2s; animation-duration: 5s;"></div>
+                </div>
 
-                {{-- Main Center Card --}}
-                <div class="relative bg-gradient-to-br from-primary to-primary-dark rounded-3xl p-8 sm:p-10 shadow-2xl text-center mx-4 sm:mx-8 overflow-hidden group">
-                    {{-- Pattern overlay --}}
-                    <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
-
-                    <div class="relative z-10">
-                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-16 sm:h-20 mx-auto mb-6 brightness-0 invert opacity-90">
-
-                        <h3 class="text-lg sm:text-xl font-black text-white mb-2">{{ app()->getLocale() == 'ar' ? 'مركز مطمئنة' : 'Motmaena Center' }}</h3>
-                        <p class="text-white/60 text-xs sm:text-sm mb-6">{{ app()->getLocale() == 'ar' ? 'للاستشارات والدورات النفسية' : 'Psychological Counseling & Courses' }}</p>
-
-                        {{-- Stats Row --}}
-                        <div class="grid grid-cols-3 gap-3 mb-6">
-                            <div class="bg-white/10 backdrop-blur rounded-2xl py-3 px-2 border border-white/5">
-                                <div class="text-xl sm:text-2xl font-black text-white">+30</div>
-                                <div class="text-[9px] sm:text-[10px] text-white/50 mt-0.5">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Years' }}</div>
-                            </div>
-                            <div class="bg-white/10 backdrop-blur rounded-2xl py-3 px-2 border border-white/5">
-                                <div class="text-xl sm:text-2xl font-black text-white">+50</div>
-                                <div class="text-[9px] sm:text-[10px] text-white/50 mt-0.5">{{ app()->getLocale() == 'ar' ? 'دورة' : 'Courses' }}</div>
-                            </div>
-                            <div class="bg-white/10 backdrop-blur rounded-2xl py-3 px-2 border border-white/5">
-                                <div class="text-xl sm:text-2xl font-black text-white">4.9</div>
-                                <div class="text-[9px] sm:text-[10px] text-white/50 mt-0.5">{{ app()->getLocale() == 'ar' ? 'تقييم' : 'Rating' }}</div>
-                            </div>
+                {{-- Central Brand Core --}}
+                <div class="relative z-20 w-full max-w-[340px] sm:max-w-[400px] reveal-scale">
+                    <div class="glass-effect rounded-[3rem] p-8 sm:p-12 border border-white/20 dark:border-white/10 shadow-[0_40px_100px_-20px_rgba(176,65,65,0.3)] dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden group">
+                        {{-- Background Art (SVG Peace Symbol) --}}
+                        <div class="absolute -bottom-10 -right-10 w-48 h-48 text-primary/5 dark:text-white/5 opacity-50 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-1000 pointer-events-none">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,2C6.47,2,2,6.47,2,12s4.47,10,10,10s10-4.47,10-10S17.53,2,12,2z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8 S16.41,20,12,20z M12.5,7h-1v5.18l3.12,1.8l0.5-0.87l-2.62-1.51V7z"/></svg>
                         </div>
 
-                        {{-- Instructor --}}
-                        <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/5 flex items-center gap-4 {{ app()->getLocale() == 'ar' ? 'flex-row-reverse text-right' : 'text-left' }}">
-                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white font-black text-sm shrink-0">د.ط</div>
-                            <div>
-                                <div class="text-sm font-bold text-white">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</div>
-                                <div class="text-[10px] text-white/50">{{ app()->getLocale() == 'ar' ? 'استشاري الطب النفسي' : 'Consultant Psychiatrist' }}</div>
+                        <div class="relative z-10 text-center">
+                            {{-- Logo Area --}}
+                            <div class="mb-8 relative inline-block">
+                                <div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
+                                <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-20 sm:h-24 mx-auto relative z-10 drop-shadow-2xl">
+                            </div>
+
+                            <h3 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-3 tracking-tight">
+                                {{ app()->getLocale() == 'ar' ? 'رحلة الاطمئنان' : 'Journey to Peace' }}
+                            </h3>
+                            <p class="text-[var(--muted-color)] text-sm sm:text-base mb-8 max-w-[240px] mx-auto leading-relaxed">
+                                {{ app()->getLocale() == 'ar' ? 'نأخذك خطوة بخطوة نحو توازنك النفسي' : 'We take you step by step towards your mental balance.' }}
+                            </p>
+
+                            {{-- High-end Status Badge --}}
+                            <div class="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 px-5 py-2.5 rounded-2xl border border-primary/20">
+                                <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                                <span class="text-xs sm:text-sm font-bold text-primary">{{ app()->getLocale() == 'ar' ? 'مركز معتمد دولياً' : 'Internationally Accredited' }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Floating Card: Brain/Psychology (top-right) --}}
-                <div class="absolute -top-4 {{ app()->getLocale() == 'ar' ? '-left-2 sm:-left-4' : '-right-2 sm:-right-4' }} bg-white dark:bg-dark-surface p-3 sm:p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-border animate-float" style="animation-delay: 0.3s; animation-duration: 5s;">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                {{-- Floating orbital Elements --}}
+
+                {{-- Achievement Chip 1: Experience (Top Right) --}}
+                <div class="absolute top-[5%] right-[5%] z-30 animate-float" style="animation-duration: 6s;">
+                    <div class="glass-effect-heavy px-4 sm:px-6 py-3 sm:py-4 rounded-3xl shadow-xl border border-white/30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform">
+                        <div class="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/30">
+                            <span class="text-lg sm:text-xl font-black">+30</span>
                         </div>
                         <div>
-                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'تطوير الذات' : 'Self Growth' }}</div>
-                            <div class="text-[9px] text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'مهارات حياتية' : 'Life Skills' }}</div>
+                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Years of Exp.' }}</div>
+                            <div class="flex gap-0.5 mt-0.5">
+                                @for($i=0; $i<5; $i++) <div class="w-1 h-1 bg-primary rounded-full"></div> @endfor
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Floating Card: Shield/Certificate (bottom-left) --}}
-                <div class="absolute -bottom-4 {{ app()->getLocale() == 'ar' ? '-right-2 sm:-right-4' : '-left-2 sm:-left-4' }} bg-white dark:bg-dark-surface p-3 sm:p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-border animate-float" style="animation-delay: 0.6s; animation-duration: 7s;">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-green-500/10 rounded-xl flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                {{-- Achievement Chip 2: Trainees (Bottom Left) --}}
+                <div class="absolute bottom-[10%] left-[5%] z-30 animate-float" style="animation-duration: 7s; animation-delay: 1s;">
+                    <div class="glass-effect-heavy px-4 sm:px-6 py-3 sm:py-4 rounded-3xl shadow-xl border border-white/30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform">
+                        <div class="flex -space-x-3 rtl:space-x-reverse">
+                            @foreach([1,2,3] as $i)
+                            <div class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-bg bg-primary/10 flex items-center justify-center overflow-hidden">
+                                <span class="text-[8px] font-bold text-primary">U{{$i}}</span>
+                            </div>
+                            @endforeach
+                            <div class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-bg bg-primary text-white flex items-center justify-center text-[8px] font-bold">+</div>
                         </div>
                         <div>
-                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'شهادات معتمدة' : 'Accredited' }}</div>
-                            <div class="text-[9px] text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'إتمام الدورات' : 'Certificates' }}</div>
+                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? '+100 ألف متدرب' : '+100K Trainees' }}</div>
+                            <div class="text-[9px] text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'ثقة ومصداقية' : 'Trust & Credibility' }}</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Floating Card: Heart/Wellness (top-left) --}}
-                <div class="hidden sm:block absolute top-16 {{ app()->getLocale() == 'ar' ? '-right-6 md:-right-12' : '-left-6 md:-left-12' }} bg-white dark:bg-dark-surface p-3 sm:p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-border animate-float" style="animation-delay: 0.9s; animation-duration: 6s;">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-pink-500/10 rounded-xl flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                        </div>
-                        <div>
-                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'صحة نفسية' : 'Mental Health' }}</div>
-                            <div class="text-[9px] text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'حياة أفضل' : 'Better Life' }}</div>
+                {{-- Achievement Chip 3: Rating (Middle Left) --}}
+                <div class="absolute top-[35%] -left-[5%] lg:left-[0%] z-30 animate-float" style="animation-duration: 5s; animation-delay: 0.5s;">
+                    <div class="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg border border-white/50 flex flex-col items-center gap-1">
+                        <div class="text-lg font-black text-gray-900 dark:text-white leading-none">4.9/5</div>
+                        <div class="flex text-yellow-400 scale-75">
+                            @for($i=0; $i<5; $i++) ★ @endfor
                         </div>
                     </div>
                 </div>
 
-                {{-- Floating Card: Trainees (bottom-right) --}}
-                <div class="hidden sm:block absolute bottom-16 {{ app()->getLocale() == 'ar' ? '-left-6 md:-left-12' : '-right-6 md:-right-12' }} bg-white dark:bg-dark-surface p-3 sm:p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-border animate-float" style="animation-delay: 1.2s; animation-duration: 5.5s;">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                        </div>
-                        <div>
-                            <div class="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">+100K</div>
-                            <div class="text-[9px] text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'متدرب مسجل' : 'Trainees' }}</div>
-                        </div>
+                {{-- Achievement Chip 4: Courses (Bottom Right) --}}
+                <div class="absolute bottom-[20%] -right-[5%] lg:right-[5%] z-30 animate-float" style="animation-duration: 8s; animation-delay: 1.5s;">
+                    <div class="bg-primary px-5 py-4 rounded-[2rem] shadow-2xl shadow-primary/40 text-center animate-bounce" style="animation-duration: 3s;">
+                        <div class="text-2xl font-black text-white leading-none">50+</div>
+                        <div class="text-[9px] font-bold text-white/70 uppercase tracking-widest mt-1">{{ app()->getLocale() == 'ar' ? 'دورة' : 'Courses' }}</div>
                     </div>
                 </div>
+
+                {{-- Decorative Floating Circles --}}
+                <div class="absolute top-[20%] left-[15%] w-4 h-4 rounded-full bg-primary/40 animate-float" style="animation-duration: 4s;"></div>
+                <div class="absolute bottom-[30%] right-[20%] w-6 h-6 rounded-full bg-primary/20 border border-primary/30 animate-float" style="animation-duration: 6s; animation-delay: 2s;"></div>
+                <div class="absolute top-[60%] left-[5%] w-3 h-3 rounded-full bg-primary/60 animate-float" style="animation-duration: 5s; animation-delay: 1s;"></div>
 
             </div>
         </div>
