@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && php artisan db:seed --class=CourseSeeder 2>&1)",
+      "Bash(cd:*)",
+      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && php artisan config:clear && php artisan view:clear 2>&1)",
+      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && npm run build 2>&1)",
+      "Bash(cd \"/c/Users/abd-allah/Desktop/motmaena_kw\" && npm run build 2>&1 && php artisan config:clear && php artisan view:clear 2>&1)"
+    ]
+  }
+}
