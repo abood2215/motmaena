@@ -1,17 +1,10 @@
 #!/bin/bash
-set -e
 
-# توليد APP_KEY إذا مش موجود
-if [ -z "$APP_KEY" ]; then
-    php artisan key:generate --force
-fi
+cd /var/www/html
 
-# Cache config
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# تشغيل migrations (اختياري)
-php artisan migrate --force
+php artisan config:cache || true
+php artisan route:cache  || true
+php artisan view:cache   || true
+php artisan migrate --force || true
 
 exec "$@"
