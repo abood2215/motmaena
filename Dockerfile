@@ -1,7 +1,7 @@
 FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
-    git unzip curl libzip-dev zip libpng-dev libonig-dev libxml2-dev libpq-dev \
+    git unzip curl libzip-dev zip libpng-dev libonig-dev libxml2-dev libpq-dev nodejs npm \
     && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip mbstring exif pcntl bcmath gd
 
 RUN a2enmod rewrite
@@ -18,6 +18,9 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 RUN composer install --no-dev --optimize-autoloader
+
+# ✅ بناء ملفات Vite
+RUN npm install && npm run build
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
