@@ -120,7 +120,7 @@
 
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden lg:hidden bg-[var(--bg-color)] border-b border-[var(--border-color)] shadow-lg animate-menu-in">
-                <nav class="container mx-auto px-4 py-4 flex flex-col">
+                <nav class="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col">
                     <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)] {{ request()->is('/') ? 'text-primary' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                         {{ __('Home') }}
@@ -156,19 +156,19 @@
                 @yield('content')
             </main>
 
-            <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] py-16 mt-auto">
+            <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] py-10 sm:py-16 mt-auto">
                 <div class="container mx-auto px-4">
-                    <div class="flex flex-col items-center gap-8 text-center">
-                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
+                    <div class="flex flex-col items-center gap-5 sm:gap-8 text-center">
+                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
                         
-                        <div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
+                        <div class="flex flex-wrap justify-center gap-x-5 sm:gap-x-8 md:gap-x-10 gap-y-2 sm:gap-y-3">
                             <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>
                             <a href="#" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Clinics') }}</a>
                             <a href="#courses" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Courses') }}</a>
                         </div>
 
                         <!-- Social Media Links -->
-                        <div class="flex flex-wrap items-center justify-center gap-6">
+                        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
                             <a href="https://www.instagram.com/motmaena_kw/?hl=ar" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all hover:-translate-y-1 shadow-sm" title="Instagram">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                             </a>
@@ -193,7 +193,7 @@
                             <div class="rounded-2xl overflow-hidden border border-[var(--border-color)] shadow-lg">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8!2d47.9907505!3d29.3901935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf85ac7308d461%3A0x108f7b378447d243!2z2YXYsdmD2LIg2YXYt9mF2KbZhtipINmE2YTYp9iz2KrYtNin2LHYp9iqINin2YTZhtmB2LPZitipIHwg2KXYtNix2KfZgSDYoy7YryDYt9in2LHZgiDYp9mE2K3YqNmK2Kg!5e0!3m2!1sar!2skw!4v1700000000000!5m2!1sar!2skw"
-                                    width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
                                     referrerpolicy="no-referrer-when-downgrade"
                                     class="w-full"></iframe>
                             </div>

@@ -14,7 +14,7 @@
             <!-- Search Input -->
             <div class="relative w-full sm:w-auto">
                 <input wire:model.live.debounce.300ms="search" type="text" placeholder="{{ __('Search for a course') }}"
-                    class="w-full sm:w-72 md:w-80 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-2xl {{ app()->getLocale() == 'ar' ? 'px-5 pr-11' : 'px-11 pr-5' }} py-3 sm:py-4 text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none shadow-sm dark:text-white">
+                    class="w-full sm:w-64 md:w-80 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-2xl {{ app()->getLocale() == 'ar' ? 'px-4 pr-10' : 'px-10 pr-4' }} py-3 text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none shadow-sm dark:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 absolute {{ app()->getLocale() == 'ar' ? 'right-4' : 'left-4' }} top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -81,7 +81,7 @@
 
                     {{-- Profile image (circular, glows on hover) --}}
                     <div class="absolute bottom-3 left-4 z-20">
-                        <div class="relative w-28 h-28 rounded-full overflow-hidden
+                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden
                                     border-[3px] border-white dark:border-dark-surface shadow-lg
                                     transition-all duration-500
                                     group-hover:scale-105
@@ -101,7 +101,7 @@
                             {{ app()->getLocale() == 'ar' ? 'دورة' : 'COURSE' }}
                         </span>
                         {{-- Title --}}
-                        <h4 class="text-xl sm:text-2xl font-black text-[#5a4a42] dark:text-white leading-[1.2] line-clamp-3
+                        <h4 class="text-base sm:text-xl md:text-2xl font-black text-[#5a4a42] dark:text-white leading-[1.2] line-clamp-3
                                    transition-colors duration-300 group-hover:text-primary">
                             {{ $course->title }}
                         </h4>

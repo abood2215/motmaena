@@ -9,8 +9,8 @@
 
     {{-- Background Orbs --}}
     <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'right-0' : 'left-0' }} w-1/2 h-full bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" data-parallax="0.15"></div>
-    <div class="absolute top-1/3 {{ app()->getLocale() == 'ar' ? 'right-1/3' : 'left-1/3' }} w-[400px] h-[400px] bg-primary/6 rounded-full blur-[120px] pointer-events-none animate-float" style="animation-duration: 8s;" data-parallax="0.25"></div>
-    <div class="absolute -bottom-20 -left-10 w-[280px] h-[280px] bg-primary/4 rounded-full blur-[70px] pointer-events-none" data-parallax="0.35"></div>
+    <div class="absolute top-1/3 {{ app()->getLocale() == 'ar' ? 'right-1/3' : 'left-1/3' }} w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] bg-primary/6 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none animate-float" style="animation-duration: 8s;" data-parallax="0.25"></div>
+    <div class="absolute -bottom-20 -left-10 w-[150px] h-[150px] sm:w-[280px] sm:h-[280px] bg-primary/4 rounded-full blur-[50px] sm:blur-[70px] pointer-events-none" data-parallax="0.35"></div>
 
     <div class="container mx-auto px-4 py-10 sm:py-14 lg:py-0 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 relative z-10">
 
@@ -186,7 +186,7 @@
 {{-- ════════════════ ABOUT SECTION ════════════════ --}}
 <section id="about" class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
+        <div class="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-20">
 
             {{-- Image / Visual Side --}}
             <div class="w-full lg:w-2/5 flex justify-center reveal-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }}">
@@ -258,7 +258,7 @@
 </section>
 
 {{-- ════════════════ CHILDREN SPECIALISED PACKAGES SECTION ════════════════ --}}
-<section id="packages" class="py-16 sm:py-24 md:py-32 bg-secondary dark:bg-dark-surface relative overflow-hidden">
+<section id="packages" class="py-12 sm:py-20 md:py-28 bg-secondary dark:bg-dark-surface relative overflow-hidden">
 
     {{-- Dot-grid pattern --}}
     <div class="absolute inset-0 pointer-events-none opacity-[0.035] dark:opacity-[0.02]" style="background-image: radial-gradient(#b04141 1px, transparent 1px); background-size: 26px 26px;"></div>
@@ -554,7 +554,7 @@
 <section class="py-14 sm:py-20 bg-primary relative overflow-hidden">
     <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px;"></div>
     <div class="container mx-auto px-4 relative z-10">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-10">
             <div class="text-center reveal">
                 <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="100000">0</div>
                 <div class="w-10 h-1 bg-white/30 rounded-full mx-auto mb-2"></div>

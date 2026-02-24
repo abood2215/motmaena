@@ -651,21 +651,37 @@
 }
 @media (max-width: 480px) {
   .s-section { padding: 40px 16px; }
+  .specialized-bg { padding: 40px 16px; }
+  .cta-section { padding: 48px 16px; }
   .hero { padding: 40px 16px 40px; }
   .hero-btns { flex-direction: column; }
   .sess-btn-primary, .sess-btn-secondary { width: 100%; justify-content: center; }
-  .hero-stats { padding: 24px 20px; }
-  .stat-num { font-size: 2.2rem; }
+  .hero-stats { padding: 24px 16px; }
+  .stat-num { font-size: 2rem; }
   .stat-lbl { font-size: 0.65rem; }
   .reinforce-details { grid-template-columns: 1fr; gap: 10px; }
   .spec-club-meta { grid-template-columns: 1fr; }
   .spec-pkgs { grid-template-columns: 1fr; }
-  .spec-eval-card { padding: 20px; flex-direction: column; text-align: center; }
-  .spec-price-big { text-align: center; font-size: 2.5rem; margin-top: 10px; }
+  .spec-eval-card { padding: 16px; flex-direction: column; text-align: center; gap: 12px; }
+  .spec-price-big { text-align: center; font-size: 2.5rem; margin-top: 4px; }
   .spec-price-unit { text-align: center; }
   .cta-btns { flex-direction: column; }
-  .cta-primary, .cta-secondary { width: 100%; justify-content: center; }
+  .cta-primary, .cta-secondary { width: 100%; justify-content: center; padding: 14px 24px; }
   .plan-price { font-size: 2.8rem; }
+  .plan-card { padding: 24px 20px; }
+  .club-card { padding: 28px 20px; }
+  .reinforce-card { padding: 28px 20px; }
+  .sibling-amount { font-size: 2rem; }
+  .spec-daily { padding: 28px 24px; }
+  .spec-club { padding: 28px 24px; }
+  .rating-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+@media (max-width: 375px) {
+  .hero-title { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+  .stat-num { font-size: 1.8rem; }
+  .price-big { font-size: 2.4rem; }
+  .plan-price { font-size: 2.4rem; }
+  .club-title { font-size: 1.6rem; }
 }
 </style>
 
