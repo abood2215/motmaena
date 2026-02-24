@@ -12,7 +12,7 @@
     <div class="absolute top-1/3 {{ app()->getLocale() == 'ar' ? 'right-1/3' : 'left-1/3' }} w-[400px] h-[400px] bg-primary/6 rounded-full blur-[120px] pointer-events-none animate-float" style="animation-duration: 8s;" data-parallax="0.25"></div>
     <div class="absolute -bottom-20 -left-10 w-[280px] h-[280px] bg-primary/4 rounded-full blur-[70px] pointer-events-none" data-parallax="0.35"></div>
 
-    <div class="container mx-auto px-4 py-12 sm:py-16 lg:py-0 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 relative z-10">
+    <div class="container mx-auto px-4 py-10 sm:py-14 lg:py-0 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 relative z-10">
 
         {{-- ─── Text Content ─── --}}
         <div class="w-full lg:w-1/2 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}">
@@ -75,8 +75,8 @@
         </div>
 
         {{-- ─── Hero Visual (V3: The Wellness Core) ─── --}}
-        <div class="w-full lg:w-1/2 flex justify-center pb-10 sm:pb-14 lg:pb-0 reveal-scale" style="animation-delay: 0.18s;">
-            <div class="relative w-full max-w-[480px] lg:max-w-xl aspect-square flex items-center justify-center">
+        <div class="w-full lg:w-1/2 flex justify-center pb-12 sm:pb-16 lg:pb-0 reveal-scale" style="animation-delay: 0.18s;">
+            <div class="relative w-full max-w-[300px] sm:max-w-[400px] lg:max-w-xl aspect-square flex items-center justify-center">
 
                 {{-- Deep Atmospheric Glows --}}
                 <div class="absolute inset-0 pointer-events-none">
@@ -158,7 +158,7 @@
                 </div>
 
                 {{-- Stat: Rating (Middle Left) --}}
-                <div class="absolute top-[40%] -left-6 sm:left-0 z-30 animate-float" style="animation-delay: 1.5s;">
+                <div class="absolute top-[40%] -left-6 sm:left-0 z-30 animate-float hidden sm:block" style="animation-delay: 1.5s;">
                     <div class="glass-effect-heavy p-4 sm:p-5 rounded-[2.5rem] shadow-xl border border-white/40 flex flex-col items-center">
                         <div class="text-xl sm:text-2xl font-black text-primary leading-none mb-1">4.9</div>
                         <div class="flex text-yellow-500 scale-90 mb-1">★★★★★</div>
@@ -167,7 +167,7 @@
                 </div>
 
                 {{-- Stat: Certification (Bottom Left) --}}
-                <div class="absolute -bottom-10 -left-2 sm:bottom-0 sm:left-10 z-30 animate-float" style="animation-delay: 0.5s;">
+                <div class="absolute -bottom-10 -left-2 sm:bottom-0 sm:left-10 z-30 animate-float hidden sm:block" style="animation-delay: 0.5s;">
                     <div class="bg-gradient-to-br from-primary to-primary-dark p-4 sm:p-5 rounded-3xl shadow-2xl shadow-primary/40 text-white flex items-center gap-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -198,18 +198,18 @@
                         </div>
                         <h3 class="text-xl sm:text-2xl font-black text-white mb-2">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</h3>
                         <p class="text-white/70 text-sm">{{ app()->getLocale() == 'ar' ? 'استشاري الطب النفسي' : 'Consultant Psychiatrist' }}</p>
-                        <div class="flex justify-center gap-3 mt-6">
-                            <div class="bg-white/15 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
-                                <div class="text-lg font-black text-white">+30</div>
-                                <div class="text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Years Exp.' }}</div>
+                        <div class="flex justify-center gap-2 sm:gap-3 mt-4 sm:mt-6">
+                            <div class="bg-white/15 backdrop-blur px-2 sm:px-4 py-2 rounded-xl border border-white/10">
+                                <div class="text-base sm:text-lg font-black text-white">+30</div>
+                                <div class="text-[9px] sm:text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Years Exp.' }}</div>
                             </div>
-                            <div class="bg-white/15 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
-                                <div class="text-lg font-black text-white">+55</div>
-                                <div class="text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'دورة' : 'Courses' }}</div>
+                            <div class="bg-white/15 backdrop-blur px-2 sm:px-4 py-2 rounded-xl border border-white/10">
+                                <div class="text-base sm:text-lg font-black text-white">+55</div>
+                                <div class="text-[9px] sm:text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'دورة' : 'Courses' }}</div>
                             </div>
-                            <div class="bg-white/15 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
-                                <div class="text-lg font-black text-white">+100K</div>
-                                <div class="text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'متدرب' : 'Trainees' }}</div>
+                            <div class="bg-white/15 backdrop-blur px-2 sm:px-4 py-2 rounded-xl border border-white/10">
+                                <div class="text-base sm:text-lg font-black text-white">+100K</div>
+                                <div class="text-[9px] sm:text-[10px] text-white/60">{{ app()->getLocale() == 'ar' ? 'متدرب' : 'Trainees' }}</div>
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                 <div class="w-px h-4 bg-gray-200 dark:bg-dark-border"></div>
                 <span class="text-primary font-black text-base sm:text-lg tracking-tighter leading-none">deema</span>
                 <div class="w-px h-4 bg-gray-200 dark:bg-dark-border hidden sm:block"></div>
-                <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">{{ app()->getLocale() == 'ar' ? 'برامج متخصصة' : 'Specialized Programs' }}</span>
+                <span class="hidden sm:block text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'برامج متخصصة' : 'Specialized Programs' }}</span>
             </div>
 
             <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black text-gray-900 dark:text-white mb-5 leading-[1.15]">
@@ -491,20 +491,20 @@
                     {{-- Steps: 1 → 2 → 3 → 4 --}}
                     <div class="flex items-center justify-center mb-10 sm:mb-12">
                         @for($step = 1; $step <= 4; $step++)
-                            <div class="flex flex-col items-center gap-2">
-                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-black text-2xl sm:text-3xl transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+                            <div class="flex flex-col items-center gap-1.5 sm:gap-2">
+                                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-lg sm:text-3xl transition-all duration-300 hover:-translate-y-1 hover:scale-105"
                                      style="background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.35);color:#fff;box-shadow:0 8px 24px -6px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.2);">
                                     {{ $step }}
                                 </div>
-                                <span class="text-white/65 text-[10px] sm:text-[11px] font-bold tracking-wide">
+                                <span class="text-white/65 text-[9px] sm:text-[11px] font-bold tracking-wide">
                                     {{ app()->getLocale() == 'ar' ? 'دفعة '.$step : 'Pay '.$step }}
                                 </span>
                             </div>
                             @if($step < 4)
-                                <div class="flex items-center gap-1.5 mb-5 mx-3 sm:mx-6">
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.55);"></span>
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.28);"></span>
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.12);"></span>
+                                <div class="flex items-center gap-1 sm:gap-1.5 mb-5 mx-1 sm:mx-4">
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.55);"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.28);"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full hidden sm:block" style="background:rgba(255,255,255,0.12);"></span>
                                 </div>
                             @endif
                         @endfor
@@ -589,7 +589,7 @@
             </h2>
             <p class="text-[var(--muted-color)] text-sm sm:text-base max-w-2xl mx-auto">{{ app()->getLocale() == 'ar' ? 'تجارب حقيقية من متدربين استفادوا من دوراتنا المتخصصة' : 'Real experiences from trainees who benefited from our courses' }}</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {{-- Testimonial 1 --}}
             <div class="card-premium p-6 sm:p-8 hover:-translate-y-2 reveal" style="transition-delay: 0.1s">
                 <div class="flex items-center gap-1 mb-4">
