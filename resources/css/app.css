@@ -402,39 +402,100 @@
 
     /* ── Course Thumbnail Animations ────────────── */
     @keyframes thumb-badge {
-        from { opacity: 0; transform: translateY(-10px) scale(0.85); }
-        to   { opacity: 1; transform: translateY(0)    scale(1);    }
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.85);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
     }
+
     @keyframes thumb-title {
-        from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
-        to   { opacity: 1; transform: translateY(0);   filter: blur(0);   }
+        from {
+            opacity: 0;
+            transform: translateY(18px);
+            filter: blur(6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
     }
+
     @keyframes thumb-line {
-        from { transform: scaleX(0) translateX(8px); opacity: 0; }
-        to   { transform: scaleX(1) translateX(0);   opacity: 1; }
+        from {
+            transform: scaleX(0) translateX(8px);
+            opacity: 0;
+        }
+
+        to {
+            transform: scaleX(1) translateX(0);
+            opacity: 1;
+        }
     }
+
     @keyframes thumb-center {
-        from { opacity: 0; transform: translateY(8px); }
-        to   { opacity: 1; transform: translateY(0);  }
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
+
     @keyframes thumb-img-enter {
-        from { opacity: 0; transform: translateX(20px) scale(1.04); }
-        to   { opacity: 1; transform: translateX(0)    scale(1);    }
+        from {
+            opacity: 0;
+            transform: translateX(20px) scale(1.04);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
     }
+
     @keyframes thumb-shimmer {
-        0%   { background-position: 200% center; }
-        100% { background-position: -200% center; }
+        0% {
+            background-position: 200% center;
+        }
+
+        100% {
+            background-position: -200% center;
+        }
     }
 
     /* ── Course Card Premium Interactions ────────────── */
     @keyframes card-shine-sweep {
-        0%   { transform: translateX(-250%) skewX(-20deg); }
-        100% { transform: translateX(350%)  skewX(-20deg); }
+        0% {
+            transform: translateX(-250%) skewX(-20deg);
+        }
+
+        100% {
+            transform: translateX(350%) skewX(-20deg);
+        }
     }
 
     @keyframes live-dot-pulse {
-        0%, 100% { opacity: 1;   transform: scale(1);   }
-        50%       { opacity: 0.3; transform: scale(1.7); }
+
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.3;
+            transform: scale(1.7);
+        }
     }
 
     .card-shine-inner {
@@ -455,5 +516,67 @@
 
     .badge-live-dot {
         animation: live-dot-pulse 2.5s ease-in-out infinite;
+    }
+
+    /* ── Premium Banner Enhancements ────────────── */
+    @keyframes orb-float {
+
+        0%,
+        100% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+    }
+
+    .animate-orb-float {
+        animation: orb-float 20s ease-in-out infinite;
+    }
+
+    .animate-orb-float-delayed {
+        animation: orb-float 25s ease-in-out infinite reverse;
+        animation-delay: -5s;
+    }
+
+    .feature-card {
+        @apply bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-2xl p-4 transition-all duration-500 hover:-translate-y-2 hover:bg-white/60 dark:hover:bg-white/10 hover:shadow-xl hover:grayscale-0 grayscale-[0.3];
+    }
+
+    .shimmer-btn {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .shimmer-btn::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: rotate(45deg);
+        animation: shimmer-swipe 3s infinite;
+    }
+
+    @keyframes shimmer-swipe {
+        0% {
+            transform: rotate(45deg) translate(-150%, -150%);
+        }
+
+        100% {
+            transform: rotate(45deg) translate(150%, 150%);
+        }
     }
 }
