@@ -5,10 +5,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pdo pdo_mysql zip
 
-# تفعيل mod_rewrite
 RUN a2enmod rewrite
 
-# تغيير مجلد Apache إلى public
+# اجعل Apache يفتح public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -18,11 +17,12 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
+# تثبيت Composer
 RUN curl -sS https://getcomposer.org/installer | php \
  && php composer.phar install --no-dev --optimize-autoloader
 
-RUN php artisan key:generate || true
-
-RUN chown -R www-data:www-data /var/www/html
+# صلاحيات لارافيل
+RUN chown -R www-data:www-data /var/www/html \
+ && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
