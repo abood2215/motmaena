@@ -7,7 +7,7 @@ RUN docker-php-ext-install pdo pdo_mysql zip
 
 RUN a2enmod rewrite
 
-# اجعل Apache يفتح public
+# تغيير مسار الموقع إلى public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -17,12 +17,11 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
-# تثبيت Composer
-RUN curl -sS https://getcomposer.org/installer | php \
- && php composer.phar install --no-dev --optimize-autoloader
+# تثبيت composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# صلاحيات لارافيل
-RUN chown -R www-data:www-data /var/www/html \
- && chmod -R 775 storage bootstrap/cache
+RUN composer install --no-dev --optimize-autoloader
+
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
