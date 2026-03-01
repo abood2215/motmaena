@@ -45,7 +45,7 @@
                 <a href="{{ route('courses') }}" class="btn-motmaena text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-4 text-center shadow-xl shadow-primary/30">
                     {{ __('Start your journey now') }}
                 </a>
-                <a href="#" class="btn-outline dark:bg-transparent dark:text-white dark:border-white/20 text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-4 text-center bg-white">
+                <a href="#about" class="btn-outline dark:bg-transparent dark:text-white dark:border-white/20 text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-4 text-center bg-white">
                     {{ __('About the Professor') }}
                 </a>
             </div>
@@ -175,6 +175,214 @@
                             <div class="text-[9px] text-white/60">{{ app()->getLocale() == 'ar' ? 'شهادات مهنية' : 'Pro Certificates' }}</div>
                         </div>
                     </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ════════════════ SPECIAL EVENT: PREMIUM DR. TARIQ VISIT ════════════════ --}}
+<section id="special-event" class="relative overflow-hidden bg-[#fdf4ef] dark:bg-[#0d0606]">
+
+    {{-- ── Ambient Background Glows ── --}}
+    <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'right-0' : 'left-0' }} w-[700px] h-[700px] bg-primary/[0.06] dark:bg-primary/[0.22] rounded-full blur-[160px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+    <div class="absolute bottom-0 {{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} w-[500px] h-[500px] bg-primary/[0.04] dark:bg-primary/[0.14] rounded-full blur-[140px] translate-y-1/3 pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-primary/[0.03] dark:bg-primary/[0.06] rounded-full blur-[120px] pointer-events-none"></div>
+
+    {{-- ── Floating Particles (dark only) ── --}}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block" aria-hidden="true">
+        @foreach([['top-[15%]','left-[8%]','w-1','h-1','opacity-30','1s'],['top-[35%]','left-[3%]','w-0.5','h-0.5','opacity-20','2.5s'],['top-[65%]','left-[12%]','w-1','h-1','opacity-25','0.5s'],['top-[80%]','left-[5%]','w-0.5','h-0.5','opacity-15','3s'],['top-[20%]','right-[6%]','w-1','h-1','opacity-25','1.5s'],['top-[55%]','right-[4%]','w-0.5','h-0.5','opacity-20','0.8s'],['top-[75%]','right-[10%]','w-1','h-1','opacity-30','2s'],['top-[45%]','left-[50%]','w-0.5','h-0.5','opacity-10','1.2s']] as [$t,$s,$w,$h,$op,$del])
+        <div class="absolute {{ $t }} {{ $s }} {{ $w }} {{ $h }} bg-primary rounded-full {{ $op }} animate-pulse" style="animation-delay:{{ $del }}"></div>
+        @endforeach
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28 relative z-10">
+        <div class="grid lg:grid-cols-[42%_58%] gap-8 lg:gap-12 xl:gap-20 items-center max-w-7xl mx-auto">
+
+            {{-- ══════════ LEFT COLUMN: Dr. Photo with Islamic Arch ══════════ --}}
+            <div class="relative flex justify-center {{ app()->getLocale() == 'ar' ? 'lg:order-1' : 'lg:order-2' }} reveal-scale">
+
+                {{-- Outer rotating ring --}}
+                <div class="absolute inset-8 rounded-full border border-primary/15 dark:border-primary/10 animate-[spin_25s_linear_infinite] pointer-events-none"></div>
+                <div class="absolute inset-16 rounded-full border border-primary/8 dark:border-white/5 animate-[spin_18s_linear_infinite_reverse] pointer-events-none"></div>
+
+                {{-- Glow behind arch --}}
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-3/4 h-3/4 bg-primary/[0.07] dark:bg-primary/15 rounded-full blur-[60px]"></div>
+                </div>
+
+                {{-- Islamic Arch Container --}}
+                <div class="relative w-[260px] sm:w-[320px] lg:w-[380px] xl:w-[420px]">
+
+                    {{-- SVG Islamic Arch Frame --}}
+                    <svg class="absolute inset-0 w-full h-[115%] -top-[7%] arch-svg-frame" viewBox="0 0 420 560" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <path d="M210,18 C140,18 55,75 55,195 L55,430 Q55,468 88,485 L165,510 L210,522 L255,510 L332,485 Q365,468 365,430 L365,195 C365,75 280,18 210,18 Z"
+                              fill="url(#archGrad)" stroke="url(#archStroke)" stroke-width="1.5" opacity="0.9"/>
+                        <path d="M210,35 C148,35 72,87 72,198 L72,428 Q72,461 100,477 L170,501 L210,512 L250,501 L320,477 Q348,461 348,428 L348,198 C348,87 272,35 210,35 Z"
+                              stroke="url(#archStroke2)" stroke-width="1" fill="none" opacity="0.5"/>
+                        <path d="M210,4 L220,18 L210,32 L200,18 Z" fill="url(#diamondGrad)" filter="url(#glow)"/>
+                        <path d="M210,10 L216,18 L210,26 L204,18 Z" fill="rgba(255,210,180,0.8)"/>
+                        <circle cx="55" cy="200" r="5" fill="rgba(176,65,65,0.7)" filter="url(#glow)"/>
+                        <circle cx="365" cy="200" r="5" fill="rgba(176,65,65,0.7)" filter="url(#glow)"/>
+                        <circle cx="55" cy="320" r="3" fill="rgba(176,65,65,0.4)"/>
+                        <circle cx="365" cy="320" r="3" fill="rgba(176,65,65,0.4)"/>
+                        <circle cx="55" cy="420" r="2" fill="rgba(176,65,65,0.25)"/>
+                        <circle cx="365" cy="420" r="2" fill="rgba(176,65,65,0.25)"/>
+                        <circle cx="130" cy="55" r="1.5" fill="rgba(176,65,65,0.4)"/>
+                        <circle cx="290" cy="55" r="1.5" fill="rgba(176,65,65,0.4)"/>
+                        <circle cx="80" cy="120" r="1" fill="rgba(176,65,65,0.25)"/>
+                        <circle cx="340" cy="120" r="1" fill="rgba(176,65,65,0.25)"/>
+                        <defs>
+                            <linearGradient id="archGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(176,65,65,0.18)"/>
+                                <stop offset="60%" stop-color="rgba(176,65,65,0.06)"/>
+                                <stop offset="100%" stop-color="rgba(176,65,65,0.02)"/>
+                            </linearGradient>
+                            <linearGradient id="archStroke" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(176,65,65,0.9)"/>
+                                <stop offset="50%" stop-color="rgba(176,65,65,0.5)"/>
+                                <stop offset="100%" stop-color="rgba(176,65,65,0.1)"/>
+                            </linearGradient>
+                            <linearGradient id="archStroke2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(176,65,65,0.35)"/>
+                                <stop offset="100%" stop-color="rgba(176,65,65,0.03)"/>
+                            </linearGradient>
+                            <linearGradient id="diamondGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(255,220,180,0.9)"/>
+                                <stop offset="100%" stop-color="rgba(176,65,65,1)"/>
+                            </linearGradient>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+                    </svg>
+
+                    {{-- Dr. Photo --}}
+                    <div class="relative z-10 pt-10 px-6 pb-0">
+                        <img src="{{ asset('courses-img/dr-tariq.png') }}"
+                             alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
+                             class="w-full h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(176,65,65,0.25)] dark:drop-shadow-[0_40px_80px_rgba(176,65,65,0.4)]">
+                    </div>
+                </div>
+
+                {{-- Floating Badge: Years --}}
+                <div class="absolute top-6 {{ app()->getLocale() == 'ar' ? 'right-0 lg:-right-2' : 'left-0 lg:-left-2' }} z-20 animate-float" style="animation-delay:0.4s">
+                    <div class="bg-white dark:bg-white/10 border border-gray-100 dark:border-white/20 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-lg dark:shadow-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 bg-primary/10 dark:bg-primary/20 rounded-xl flex items-center justify-center border border-primary/20 dark:border-primary/30">
+                                <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-gray-900 dark:text-white text-sm font-black leading-none">+30</div>
+                                <div class="text-gray-400 dark:text-white/40 text-[10px] font-bold mt-0.5">{{ app()->getLocale() == 'ar' ? 'سنة خبرة' : 'Yrs. Exp.' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Floating Badge: Live --}}
+                <div class="absolute bottom-12 {{ app()->getLocale() == 'ar' ? 'left-0 lg:-left-2' : 'right-0 lg:-right-2' }} z-20 animate-float" style="animation-delay:1s">
+                    <div class="bg-gradient-to-br from-primary to-[#8a2f2f] px-5 py-3 rounded-2xl shadow-[0_15px_40px_-10px_rgba(176,65,65,0.55)] border border-white/10">
+                        <div class="flex items-center gap-2">
+                            <div class="relative">
+                                <div class="w-2.5 h-2.5 bg-green-400 rounded-full"></div>
+                                <div class="absolute inset-0 w-2.5 h-2.5 bg-green-400 rounded-full animate-ping opacity-60"></div>
+                            </div>
+                            <div class="text-white text-xs font-black whitespace-nowrap">{{ app()->getLocale() == 'ar' ? 'متاح ● مارس 2026' : 'Available ● March 2026' }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- ══════════ RIGHT COLUMN: Content ══════════ --}}
+            <div class="{{ app()->getLocale() == 'ar' ? 'text-right lg:order-2' : 'text-left lg:order-1' }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
+                {{-- Branding Row --}}
+                <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-3 mb-8">
+                    <img src="{{ asset('logo-clinic.png') }}" alt="مطمئنة" class="h-7 dark:brightness-[1.8] dark:opacity-80">
+                    <div class="w-px h-5 bg-gray-200 dark:bg-white/15"></div>
+                    <span class="text-[10px] font-black text-gray-400 dark:text-white/30 tracking-[0.35em] uppercase">Motmaena · Kuwait</span>
+                </div>
+
+                {{-- Badge --}}
+                <div class="inline-flex items-center gap-2 border border-primary/35 bg-primary/[0.07] px-4 py-1.5 rounded-full mb-5">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                    <span class="text-primary text-[11px] font-black tracking-[0.25em] uppercase">{{ app()->getLocale() == 'ar' ? 'زيارة حصرية' : 'Exclusive Visit' }}</span>
+                </div>
+
+                {{-- يتواجد --}}
+                <p class="text-gray-400 dark:text-white/35 text-base sm:text-lg font-bold mb-1 tracking-wide">{{ app()->getLocale() == 'ar' ? 'يتواجد' : 'Now Present' }}</p>
+
+                {{-- Name: dark red in light mode, white→red gradient in dark mode --}}
+                <h2 class="event-dr-title text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-black leading-[1.05] mb-3">
+                    {{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}
+                </h2>
+
+                {{-- Title --}}
+                <p class="text-gray-500 dark:text-white/45 text-sm sm:text-base font-medium mb-1.5">{{ app()->getLocale() == 'ar' ? 'بروفسور واستشاري الطب النفسي' : 'Professor & Psychiatric Consultant' }}</p>
+
+                {{-- Location line --}}
+                <p class="text-gray-700 dark:text-white/80 text-lg sm:text-xl font-bold mb-7">
+                    {{ app()->getLocale() == 'ar' ? 'في مركز مطمئنة الكويت' : 'at Motmaena Kuwait Center' }}
+                </p>
+
+                {{-- Month Badge --}}
+                <div class="inline-flex items-center gap-3 bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-3 mb-8 shadow-sm dark:shadow-none">
+                    <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span class="text-gray-400 dark:text-white/50 text-xs font-bold uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'خلال شهر' : 'During' }}</span>
+                    <div class="w-px h-4 bg-gray-200 dark:bg-white/15"></div>
+                    <span class="text-primary font-black text-base sm:text-lg">{{ app()->getLocale() == 'ar' ? 'مارس 2026' : 'March 2026' }}</span>
+                </div>
+
+                {{-- Dates Grid — 3×2 --}}
+                <div class="mb-8">
+                    <p class="text-gray-400 dark:text-white/25 text-[10px] font-black uppercase tracking-[0.3em] mb-4">{{ app()->getLocale() == 'ar' ? 'مواعيد الاستشارات المتاحة' : 'Available Consultation Dates' }}</p>
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-[320px]">
+                        @php $visitDates = [1, 2, 10, 11, 16, 17]; @endphp
+                        @foreach($visitDates as $date)
+                        <div class="group relative bg-white dark:bg-white/[0.04] hover:bg-primary/[0.07] dark:hover:bg-primary/20 border border-gray-200 dark:border-white/[0.08] hover:border-primary/50 dark:hover:border-primary/50 rounded-xl p-2.5 sm:p-3 text-center cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_28px_-8px_rgba(176,65,65,0.25)] dark:hover:shadow-[0_16px_36px_-8px_rgba(176,65,65,0.55)] overflow-hidden shadow-sm dark:shadow-none">
+                            <div class="absolute inset-0 bg-gradient-to-b from-primary/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                            <div class="relative z-10">
+                                <div class="text-[8px] font-black text-gray-300 dark:text-white/20 group-hover:text-primary/60 transition-colors leading-none">03 | مارس</div>
+                                <div class="text-2xl sm:text-3xl font-black text-gray-800 dark:text-white leading-tight my-0.5">{{ $date }}</div>
+                                <div class="text-[8px] font-bold text-gray-300 dark:text-white/15 group-hover:text-primary/40 dark:group-hover:text-white/30 transition-colors leading-none">March · 26</div>
+                            </div>
+                            <div class="absolute top-1.5 {{ app()->getLocale() == 'ar' ? 'left-1.5' : 'right-1.5' }} w-1.5 h-1.5 bg-green-500 rounded-full opacity-40 group-hover:opacity-100 transition-opacity animate-pulse"></div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Service Description --}}
+                <p class="{{ app()->getLocale() == 'ar' ? 'border-r-2 pr-4' : 'border-l-2 pl-4' }} border-primary/40 text-gray-500 dark:text-white/40 text-sm sm:text-base leading-relaxed mb-8">
+                    {{ app()->getLocale() == 'ar' ? 'لتقديم الاستشارات الاجتماعية والحياتية والتربوية والتدريب' : 'Social, life, educational consultations & professional training' }}
+                </p>
+
+                {{-- CTA Row --}}
+                <div class="flex flex-col sm:flex-row items-start gap-4">
+                    <a href="https://wa.me/96555665161" target="_blank"
+                       class="group inline-flex items-center gap-3 text-white font-black text-base sm:text-lg px-7 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 active:scale-95 whitespace-nowrap"
+                       style="background: linear-gradient(135deg, #c95050 0%, #b04141 50%, #8a2f2f 100%); box-shadow: 0 16px 40px -10px rgba(176,65,65,0.5);">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        {{ app()->getLocale() == 'ar' ? 'احجز الآن بالواتساب' : 'Book via WhatsApp' }}
+                    </a>
+
+                    <div class="flex items-center gap-3 self-center">
+                        <div class="w-px h-10 bg-gray-200 dark:bg-white/10 hidden sm:block"></div>
+                        <div>
+                            <div class="text-gray-400 dark:text-white/25 text-[10px] uppercase tracking-widest font-bold">{{ app()->getLocale() == 'ar' ? 'للتواصل والاستفسار' : 'Contact' }}</div>
+                            <div class="text-gray-600 dark:text-white/55 font-black text-sm mt-0.5" dir="ltr">+965 556 651 61</div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Location Strip --}}
+                <div class="mt-7 pt-6 border-t border-gray-100 dark:border-white/[0.06] flex items-center gap-3">
+                    <svg class="w-3.5 h-3.5 text-primary/50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span class="text-gray-400 dark:text-white/25 text-xs font-medium">{{ app()->getLocale() == 'ar' ? 'الكويت — برج أحمد، بجوار المستشفى الأميري' : 'Kuwait — Burj Ahmed, near Al-Amiri Hospital' }}</span>
                 </div>
 
             </div>

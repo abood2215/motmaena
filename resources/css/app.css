@@ -348,6 +348,25 @@
         animation: count-up-pop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
+    /* ── Special Event Section ────────────── */
+    @keyframes arch-glow-pulse {
+        0%, 100% { opacity: 0.9; filter: drop-shadow(0 0 6px rgba(176,65,65,0.4)); }
+        50%       { opacity: 1;   filter: drop-shadow(0 0 16px rgba(176,65,65,0.75)); }
+    }
+    .arch-svg-frame { animation: arch-glow-pulse 3.5s ease-in-out infinite; }
+
+    /* Name gradient: dark red in light mode, white→red in dark mode */
+    .event-dr-title {
+        color: var(--color-primary-dark);
+    }
+    .dark .event-dr-title {
+        background: linear-gradient(135deg, #ffffff 0%, #f5d8d8 40%, #c96060 75%, #b04141 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+    }
+
     /* ── Preloader Animation ────────────── */
     @keyframes preloader-pulse {
 
@@ -464,54 +483,38 @@
     }
 
     @keyframes thumb-shimmer {
-        0% {
-            background-position: 200% center;
-        }
-
-        100% {
-            background-position: -200% center;
-        }
+        0%   { background-position: 200% center; }
+        100% { background-position: -200% center; }
     }
 
     /* ── Course Card Premium Interactions ────────────── */
     @keyframes card-shine-sweep {
-        0% {
-            transform: translateX(-250%) skewX(-20deg);
-        }
-
-        100% {
-            transform: translateX(350%) skewX(-20deg);
-        }
-    }
-
-    @keyframes live-dot-pulse {
-
-        0%,
-        100% {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        50% {
-            opacity: 0.3;
-            transform: scale(1.7);
-        }
+        0%   { background-position: 250% 0; opacity: 0; }
+        15%  { opacity: 1; }
+        85%  { opacity: 1; }
+        100% { background-position: -150% 0; opacity: 0; }
     }
 
     .card-shine-inner {
         position: absolute;
-        top: -50%;
-        left: -5%;
-        width: 30%;
-        height: 200%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-        transform: translateX(-250%) skewX(-20deg);
+        inset: 0;
+        background: linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
+        background-size: 250% 100%;
+        background-position: 250% 0;
         pointer-events: none;
         z-index: 30;
+        opacity: 0;
+        transition: opacity 0.3s;
+        border-radius: inherit;
+    }
+
+    @keyframes live-dot-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%       { opacity: 0.3; transform: scale(1.7); }
     }
 
     .group:hover .card-shine-inner {
-        animation: card-shine-sweep 0.7s ease-out forwards;
+        animation: card-shine-sweep 0.8s ease-in-out;
     }
 
     .badge-live-dot {
@@ -520,19 +523,9 @@
 
     /* ── Premium Banner Enhancements ────────────── */
     @keyframes orb-float {
-
-        0%,
-        100% {
-            transform: translate(0, 0) scale(1);
-        }
-
-        33% {
-            transform: translate(30px, -50px) scale(1.1);
-        }
-
-        66% {
-            transform: translate(-20px, 20px) scale(0.9);
-        }
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33%       { transform: translate(30px, -50px) scale(1.1); }
+        66%       { transform: translate(-20px, 20px) scale(0.9); }
     }
 
     .animate-orb-float {
@@ -545,7 +538,7 @@
     }
 
     .feature-card {
-        @apply bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-2xl p-4 transition-all duration-500 hover:-translate-y-2 hover:bg-white/60 dark:hover:bg-white/10 hover:shadow-xl hover:grayscale-0 grayscale-[0.3];
+        @apply bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-2xl p-4 transition-all duration-500 hover:-translate-y-2 hover:bg-white/60 dark:hover:bg-white/10 hover:shadow-xl;
     }
 
     .shimmer-btn {
@@ -571,12 +564,7 @@
     }
 
     @keyframes shimmer-swipe {
-        0% {
-            transform: rotate(45deg) translate(-150%, -150%);
-        }
-
-        100% {
-            transform: rotate(45deg) translate(150%, 150%);
-        }
+        0%   { transform: rotate(45deg) translate(-150%, -150%); }
+        100% { transform: rotate(45deg) translate(150%, 150%); }
     }
 }
