@@ -914,20 +914,20 @@
                     {{-- Steps: 1 → 2 → 3 → 4 --}}
                     <div class="flex items-center justify-center mb-10 sm:mb-12">
                         @for($step = 1; $step <= 4; $step++)
-                            <div class="flex flex-col items-center gap-2">
-                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-black text-2xl sm:text-3xl transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+                            <div class="flex flex-col items-center gap-1.5 sm:gap-2 shrink-0">
+                                <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-lg sm:text-3xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 shrink-0"
                                      style="background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.35);color:#fff;box-shadow:0 8px 24px -6px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.2);">
                                     {{ $step }}
                                 </div>
-                                <span class="text-white/65 text-[10px] sm:text-[11px] font-bold tracking-wide">
+                                <span class="text-white/65 text-[9px] sm:text-[11px] font-bold tracking-wide">
                                     {{ app()->getLocale() == 'ar' ? 'دفعة '.$step : 'Pay '.$step }}
                                 </span>
                             </div>
                             @if($step < 4)
-                                <div class="flex items-center gap-1.5 mb-5 mx-3 sm:mx-6">
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.55);"></span>
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.28);"></span>
-                                    <span class="w-2 h-2 rounded-full" style="background:rgba(255,255,255,0.12);"></span>
+                                <div class="flex items-center gap-1 sm:gap-1.5 mb-5 mx-1 sm:mx-6">
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.55);"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.28);"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full hidden xs:block" style="background:rgba(255,255,255,0.12);"></span>
                                 </div>
                             @endif
                         @endfor

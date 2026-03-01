@@ -6,7 +6,7 @@ use App\Models\Course;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, ['ar', 'en'])) {
@@ -21,3 +21,9 @@ Route::get('/course/{course}', function (Course $course) {
 Route::get('/sessions', function () {
     return view('sessions');
 })->name('sessions');
+Route::get('/courses', function () {
+    return view('courses');
+})->name('courses');
+Route::get('/packages', function () {
+    return view('packages');
+})->name('packages');

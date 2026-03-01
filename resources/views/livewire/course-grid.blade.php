@@ -86,7 +86,7 @@
                                     transition-all duration-500
                                     group-hover:scale-105
                                     group-hover:shadow-[0_8px_28px_rgba(176,65,65,0.22)]">
-                            <img src="{{ (isset($course->image) && file_exists(public_path($course->image))) ? asset($course->image) : asset('courses/dr-tariq.png') }}"
+                            <img src="{{ (isset($course->image) && file_exists(public_path($course->image))) ? asset($course->image) : asset('courses-img/dr-tariq.png') }}"
                                  alt="{{ $course->title }}"
                                  class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-112">
                         </div>

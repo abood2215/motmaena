@@ -78,13 +78,13 @@
                         <div class="hidden lg:flex items-center gap-8">
                             <a href="/" class="nav-link {{ request()->is('/') ? 'text-primary font-bold' : '' }}">{{ __('Home') }}</a>
                             <a href="#" class="nav-link">{{ __('Clinics') }}</a>
-                            <a href="/#courses" class="nav-link">{{ __('Courses') }}</a>
-                            <a href="/#packages" class="nav-link flex items-center gap-1.5 group/pkg">
+                            <a href="{{ route('courses') }}" class="nav-link {{ request()->routeIs('courses') ? 'text-primary font-bold' : '' }}">{{ __('Courses') }}</a>
+                            <a href="{{ route('packages') }}" class="nav-link flex items-center gap-1.5 group/pkg {{ request()->routeIs('packages') ? 'text-primary font-bold' : '' }}">
                                 {{ __('Packages') }}
                                 <span class="inline-flex items-center justify-center bg-primary/10 text-primary text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide group-hover/pkg:bg-primary group-hover/pkg:text-white transition-all duration-200">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
                             </a>
                             <a href="{{ route('sessions') }}" class="nav-link {{ request()->routeIs('sessions') ? 'text-primary font-bold' : '' }}">{{ __('Sessions') }}</a>
-                            <a href="#" class="nav-link">{{ __('App') }}</a>
+                            <a href="{{ url('/#app-section') }}" class="nav-link">{{ __('App') }}</a>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
@@ -116,41 +116,54 @@
                         <a href="#" class="hidden sm:inline-block btn-motmaena text-xs md:text-sm px-4 md:px-5 py-2 md:py-2.5 shadow-lg shadow-primary/20">{{ __('Login') }}</a>
                     </div>
                 </nav>
-            </header>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden lg:hidden bg-[var(--bg-color)] border-b border-[var(--border-color)] shadow-lg animate-menu-in">
-                <nav class="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col">
-                    <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)] {{ request()->is('/') ? 'text-primary' : '' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            <div id="mobile-menu" class="hidden lg:hidden bg-[var(--bg-color)]/95 backdrop-blur-md border-b border-[var(--border-color)] shadow-xl animate-menu-in max-h-[calc(100vh-80px)] overflow-y-auto">
+                <nav class="container mx-auto px-3 sm:px-4 py-3 sm:py-6 flex flex-col gap-1">
+                    <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->is('/') ? 'bg-primary/5 text-primary' : '' }}">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                        </div>
                         {{ __('Home') }}
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        </div>
                         {{ __('Clinics') }}
                     </a>
-                    <a href="/#courses" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <a href="{{ route('courses') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('courses') ? 'bg-primary/5 text-primary' : '' }}">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </div>
                         {{ __('Courses') }}
                     </a>
-                    <a href="/#packages" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                        <span>{{ __('Packages') }}</span>
-                        <span class="ms-auto inline-flex items-center justify-center bg-primary/10 text-primary text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
+                    <a href="{{ route('packages') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('packages') ? 'bg-primary/5 text-primary' : '' }}">
+                        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                        </div>
+                        {{ __('Packages') }}
+                        <span class="ms-auto inline-flex items-center justify-center bg-primary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
                     </a>
-                    <a href="{{ route('sessions') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)] {{ request()->routeIs('sessions') ? 'text-primary' : '' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <span>{{ __('Sessions') }}</span>
+                    <a href="{{ route('sessions') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('sessions') ? 'bg-primary/5 text-primary' : '' }}">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        </div>
+                        {{ __('Sessions') }}
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-semibold text-[var(--text-color)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                    <a href="{{ url('/#app-section') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                        </div>
                         {{ __('App') }}
                     </a>
                     <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
-                        <a href="#" class="btn-motmaena w-full text-center">{{ __('Login') }}</a>
+                        <a href="#" class="btn-motmaena w-full text-center py-4 shadow-xl shadow-primary/20">{{ __('Login') }}</a>
                     </div>
                 </nav>
             </div>
+        </header>
+
 
             <main class="flex-grow">
                 @yield('content')
@@ -164,7 +177,8 @@
                         <div class="flex flex-wrap justify-center gap-x-5 sm:gap-x-8 md:gap-x-10 gap-y-2 sm:gap-y-3">
                             <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>
                             <a href="#" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Clinics') }}</a>
-                            <a href="#courses" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Courses') }}</a>
+                            <a href="{{ route('courses') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('courses') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Courses') }}</a>
+                            <a href="{{ route('packages') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('packages') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Packages') }}</a>
                         </div>
 
                         <!-- Social Media Links -->
@@ -228,12 +242,41 @@
             const closeIcon     = document.getElementById('close-icon');
 
             if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    const isOpen = !mobileMenu.classList.contains('hidden');
-                    mobileMenu.classList.toggle('hidden');
-                    hamburgerIcon.classList.toggle('hidden', !isOpen ? false : true);
-                    closeIcon.classList.toggle('hidden', !isOpen ? true : false);
+                const toggleMenu = (forceState) => {
+                    const isClosing = (typeof forceState === 'boolean') ? !forceState : !mobileMenu.classList.contains('hidden');
+                    
+                    if (isClosing) {
+                        mobileMenu.classList.add('hidden');
+                        hamburgerIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    } else {
+                        mobileMenu.classList.remove('hidden');
+                        hamburgerIcon.classList.add('hidden');
+                        closeIcon.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    }
+                };
+
+                mobileMenuBtn.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                };
+
+                // Close menu when clicking any link inside it
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.onclick = () => {
+                        setTimeout(() => toggleMenu(false), 150);
+                    };
                 });
+
+                // Close menu when clicking outside
+                document.onclick = (e) => {
+                    if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                        toggleMenu(false);
+                    }
+                };
             }
 
             // Scroll Reveal Animation

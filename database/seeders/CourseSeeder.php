@@ -75,7 +75,7 @@ class CourseSeeder extends Seeder
 
         foreach ($courses as $index => $courseData) {
             $imageName = $courseData['title'] . '.png';
-            $imagePath = 'courses/' . $imageName;
+            $imagePath = 'courses-img/' . $imageName;
 
             Course::updateOrCreate(
                 ['title' => $courseData['title']],
