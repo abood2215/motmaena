@@ -150,30 +150,20 @@
                         ? ['علاج تدريجي ومنظم للتواصل', 'تقليل القلق الاجتماعي', 'تدريب لفظي ومهاري متخصص']
                         : ['Gradual Communication Therapy', 'Social Anxiety Reduction', 'Verbal & Skill Training'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'الأسباب', 'items' => [
-                            'السبب الدقيق وراء الإصابة بمتلازمة توريت يعد غير معروف',
-                            'في العادة يحدث هذا الاضطراب المعقد بسبب مزج من الصفات الموروثة (الجينية)',
-                            'المواد الكيميائية في النواقل العصبية قد تلعب دوراً في الدماغ وهي التي تنقل نبضات العصب، والتي تتضمن الدوبامين والسيروتونين',
-                        ]],
                         ['category' => 'آثار الإصابة بالاضطراب', 'items' => [
                             'تأثر المستوى الأكاديمي عند الطفل بسبب ضعف المشاركة في المدرسة',
-                            'يكون أكثر عرضة للإصابة باضطرابات القلق والاكتئاب',
-                            'يواجه الطفل صعوبة في تكوين العلاقات الاجتماعية',
+                            'بسبب طابع القلق والخجل عند الطفل المصاب، فإنه يكون أكثر عرضة للإصابة باضطرابات القلق والاكتئاب',
+                            'مع استمرارية الاضطراب، يواجه الطفل صعوبة في تكوين العلاقات الاجتماعية',
                             'يتسم بعض الأطفال المصابين بالصمت الاختياري بالسلبية والعدوانية والسلوكيات القهرية في المنزل',
-                            'من الممكن للطفل المصاب أن يتحسّن مع العلاجات المناسبة',
+                            'من الممكن للطفل المصاب أن يتحسن مع العلاجات المناسبة وفي بعض الأحيان دون الحاجة للتدخل العلاجي أو الدوائي',
                         ]],
                     ] : [
-                        ['category' => 'Causes', 'items' => [
-                            'The exact cause of Tourette syndrome is unknown',
-                            'This complex disorder usually results from a mix of inherited (genetic) traits',
-                            'Chemicals in neural transmitters may play a role in the brain',
-                        ]],
                         ['category' => 'Effects of the Disorder', 'items' => [
                             'Academic level affected due to poor school participation',
-                            'More susceptible to anxiety and depression disorders',
-                            'Difficulty forming social relationships',
-                            'Some affected children show negativity and compulsive behaviors at home',
-                            'The child can improve with appropriate treatments',
+                            'More susceptible to anxiety and depression due to nature of anxiety/shyness',
+                            'Difficulty forming social relationships with continued disorder',
+                            'Some children exhibit negativity, aggression, and compulsive behaviors at home',
+                            'An affected child can improve with appropriate treatments or sometimes without intervention',
                         ]],
                     ],
                 ],
@@ -252,6 +242,50 @@
                         ? ['مهارات حياتية وتواصل فعّال', 'ضبط المشاعر والسلوك', 'مهارات اجتماعية وتفاعلية']
                         : ['Life & Communication Skills', 'Emotion & Behavior Regulation', 'Social & Interactive Skills'],
                     'symptoms' => [],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'متلازمة توريت' : 'Tourette Syndrome',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['دعم الحركات اللاإرادية (Tics)', 'علاج سلوكي متخصص', 'تنسيق دوائي وتأهيلي']
+                        : ['Tics Management Support', 'Specialized Behavior Therapy', 'Medical & Rehab Coordination'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'الأسباب', 'items' => [
+                            'السبب الدقيق وراء الإصابة بمتلازمة توريت يعد غير معروف، وفي العادة يحدث هذا الاضطراب المعقد بسبب مزيج من الصفات الموروثة (الجينية)',
+                            'المواد الكيميائية في النواقل العصبية قد تلعب دوراً في الدماغ فهي التي تنقل نبضات العصب، والتي تتضمن الدوبامين والسيروتونين',
+                        ]],
+                    ] : [
+                        ['category' => 'Causes', 'items' => [
+                            'The exact cause of Tourette syndrome is unknown, usually a mix of inherited/genetic traits',
+                            'Chemicals in neural transmitters may play a role in the brain by transmitting nerve impulses, including Dopamine and Serotonin',
+                        ]],
+                    ],
+                ],
+                [
+                    'title' => app()->getLocale() == 'ar' ? 'قلق الانفصال' : 'Separation Anxiety',
+                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
+                    'tags'  => app()->getLocale() == 'ar'
+                        ? ['علاج التعلق المرضي', 'تخفيف قلق الانفصال المدرسي', 'تمكين الاستقلالية والثقة']
+                        : ['Attachment Therapy', 'School Anxiety Reduction', 'Independence & Confidence Building'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'الأعراض والعلامات التحذيرية', 'items' => [
+                            'توتر شديد عند الفراق عن المنزل أو الأشخاص المقربين، ولحظات وداع مؤلمة طويلاً',
+                            'بكاء مستمر وتوسل للوالدين لمنعهم من المغادرة، مما يزيد من صعوبة الانفصال',
+                            'خوف دائم من فقدان الوالدين بسبب (الخطف، المرض، أو الوفاة) وقلق حيال مكان تواجدهم',
+                            'رفض الذهاب للمدرسة أو التخييم أو النوم بعيداً عن المنزل، وصعوبة البقاء وحيداً في الغرفة',
+                            'مشاكل في النوم والإصرار على وجود أحد الوالدين عند النوم، وكوابيس متكررة عن الكوارث',
+                            'ظهور أعراض جسدية عند محاولة الانفصال مثل الصداع أو آلام المعدة تختفي بوجود الوالدين',
+                        ]],
+                    ] : [
+                        ['category' => 'Warning Signs & Symptoms', 'items' => [
+                            'Extreme distress when separating from home or attachment figures, and painful farewells',
+                            'Persistent crying and begging parents not to leave, making separation difficult',
+                            'Constant fear of losing parents (kidnapping, illness, or death) and anxiety about their location',
+                            'Refusal to go to school, camps, or sleep away from home, and difficulty staying alone',
+                            'Sleep problems and insisting on a parent being present at bedtime, with recurring nightmares',
+                            'Physical symptoms like headaches or stomach aches when separation is attempted',
+                        ]],
+                    ],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الإعاقة الذهنية' : 'Intellectual Disability',
