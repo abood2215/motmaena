@@ -63,6 +63,23 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنمية التواصل اللفظي والبصري', 'تحسين المهارات الاجتماعية', 'دعم السلوك وتعديله']
                         : ['Verbal & Visual Communication', 'Social Skills Enhancement', 'Behavior Support & Modification'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'المهارات الاجتماعية', 'items' => [
+                            'لا يستجيب لمناداة اسمه',
+                            'لا يُكثر من الاتصال البصري المباشر',
+                            'يرفض العناق أو ينكمش على نفسه',
+                            'يبدو إنه لا يدرك مشاعر وأحاسيس الآخرين',
+                            'يحب أن يلعب لوحده، يتوقع في عالمه الشخصي الخاص به',
+                        ]],
+                    ] : [
+                        ['category' => 'Social Skills', 'items' => [
+                            'Does not respond to name',
+                            'Avoids direct eye contact',
+                            'Rejects hugs or withdraws',
+                            'Seems unaware of others\' feelings',
+                            'Prefers solitary play in own world',
+                        ]],
+                    ],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'صعوبات التعلم' : 'Learning Disabilities',
@@ -70,6 +87,45 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنمية مهارات القراءة والكتابة', 'تحسين الانتباه والتركيز', 'خطط تعليمية فردية مخصصة']
                         : ['Reading & Writing Skills', 'Attention & Focus Improvement', 'Personalized Learning Plans'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'مرحلة ما قبل المدرسة', 'items' => [
+                            'صعوبة في نطق الكلمات وصعوبة في العثور على الكلمة الصحيحة',
+                            'وجود صعوبة في تعلم الأبجدية والأرقام والألوان والأشكال وأيام الأسبوع',
+                            'صعوبة في السيطرة على أقلام التلوين وأقلام الرصاص',
+                            'صعوبة في التعامل مع الأزرار وصعوبة في ربط الحذاء',
+                        ]],
+                        ['category' => 'المرحلة العمرية من سن (4-9) سنوات', 'items' => [
+                            'مشاكل في تعلم صلة الوصل بين الأصوات والكلمات',
+                            'الخلط بين الكلمات الأساسية عند القراءة',
+                            'أخطاء إملائية دائمة وتكرار الأخطاء',
+                            'صعوبة في تعلم مهارات الحسابية الأساسية مثل الجمع والطرح',
+                        ]],
+                        ['category' => 'المرحلة العمرية من سن (9-15) سنة', 'items' => [
+                            'صعوبة في القراءة والكتابة ومهارات الرياضيات',
+                            'مشكلة في اختبارات الأسئلة المفتوحة',
+                            'مشكلة في المناقشات أثناء الدروس وتجنب التعبير بصوت عالٍ',
+                            'تهجئة نفس الكلمة بطريقتين من ورقة واحدة',
+                        ]],
+                    ] : [
+                        ['category' => 'Pre-School Stage', 'items' => [
+                            'Difficulty pronouncing words and finding the right word',
+                            'Difficulty learning alphabet, numbers, colors, shapes, and days',
+                            'Difficulty controlling crayons and pencils',
+                            'Difficulty with buttons and tying shoes',
+                        ]],
+                        ['category' => 'Age 4-9 Years', 'items' => [
+                            'Problems connecting sounds and words',
+                            'Confusing basic words when reading',
+                            'Persistent spelling errors',
+                            'Difficulty with basic math like addition and subtraction',
+                        ]],
+                        ['category' => 'Age 9-15 Years', 'items' => [
+                            'Difficulty with reading, writing, and math skills',
+                            'Problems with open-ended test questions',
+                            'Avoiding class discussions and speaking aloud',
+                            'Spelling the same word two different ways on one page',
+                        ]],
+                    ],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'نقص الثقة بالنفس' : 'Lack of Confidence',
@@ -77,6 +133,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تعزيز الشخصية الإيجابية', 'رفع مستوى الثقة بالنفس', 'دعم مهارات التعبير الذاتي']
                         : ['Positive Personality Boost', 'Self-Confidence Raising', 'Self-Expression Skills'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الذكاء وتنمية القدرات' : 'Intelligence & Abilities',
@@ -84,6 +141,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['اختبارات الذكاء والكفاءات', 'برامج تنمية التفكير الإبداعي', 'مهارات حل المشكلات']
                         : ['IQ & Aptitude Assessments', 'Creative Thinking Programs', 'Problem Solving Skills'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الصمت الاختياري' : 'Selective Mutism',
@@ -91,6 +149,33 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['علاج تدريجي ومنظم للتواصل', 'تقليل القلق الاجتماعي', 'تدريب لفظي ومهاري متخصص']
                         : ['Gradual Communication Therapy', 'Social Anxiety Reduction', 'Verbal & Skill Training'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'الأسباب', 'items' => [
+                            'السبب الدقيق وراء الإصابة بمتلازمة توريت يعد غير معروف',
+                            'في العادة يحدث هذا الاضطراب المعقد بسبب مزج من الصفات الموروثة (الجينية)',
+                            'المواد الكيميائية في النواقل العصبية قد تلعب دوراً في الدماغ وهي التي تنقل نبضات العصب، والتي تتضمن الدوبامين والسيروتونين',
+                        ]],
+                        ['category' => 'آثار الإصابة بالاضطراب', 'items' => [
+                            'تأثر المستوى الأكاديمي عند الطفل بسبب ضعف المشاركة في المدرسة',
+                            'يكون أكثر عرضة للإصابة باضطرابات القلق والاكتئاب',
+                            'يواجه الطفل صعوبة في تكوين العلاقات الاجتماعية',
+                            'يتسم بعض الأطفال المصابين بالصمت الاختياري بالسلبية والعدوانية والسلوكيات القهرية في المنزل',
+                            'من الممكن للطفل المصاب أن يتحسّن مع العلاجات المناسبة',
+                        ]],
+                    ] : [
+                        ['category' => 'Causes', 'items' => [
+                            'The exact cause of Tourette syndrome is unknown',
+                            'This complex disorder usually results from a mix of inherited (genetic) traits',
+                            'Chemicals in neural transmitters may play a role in the brain',
+                        ]],
+                        ['category' => 'Effects of the Disorder', 'items' => [
+                            'Academic level affected due to poor school participation',
+                            'More susceptible to anxiety and depression disorders',
+                            'Difficulty forming social relationships',
+                            'Some affected children show negativity and compulsive behaviors at home',
+                            'The child can improve with appropriate treatments',
+                        ]],
+                    ],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الخوف والقلق' : 'Fear & Anxiety',
@@ -98,6 +183,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['علاج مخاوف النوم والظلام', 'قلق المدرسة والانفصال', 'تنظيم القلق والمشاعر']
                         : ['Sleep & Darkness Fear Therapy', 'School Separation Anxiety', 'Anxiety & Emotion Regulation'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'التأتأة' : 'Stuttering',
@@ -105,6 +191,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['جلسات النطق والتواصل الفعّال', 'تحسين الطلاقة اللغوية', 'تقنيات تخفيف التوتر والقلق']
                         : ['Speech & Communication Sessions', 'Language Fluency Improvement', 'Tension Reduction Techniques'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'فرط الحركة (ADHD)' : 'ADHD',
@@ -112,6 +199,35 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنظيم السلوك والطاقة الزائدة', 'تحسين التركيز والانتباه', 'خطط متابعة مدرسية شاملة']
                         : ['Behavior & Energy Management', 'Focus & Attention Improvement', 'Comprehensive School Plans'],
+                    'symptoms' => app()->getLocale() == 'ar' ? [
+                        ['category' => 'أعراض فرط الحركة وتشتت الانتباه', 'items' => [
+                            'الحركة الدائمة',
+                            'عدم القدرة على الإصغاء',
+                            'العجز عن اتباع التعليمات',
+                            'الاستغراق في أحلام اليقظة',
+                            'صعوبة إنجاز المهام',
+                            'صعوبة المكوث في مكان لمدة تتجاوز في الغالب الـ 3-5 دقائق',
+                            'صعوبة القيام بالمهام والمتطلبات العمرية',
+                            'عدم القدرة على ضبط الانفعالات',
+                            'الغضب الشديد',
+                            'عدم القدرة على الانتظار',
+                            'عدم القدرة على التعامل مع الخبرات البيئية بالشكل السليم',
+                        ]],
+                    ] : [
+                        ['category' => 'ADHD Symptoms', 'items' => [
+                            'Constant movement',
+                            'Inability to listen',
+                            'Unable to follow instructions',
+                            'Daydreaming',
+                            'Difficulty completing tasks',
+                            'Difficulty staying in one place for more than 3-5 minutes',
+                            'Difficulty with age-appropriate tasks',
+                            'Inability to control emotions',
+                            'Intense anger',
+                            'Inability to wait',
+                            'Difficulty handling environmental experiences properly',
+                        ]],
+                    ],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الاختبارات النفسية' : 'Psychological Tests',
@@ -119,6 +235,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['اختبارات الذكاء والسلوك المعتمدة', 'تقييمات تربوية ومدرسية', 'تقييم نفسي شامل ودقيق']
                         : ['Accredited IQ & Behavior Tests', 'Educational & School Evaluations', 'Comprehensive Mental Assessment'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'السلوكيات' : 'Behaviors',
@@ -126,6 +243,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['علاج السلوك العدواني والانفجاري', 'إدارة الغضب والعناد', 'ضبط الانفعالات وتوجيهها']
                         : ['Aggressive Behavior Therapy', 'Anger & Stubbornness Management', 'Emotional Control & Guidance'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'المهارات' : 'Skills',
@@ -133,6 +251,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['مهارات حياتية وتواصل فعّال', 'ضبط المشاعر والسلوك', 'مهارات اجتماعية وتفاعلية']
                         : ['Life & Communication Skills', 'Emotion & Behavior Regulation', 'Social & Interactive Skills'],
+                    'symptoms' => [],
                 ],
                 [
                     'title' => app()->getLocale() == 'ar' ? 'الإعاقة الذهنية' : 'Intellectual Disability',
@@ -140,6 +259,7 @@
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنمية المهارات المعرفية الأساسية', 'مهارات الحياة اليومية المستقلة', 'تدريب أكاديمي مبسط ومنظم']
                         : ['Core Cognitive Skills Development', 'Independent Daily Life Skills', 'Structured Academic Training'],
+                    'symptoms' => [],
                 ],
             ];
         @endphp
@@ -169,7 +289,7 @@
                         </h3>
 
                         {{-- Feature list --}}
-                        <ul class="space-y-2.5 mb-6">
+                        <ul class="space-y-2.5 mb-5">
                             @foreach($package['tags'] as $tag)
                             <li class="flex items-center gap-2.5 text-[0.8rem] sm:text-sm text-[var(--muted-color)]">
                                 <span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
@@ -183,17 +303,63 @@
                             @endforeach
                         </ul>
 
+                        @if(!empty($package['symptoms']))
+                        {{-- Symptoms Toggle Button --}}
+                        <button onclick="toggleSymptoms(this)" class="symptoms-toggle-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl text-[0.78rem] sm:text-[0.82rem] font-bold transition-all duration-300 mb-4 border"
+                                style="color: {{ $c['hex'] }}; border-color: {{ $c['hex'] }}20; background: {{ $c['hex'] }}08;"
+                                onmouseenter="this.style.background='{{ $c['hex'] }}12'" onmouseleave="this.style.background='{{ $c['hex'] }}08'">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                {{ app()->getLocale() == 'ar' ? 'الأعراض والعلامات' : 'Signs & Symptoms' }}
+                            </span>
+                            <svg class="w-4 h-4 shrink-0 transition-transform duration-300 symptoms-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+
+                        {{-- Expandable Symptoms Section --}}
+                        <div class="symptoms-panel overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
+                            <div class="rounded-2xl p-4 mb-4 space-y-4 border" style="background: {{ $c['hex'] }}06; border-color: {{ $c['hex'] }}12;">
+                                @foreach($package['symptoms'] as $catIdx => $symptomGroup)
+                                <div>
+                                    {{-- Category Header --}}
+                                    <div class="flex items-center gap-2 mb-2.5">
+                                        <span class="w-1.5 h-6 rounded-full shrink-0" style="background: {{ $c['g'] }};"></span>
+                                        <h4 class="text-[0.8rem] sm:text-[0.85rem] font-black text-gray-800 dark:text-white">
+                                            {{ $symptomGroup['category'] }}
+                                        </h4>
+                                    </div>
+                                    {{-- Symptom Items --}}
+                                    <ul class="space-y-2 {{ app()->getLocale() == 'ar' ? 'pr-4' : 'pl-4' }}">
+                                        @foreach($symptomGroup['items'] as $symptom)
+                                        <li class="flex items-start gap-2 text-[0.75rem] sm:text-[0.8rem] text-[var(--muted-color)] leading-relaxed">
+                                            <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style="background: {{ $c['hex'] }};"></span>
+                                            <span>{{ $symptom }}</span>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @if(!$loop->last)
+                                <div class="h-px w-full" style="background: {{ $c['hex'] }}15;"></div>
+                                @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
                         {{-- Divider --}}
                         <div class="h-px bg-gray-100 dark:bg-dark-border mb-4"></div>
 
-                        {{-- CTA link --}}
+                        {{-- CTA WhatsApp Button --}}
                         <a href="https://wa.me/96555665161" target="_blank"
-                           class="inline-flex items-center gap-1.5 text-sm font-black transition-all duration-300"
-                           style="color: {{ $c['hex'] }};">
-                            {{ app()->getLocale() == 'ar' ? 'اكتشف الباقة' : 'Explore Package' }}
-                            <svg class="w-4 h-4 transition-transform duration-300 {{ app()->getLocale() == 'ar' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                           class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-white text-[0.82rem] font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                           style="background: {{ $c['g'] }}; box-shadow: 0 6px 20px -4px {{ $c['sh'] }};">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
+                            {{ app()->getLocale() == 'ar' ? 'تواصل معنا عبر واتساب' : 'Contact via WhatsApp' }}
                         </a>
                     </div>
                 </div>
@@ -289,12 +455,34 @@
     </div>
 </section>
 
-@endsection
-
-@push('scripts')
+{{-- Inline script (layout has no @stack) --}}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (typeof reveal === 'function') reveal();
     });
+
+    function toggleSymptoms(btn) {
+        let panel = btn.nextElementSibling;
+        while (panel && !panel.classList.contains('symptoms-panel')) {
+            panel = panel.nextElementSibling;
+        }
+        if (!panel) return;
+
+        const chevron = btn.querySelector('.symptoms-chevron');
+        const isOpen = panel.getAttribute('data-open') === 'true';
+
+        if (isOpen) {
+            panel.style.maxHeight = '0px';
+            panel.style.opacity = '0';
+            panel.setAttribute('data-open', 'false');
+            if (chevron) chevron.style.transform = 'rotate(0deg)';
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            panel.style.opacity = '1';
+            panel.setAttribute('data-open', 'true');
+            if (chevron) chevron.style.transform = 'rotate(180deg)';
+        }
+    }
 </script>
-@endpush
+
+@endsection
