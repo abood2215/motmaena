@@ -77,7 +77,6 @@
                         </a>
                         <div class="hidden lg:flex items-center gap-8">
                             <a href="/" class="nav-link {{ request()->is('/') ? 'text-primary font-bold' : '' }}">{{ __('Home') }}</a>
-                            <a href="#" class="nav-link">{{ __('Clinics') }}</a>
                             <a href="{{ route('courses') }}" class="nav-link {{ request()->routeIs('courses') ? 'text-primary font-bold' : '' }}">{{ __('Courses') }}</a>
                             <a href="{{ route('packages') }}" class="nav-link flex items-center gap-1.5 group/pkg {{ request()->routeIs('packages') ? 'text-primary font-bold' : '' }}">
                                 {{ __('Packages') }}
@@ -126,12 +125,6 @@
                         </div>
                         {{ __('Home') }}
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group">
-                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                        </div>
-                        {{ __('Clinics') }}
-                    </a>
                     <a href="{{ route('courses') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('courses') ? 'bg-primary/5 text-primary' : '' }}">
                         <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
@@ -176,7 +169,6 @@
                         
                         <div class="flex flex-wrap justify-center gap-x-5 sm:gap-x-8 md:gap-x-10 gap-y-2 sm:gap-y-3">
                             <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>
-                            <a href="#" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Clinics') }}</a>
                             <a href="{{ route('courses') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('courses') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Courses') }}</a>
                             <a href="{{ route('packages') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('packages') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Packages') }}</a>
                         </div>

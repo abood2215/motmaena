@@ -290,7 +290,7 @@
                                 <div class="w-2.5 h-2.5 bg-green-400 rounded-full"></div>
                                 <div class="absolute inset-0 w-2.5 h-2.5 bg-green-400 rounded-full animate-ping opacity-60"></div>
                             </div>
-                            <div class="text-white text-xs font-black whitespace-nowrap">{{ app()->getLocale() == 'ar' ? 'متاح ● مارس 2026' : 'Available ● March 2026' }}</div>
+                            <div class="text-white text-xs font-black whitespace-nowrap">{{ app()->getLocale() == 'ar' ? 'متاح ● أبريل 2026' : 'Available ● April 2026' }}</div>
                         </div>
                     </div>
                 </div>
@@ -334,21 +334,29 @@
                     <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <span class="text-gray-400 dark:text-white/50 text-xs font-bold uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'خلال شهر' : 'During' }}</span>
                     <div class="w-px h-4 bg-gray-200 dark:bg-white/15"></div>
-                    <span class="text-primary font-black text-base sm:text-lg">{{ app()->getLocale() == 'ar' ? 'مارس 2026' : 'March 2026' }}</span>
+                    <span class="text-primary font-black text-base sm:text-lg">{{ app()->getLocale() == 'ar' ? 'أبريل 2026' : 'April 2026' }}</span>
                 </div>
 
                 {{-- Dates Grid — 3×2 --}}
                 <div class="mb-8">
                     <p class="text-gray-400 dark:text-white/25 text-[10px] font-black uppercase tracking-[0.3em] mb-4">{{ app()->getLocale() == 'ar' ? 'مواعيد الاستشارات المتاحة' : 'Available Consultation Dates' }}</p>
                     <div class="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-[320px]">
-                        @php $visitDates = [1, 2, 10, 11, 16, 17]; @endphp
-                        @foreach($visitDates as $date)
+                        @php
+                            $visitDates = [
+                                6  => ['ar' => 'الإثنين',   'en' => 'Monday'],
+                                7  => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
+                                8  => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
+                                21 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
+                                22 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
+                            ];
+                        @endphp
+                        @foreach($visitDates as $date => $day)
                         <div class="group relative bg-white dark:bg-white/[0.04] hover:bg-primary/[0.07] dark:hover:bg-primary/20 border border-gray-200 dark:border-white/[0.08] hover:border-primary/50 dark:hover:border-primary/50 rounded-xl p-2.5 sm:p-3 text-center cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_28px_-8px_rgba(176,65,65,0.25)] dark:hover:shadow-[0_16px_36px_-8px_rgba(176,65,65,0.55)] overflow-hidden shadow-sm dark:shadow-none">
                             <div class="absolute inset-0 bg-gradient-to-b from-primary/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                             <div class="relative z-10">
-                                <div class="text-[8px] font-black text-gray-300 dark:text-white/20 group-hover:text-primary/60 transition-colors leading-none">03 | مارس</div>
-                                <div class="text-2xl sm:text-3xl font-black text-gray-800 dark:text-white leading-tight my-0.5">{{ $date }}</div>
-                                <div class="text-[8px] font-bold text-gray-300 dark:text-white/15 group-hover:text-primary/40 dark:group-hover:text-white/30 transition-colors leading-none">March · 26</div>
+                                <div class="text-[8px] font-black text-gray-300 dark:text-white/20 group-hover:text-primary/60 transition-colors leading-none">04 | أبريل</div>
+                                <div class="text-2xl sm:text-3xl font-black text-gray-800 dark:text-white leading-tight my-0.5">{{ str_pad($date, 2, '0', STR_PAD_LEFT) }}</div>
+                                <div class="text-[8px] font-bold text-gray-300 dark:text-white/15 group-hover:text-primary/40 dark:group-hover:text-white/30 transition-colors leading-none">{{ app()->getLocale() == 'ar' ? $day['ar'] : $day['en'] }}</div>
                             </div>
                             <div class="absolute top-1.5 {{ app()->getLocale() == 'ar' ? 'left-1.5' : 'right-1.5' }} w-1.5 h-1.5 bg-green-500 rounded-full opacity-40 group-hover:opacity-100 transition-opacity animate-pulse"></div>
                         </div>
@@ -383,6 +391,192 @@
                 <div class="mt-7 pt-6 border-t border-gray-100 dark:border-white/[0.06] flex items-center gap-3">
                     <svg class="w-3.5 h-3.5 text-primary/50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <span class="text-gray-400 dark:text-white/25 text-xs font-medium">{{ app()->getLocale() == 'ar' ? 'الكويت — برج أحمد، بجوار المستشفى الأميري' : 'Kuwait — Burj Ahmed, near Al-Amiri Hospital' }}</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{{-- ════════════════ TRAINING COURSES SECTION ════════════════ --}}
+<section id="training" class="py-12 sm:py-20 md:py-24 bg-gray-50 dark:bg-[#0d0d0d] relative overflow-hidden">
+
+    {{-- Background decoration --}}
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} w-[400px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl -translate-y-1/2"></div>
+        <div class="absolute bottom-0 {{ app()->getLocale() == 'ar' ? 'right-0' : 'left-0' }} w-[300px] h-[300px] bg-primary/[0.03] rounded-full blur-3xl translate-y-1/2"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+
+            {{-- IMAGE SIDE — hidden on mobile, shown on lg+ --}}
+            <div class="hidden lg:flex w-full lg:w-2/5 justify-center relative">
+                <div class="relative w-full max-w-[360px]">
+                    <div class="absolute inset-x-6 bottom-0 top-8 bg-gradient-to-b from-primary/10 to-primary/[0.03] dark:from-primary/20 dark:to-primary/[0.05] rounded-[2.5rem] border border-primary/10 dark:border-primary/15"></div>
+
+                    {{-- Zoom badge --}}
+                    <div class="absolute top-4 {{ app()->getLocale() == 'ar' ? 'right-2' : 'left-2' }} z-20">
+                        <div class="flex items-center gap-2 bg-primary text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg">
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                            {{ app()->getLocale() == 'ar' ? 'أونلاين عبر زووم' : 'Online via Zoom' }}
+                        </div>
+                    </div>
+
+                    {{-- Dr. Photo --}}
+                    <div class="relative z-10 pt-12 px-6 pb-0">
+                        <img src="{{ asset('courses-img/dr-tariq.png') }}"
+                             alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
+                             class="w-full h-auto object-contain drop-shadow-[0_30px_60px_rgba(176,65,65,0.2)] dark:drop-shadow-[0_30px_60px_rgba(176,65,65,0.35)]">
+                    </div>
+
+                    {{-- Floating: certificate --}}
+                    <div class="absolute bottom-10 {{ app()->getLocale() == 'ar' ? 'left-0 xl:-left-4' : 'right-0 xl:-right-4' }} z-20 animate-float" style="animation-delay:0.8s">
+                        <div class="bg-white dark:bg-white/10 border border-gray-100 dark:border-white/20 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-lg max-w-[140px]">
+                            <div class="flex items-start gap-2">
+                                <div class="w-7 h-7 bg-green-50 dark:bg-green-500/20 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-black leading-tight text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'شهادة معتمدة' : 'Certified' }}</div>
+                                    <div class="text-[9px] font-medium mt-0.5 leading-tight text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'ديوان الخدمة المدنية' : 'Civil Service Bureau' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Floating: time --}}
+                    <div class="absolute top-10 {{ app()->getLocale() == 'ar' ? 'left-0 xl:-left-2' : 'right-0 xl:-right-2' }} z-20 animate-float" style="animation-delay:1.3s">
+                        <div class="bg-gradient-to-br from-primary to-[#8a2f2f] px-4 py-2.5 rounded-xl shadow-[0_10px_30px_-8px_rgba(176,65,65,0.5)] border border-white/10">
+                            <div class="text-white text-[10px] font-black opacity-70">{{ app()->getLocale() == 'ar' ? 'الوقت' : 'Time' }}</div>
+                            <div class="text-white text-xs font-black" dir="ltr">07:00 – 09:00م</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- CONTENT SIDE --}}
+            <div class="w-full lg:w-3/5 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
+                {{-- Mobile: Dr photo strip --}}
+                <div class="flex lg:hidden items-center gap-4 mb-6 p-4 rounded-2xl border-2 border-primary/20" style="background: linear-gradient(135deg, rgba(176,65,65,0.06) 0%, rgba(176,65,65,0.02) 100%);">
+                    <img src="{{ asset('courses-img/dr-tariq.png') }}"
+                         alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
+                         class="w-20 h-24 object-contain object-bottom shrink-0 drop-shadow-md">
+                    <div class="flex-1 min-w-0">
+                        <div class="inline-flex items-center gap-1.5 bg-primary text-white text-[10px] font-black px-2.5 py-1 rounded-full mb-2 shadow-sm">
+                            <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                            {{ app()->getLocale() == 'ar' ? 'أونلاين عبر زووم' : 'Online via Zoom' }}
+                        </div>
+                        <p class="text-primary font-black text-lg leading-tight">{{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq' }}</p>
+                        <p class="text-xs font-medium mt-0.5 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور واستشاري الطب النفسي' : 'Prof. & Psychiatric Consultant' }}</p>
+                        <div class="flex items-center gap-1.5 mt-2">
+                            <svg class="w-3 h-3 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300" dir="ltr">07:00 – 09:00م</span>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Badge --}}
+                <div class="inline-flex items-center gap-2 border border-primary/35 bg-primary/[0.07] px-4 py-1.5 rounded-full mb-4">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                    <span class="text-primary text-[11px] font-black tracking-[0.2em] uppercase">{{ app()->getLocale() == 'ar' ? 'دورات تدريبية' : 'Training Courses' }}</span>
+                </div>
+
+                {{-- Title --}}
+                <h2 class="text-3xl sm:text-4xl lg:text-[3rem] font-black leading-[1.1] mb-2 text-gray-900 dark:text-gray-100">
+                    {{ app()->getLocale() == 'ar' ? 'الدورات التدريبية' : 'Training Courses' }}
+                </h2>
+
+                {{-- Dr. Name & Title — desktop only --}}
+                <p class="hidden lg:block text-primary font-black text-xl sm:text-2xl mb-1">{{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</p>
+                <p class="hidden lg:block text-sm font-medium mb-6 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور واستشاري الطب النفسي' : 'Professor & Psychiatric Consultant' }}</p>
+                <div class="block lg:hidden mb-6"></div>
+
+                {{-- Courses — mobile: cards / desktop: table --}}
+
+                {{-- MOBILE CARDS --}}
+                <div class="flex flex-col gap-3 sm:hidden mb-6">
+                    @php $courses = [
+                        ['name_ar' => 'إدارة الأفكار السلبية', 'name_en' => 'Managing Negative Thoughts', 'date_ar' => '8 أبريل 2026', 'date_en' => 'Apr 8, 2026'],
+                        ['name_ar' => 'صناعة الطفل الواثق',   'name_en' => 'Raising a Confident Child',  'date_ar' => '22 أبريل 2026', 'date_en' => 'Apr 22, 2026'],
+                    ]; @endphp
+                    @foreach($courses as $c)
+                    <div class="rounded-2xl border border-gray-200 dark:border-white/[0.12] p-4 bg-white dark:bg-white/[0.06]">
+                        <div class="font-black text-sm mb-2 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? $c['name_ar'] : $c['name_en'] }}</div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-[11px] font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</span>
+                            <span class="text-primary font-black text-[11px]">{{ app()->getLocale() == 'ar' ? $c['date_ar'] : $c['date_en'] }}</span>
+                            <span class="ms-auto font-black text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</span>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+                {{-- DESKTOP TABLE --}}
+                <div class="hidden sm:block mb-6 rounded-2xl overflow-hidden border border-gray-200 dark:border-white/[0.12] shadow-sm">
+                    <div class="flex bg-primary text-white text-xs font-black px-4 py-3 gap-3">
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}">{{ app()->getLocale() == 'ar' ? 'المحاضرة' : 'Course' }}</div>
+                        <div class="w-20 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'اليوم' : 'Day' }}</div>
+                        <div class="w-28 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'التاريخ' : 'Date' }}</div>
+                        <div class="w-20 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}</div>
+                    </div>
+                    <div class="flex px-4 py-4 gap-3 items-center border-b border-gray-100 dark:border-white/[0.08] bg-white dark:bg-white/[0.06]">
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'إدارة الأفكار السلبية' : 'Managing Negative Thoughts' }}</div>
+                        <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
+                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '8 أبريل 2026' : 'Apr 8, 2026' }}</div>
+                        <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
+                    </div>
+                    <div class="flex px-4 py-4 gap-3 items-center bg-gray-50 dark:bg-white/[0.10]">
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'صناعة الطفل الواثق' : 'Raising a Confident Child' }}</div>
+                        <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
+                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '22 أبريل 2026' : 'Apr 22, 2026' }}</div>
+                        <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
+                    </div>
+                </div>
+
+                {{-- Bundle Price --}}
+                <div class="flex items-center gap-3 sm:gap-4 border border-primary/20 rounded-2xl px-4 sm:px-5 py-4 mb-6 shadow-sm bg-white dark:bg-white/[0.06]">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-xs font-bold mb-1 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'سعر الاشتراك في الدورتين' : 'Bundle Price (Both Courses)' }}</div>
+                        <div class="flex items-baseline gap-2 sm:gap-3">
+                            <span class="text-primary font-black text-xl sm:text-2xl lg:text-3xl">{{ app()->getLocale() == 'ar' ? '50 دينار' : '50 KWD' }}</span>
+                            <span class="text-sm font-bold line-through opacity-40 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '60' : '60 KWD' }}</span>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <div class="text-white text-[10px] font-black px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm" style="background:#16a34a;">{{ app()->getLocale() == 'ar' ? 'وفّر 10 د.ك' : 'Save 10 KWD' }}</div>
+                    </div>
+                </div>
+
+                {{-- Per-course price note --}}
+                <p class="text-xs font-medium mb-6 text-gray-500 dark:text-gray-400">
+                    {{ app()->getLocale() == 'ar' ? '* سعر كل دورة منفردة 30 دينار كويتي' : '* Each course individually: 30 KWD' }}
+                </p>
+
+                {{-- CTA --}}
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+                    <a href="https://wa.me/96555665161" target="_blank"
+                       class="group inline-flex items-center justify-center gap-3 text-white font-black text-base px-6 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                       style="background: linear-gradient(135deg, #c95050 0%, #b04141 50%, #8a2f2f 100%); box-shadow: 0 16px 40px -10px rgba(176,65,65,0.5);">
+                        <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        {{ app()->getLocale() == 'ar' ? 'سجّل الآن بالواتساب' : 'Register via WhatsApp' }}
+                    </a>
+                    <div class="flex items-center gap-3">
+                        <div class="w-px h-10 hidden sm:block bg-gray-200 dark:bg-white/[0.12]"></div>
+                        <div>
+                            <div class="text-[10px] uppercase tracking-widest font-bold text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'للتواصل والاستفسار' : 'Contact' }}</div>
+                            <div class="font-black text-sm mt-0.5 text-gray-900 dark:text-gray-100" dir="ltr">+965 998 801 40</div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Location Strip --}}
+                <div class="mt-6 pt-5 border-t border-gray-200 dark:border-white/[0.08] flex items-center gap-3">
+                    <svg class="w-3.5 h-3.5 text-primary/50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الكويت — برج أحمد، بجوار المستشفى الأميري' : 'Kuwait — Burj Ahmed, near Al-Amiri Hospital' }}</span>
                 </div>
 
             </div>
