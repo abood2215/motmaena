@@ -112,7 +112,6 @@
                             <a href="{{ route('lang.switch', 'en') }}" class="px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() == 'en' ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:text-primary' }}">EN</a>
                         </div>
 
-                        <a href="#" class="hidden sm:inline-block btn-motmaena text-xs md:text-sm px-4 md:px-5 py-2 md:py-2.5 shadow-lg shadow-primary/20">{{ __('Login') }}</a>
                     </div>
                 </nav>
 
@@ -150,9 +149,6 @@
                         </div>
                         {{ __('App') }}
                     </a>
-                    <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
-                        <a href="#" class="btn-motmaena w-full text-center py-4 shadow-xl shadow-primary/20">{{ __('Login') }}</a>
-                    </div>
                 </nav>
             </div>
         </header>
