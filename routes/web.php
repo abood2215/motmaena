@@ -36,3 +36,6 @@ Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->na
 Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->name('admin.login');
 Route::get('/admin/logout', [ConsultationController::class, 'adminLogout'])->name('admin.logout');
 Route::post('/admin/consultations/{booking}/status', [ConsultationController::class, 'updateStatus'])->name('admin.consultations.status');
+Route::post('/admin/consultations/{booking}/notes', [ConsultationController::class, 'updateNotes'])->name('admin.consultations.notes');
+Route::get('/admin/consultations/export', [ConsultationController::class, 'exportCsv'])->name('admin.consultations.export');
+Route::get('/admin/consultations/new-count', [ConsultationController::class, 'newCount'])->name('admin.consultations.new-count');
