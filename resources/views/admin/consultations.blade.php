@@ -290,61 +290,99 @@ tr.row-new:hover td{background:#fef9e0}
 @keyframes toast-in{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
 
 /* ═══════════ RESPONSIVE ═══════════ */
-@media(max-width:900px){
-  .sidebar{transform:translateX(110%)}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-right:0}
-  .hamburger{display:flex}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .charts-row{grid-template-columns:1fr}
-  .content{padding:14px 12px 48px}
-  .topbar{padding:0 12px;gap:8px}
-  .search-input{width:140px}
-  .search-input:focus{width:140px}
-  .chart-wrap{height:150px}
-}
-
-/* ── Mobile card list (replaces table) ── */
-@media(max-width:700px){
-  .table-scroll{overflow-x:unset}
-  table,thead,tbody,tr,th,td{display:block}
-  thead{display:none}
-  tr{
-    background:#fff;border:1px solid var(--border);border-radius:14px;
-    margin-bottom:10px;padding:14px;position:relative;
+@media(max-width:960px){
+  /* hide sidebar by default on tablet/mobile */
+  .sidebar{
+    transform:translateX(calc(100% + 4px));
+    box-shadow:none;
   }
-  tr.row-new{background:#fffbeb}
-  tr td{border:none;padding:0;font-size:13px;margin-bottom:8px}
-  tr td:last-child{margin-bottom:0}
-  /* phone */
-  tr td:nth-child(2){font-size:16px;font-weight:800;margin-bottom:4px}
-  /* type */
-  tr td:nth-child(3){margin-bottom:6px}
-  /* hide # column */
-  tr td:nth-child(1){position:absolute;top:14px;left:14px;font-size:11px;color:var(--muted)}
-  /* date */
-  tr td:nth-child(5){font-size:11px}
-  /* status buttons — smaller */
-  .s-btn{padding:5px 10px;font-size:11px}
-  /* action row */
-  .action-row{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-  .stat-card .num{font-size:28px}
+  .sidebar.open{transform:translateX(0);box-shadow:-4px 0 32px rgba(0,0,0,.4)}
+  .main{margin-right:0 !important;width:100%}
+  .hamburger{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .charts-row{grid-template-columns:1fr}
+  .content{padding:14px 14px 56px}
+  .topbar{padding:0 14px;gap:10px}
+  .search-input,.search-input:focus{width:130px}
+  .chart-wrap{height:140px}
 }
 
+/* ── Card layout for phones ── */
+@media(max-width:680px){
+  /* remove horizontal scroll — go full card */
+  .table-card{background:transparent;border:none;border-radius:0;overflow:visible}
+  .table-scroll{overflow:visible}
+  table,thead,tbody,tr,th,td{display:block;width:100%}
+  thead{display:none}
+
+  /* each row = a card */
+  #tbl tbody tr{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
+    position:relative;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+  }
+  #tbl tbody tr.row-new{background:#fffbeb;border-color:#fcd34d}
+
+  /* hide # td */
+  #tbl tbody td:nth-child(1){
+    position:absolute;top:14px;left:14px;
+    font-size:10px;color:var(--muted);margin:0;padding:0;border:none;
+  }
+  /* phone — large */
+  #tbl tbody td:nth-child(2){
+    padding:0;border:none;margin-bottom:6px;padding-right:24px;
+  }
+  .phone-badge{font-size:15px;font-weight:800}
+
+  /* type tag */
+  #tbl tbody td:nth-child(3){padding:0;border:none;margin-bottom:8px}
+
+  /* notes */
+  #tbl tbody td:nth-child(4){padding:0;border:none;margin-bottom:6px}
+  .notes-text{max-width:100%}
+
+  /* date */
+  #tbl tbody td:nth-child(5){padding:0;border:none;margin-bottom:10px}
+
+  /* status */
+  #tbl tbody td:nth-child(6){padding:0;border:none;margin-bottom:10px}
+  .status-form{flex-wrap:wrap;gap:4px}
+  .s-btn{padding:6px 14px;font-size:12px}
+
+  /* actions */
+  #tbl tbody td:nth-child(7){
+    padding:0;border:none;padding-top:10px;
+    border-top:1px solid var(--border);
+  }
+  .action-row{justify-content:flex-start}
+  .detail-btn,.wa-btn{padding:8px 16px;font-size:13px;border-radius:10px}
+}
+
+/* ── Small phones ── */
 @media(max-width:420px){
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  body{overflow-x:hidden}
+  .stats-grid{gap:8px}
   .stat-card{padding:14px 12px}
-  .filter-bar{gap:5px;padding:10px 12px}
-  .filter-btn{padding:6px 10px;font-size:11px}
-  .info-grid{grid-template-columns:1fr}
-  .modal{padding:16px;border-radius:16px}
-  .modal-overlay{padding:8px}
-  .toast-wrap{bottom:12px;right:10px;left:10px}
-  .toast{min-width:unset;font-size:12px}
-  .topbar{gap:6px}
-  .page-title{font-size:13px}
+  .stat-card .num{font-size:26px}
+  .stat-card .lbl{font-size:11px}
+  .filter-bar{padding:10px 12px;gap:6px}
+  .filter-btn{padding:6px 12px;font-size:11px}
+  .search-input,.search-input:focus{width:120px}
+  .topbar{padding:0 10px;gap:6px}
+  .page-title{font-size:14px}
   .page-sub{display:none}
   .btn-sm{padding:6px 10px;font-size:11px}
+  .content{padding:12px 10px 56px}
+  /* modal full-screen */
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal{border-radius:20px 20px 0 0;max-height:88vh;padding:20px 16px}
+  .info-grid{grid-template-columns:1fr}
+  .toast-wrap{bottom:0;right:0;left:0;padding:0 8px 8px}
+  .toast{min-width:unset;border-radius:12px}
 }
 </style>
 </head>
