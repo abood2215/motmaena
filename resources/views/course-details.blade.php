@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', $course->title . ' - ' . __('Motmaena Center'))
 @section('meta_description', $course->description)
@@ -94,14 +94,14 @@
                         'فهم المبادئ الأساسية في علم النفس',
                         'تطوير مهارات الذكاء العاطفي',
                         'بناء علاقات اجتماعية صحية ومستدامة',
-                        'التعامل مع الضغوط النفسية بفعالية',
+                        'التعامل مع ضغوط الحياة بفعالية',
                         'تطبيق أساليب عملية في الحياة اليومية',
                         'فهم السلوك البشري وأنماط التفكير',
                     ] : [
-                        'Understand core psychology principles',
+                        'Understand core personal development principles',
                         'Develop emotional intelligence skills',
                         'Build healthy and sustainable relationships',
-                        'Effectively manage psychological stress',
+                        'Effectively manage life pressures',
                         'Apply practical methods in daily life',
                         'Understand human behavior and thinking patterns',
                     ];
@@ -121,7 +121,7 @@
                     <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary font-black text-xl shrink-0">د.ط</div>
                     <div>
                         <div class="font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</div>
-                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'استشاري الطب النفسي - أكثر من 30 سنة خبرة' : 'Consultant Psychiatrist - 30+ years experience' }}</div>
+                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'خبير التنمية الذاتية والإرشاد - أكثر من 30 سنة خبرة' : 'Personal Development Expert - 30+ years experience' }}</div>
                     </div>
                 </div>
             </div>

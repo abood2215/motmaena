@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', __('Courses') . ' - ' . __('Motmaena Center'))
 
@@ -21,8 +21,8 @@
         
         <p class="text-sm sm:text-base lg:text-lg text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed reveal">
             {{ app()->getLocale() == 'ar' 
-                ? 'استكشف مجموعة واسعة من الدورات النفسية والتربوية تحت إشراف البروفيسور طارق الحبيب لتطوير مهاراتك وصحتك النفسية.' 
-                : 'Explore a wide range of psychological and educational courses under the supervision of Professor Tariq Al-Habib to develop your skills and mental health.' }}
+                ? 'استكشف مجموعة واسعة من الدورات التنموية والتربوية تحت إشراف البروفيسور طارق الحبيب لتطوير مهاراتك ومهاراتك الشخصية.' 
+                : 'Explore a wide range of developmental and educational courses under the supervision of Professor Tariq Al-Habib to develop your skills and personal skills.' }}
         </p>
     </div>
 </section>
