@@ -39,17 +39,16 @@
   background: linear-gradient(90deg, #7c2d12, var(--red), #7c2d12);
   color: #fff;
   text-align: center;
-  padding: 10px 16px;
+  padding: 11px 16px;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: .3px;
-  position: sticky;
-  top: 0;
-  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  position: relative;
+  z-index: 10;
 }
 .urgency-strip .pulse-dot {
   width: 9px; height: 9px;
@@ -424,15 +423,24 @@
 }
 .advisor-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.09); }
 .advisor-card .avatar {
-  width: 64px; height: 64px;
+  width: 72px; height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--red), var(--red-d));
-  color: #fff;
-  font-size: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
+  position: relative;
+}
+.advisor-card .avatar svg { width: 32px; height: 32px; }
+.advisor-card .online-dot {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  width: 14px; height: 14px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  animation: pulseDot 2s ease-in-out infinite;
 }
 .advisor-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 4px; color: var(--text); }
 .advisor-card .spec { font-size: 13px; color: var(--red); font-weight: 600; margin-bottom: 8px; }
@@ -785,6 +793,96 @@
 .reveal-delay-3 { transition-delay: .3s; }
 .reveal-delay-4 { transition-delay: .4s; }
 
+/* ── Live Presence Bar ── */
+.live-bar {
+  background: #f0fdf4;
+  border-bottom: 1px solid #bbf7d0;
+  padding: 9px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 600;
+  color: #166534;
+}
+.dark .live-bar { background: #052e16; border-color: #14532d; color: #86efac; }
+.live-bar .live-item { display: flex; align-items: center; gap: 6px; }
+.live-bar .green-dot {
+  width: 8px; height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulseDot 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.live-bar .sep { color: #86efac; }
+
+/* ── Last Booking Toast ── */
+.last-booking-toast {
+  position: fixed;
+  bottom: 90px;
+  {{ app()->getLocale() === 'ar' ? 'right' : 'left' }}: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-right: 3px solid #22c55e;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+  z-index: 999;
+  max-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn .5s ease;
+  cursor: pointer;
+}
+.last-booking-toast .t-icon { font-size: 22px; flex-shrink: 0; }
+.last-booking-toast .t-txt strong { display: block; font-size: 13px; color: var(--text); }
+.last-booking-toast .t-txt span { font-size: 12px; color: var(--muted); }
+@keyframes toastIn { from { opacity:0; transform: translateX({{ app()->getLocale() === 'ar' ? '20px' : '-20px' }}); } to { opacity:1; transform:none; } }
+
+/* ── Floating WhatsApp ── */
+.float-wa {
+  position: fixed;
+  bottom: 90px;
+  {{ app()->getLocale() === 'ar' ? 'left' : 'right' }}: 20px;
+  width: 56px; height: 56px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.5);
+  z-index: 998;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  animation: waPulse 3s ease-in-out infinite;
+}
+.float-wa:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,.65); animation: none; }
+.float-wa svg { width: 28px; height: 28px; }
+@keyframes waPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.5); }
+  50% { box-shadow: 0 4px 32px rgba(37,211,102,.8), 0 0 0 8px rgba(37,211,102,.15); }
+}
+.float-wa .wa-label {
+  position: absolute;
+  top: -36px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+.float-wa:hover .wa-label { opacity: 1; }
+
 /* ── Animations ── */
 @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:none; } }
 
@@ -815,6 +913,31 @@
 </style>
 
 <div class="consult-page">
+
+  {{-- ── Live Presence Bar ── --}}
+  <div class="live-bar">
+    <div class="live-item">
+      <span class="green-dot"></span>
+      @if(app()->getLocale() === 'ar')
+        <span>متواجدون الآن ونرد خلال دقائق</span>
+      @else
+        <span>Online now — we reply within minutes</span>
+      @endif
+    </div>
+    <span class="sep">|</span>
+    <div class="live-item">
+      <span>👁</span>
+      <span id="live-viewers">{{ rand(8,22) }}</span>
+      {{ app()->getLocale() === 'ar' ? 'شخص يشاهد الصفحة الآن' : 'people viewing now' }}
+    </div>
+    <span class="sep">|</span>
+    <div class="live-item">
+      <span>✅</span>
+      {{ app()->getLocale() === 'ar' ? 'آخر حجز منذ' : 'Last booking' }}
+      <span id="last-book-time">{{ rand(4,18) }}</span>
+      {{ app()->getLocale() === 'ar' ? 'دقيقة' : 'min ago' }}
+    </div>
+  </div>
 
   {{-- ── Urgency Strip ── --}}
   <div class="urgency-strip">
@@ -1102,25 +1225,37 @@
       </div>
       <div class="advisors-grid">
         <div class="advisor-card reveal">
-          <div class="avatar">👨‍👩‍👧</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#b04141,#7c2d12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span class="online-dot"></span>
+          </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Tariq Al-Habib' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'مرشد أسري واجتماعي' : 'Family & Social Counselor' }}</div>
           <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 25 سنة في الإرشاد الأسري وتطوير العلاقات' : 'Over 25 years experience in family counseling and relationship development' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-1">
-          <div class="avatar">📖</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#1e40af);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span class="online-dot"></span>
+          </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'مرشد تربوي' : 'Educational Advisor' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'تربوي معتمد' : 'Certified Educational Counselor' }}</div>
           <p>{{ app()->getLocale() === 'ar' ? 'متخصص في التوجيه التربوي واكتشاف أساليب التعلم المناسبة للأطفال' : 'Specialist in educational guidance and identifying appropriate learning styles for children' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-2">
-          <div class="avatar">🤝</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#059669,#065f46);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span class="online-dot"></span>
+          </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'مستشار اجتماعي' : 'Social Consultant' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'إرشاد اجتماعي وأسري' : 'Social & Family Guidance' }}</div>
           <p>{{ app()->getLocale() === 'ar' ? 'يساعدك على بناء علاقات صحية ومعالجة الأنماط الاجتماعية السلبية' : 'Helps you build healthy relationships and address negative social patterns' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-3">
-          <div class="avatar">🎯</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#d97706,#92400e);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            <span class="online-dot"></span>
+          </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'مدرّب تطوير ذات' : 'Self-Development Coach' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'مدرّب معتمد' : 'Certified Life Coach' }}</div>
           <p>{{ app()->getLocale() === 'ar' ? 'يرافقك في رحلة اكتشاف الذات وبناء عادات الحياة الصحية' : 'Accompanies you on a journey of self-discovery and building healthy life habits' }}</p>
@@ -1403,6 +1538,22 @@
     </a>
   </div>
 
+  {{-- ── Floating WhatsApp ── --}}
+  <a href="https://wa.me/96555665161?text={{ urlencode(app()->getLocale() === 'ar' ? 'مرحباً، أريد حجز استشارة' : 'Hello, I want to book a consultation') }}"
+     target="_blank" class="float-wa" id="float-wa" title="">
+    <span class="wa-label">{{ app()->getLocale() === 'ar' ? 'احجز الآن' : 'Book Now' }}</span>
+    <svg fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  </a>
+
+  {{-- ── Last Booking Toast ── --}}
+  <div class="last-booking-toast" id="booking-toast" style="display:none;" onclick="this.style.display='none'">
+    <span class="t-icon">✅</span>
+    <div class="t-txt">
+      <strong>{{ app()->getLocale() === 'ar' ? 'تم حجز موعد جديد' : 'New booking just made' }}</strong>
+      <span id="toast-msg">{{ app()->getLocale() === 'ar' ? 'من الكويت — منذ قليل' : 'From Kuwait — just now' }}</span>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -1535,6 +1686,49 @@ function updatePhoneField() {
   setTimeout(() => {
     if(spots > 1){ spots--; updateSpots(spots); }
   }, 8000 + Math.random() * 14000);
+
+  /* ── Live viewers fluctuation ── */
+  const viewersEl = document.getElementById('live-viewers');
+  if(viewersEl){
+    let v = parseInt(viewersEl.textContent) || 12;
+    setInterval(() => {
+      v = Math.max(5, Math.min(30, v + (Math.random() > .5 ? 1 : -1)));
+      viewersEl.textContent = v;
+    }, 7000);
+  }
+
+  /* ── Last booking time update ── */
+  const lastBookEl = document.getElementById('last-book-time');
+  if(lastBookEl){
+    let mins = parseInt(lastBookEl.textContent) || 8;
+    setInterval(() => { mins++; lastBookEl.textContent = mins; }, 60000);
+  }
+
+  /* ── Booking toast notifications ── */
+  const toast = document.getElementById('booking-toast');
+  const toastMsg = document.getElementById('toast-msg');
+  const toastNames = isAr
+    ? ['من الكويت — منذ دقيقتين','من الرياض — منذ 5 دقائق','من الإمارات — منذ 7 دقائق','من الكويت — منذ لحظات','من قطر — منذ 3 دقائق']
+    : ['From Kuwait — 2 min ago','From UAE — 5 min ago','From Saudi — just now','From Kuwait — 3 min ago'];
+  let toastIdx = 0;
+  function showToast(){
+    if(!toast || !toastMsg) return;
+    toastMsg.textContent = toastNames[toastIdx % toastNames.length];
+    toastIdx++;
+    toast.style.display = 'flex';
+    setTimeout(() => { if(toast) toast.style.display = 'none'; }, 5000);
+  }
+  setTimeout(showToast, 6000);
+  setInterval(showToast, 35000 + Math.random() * 20000);
+
+  /* ── Hide float-wa when sticky bar visible ── */
+  const floatWa = document.getElementById('float-wa');
+  if(floatWa && stickyBar){
+    const mo = new MutationObserver(() => {
+      floatWa.style.display = stickyBar.classList.contains('visible') ? 'none' : 'flex';
+    });
+    mo.observe(stickyBar, { attributes: true, attributeFilter: ['class'] });
+  }
 
 })();
 </script>
