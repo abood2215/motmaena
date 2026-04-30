@@ -472,16 +472,18 @@ tr.row-new:hover td{background:#fef9e0}
                 </td>
                 <td>
                   <div class="action-row">
-                    <button class="detail-btn" onclick='openModal(@json([
-                      "id"          => $b->id,
-                      "phone"       => $b->phone,
-                      "type"        => $b->problem_type,
-                      "notes"       => $b->notes ?? "",
-                      "admin_notes" => $b->admin_notes ?? "",
-                      "status"      => $b->status,
-                      "date"        => $b->created_at->format("Y/m/d H:i"),
-                      "ago"         => $b->created_at->diffForHumans(),
-                    ]))'>
+                    <button class="detail-btn"
+                      data-b="{{ htmlspecialchars(json_encode([
+                        'id'          => $b->id,
+                        'phone'       => $b->phone,
+                        'type'        => $b->problem_type,
+                        'notes'       => $b->notes ?? '',
+                        'admin_notes' => $b->admin_notes ?? '',
+                        'status'      => $b->status,
+                        'date'        => $b->created_at->format('Y/m/d H:i'),
+                        'ago'         => $b->created_at->diffForHumans(),
+                      ]), ENT_QUOTES) }}"
+                      onclick="openModal(JSON.parse(this.dataset.b))">
                       &#128194; تفاصيل
                     </button>
                     <a href="#"
