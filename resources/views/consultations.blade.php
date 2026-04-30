@@ -1104,7 +1104,7 @@
 
         @foreach($faqs as $i => $faq)
           <div class="faq-item" data-faq="{{ $i }}">
-            <button class="faq-q" onclick="toggleFaq({{ $i }})">
+            <button class="faq-q" type="button" data-faq-btn="{{ $i }}">
               <span>{{ $faq['q'] }}</span>
               <span class="arrow">▾</span>
             </button>
@@ -1272,12 +1272,15 @@
   document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
 
   /* ── FAQ Accordion ── */
-  window.toggleFaq = function(idx) {
-    const item = document.querySelector('.faq-item[data-faq="'+idx+'"]');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if(!isOpen) item.classList.add('open');
-  };
+  document.querySelectorAll('[data-faq-btn]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = this.getAttribute('data-faq-btn');
+      const item = document.querySelector('.faq-item[data-faq="'+idx+'"]');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
   const firstFaq = document.querySelector('.faq-item[data-faq="0"]');
   if(firstFaq) firstFaq.classList.add('open');
 
