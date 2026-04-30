@@ -213,10 +213,7 @@ tr:hover td { background: #fdf8f3; }
     <div class="brand">مطمئنة</div>
     <div class="title">لوحة تحكم الاستشارات</div>
   </div>
-  <a href="{{ route('admin.consultations') }}?key=logout" class="logout-btn"
-     onclick="event.preventDefault(); fetch('{{ route('admin.consultations') }}?logout=1').then(()=>location.reload())">
-    خروج
-  </a>
+  <a href="{{ route('admin.logout') }}" class="logout-btn">خروج</a>
 </div>
 
 {{-- Stats --}}

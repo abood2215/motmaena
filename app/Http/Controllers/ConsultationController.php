@@ -29,14 +29,20 @@ class ConsultationController extends Controller
         return redirect('https://wa.me/96555665161?text=' . urlencode($msg));
     }
 
-    public function admin(Request $request)
+    public function adminLogin(Request $request)
     {
         $key = env('ADMIN_KEY', 'motmaena-admin-2025');
 
-        if ($request->get('key') === $key) {
+        if ($request->input('password') === $key) {
             session(['admin_auth' => true]);
+            return redirect()->route('admin.consultations');
         }
 
+        return back()->withErrors(['password' => 'كلمة المرور غير صحيحة']);
+    }
+
+    public function admin(Request $request)
+    {
         if (!session('admin_auth')) {
             return view('admin.login');
         }
@@ -51,6 +57,12 @@ class ConsultationController extends Controller
         ];
 
         return view('admin.consultations', compact('bookings', 'stats'));
+    }
+
+    public function adminLogout()
+    {
+        session()->forget('admin_auth');
+        return redirect()->route('admin.consultations');
     }
 
     public function updateStatus(Request $request, ConsultationBooking $booking)
