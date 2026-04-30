@@ -648,6 +648,31 @@
 .form-row select:focus,
 .form-row textarea:focus { border-color: var(--red); }
 .form-row textarea { resize: none; height: 80px; }
+.phone-row { display: flex; gap: 8px; }
+.phone-row select { width: 150px; flex-shrink: 0; }
+.phone-row input  { flex: 1; }
+.optional-tag {
+  display: inline-block;
+  background: #f3f4f6;
+  color: #9ca3af;
+  border-radius: 999px;
+  padding: 1px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+.dark .optional-tag { background: #2a2420; color: #6b7280; }
+.consent-required-note {
+  display: none;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--red-lt);
+  border-radius: 10px;
+  border: 1px solid rgba(176,65,65,.2);
+}
 .form-submit-btn {
   background: #25d366;
   color: #fff;
@@ -1247,22 +1272,49 @@
             </label>
           </div>
 
+          {{-- Hint: must agree first --}}
+          <div class="consent-required-note" id="consent-required-note">
+            ⚠️ {{ app()->getLocale() === 'ar' ? 'يرجى الموافقة على الشروط أعلاه أولاً قبل الحجز' : 'Please agree to the terms above before booking' }}
+          </div>
+
           {{-- Booking Form — appears after agreeing --}}
           <div class="booking-form-wrap" id="booking-form-wrap">
-            <form class="booking-form" method="POST" action="{{ route('consultations.book') }}">
+            <form class="booking-form" method="POST" action="{{ route('consultations.book') }}" id="booking-form" onsubmit="updatePhoneField()">
               @csrf
+
               <h4>
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
                 {{ app()->getLocale() === 'ar' ? 'أدخل بياناتك لتأكيد الحجز' : 'Enter your details to confirm booking' }}
               </h4>
 
+              {{-- Phone with country code --}}
               <div class="form-row">
-                <label>{{ app()->getLocale() === 'ar' ? '📱 رقم هاتفك (واتساب)' : '📱 Your phone number (WhatsApp)' }}</label>
-                <input type="tel" name="phone" placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: 96550000000+' : 'e.g. +96550000000' }}" required>
+                <label>📱 {{ app()->getLocale() === 'ar' ? 'رقم هاتفك (واتساب)' : 'Your WhatsApp number' }}</label>
+                <div class="phone-row">
+                  <select id="country-code" onchange="updatePhoneField()">
+                    <option value="965" selected>🇰🇼 +965 الكويت</option>
+                    <option value="966">🇸🇦 +966 السعودية</option>
+                    <option value="971">🇦🇪 +971 الإمارات</option>
+                    <option value="974">🇶🇦 +974 قطر</option>
+                    <option value="973">🇧🇭 +973 البحرين</option>
+                    <option value="968">🇴🇲 +968 عُمان</option>
+                    <option value="962">🇯🇴 +962 الأردن</option>
+                    <option value="20">🇪🇬 +20 مصر</option>
+                    <option value="963">🇸🇾 +963 سوريا</option>
+                    <option value="961">🇱🇧 +961 لبنان</option>
+                    <option value="other">🌍 {{ app()->getLocale() === 'ar' ? 'أخرى' : 'Other' }}</option>
+                  </select>
+                  <input type="tel" id="phone-number"
+                    placeholder="{{ app()->getLocale() === 'ar' ? 'رقم الهاتف' : 'Phone number' }}"
+                    required
+                    oninput="updatePhoneField()">
+                </div>
+                <input type="hidden" name="phone" id="phone-hidden">
               </div>
 
+              {{-- Consultation type --}}
               <div class="form-row">
-                <label>{{ app()->getLocale() === 'ar' ? '📋 نوع الاستشارة' : '📋 Consultation type' }}</label>
+                <label>📋 {{ app()->getLocale() === 'ar' ? 'نوع الاستشارة' : 'Consultation type' }}</label>
                 <select name="problem_type" required>
                   <option value="" disabled selected>{{ app()->getLocale() === 'ar' ? '— اختر —' : '— Select —' }}</option>
                   @if(app()->getLocale() === 'ar')
@@ -1281,9 +1333,14 @@
                 </select>
               </div>
 
+              {{-- Notes — optional --}}
               <div class="form-row">
-                <label>{{ app()->getLocale() === 'ar' ? '📝 ما مشكلتك باختصار؟ (اختياري)' : '📝 Briefly describe your concern (optional)' }}</label>
-                <textarea name="notes" placeholder="{{ app()->getLocale() === 'ar' ? 'اكتب هنا باختصار...' : 'Write briefly here...' }}"></textarea>
+                <label>
+                  💬 {{ app()->getLocale() === 'ar' ? 'شاركنا شي عن وضعك' : 'Share something about your situation' }}
+                  <span class="optional-tag">{{ app()->getLocale() === 'ar' ? 'اختياري' : 'optional' }}</span>
+                </label>
+                <textarea name="notes"
+                  placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: عندي مشكلة في التعامل مع ابني...' : 'e.g. I\'m struggling with a family situation...' }}"></textarea>
               </div>
 
               <button type="submit" class="form-submit-btn">
@@ -1352,13 +1409,51 @@
 /* ── Booking form toggle ── */
 function toggleBookingForm(checked) {
   const wrap = document.getElementById('booking-form-wrap');
+  const note = document.getElementById('consent-required-note');
   if (!wrap) return;
   if (checked) {
     wrap.classList.add('open');
-    setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    if (note) note.style.display = 'none';
+    setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
   } else {
     wrap.classList.remove('open');
   }
+}
+
+/* ── Intercept CTA buttons that need consent ── */
+document.addEventListener('DOMContentLoaded', function() {
+  /* Show hint if user tries to click WhatsApp CTAs without agreeing */
+  document.querySelectorAll('.btn-hero-primary, .btn-final, .sticky-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const cb = document.getElementById('consent-check');
+      if (cb && !cb.checked) {
+        e.preventDefault();
+        const note = document.getElementById('consent-required-note');
+        if (note) {
+          note.style.display = 'block';
+          note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          note.style.animation = 'none';
+          setTimeout(() => note.style.animation = '', 10);
+        }
+        /* Scroll to terms */
+        document.querySelector('.terms-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+});
+
+/* ── Phone field with country code ── */
+function updatePhoneField() {
+  const code = document.getElementById('country-code');
+  const num  = document.getElementById('phone-number');
+  const hidden = document.getElementById('phone-hidden');
+  if (!code || !num || !hidden) return;
+  const selectedCode = code.value === 'other' ? '' : code.value;
+  const raw = num.value.replace(/\D/g, '');
+  hidden.value = selectedCode ? ('+' + selectedCode + raw) : raw;
+  /* also update the real phone input name so only hidden submits */
+  num.removeAttribute('name');
+  hidden.setAttribute('name', 'phone');
 }
 
 (function(){
