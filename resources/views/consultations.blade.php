@@ -871,7 +871,7 @@
       </div>
       <div class="dr-img-wrap reveal">
         <div class="ring">
-          <img src="{{ asset('images/dr-tariq.png') }}" alt="Dr. Tariq" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="Dr. Tariq" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
           <div class="dr-img-placeholder" style="display:none;">ط</div>
         </div>
       </div>
