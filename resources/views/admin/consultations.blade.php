@@ -291,28 +291,60 @@ tr.row-new:hover td{background:#fef9e0}
 
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:900px){
-  .sidebar{transform:translateX(100%)}
+  .sidebar{transform:translateX(110%)}
   .sidebar.open{transform:translateX(0)}
   .main{margin-right:0}
   .hamburger{display:flex}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .charts-row{grid-template-columns:1fr}
-  .content{padding:16px 14px 40px}
-  .topbar{padding:0 14px}
-  .search-input{width:160px}
-  .search-input:focus{width:160px}
+  .content{padding:14px 12px 48px}
+  .topbar{padding:0 12px;gap:8px}
+  .search-input{width:140px}
+  .search-input:focus{width:140px}
+  .chart-wrap{height:150px}
 }
-@media(max-width:500px){
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .stat-card .num{font-size:30px}
-  .filter-bar{gap:6px}
-  .filter-btn{padding:6px 12px;font-size:12px}
+
+/* ── Mobile card list (replaces table) ── */
+@media(max-width:700px){
+  .table-scroll{overflow-x:unset}
+  table,thead,tbody,tr,th,td{display:block}
+  thead{display:none}
+  tr{
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    margin-bottom:10px;padding:14px;position:relative;
+  }
+  tr.row-new{background:#fffbeb}
+  tr td{border:none;padding:0;font-size:13px;margin-bottom:8px}
+  tr td:last-child{margin-bottom:0}
+  /* phone */
+  tr td:nth-child(2){font-size:16px;font-weight:800;margin-bottom:4px}
+  /* type */
+  tr td:nth-child(3){margin-bottom:6px}
+  /* hide # column */
+  tr td:nth-child(1){position:absolute;top:14px;left:14px;font-size:11px;color:var(--muted)}
+  /* date */
+  tr td:nth-child(5){font-size:11px}
+  /* status buttons — smaller */
+  .s-btn{padding:5px 10px;font-size:11px}
+  /* action row */
+  .action-row{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .stat-card .num{font-size:28px}
+}
+
+@media(max-width:420px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat-card{padding:14px 12px}
+  .filter-bar{gap:5px;padding:10px 12px}
+  .filter-btn{padding:6px 10px;font-size:11px}
   .info-grid{grid-template-columns:1fr}
-  .modal{padding:18px}
-  .toast-wrap{bottom:14px;right:14px;left:14px}
-  .toast{min-width:unset}
-  .topbar{gap:8px}
-  .page-title{font-size:14px}
+  .modal{padding:16px;border-radius:16px}
+  .modal-overlay{padding:8px}
+  .toast-wrap{bottom:12px;right:10px;left:10px}
+  .toast{min-width:unset;font-size:12px}
+  .topbar{gap:6px}
+  .page-title{font-size:13px}
+  .page-sub{display:none}
+  .btn-sm{padding:6px 10px;font-size:11px}
 }
 </style>
 </head>
@@ -473,16 +505,16 @@ tr.row-new:hover td{background:#fef9e0}
                 <td>
                   <div class="action-row">
                     <button class="detail-btn"
-                      data-b="{{ htmlspecialchars(json_encode([
-                        'id'          => $b->id,
-                        'phone'       => $b->phone,
-                        'type'        => $b->problem_type,
-                        'notes'       => $b->notes ?? '',
-                        'admin_notes' => $b->admin_notes ?? '',
-                        'status'      => $b->status,
-                        'date'        => $b->created_at->format('Y/m/d H:i'),
-                        'ago'         => $b->created_at->diffForHumans(),
-                      ]), ENT_QUOTES) }}"
+                      data-b='{!! addslashes(json_encode([
+                        "id"          => $b->id,
+                        "phone"       => $b->phone,
+                        "type"        => $b->problem_type,
+                        "notes"       => $b->notes ?? "",
+                        "admin_notes" => $b->admin_notes ?? "",
+                        "status"      => $b->status,
+                        "date"        => $b->created_at->format("Y/m/d H:i"),
+                        "ago"         => $b->created_at->diffForHumans(),
+                      ], JSON_UNESCAPED_UNICODE)) !!}'
                       onclick="openModal(JSON.parse(this.dataset.b))">
                       &#128194; تفاصيل
                     </button>
