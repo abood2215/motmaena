@@ -598,6 +598,76 @@
 .consent-row label { font-size: 13.5px; color: var(--text); line-height: 1.65; cursor: pointer; }
 .consent-row label strong { color: var(--red); }
 
+/* ── Booking Form ── */
+.booking-form-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+  opacity: 0;
+}
+.booking-form-wrap.open {
+  max-height: 600px;
+  opacity: 1;
+}
+.booking-form {
+  margin-top: 20px;
+  background: var(--cream);
+  border: 2px solid rgba(176,65,65,.25);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.booking-form h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-row { display: flex; flex-direction: column; gap: 6px; }
+.form-row label { font-size: 13px; font-weight: 700; color: var(--muted); }
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+  direction: rtl;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus { border-color: var(--red); }
+.form-row textarea { resize: none; height: 80px; }
+.form-submit-btn {
+  background: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 15px 28px;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background .2s, transform .15s;
+  box-shadow: 0 4px 18px rgba(37,211,102,.35);
+  margin-top: 4px;
+}
+.form-submit-btn:hover { background: #1da851; transform: translateY(-2px); }
+
 /* ── Final CTA ── */
 .final-cta {
   padding: 80px 24px;
@@ -1168,13 +1238,59 @@
             </div>
           </div>
           <div class="consent-row">
-            <input type="checkbox" id="consent-check">
+            <input type="checkbox" id="consent-check" onchange="toggleBookingForm(this.checked)">
             <label for="consent-check">
               {{ app()->getLocale() === 'ar'
                 ? 'أقرّ بأنني اطلعت على جميع الشروط وأفهم أن الخدمة المقدمة هي استشارات اجتماعية وتربوية، وليست علاجاً طبياً. أوافق على الالتزام بسياسة المركز.'
                 : 'I acknowledge reading all terms and understand that the service is social & educational consultation, not medical treatment. I agree to abide by the center\'s policy.' }}
               <strong> {{ app()->getLocale() === 'ar' ? '(الحجز يعني الموافقة التلقائية)' : '(Booking implies automatic acceptance)' }}</strong>
             </label>
+          </div>
+
+          {{-- Booking Form — appears after agreeing --}}
+          <div class="booking-form-wrap" id="booking-form-wrap">
+            <form class="booking-form" method="POST" action="{{ route('consultations.book') }}">
+              @csrf
+              <h4>
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                {{ app()->getLocale() === 'ar' ? 'أدخل بياناتك لتأكيد الحجز' : 'Enter your details to confirm booking' }}
+              </h4>
+
+              <div class="form-row">
+                <label>{{ app()->getLocale() === 'ar' ? '📱 رقم هاتفك (واتساب)' : '📱 Your phone number (WhatsApp)' }}</label>
+                <input type="tel" name="phone" placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: 96550000000+' : 'e.g. +96550000000' }}" required>
+              </div>
+
+              <div class="form-row">
+                <label>{{ app()->getLocale() === 'ar' ? '📋 نوع الاستشارة' : '📋 Consultation type' }}</label>
+                <select name="problem_type" required>
+                  <option value="" disabled selected>{{ app()->getLocale() === 'ar' ? '— اختر —' : '— Select —' }}</option>
+                  @if(app()->getLocale() === 'ar')
+                    <option value="استشارة أسرية">👨‍👩‍👧 استشارة أسرية</option>
+                    <option value="استشارة تربوية">📚 استشارة تربوية</option>
+                    <option value="استشارة اجتماعية">🤝 استشارة اجتماعية</option>
+                    <option value="تطوير الذات">🎯 تطوير الذات</option>
+                    <option value="استشارة مع د. طارق">⭐ استشارة مع د. طارق الحبيب</option>
+                  @else
+                    <option value="Family Consultation">👨‍👩‍👧 Family Consultation</option>
+                    <option value="Educational Consultation">📚 Educational Consultation</option>
+                    <option value="Social Consultation">🤝 Social Consultation</option>
+                    <option value="Self Development">🎯 Self Development</option>
+                    <option value="Session with Dr. Tariq">⭐ Session with Dr. Tariq</option>
+                  @endif
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label>{{ app()->getLocale() === 'ar' ? '📝 ما مشكلتك باختصار؟ (اختياري)' : '📝 Briefly describe your concern (optional)' }}</label>
+                <textarea name="notes" placeholder="{{ app()->getLocale() === 'ar' ? 'اكتب هنا باختصار...' : 'Write briefly here...' }}"></textarea>
+              </div>
+
+              <button type="submit" class="form-submit-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                {{ app()->getLocale() === 'ar' ? 'تأكيد وإرسال عبر واتساب' : 'Confirm & Send via WhatsApp' }}
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -1233,6 +1349,18 @@
 </div>
 
 <script>
+/* ── Booking form toggle ── */
+function toggleBookingForm(checked) {
+  const wrap = document.getElementById('booking-form-wrap');
+  if (!wrap) return;
+  if (checked) {
+    wrap.classList.add('open');
+    setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  } else {
+    wrap.classList.remove('open');
+  }
+}
+
 (function(){
   const isAr = '{{ app()->getLocale() }}' === 'ar';
   const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];

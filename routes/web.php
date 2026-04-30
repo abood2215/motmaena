@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Models\Course;
+use App\Http\Controllers\ConsultationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,3 +30,7 @@ Route::get('/packages', function () {
 Route::get('/consultations', function () {
     return view('consultations');
 })->name('consultations');
+
+Route::post('/consultations/book', [ConsultationController::class, 'store'])->name('consultations.book');
+Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->name('admin.consultations');
+Route::post('/admin/consultations/{booking}/status', [ConsultationController::class, 'updateStatus'])->name('admin.consultations.status');
