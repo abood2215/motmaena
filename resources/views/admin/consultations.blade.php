@@ -778,9 +778,30 @@ function saveNotes() {
   .catch(() => toast('خطأ في الحفظ', 'err'));
 }
 
+// ── Emoji via codepoints (avoids file encoding corruption) ──
+const EM = {
+  herb:  String.fromCodePoint(0x1F33F), // 🌿
+  spark: String.fromCodePoint(0x2728),  // ✨
+  heart: String.fromCodePoint(0x1F90D), // 🤍
+  cal:   String.fromCodePoint(0x1F4C5), // 📅
+  check: String.fromCodePoint(0x2705),  // ✅
+  clip:  String.fromCodePoint(0x1F4CB), // 📋
+  clock: String.fromCodePoint(0x1F550), // 🕐
+  bell:  String.fromCodePoint(0x1F514), // 🔔
+  smile: String.fromCodePoint(0x1F642), // 🙂
+  cal2:  String.fromCodePoint(0x1F5D3), // 🗓
+  chat:  String.fromCodePoint(0x1F4AC), // 💬
+  party: String.fromCodePoint(0x1F389), // 🎉
+  yhrt:  String.fromCodePoint(0x1F49B), // 💛
+  file:  String.fromCodePoint(0x1F5C2), // 🗂
+};
+
 // ── WhatsApp quick button (table row) ──
 function quickWA(phone, type) {
-  const msg = 'السلام عليكم 🌿\nمعاك فريق مركز مطمئنة ✨\nوصلنا طلبك بخصوص *' + type + '* 🗂\nمتى يناسبك نحدد موعدًا؟ 📅';
+  const msg = 'السلام عليكم ' + EM.herb
+    + '\nمعاك فريق مركز مطمئنة ' + EM.spark
+    + '\nوصلنا طلبك بخصوص *' + type + '* ' + EM.file
+    + '\nمتى يناسبك نحدد موعدًا؟ ' + EM.cal;
   window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
@@ -788,12 +809,36 @@ function quickWA(phone, type) {
 function sendTpl(n) {
   const p = mPhone.replace(/[^0-9]/g, '');
   const t = mType;
+  const sl  = 'السلام عليكم ';
+  const ctr = 'معاك فريق مركز مطمئنة ';
   const msgs = {
-    1: 'السلام عليكم 🌿\n\nمعاك فريق مركز مطمئنة ✨\n\nوصلنا طلبك بخصوص *' + t + '* 🗂\nوشكرًا جزيلًا على ثقتك فينا 🤍\n\nودّنا نحجزلك موعد في أقرب وقت يناسبك 📅\nمتى تكون متاحًا؟',
-    2: 'السلام عليكم 🌿\n\n✅ تم تأكيد موعدك في مركز مطمئنة\n\n📋 الخدمة: *' + t + '*\n\nسيتواصل معك أحد الفريق في الوقت المحدد 🕐\nنتمنى لك تجربة مثمرة 🤍\nمركز مطمئنة',
-    3: 'السلام عليكم 🌿\n\nمعاك فريق مركز مطمئنة 🔔\n\nتواصلنا معك سابقًا بخصوص *' + t + '*\nولاحظنا إنك ما رديت 🙂\n\nطلبك لا يزال محجوزًا لك 🗓\nمتى يناسبك نكمل؟',
-    4: 'السلام عليكم 🌿\n\nشكرًا على تواصلك مع مركز مطمئنة 💬\n\nيسعدنا نجاوب على أي استفسار عندك بخصوص *' + t + '*\n\nلا تتردد، احنا هنا دائمًا لأجلك 🤍',
-    5: 'السلام عليكم 🌿\n\nمن فريق مركز مطمئنة 🎉\n\nيسعدنا إن جلستك اكتملت بنجاح ✅\n\nرأيك يهمّنا كثيرًا 💛\nهل تقدر تشاركنا انطباعك عن تجربتك معنا؟\n\nنسعد دائمًا بخدمتك 🤍'
+    1: sl + EM.herb + '\n\n' + ctr + EM.spark
+      + '\n\nوصلنا طلبك بخصوص *' + t + '* ' + EM.file
+      + '\nوشكرًا جزيلًا على ثقتك فينا ' + EM.heart
+      + '\n\nودّنا نحجزلك موعد في أقرب وقت يناسبك ' + EM.cal
+      + '\nمتى تكون متاحًا؟',
+
+    2: sl + EM.herb + '\n\n' + EM.check + ' تم تأكيد موعدك في مركز مطمئنة'
+      + '\n\n' + EM.clip + ' الخدمة: *' + t + '*'
+      + '\n\nسيتواصل معك أحد الفريق في الوقت المحدد ' + EM.clock
+      + '\nنتمنى لك تجربة مثمرة ' + EM.heart
+      + '\nمركز مطمئنة',
+
+    3: sl + EM.herb + '\n\n' + ctr + EM.bell
+      + '\n\nتواصلنا معك سابقًا بخصوص *' + t + '*'
+      + '\nولاحظنا إنك ما رديت ' + EM.smile
+      + '\n\nطلبك لا يزال محجوزًا لك ' + EM.cal2
+      + '\nمتى يناسبك نكمل؟',
+
+    4: sl + EM.herb + '\n\nشكرًا على تواصلك مع مركز مطمئنة ' + EM.chat
+      + '\n\nيسعدنا نجاوب على أي استفسار عندك بخصوص *' + t + '*'
+      + '\n\nلا تتردد، احنا هنا دائمًا لأجلك ' + EM.heart,
+
+    5: sl + EM.herb + '\n\nمن فريق مركز مطمئنة ' + EM.party
+      + '\n\nيسعدنا إن جلستك اكتملت بنجاح ' + EM.check
+      + '\n\nرأيك يهمّنا كثيرًا ' + EM.yhrt
+      + '\nهل تقدر تشاركنا انطباعك عن تجربتك معنا؟'
+      + '\n\nنسعد دائمًا بخدمتك ' + EM.heart,
   };
   window.open('https://wa.me/' + p + '?text=' + encodeURIComponent(msgs[n]), '_blank');
 }
