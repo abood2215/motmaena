@@ -505,17 +505,15 @@ tr.row-new:hover td{background:#fef9e0}
                 <td>
                   <div class="action-row">
                     <button class="detail-btn"
-                      data-b='{!! json_encode([
-                        "id"          => $b->id,
-                        "phone"       => $b->phone,
-                        "type"        => $b->problem_type,
-                        "notes"       => $b->notes ?? "",
-                        "admin_notes" => $b->admin_notes ?? "",
-                        "status"      => $b->status,
-                        "date"        => $b->created_at->format("Y/m/d H:i"),
-                        "ago"         => $b->created_at->diffForHumans(),
-                      ], JSON_UNESCAPED_UNICODE | JSON_HEX_APOS) !!}'
-                      onclick="openModal(JSON.parse(this.dataset.b))">
+                      data-id="{{ $b->id }}"
+                      data-phone="{{ $b->phone }}"
+                      data-type="{{ $b->problem_type }}"
+                      data-notes="{{ $b->notes ?? '' }}"
+                      data-anotes="{{ $b->admin_notes ?? '' }}"
+                      data-status="{{ $b->status }}"
+                      data-date="{{ $b->created_at->format('Y/m/d H:i') }}"
+                      data-ago="{{ $b->created_at->diffForHumans() }}"
+                      onclick="openModalFromEl(this)">
                       &#128194; تفاصيل
                     </button>
                     <a href="#"
@@ -689,6 +687,19 @@ function doSearch(q) {
 
 // ── Modal ──
 let mId = null, mPhone = null, mType = null;
+
+function openModalFromEl(el) {
+  openModal({
+    id:          el.dataset.id,
+    phone:       el.dataset.phone,
+    type:        el.dataset.type,
+    notes:       el.dataset.notes,
+    admin_notes: el.dataset.anotes,
+    status:      el.dataset.status,
+    date:        el.dataset.date,
+    ago:         el.dataset.ago,
+  });
+}
 
 function openModal(d) {
   mId = d.id; mPhone = d.phone; mType = d.type;
