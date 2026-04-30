@@ -27,3 +27,6 @@ Route::get('/courses', function () {
 Route::get('/packages', function () {
     return view('packages');
 })->name('packages');
+Route::get('/consultations', function () {
+    return view('consultations');
+})->name('consultations');

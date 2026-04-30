@@ -83,6 +83,7 @@
                                 <span class="inline-flex items-center justify-center bg-primary/10 text-primary text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide group-hover/pkg:bg-primary group-hover/pkg:text-white transition-all duration-200">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
                             </a>
                             <a href="{{ route('sessions') }}" class="nav-link {{ request()->routeIs('sessions') ? 'text-primary font-bold' : '' }}">{{ __('Sessions') }}</a>
+                            <a href="{{ route('consultations') }}" class="nav-link {{ request()->routeIs('consultations') ? 'text-primary font-bold' : '' }}">{{ __('Consultations') }}</a>
                             <a href="{{ url('/#app-section') }}" class="nav-link">{{ __('App') }}</a>
                         </div>
                     </div>
@@ -142,6 +143,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         </div>
                         {{ __('Sessions') }}
+                    </a>
+                    <a href="{{ route('consultations') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('consultations') ? 'bg-primary/5 text-primary' : '' }}">
+                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" /></svg>
+                        </div>
+                        {{ __('Consultations') }}
                     </a>
                     <a href="{{ url('/#app-section') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group">
                         <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
