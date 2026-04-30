@@ -505,7 +505,7 @@ tr.row-new:hover td{background:#fef9e0}
                 <td>
                   <div class="action-row">
                     <button class="detail-btn"
-                      data-b='{!! addslashes(json_encode([
+                      data-b='{!! json_encode([
                         "id"          => $b->id,
                         "phone"       => $b->phone,
                         "type"        => $b->problem_type,
@@ -514,7 +514,7 @@ tr.row-new:hover td{background:#fef9e0}
                         "status"      => $b->status,
                         "date"        => $b->created_at->format("Y/m/d H:i"),
                         "ago"         => $b->created_at->diffForHumans(),
-                      ], JSON_UNESCAPED_UNICODE)) !!}'
+                      ], JSON_UNESCAPED_UNICODE | JSON_HEX_APOS) !!}'
                       onclick="openModal(JSON.parse(this.dataset.b))">
                       &#128194; تفاصيل
                     </button>
