@@ -22,12 +22,16 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $msg  = "مرحباً مركز مطمئنة،\n";
+        $star = "\xE2\xAD\x90"; // ⭐ 3-byte BMP emoji
+        $chk  = "\xE2\x9C\x85"; // ✅ 3-byte BMP emoji
+        $pin  = "\xE2\x9C\x8F"; // ✏ 3-byte BMP emoji
+
+        $msg  = "{$star} مرحباً مركز مطمئنة\n";
         $msg .= "أريد حجز استشارة\n\n";
-        $msg .= "*رقم التواصل:* {$phone}\n";
-        $msg .= "*نوع الاستشارة:* {$type}";
+        $msg .= "{$chk} *رقم التواصل:* {$phone}\n";
+        $msg .= "{$chk} *نوع الاستشارة:* {$type}";
         if ($notes) {
-            $msg .= "\n*ملاحظات:* {$notes}";
+            $msg .= "\n{$pin} *ملاحظات:* {$notes}";
         }
 
         return redirect('https://wa.me/96555665161?text=' . rawurlencode($msg));
