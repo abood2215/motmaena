@@ -1672,16 +1672,12 @@ function updatePhoneField() {
     .then(json => {
       if (!json.ok) return;
 
-      const star = String.fromCodePoint(0x1F31F); // 🌟
-      const chk  = String.fromCodePoint(0x2705);  // ✅
-      const pin  = String.fromCodePoint(0x1F4DD); // 📝
-
-      let msg = star + ' مرحباً مركز مطمئنة\n'
+      let msg = 'مرحباً مركز مطمئنة\n'
               + 'أريد حجز استشارة\n\n'
-              + chk + ' *رقم التواصل:* ' + phone + '\n'
-              + chk + ' *نوع الاستشارة:* ' + type;
+              + '*رقم التواصل:* ' + phone + '\n'
+              + '*نوع الاستشارة:* ' + type;
       if (notes.trim()) {
-        msg += '\n' + pin + ' *ملاحظات:* ' + notes;
+        msg += '\n*ملاحظات:* ' + notes;
       }
 
       window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
