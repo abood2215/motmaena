@@ -61,7 +61,7 @@
             <div id="announcement-bar" class="bg-gradient-to-r from-primary via-primary-dark to-primary text-white text-center py-2 px-4 text-[10px] sm:text-sm font-bold relative z-[51] transition-all duration-300">
                 <div class="container mx-auto flex items-center justify-center gap-2 sm:gap-3 pr-6 sm:pr-0">
                     <span class="animate-pulse shrink-0">🔥</span>
-                    <span class="leading-tight">{{ app()->getLocale() == 'ar' ? 'خصم 20% على جميع الوورات لفترة محوووة!' : '20% off all courses for a limited time!' }}</span>
+                    <span class="leading-tight">{{ app()->getLocale() == 'ar' ? 'خصم 20% على جميع الدورات لفترة محدودة!' : '20% off all courses for a limited time!' }}</span>
                     <a href="#courses" class="bg-white/20 hover:bg-white/30 px-2 sm:px-3 py-0.5 rounded-full text-[9px] sm:text-xs transition-all border border-white/20 shrink-0">{{ app()->getLocale() == 'ar' ? 'تسوّق الآن' : 'Shop Now' }}</a>
                     <button onclick="document.getElementById('announcement-bar').style.display='none'" class="absolute {{ app()->getLocale() == 'ar' ? 'left-2' : 'right-2' }} top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -80,7 +80,7 @@
                             <a href="{{ route('courses') }}" class="nav-link {{ request()->routeIs('courses') ? 'text-primary font-bold' : '' }}">{{ __('Courses') }}</a>
                             <a href="{{ route('packages') }}" class="nav-link flex items-center gap-1.5 group/pkg {{ request()->routeIs('packages') ? 'text-primary font-bold' : '' }}">
                                 {{ __('Packages') }}
-                                <span class="inline-flex items-center justify-center bg-primary/10 text-primary text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide group-hover/pkg:bg-primary group-hover/pkg:text-white transition-all duration-200">{{ app()->getLocale() == 'ar' ? 'جويو' : 'New' }}</span>
+                                <span class="inline-flex items-center justify-center bg-primary/10 text-primary text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide group-hover/pkg:bg-primary group-hover/pkg:text-white transition-all duration-200">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
                             </a>
                             <a href="{{ route('sessions') }}" class="nav-link {{ request()->routeIs('sessions') ? 'text-primary font-bold' : '' }}">{{ __('Sessions') }}</a>
                             <a href="{{ route('consultations') }}" class="nav-link {{ request()->routeIs('consultations') ? 'text-primary font-bold' : '' }}">{{ __('Consultations') }}</a>
@@ -136,7 +136,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                         </div>
                         {{ __('Packages') }}
-                        <span class="ms-auto inline-flex items-center justify-center bg-primary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide">{{ app()->getLocale() == 'ar' ? 'جويو' : 'New' }}</span>
+                        <span class="ms-auto inline-flex items-center justify-center bg-primary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none uppercase tracking-wide">{{ app()->getLocale() == 'ar' ? 'جديد' : 'New' }}</span>
                     </a>
                     <a href="{{ route('sessions') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->routeIs('sessions') ? 'bg-primary/5 text-primary' : '' }}">
                         <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
