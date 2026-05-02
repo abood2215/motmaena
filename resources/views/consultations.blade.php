@@ -1672,12 +1672,12 @@ function updatePhoneField() {
     .then(json => {
       if (!json.ok) return;
 
-      let msg = 'مرحباً مركز مطمئنة\n'
+      let msg = '★ مرحباً مركز مطمئنة\n'
               + 'أريد حجز استشارة\n\n'
-              + '*رقم التواصل:* ' + phone + '\n'
-              + '*نوع الاستشارة:* ' + type;
+              + '✔ *رقم التواصل:* ' + phone + '\n'
+              + '✔ *نوع الاستشارة:* ' + type;
       if (notes.trim()) {
-        msg += '\n*ملاحظات:* ' + notes;
+        msg += '\n✏ *ملاحظات:* ' + notes;
       }
 
       window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
