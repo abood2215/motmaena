@@ -1673,7 +1673,7 @@ function updatePhoneField() {
     // Open WhatsApp immediately without waiting
     var msg = '★ مرحباً مركز مطمئنة\n'
             + 'أريد حجز استشارة\n\n'
-            + '◆ *رقم التواصل:* ' + phone + '\n'
+            + '◆ *رقم التواصل:* ‎' + phone + '\n'
             + '◆ *نوع الاستشارة:* ' + type;
     if (notes.trim()) {
       msg += '\n◆ *ملاحظات:* ' + notes;
