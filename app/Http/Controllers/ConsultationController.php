@@ -22,21 +22,23 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        // Use mb_chr() to generate emoji from Unicode codepoint at runtime
-        // avoids any file-encoding corruption of literal emoji chars
-        $em = fn(int $cp) => mb_convert_encoding(
-            pack('N', $cp), 'UTF-8', 'UCS-4BE'
-        );
+        // Emoji as pre-encoded percent sequences — zero encoding issues possible
+        $e1 = '%F0%9F%93%B1'; // 📱
+        $e2 = '%F0%9F%93%8B'; // 📋
+        $e3 = '%F0%9F%93%9D'; // 📝
+        $nl = '%0A';
+        $sp = '%20';
 
-        $msg = $em(0x1F4F1) . " رقم التواصل: {$phone}\n"
-             . $em(0x1F4CB) . " نوع الاستشارة: {$type}";
+        $url  = 'https://wa.me/96555665161?text=';
+        $url .= rawurlencode("مرحباً مركز مطمئنة،") . $nl;
+        $url .= rawurlencode("أريد حجز استشارة") . $nl . $nl;
+        $url .= $e1 . $sp . rawurlencode("رقم التواصل: {$phone}") . $nl;
+        $url .= $e2 . $sp . rawurlencode("نوع الاستشارة: {$type}");
         if ($notes) {
-            $msg .= "\n" . $em(0x1F4DD) . " تفاصيل إضافية: {$notes}";
+            $url .= $nl . $e3 . $sp . rawurlencode("تفاصيل إضافية: {$notes}");
         }
 
-        $full = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n" . $msg;
-
-        return redirect('https://wa.me/96555665161?text=' . rawurlencode($full));
+        return redirect($url);
     }
 
     public function adminLogin(Request $request)
