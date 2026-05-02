@@ -22,23 +22,15 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        // Emoji as pre-encoded percent sequences — zero encoding issues possible
-        $e1 = '%F0%9F%93%B1'; // 📱
-        $e2 = '%F0%9F%93%8B'; // 📋
-        $e3 = '%F0%9F%93%9D'; // 📝
-        $nl = '%0A';
-        $sp = '%20';
-
-        $url  = 'https://wa.me/96555665161?text=';
-        $url .= rawurlencode("مرحباً مركز مطمئنة،") . $nl;
-        $url .= rawurlencode("أريد حجز استشارة") . $nl . $nl;
-        $url .= $e1 . $sp . rawurlencode("رقم التواصل: {$phone}") . $nl;
-        $url .= $e2 . $sp . rawurlencode("نوع الاستشارة: {$type}");
+        $msg  = "مرحباً مركز مطمئنة،\n";
+        $msg .= "أريد حجز استشارة\n\n";
+        $msg .= "*رقم التواصل:* {$phone}\n";
+        $msg .= "*نوع الاستشارة:* {$type}";
         if ($notes) {
-            $url .= $nl . $e3 . $sp . rawurlencode("تفاصيل إضافية: {$notes}");
+            $msg .= "\n*ملاحظات:* {$notes}";
         }
 
-        return redirect($url);
+        return redirect('https://wa.me/96555665161?text=' . rawurlencode($msg));
     }
 
     public function adminLogin(Request $request)

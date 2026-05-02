@@ -778,76 +778,24 @@ function saveNotes() {
   .catch(() => toast('خطأ في الحفظ', 'err'));
 }
 
-// ── Emoji as pre-encoded URL percent-sequences (zero encoding issues) ──
-const EM = {
-  herb:  '%F0%9F%8C%BF', // 🌿
-  spark: '%E2%9C%A8',    // ✨
-  heart: '%F0%9F%A4%8D', // 🤍
-  cal:   '%F0%9F%93%85', // 📅
-  check: '%E2%9C%85',    // ✅
-  clip:  '%F0%9F%93%8B', // 📋
-  clock: '%F0%9F%95%90', // 🕐
-  bell:  '%F0%9F%94%94', // 🔔
-  smile: '%F0%9F%99%82', // 🙂
-  cal2:  '%F0%9F%97%93', // 🗓
-  chat:  '%F0%9F%92%AC', // 💬
-  party: '%F0%9F%8E%89', // 🎉
-  yhrt:  '%F0%9F%92%9B', // 💛
-  file:  '%F0%9F%97%82', // 🗂
-};
-
-// encode Arabic text + punctuation, leave emoji percent-seqs as-is
-function eT(s) { return encodeURIComponent(s); }
-const NL = '%0A';
-
 // ── WhatsApp quick button (table row) ──
 function quickWA(phone, type) {
-  const url = 'https://wa.me/' + phone.replace(/[^0-9]/g,'') + '?text='
-    + eT('السلام عليكم ') + EM.herb + NL
-    + eT('معاك فريق مركز مطمئنة ') + EM.spark + NL
-    + eT('وصلنا طلبك بخصوص *') + eT(type) + eT('* ') + EM.file + NL
-    + eT('متى يناسبك نحدد موعدًا؟ ') + EM.cal;
-  window.open(url, '_blank');
+  const msg = 'السلام عليكم\nمعاك فريق مركز مطمئنة\n\nوصلنا طلبك بخصوص *' + type + '*\nمتى يناسبك نحدد موعدًا؟';
+  window.open('https://wa.me/' + phone.replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 // ── WhatsApp templates (modal) ──
 function sendTpl(n) {
   const p = mPhone.replace(/[^0-9]/g, '');
-  const t = eT(mType);
-  const base = 'https://wa.me/' + p + '?text=';
-  const sl  = eT('السلام عليكم ');
-  const ctr = eT('معاك فريق مركز مطمئنة ');
-
-  const urls = {
-    1: base + sl + EM.herb + NL + NL + ctr + EM.spark
-      + NL + NL + eT('وصلنا طلبك بخصوص *') + t + eT('* ') + EM.file
-      + NL + eT('وشكرًا جزيلًا على ثقتك فينا ') + EM.heart
-      + NL + NL + eT('ودّنا نحجزلك موعد في أقرب وقت يناسبك ') + EM.cal
-      + NL + eT('متى تكون متاحًا؟'),
-
-    2: base + sl + EM.herb + NL + NL + EM.check + eT(' تم تأكيد موعدك في مركز مطمئنة')
-      + NL + NL + EM.clip + eT(' الخدمة: *') + t + eT('*')
-      + NL + NL + eT('سيتواصل معك أحد الفريق في الوقت المحدد ') + EM.clock
-      + NL + eT('نتمنى لك تجربة مثمرة ') + EM.heart
-      + NL + eT('مركز مطمئنة'),
-
-    3: base + sl + EM.herb + NL + NL + ctr + EM.bell
-      + NL + NL + eT('تواصلنا معك سابقًا بخصوص *') + t + eT('*')
-      + NL + eT('ولاحظنا إنك ما رديت ') + EM.smile
-      + NL + NL + eT('طلبك لا يزال محجوزًا لك ') + EM.cal2
-      + NL + eT('متى يناسبك نكمل؟'),
-
-    4: base + sl + EM.herb + NL + NL + eT('شكرًا على تواصلك مع مركز مطمئنة ') + EM.chat
-      + NL + NL + eT('يسعدنا نجاوب على أي استفسار عندك بخصوص *') + t + eT('*')
-      + NL + NL + eT('لا تتردد، احنا هنا دائمًا لأجلك ') + EM.heart,
-
-    5: base + sl + EM.herb + NL + NL + eT('من فريق مركز مطمئنة ') + EM.party
-      + NL + NL + eT('يسعدنا إن جلستك اكتملت بنجاح ') + EM.check
-      + NL + NL + eT('رأيك يهمّنا كثيرًا ') + EM.yhrt
-      + NL + eT('هل تقدر تشاركنا انطباعك عن تجربتك معنا؟')
-      + NL + NL + eT('نسعد دائمًا بخدمتك ') + EM.heart,
+  const t = mType;
+  const msgs = {
+    1: 'السلام عليكم\nمعاك فريق مركز مطمئنة\n\nوصلنا طلبك بخصوص *' + t + '*\nوشكرًا على ثقتك فينا\n\nودّنا نحجزلك موعد في أقرب وقت يناسبك\nمتى تكون متاحًا؟',
+    2: 'السلام عليكم\n\n- تم تأكيد موعدك في مركز مطمئنة\n- الخدمة: *' + t + '*\n\nسيتواصل معك أحد الفريق في الوقت المحدد\nنتمنى لك تجربة مثمرة\nمركز مطمئنة',
+    3: 'السلام عليكم\nمعاك فريق مركز مطمئنة\n\nتواصلنا معك سابقًا بخصوص *' + t + '*\nولاحظنا إنك ما رديت\n\nطلبك لا يزال محجوزًا لك\nمتى يناسبك نكمل؟',
+    4: 'السلام عليكم\n\nشكرًا على تواصلك مع مركز مطمئنة\n\nيسعدنا نجاوب على أي استفسار عندك بخصوص *' + t + '*\n\nلا تتردد، احنا هنا دائمًا لأجلك',
+    5: 'السلام عليكم\nمن فريق مركز مطمئنة\n\nيسعدنا إن جلستك اكتملت بنجاح\n\nرأيك يهمّنا كثيرًا\nهل تقدر تشاركنا انطباعك عن تجربتك معنا؟\n\nنسعد دائمًا بخدمتك',
   };
-  window.open(urls[n], '_blank');
+  window.open('https://wa.me/' + p + '?text=' + encodeURIComponent(msgs[n]), '_blank');
 }
 
 // ── Toast ──
