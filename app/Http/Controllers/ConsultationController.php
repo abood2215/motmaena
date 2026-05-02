@@ -22,9 +22,9 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $star = "\xE2\xAD\x90"; // ⭐ 3-byte BMP emoji
-        $chk  = "\xE2\x9C\x85"; // ✅ 3-byte BMP emoji
-        $pin  = "\xE2\x9C\x8F"; // ✏ 3-byte BMP emoji
+        $star = mb_chr(0x1F31F, 'UTF-8'); // 🌟 glowing star
+        $chk  = mb_chr(0x2705,  'UTF-8'); // ✅ check mark
+        $pin  = mb_chr(0x1F4DD, 'UTF-8'); // 📝 memo
 
         $msg  = "{$star} مرحباً مركز مطمئنة\n";
         $msg .= "أريد حجز استشارة\n\n";
