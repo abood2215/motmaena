@@ -1671,12 +1671,13 @@ function updatePhoneField() {
     }).catch(function(){});
 
     // Open WhatsApp immediately without waiting
-    var msg = '★ مرحباً مركز مطمئنة\n'
-            + 'أريد حجز استشارة\n\n'
-            + '◆ *رقم التواصل:* ‎' + phone + '\n'
-            + '◆ *نوع الاستشارة:* ' + type;
+    var msg = '✦ *مرحباً مركز مطمئنة* ✦\n'
+            + '_أريد حجز استشارة_\n'
+            + '▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n'
+            + '☏ *رقم التواصل:* ‎' + phone + '\n'
+            + '◈ *نوع الاستشارة:* ' + type;
     if (notes.trim()) {
-      msg += '\n◆ *ملاحظات:* ' + notes;
+      msg += '\n✐ *ملاحظات:* ' + notes;
     }
 
     window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
