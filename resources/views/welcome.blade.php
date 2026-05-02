@@ -339,11 +339,11 @@
                 <div class="relative w-full max-w-[360px]">
                     <div class="absolute inset-x-6 bottom-0 top-8 bg-gradient-to-b from-primary/10 to-primary/[0.03] dark:from-primary/20 dark:to-primary/[0.05] rounded-[2.5rem] border border-primary/10 dark:border-primary/15"></div>
 
-                    {{-- Zoom badge --}}
+                    {{-- In-person badge --}}
                     <div class="absolute top-4 {{ app()->getLocale() == 'ar' ? 'right-2' : 'left-2' }} z-20">
                         <div class="flex items-center gap-2 bg-primary text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg">
-                            <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                            {{ app()->getLocale() == 'ar' ? 'أونلاين عبر زووم' : 'Online via Zoom' }}
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            {{ app()->getLocale() == 'ar' ? 'حضوري' : 'In-Person' }}
                         </div>
                     </div>
 
