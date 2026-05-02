@@ -37,7 +37,7 @@
             <p class="text-sm sm:text-base lg:text-xl text-[var(--muted-color)] mb-7 lg:mb-12 max-w-xl leading-relaxed animate-blur-in" style="animation-delay: 0.48s;">
                 {{ __('With Professor') }}
                 <span class="text-gray-900 dark:text-white font-bold">{{ __('Dr. Tariq Al-Habib') }}</span><br>
-                <span class="text-xs sm:text-sm lg:text-base">{{ __('Personal Development & Family Counseling Expert') }}</span>
+                <span class="text-xs sm:text-sm lg:text-base">{{ __('Consultant Psychiatrist') }}</span>
             </p>
 
             {{-- CTA Buttons --}}
@@ -111,7 +111,7 @@
                                 {{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq' }}
                             </h3>
                             <p class="text-white/70 text-[9px] sm:text-[10px] font-semibold tracking-wide mb-2">
-                                {{ app()->getLocale() == 'ar' ? 'خبير التنمية الذاتية والإرشاد الأسري' : 'Personal Development & Family Counseling Expert' }}
+                                {{ app()->getLocale() == 'ar' ? 'خبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Social, Educational & Life Skills Expert' }}
                             </p>
                             <div class="flex justify-center gap-px text-yellow-300 text-[11px]">★★★★★</div>
                         </div>
@@ -322,7 +322,7 @@
                 </h2>
 
                 {{-- Title --}}
-                <p class="text-gray-500 dark:text-white/45 text-sm sm:text-base font-medium mb-1.5">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير التنمية الذاتية والإرشاد الأسري' : 'Professor & Personal Development Expert' }}</p>
+                <p class="text-gray-500 dark:text-white/45 text-sm sm:text-base font-medium mb-1.5">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Professor & Social, Educational Guidance Expert' }}</p>
 
                 {{-- Location line --}}
                 <p class="text-gray-700 dark:text-white/80 text-lg sm:text-xl font-bold mb-7">
@@ -468,7 +468,7 @@
                             {{ app()->getLocale() == 'ar' ? 'أونلاين عبر زووم' : 'Online via Zoom' }}
                         </div>
                         <p class="text-primary font-black text-lg leading-tight">{{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq' }}</p>
-                        <p class="text-xs font-medium mt-0.5 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير التنمية الذاتية والإرشاد الأسري' : 'Prof. & Personal Development Expert' }}</p>
+                        <p class="text-xs font-medium mt-0.5 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Prof. & Social Guidance Expert' }}</p>
                         <div class="flex items-center gap-1.5 mt-2">
                             <svg class="w-3 h-3 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300" dir="ltr">07:00 – 09:00م</span>
@@ -489,7 +489,7 @@
 
                 {{-- Dr. Name & Title — desktop only --}}
                 <p class="hidden lg:block text-primary font-black text-xl sm:text-2xl mb-1">{{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</p>
-                <p class="hidden lg:block text-sm font-medium mb-6 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير التنمية الذاتية والإرشاد الأسري' : 'Professor & Personal Development Expert' }}</p>
+                <p class="hidden lg:block text-sm font-medium mb-6 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Professor & Social, Educational Guidance Expert' }}</p>
                 <div class="block lg:hidden mb-6"></div>
 
                 {{-- Courses — mobile: cards / desktop: table --}}
@@ -597,7 +597,7 @@
                             <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="أ.د طارق الحبيب" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl sm:text-2xl font-black text-white mb-2">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</h3>
-                        <p class="text-white/70 text-sm">{{ app()->getLocale() == 'ar' ? 'خبير التنمية الذاتية والإرشاد الأسري' : 'Personal Development & Family Counseling Expert' }}</p>
+                        <p class="text-white/70 text-sm">{{ app()->getLocale() == 'ar' ? 'خبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Social, Educational & Life Skills Expert' }}</p>
                         <div class="flex justify-center gap-2 sm:gap-3 mt-4 sm:mt-6">
                             <div class="bg-white/15 backdrop-blur px-2 sm:px-4 py-2 rounded-xl border border-white/10">
                                 <div class="text-base sm:text-lg font-black text-white">+30</div>
@@ -620,10 +620,10 @@
             <div class="w-full lg:w-3/5 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} reveal-{{ app()->getLocale() == 'ar' ? 'left' : 'right' }}">
                 <span class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold mb-5 tracking-widest uppercase">{{ app()->getLocale() == 'ar' ? 'من نحن' : 'About Us' }}</span>
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-                    {{ app()->getLocale() == 'ar' ? 'مركز مطمئنة للتنمية الذاتية والإرشاد' : 'Motmaena Center for Personal Development & Guidance' }}
+                    {{ app()->getLocale() == 'ar' ? 'مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Motmaena Center for Social, Educational & Life Skills' }}
                 </h2>
                 <p class="text-[var(--muted-color)] text-sm sm:text-base leading-relaxed mb-6">
-                    {{ app()->getLocale() == 'ar' ? 'مركز مطمئنة هو مركز متخصص في التنمية الذاتية والإرشاد الأسري والتربوي تحت إشراف البروفيسور طارق الحبيب. يقدم المركز دورات حصرية ومسجلة تساعدك على تطوير مهاراتك وبناء علاقات أفضل.' : 'Motmaena Center is a specialized center for personal development and family guidance under the supervision of Professor Tariq Al-Habib. The center offers exclusive recorded courses to help you build better skills and relationships.' }}
+                    {{ app()->getLocale() == 'ar' ? 'مركز مطمئنة مركز متخصص في الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، تحت إشراف البروفيسور طارق الحبيب. يقدم المركز دورات حصرية ومسجلة تساعدك على بناء مهاراتك الحياتية وتعزيز علاقاتك الاجتماعية والأسرية.' : 'Motmaena Center specializes in social, educational and life skills guidance under the supervision of Professor Tariq Al-Habib. We offer exclusive recorded courses to help you build life skills and strengthen your relationships.' }}
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                     <div class="flex items-center gap-3 bg-gray-50 dark:bg-dark-surface p-4 rounded-2xl border border-gray-100 dark:border-dark-border">

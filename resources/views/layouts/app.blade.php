@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta name="description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
         <meta name="keywords" content="مطمئنة, دورات تنموية, طارق الحبيب, استشارات أسرية وتربوية, تطوير الذات, الكويت">
         <meta name="author" content="Motmaena Center">
 
@@ -11,13 +11,13 @@
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
-        <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
         <meta property="og:image" content="{{ asset('logo-clinic.png') }}">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
-        <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Psychological Counseling - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
         <meta name="twitter:image" content="{{ asset('logo-clinic.png') }}">
 
         <title>@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))</title>

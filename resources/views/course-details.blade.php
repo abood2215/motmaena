@@ -121,7 +121,7 @@
                     <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary font-black text-xl shrink-0">د.ط</div>
                     <div>
                         <div class="font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}</div>
-                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'خبير التنمية الذاتية والإرشاد - أكثر من 30 سنة خبرة' : 'Personal Development Expert - 30+ years experience' }}</div>
+                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'خبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية - أكثر من 30 سنة خبرة' : 'Social, Educational & Life Skills Expert - 30+ years experience' }}</div>
                     </div>
                 </div>
             </div>
