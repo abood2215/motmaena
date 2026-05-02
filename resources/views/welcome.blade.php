@@ -183,7 +183,7 @@
 </section>
 
 {{-- ════════════════ SPECIAL EVENT: DR. TARIQ VISIT ════════════════ --}}
-<section id="special-event" class="relative overflow-hidden" style="min-height: 580px; background: linear-gradient(160deg, #0c1525 0%, #111827 35%, #1a0c0c 70%, #0d0606 100%);">
+<section id="special-event" class="relative overflow-hidden" style="min-height: 680px; background: linear-gradient(160deg, #0c1525 0%, #111827 35%, #1a0c0c 70%, #0d0606 100%);">
 
     {{-- Kuwait Towers background (place kuwait-towers.webp in public/) --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
@@ -198,20 +198,20 @@
     <div class="absolute bottom-0 left-1/4 w-96 h-48 pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.15) 0%, transparent 70%); filter: blur(40px);"></div>
 
     {{-- ══ Dr. Photo: anchored bottom-left (absolute) ══ --}}
-    <div class="{{ app()->getLocale() == 'ar' ? 'left-0 lg:left-[4%]' : 'right-0 lg:right-[4%]' }} absolute bottom-0 z-10 pointer-events-none"
-         style="width: clamp(200px, 32vw, 420px);">
+    <div class="{{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} absolute bottom-0 z-10 pointer-events-none"
+         style="width: clamp(260px, 42vw, 560px);">
         <img src="{{ asset('courses-img/dr-tariq.png') }}"
              alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
-             class="w-full h-auto object-contain object-bottom drop-shadow-[0_0_60px_rgba(176,65,65,0.4)]"
-             style="max-height: 520px;">
+             class="w-full h-auto object-contain object-bottom drop-shadow-[0_0_80px_rgba(176,65,65,0.45)]"
+             style="max-height: 680px;">
         {{-- fade bottom of photo into section bg --}}
-        <div class="absolute bottom-0 inset-x-0 h-20" style="background: linear-gradient(to top, rgba(13,6,6,1) 0%, transparent 100%)"></div>
+        <div class="absolute bottom-0 inset-x-0 h-24" style="background: linear-gradient(to top, rgba(13,6,6,1) 0%, transparent 100%)"></div>
     </div>
 
     {{-- ══ Content: right column (or left for EN) ══ --}}
-    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div class="flex {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }}">
-            <div class="w-full sm:w-[75%] lg:w-[55%] xl:w-[52%]"
+            <div class="w-full sm:w-[80%] lg:w-[58%] xl:w-[54%]"
                  dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
                  style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }}">
 
