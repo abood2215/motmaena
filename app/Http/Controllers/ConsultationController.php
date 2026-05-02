@@ -22,16 +22,21 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $phone_em = "\xF0\x9F\x93\xB1"; // 📱
-        $clip_em  = "\xF0\x9F\x93\x8B"; // 📋
-        $note_em  = "\xF0\x9F\x93\x9D"; // 📝
+        // Use mb_chr() to generate emoji from Unicode codepoint at runtime
+        // avoids any file-encoding corruption of literal emoji chars
+        $em = fn(int $cp) => mb_convert_encoding(
+            pack('N', $cp), 'UTF-8', 'UCS-4BE'
+        );
 
-        $msg = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n{$phone_em} رقم التواصل: {$phone}\n{$clip_em} نوع الاستشارة: {$type}";
+        $msg = $em(0x1F4F1) . " رقم التواصل: {$phone}\n"
+             . $em(0x1F4CB) . " نوع الاستشارة: {$type}";
         if ($notes) {
-            $msg .= "\n{$note_em} تفاصيل إضافية: {$notes}";
+            $msg .= "\n" . $em(0x1F4DD) . " تفاصيل إضافية: {$notes}";
         }
 
-        return redirect('https://wa.me/96555665161?text=' . urlencode($msg));
+        $full = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n" . $msg;
+
+        return redirect('https://wa.me/96555665161?text=' . rawurlencode($full));
     }
 
     public function adminLogin(Request $request)
