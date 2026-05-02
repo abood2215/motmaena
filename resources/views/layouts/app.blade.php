@@ -12,13 +12,13 @@
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
         <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta property="og:image" content="{{ asset('logo-clinic.png') }}">
+        <meta property="og:image" content="{{ asset('image.png') }}">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
         <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta name="twitter:image" content="{{ asset('logo-clinic.png') }}">
+        <meta name="twitter:image" content="{{ asset('image.png') }}">
 
         <title>@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))</title>
 
@@ -45,7 +45,7 @@
         <div id="preloader" class="fixed inset-0 z-[9999] bg-[var(--bg-color)] flex items-center justify-center transition-opacity duration-700">
             <div class="flex flex-col items-center gap-6">
                 <div class="preloader-logo">
-                    <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-20 md:h-24">
+                    <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-20 md:h-24">
                 </div>
                 <div class="flex gap-1.5">
                     <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0s"></span>
@@ -62,7 +62,7 @@
                 <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center gap-8 md:gap-12">
                         <a href="/" class="flex items-center group shrink-0">
-                            <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 md:h-14 transition-transform group-hover:scale-105 dark:brightness-110">
+                            <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 md:h-14 transition-transform group-hover:scale-105 dark:brightness-110">
                         </a>
                         <div class="hidden lg:flex items-center gap-8">
                             <a href="/" class="nav-link {{ request()->is('/') ? 'text-primary font-bold' : '' }}">{{ __('Home') }}</a>
@@ -157,7 +157,7 @@
             <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] py-10 sm:py-16 mt-auto">
                 <div class="container mx-auto px-4">
                     <div class="flex flex-col items-center gap-5 sm:gap-8 text-center">
-                        <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
+                        <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
                         
                         <div class="flex flex-wrap justify-center gap-x-5 sm:gap-x-8 md:gap-x-10 gap-y-2 sm:gap-y-3">
                             <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>

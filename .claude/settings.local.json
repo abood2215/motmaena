@@ -9,7 +9,10 @@
       "Bash(ls not:*)",
       "Bash(tail:*)",
       "Bash(cd /c/Users/abd-allah/Desktop/motmaena_kw && php artisan view:clear 2>&1 && php artisan route:list --name=sessions 2>&1)",
-      "Bash(head:*)"
+      "Bash(head:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)"
     ]
   }
 }

@@ -225,7 +225,7 @@
 
                 {{-- Logo row --}}
                 <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2.5 mb-7">
-                    <img src="{{ asset('logo-clinic.png') }}" alt="مطمئنة" class="h-6 brightness-0 invert opacity-60">
+                    <img src="{{ asset('image.png') }}" alt="مطمئنة" class="h-6 brightness-0 invert opacity-60">
                     <div class="w-px h-4 bg-white/15"></div>
                     <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 brightness-0 invert opacity-50">
                 </div>
@@ -800,7 +800,7 @@
                                 <span class="relative text-white/15 text-7xl font-black select-none leading-none">م</span>
                             </div>
                             <div class="flex-1 bg-white flex items-center justify-center px-5 py-4">
-                                <img src="{{ asset('logo-clinic.png') }}" alt="{{ __('Motmaena Center') }}" class="w-full object-contain">
+                                <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="w-full object-contain">
                             </div>
                         </div>
                         <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-14 h-4 bg-gray-900 rounded-full z-20"></div>
