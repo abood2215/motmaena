@@ -399,7 +399,7 @@
         </a>
 
         <!-- ═══════ BACK TO TOP BUTTON ═══════ -->
-        <button id="back-to-top" class="fixed bottom-5 sm:bottom-8 {{ app()->getLocale() == 'ar' ? 'right-4 sm:right-8' : 'left-4 sm:left-8' }} z-[60] bg-primary/90 hover:bg-primary text-white p-2.5 sm:p-3 rounded-full shadow-2xl opacity-0 translate-y-5 pointer-events-none transition-all duration-500 hover:scale-110 active:scale-95 backdrop-blur" title="{{ app()->getLocale() == 'ar' ? 'العووة للأعلى' : 'Back to top' }}">
+        <button id="back-to-top" class="fixed bottom-5 sm:bottom-8 {{ app()->getLocale() == 'ar' ? 'right-4 sm:right-8' : 'left-4 sm:left-8' }} z-[60] bg-primary/90 hover:bg-primary text-white p-2.5 sm:p-3 rounded-full shadow-2xl opacity-0 translate-y-5 pointer-events-none transition-all duration-500 hover:scale-110 active:scale-95 backdrop-blur" title="{{ app()->getLocale() == 'ar' ? 'العودة للأعلى' : 'Back to top' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/>
             </svg>
