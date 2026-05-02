@@ -183,142 +183,125 @@
 </section>
 
 {{-- ════════════════ SPECIAL EVENT: DR. TARIQ VISIT ════════════════ --}}
-<section id="special-event" class="relative overflow-hidden" style="background: linear-gradient(160deg, #0c1525 0%, #111827 35%, #1a0c0c 70%, #0d0606 100%);">
+<section id="special-event" class="relative overflow-hidden" style="min-height: 580px; background: linear-gradient(160deg, #0c1525 0%, #111827 35%, #1a0c0c 70%, #0d0606 100%);">
 
-    {{-- Kuwait Towers background image (place kuwait-towers.webp in public/) --}}
+    {{-- Kuwait Towers background (place kuwait-towers.webp in public/) --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="{{ asset('kuwait-towers.webp') }}" alt=""
              class="w-full h-full object-cover object-center opacity-25"
              onerror="this.style.display='none'">
-        {{-- Gradient overlays: dark on sides, lighter in middle for photo visibility --}}
-        <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(12,21,37,0.92) 0%, rgba(12,21,37,0.65) 45%, rgba(12,21,37,0.50) 100%)"></div>
-        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(10,6,6,0.85) 0%, transparent 50%, rgba(12,21,37,0.55) 100%)"></div>
+        <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(12,21,37,0.88) 0%, rgba(12,21,37,0.55) 40%, rgba(12,21,37,0.40) 100%)"></div>
+        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(10,6,6,0.80) 0%, transparent 60%)"></div>
     </div>
 
-    {{-- Subtle red glow from bottom --}}
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.12) 0%, transparent 70%); filter: blur(40px);"></div>
+    {{-- Red glow bottom --}}
+    <div class="absolute bottom-0 left-1/4 w-96 h-48 pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.15) 0%, transparent 70%); filter: blur(40px);"></div>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 relative z-10">
-        <div class="grid lg:grid-cols-[44%_56%] gap-0 items-end max-w-6xl mx-auto">
+    {{-- ══ Dr. Photo: anchored bottom-left (absolute) ══ --}}
+    <div class="{{ app()->getLocale() == 'ar' ? 'left-0 lg:left-[4%]' : 'right-0 lg:right-[4%]' }} absolute bottom-0 z-10 pointer-events-none"
+         style="width: clamp(200px, 32vw, 420px);">
+        <img src="{{ asset('courses-img/dr-tariq.png') }}"
+             alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
+             class="w-full h-auto object-contain object-bottom drop-shadow-[0_0_60px_rgba(176,65,65,0.4)]"
+             style="max-height: 520px;">
+        {{-- fade bottom of photo into section bg --}}
+        <div class="absolute bottom-0 inset-x-0 h-20" style="background: linear-gradient(to top, rgba(13,6,6,1) 0%, transparent 100%)"></div>
+    </div>
 
-            {{-- ══ LEFT: Dr. Photo ══ --}}
-            <div class="relative flex justify-center lg:justify-end {{ app()->getLocale() == 'ar' ? 'lg:order-1' : 'lg:order-2' }}">
+    {{-- ══ Content: right column (or left for EN) ══ --}}
+    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+        <div class="flex {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }}">
+            <div class="w-full sm:w-[75%] lg:w-[55%] xl:w-[52%]"
+                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
+                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }}">
 
-                {{-- deema badge top --}}
-                <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'left-4 sm:left-8' : 'right-4 sm:right-8' }} z-20">
-                    <img src="{{ asset('deema-logo.png') }}" alt="deema"
-                         class="h-9 sm:h-10 brightness-0 invert opacity-80 drop-shadow-lg">
-                </div>
-
-                {{-- Dr. Photo --}}
-                <img src="{{ asset('courses-img/dr-tariq.png') }}"
-                     alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
-                     class="relative z-10 w-[240px] sm:w-[310px] lg:w-[370px] xl:w-[410px] h-auto object-contain object-bottom mt-16 drop-shadow-[0_20px_60px_rgba(176,65,65,0.35)]">
-
-                {{-- Bottom fade into section --}}
-                <div class="absolute bottom-0 inset-x-0 h-24 pointer-events-none" style="background: linear-gradient(to top, rgba(26,12,12,0.9) 0%, transparent 100%)"></div>
-            </div>
-
-            {{-- ══ RIGHT: Content ══ --}}
-            <div class="{{ app()->getLocale() == 'ar' ? 'text-right lg:order-2 lg:pr-10 xl:pr-16' : 'text-left lg:order-1 lg:pl-10 xl:pl-16' }} pb-8 lg:pb-12" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
-
-                {{-- mطمئنة logo top --}}
-                <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2.5 mb-8">
-                    <img src="{{ asset('logo-clinic.png') }}" alt="مطمئنة" class="h-7 brightness-0 invert opacity-70">
+                {{-- Logo row --}}
+                <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2.5 mb-7">
+                    <img src="{{ asset('logo-clinic.png') }}" alt="مطمئنة" class="h-6 brightness-0 invert opacity-60">
                     <div class="w-px h-4 bg-white/15"></div>
-                    <span class="text-white/30 text-[10px] font-black tracking-[0.3em] uppercase">MOTMAINA</span>
+                    <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 brightness-0 invert opacity-50">
                 </div>
 
                 {{-- يتواجد --}}
-                <p class="text-white/50 text-lg sm:text-xl font-bold mb-2 tracking-wide">
+                <p class="text-white/55 text-base sm:text-lg font-bold mb-2 tracking-wider">
                     {{ app()->getLocale() == 'ar' ? 'يتواجد' : 'Now Present' }}
                 </p>
 
-                {{-- Name highlighted box — exactly like flyer --}}
-                <div class="inline-block mb-1" style="background: rgba(176,65,65,0.75); backdrop-filter: blur(8px); border-radius: 8px; padding: 6px 18px;">
-                    <h2 class="text-white text-3xl sm:text-4xl lg:text-[2.8rem] font-black leading-tight tracking-tight">
+                {{-- Name in red box --}}
+                <div class="inline-block mb-3" style="background: rgba(176,65,65,0.82); border-radius: 8px; padding: 8px 20px;">
+                    <h2 class="text-white font-black leading-tight" style="font-size: clamp(1.6rem, 4vw, 2.8rem);">
                         {{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}
                     </h2>
                 </div>
 
                 {{-- في مركز مطمئنة --}}
-                <p class="text-white/75 text-base sm:text-lg font-bold mt-3 mb-6">
+                <p class="text-white/70 text-base sm:text-lg font-bold mb-7">
                     {{ app()->getLocale() == 'ar' ? 'في مركز مطمئنة - الكويت' : 'at Motmaena Center - Kuwait' }}
                 </p>
 
-                {{-- خلال شهر مايو 2026 — circular stamp + big text --}}
-                <div class="flex items-center gap-4 mb-8 {{ app()->getLocale() == 'ar' ? 'flex-row-reverse sm:flex-row' : '' }}">
-                    {{-- Stamp circle --}}
-                    <div class="shrink-0 w-16 h-16 rounded-full flex flex-col items-center justify-center border-2 border-primary"
+                {{-- خلال شهر stamp + مايو 2026 --}}
+                <div class="flex items-center gap-4 mb-7">
+                    <div class="shrink-0 w-[60px] h-[60px] rounded-full flex flex-col items-center justify-center border-2 border-primary"
                          style="background: rgba(176,65,65,0.85);">
-                        <span class="text-white text-[9px] font-black leading-none">خلال</span>
-                        <span class="text-white text-[9px] font-black leading-none mt-0.5">شهر</span>
+                        <span class="text-white text-[10px] font-black leading-none">خلال</span>
+                        <span class="text-white text-[10px] font-black leading-none mt-0.5">شهر</span>
                     </div>
-                    {{-- Month + Year --}}
-                    <div class="flex items-baseline gap-3">
-                        <span class="text-white text-[2.8rem] sm:text-5xl font-black leading-none tracking-tight">{{ app()->getLocale() == 'ar' ? 'مايو' : 'May' }}</span>
-                        <span class="text-white/60 text-2xl sm:text-3xl font-bold leading-none">2026</span>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-white font-black leading-none" style="font-size: clamp(2.2rem, 5vw, 3.5rem);">{{ app()->getLocale() == 'ar' ? 'مايو' : 'May' }}</span>
+                        <span class="text-white/55 font-bold leading-none" style="font-size: clamp(1.3rem, 3vw, 2rem);">2026</span>
                     </div>
                 </div>
 
-                {{-- Date cards: May 12 & May 13 --}}
-                <div class="flex gap-6 mb-8 {{ app()->getLocale() == 'ar' ? 'flex-row-reverse' : '' }}">
-                    @php
-                        $visitDates = [
-                            13 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
-                            12 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
-                        ];
-                    @endphp
+                {{-- Date cards --}}
+                @php
+                    $visitDates = [
+                        13 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
+                        12 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
+                    ];
+                @endphp
+                <div class="flex items-start gap-5 mb-7">
                     @foreach($visitDates as $date => $day)
                     <div class="text-center">
                         <div class="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-0.5">May</div>
-                        <div class="text-white font-black leading-none" style="font-size: clamp(3rem, 8vw, 4.5rem);">{{ $date }}</div>
-                        <div class="text-white/55 text-sm font-bold mt-1">{{ app()->getLocale() == 'ar' ? $day['ar'] : $day['en'] }}</div>
+                        <div class="text-white font-black leading-none" style="font-size: clamp(2.8rem, 6vw, 4rem);">{{ $date }}</div>
+                        <div class="text-white/55 text-sm font-bold mt-0.5">{{ app()->getLocale() == 'ar' ? $day['ar'] : $day['en'] }}</div>
                     </div>
                     @if($date === 13)
-                    <div class="w-px bg-white/15 self-stretch mx-1"></div>
+                    <div class="w-px bg-white/15 self-stretch my-1"></div>
                     @endif
                     @endforeach
                 </div>
 
-                {{-- Consultation types line — matches flyer exactly --}}
-                <div class="{{ app()->getLocale() == 'ar' ? 'border-r-[3px] pr-4' : 'border-l-[3px] pl-4' }} border-primary mb-8">
-                    <p class="text-white/80 text-lg sm:text-xl font-bold leading-snug">
+                {{-- Consultation line --}}
+                <div class="{{ app()->getLocale() == 'ar' ? 'border-r-[3px] pr-4' : 'border-l-[3px] pl-4' }} border-primary mb-7">
+                    <p class="text-white/80 text-base sm:text-lg font-bold leading-snug">
                         {{ app()->getLocale() == 'ar' ? 'لتقديم الاستشارات الحياتية' : 'Offering life consultations' }}
                     </p>
-                    <p class="text-white text-xl sm:text-2xl font-black leading-snug">
+                    <p class="text-white text-lg sm:text-xl font-black leading-snug">
                         {{ app()->getLocale() == 'ar' ? 'والتربوية والاجتماعية' : 'Educational & Social' }}
                     </p>
                 </div>
 
-                {{-- Bottom strip: contact + location + CTA --}}
-                <div class="border-t border-white/[0.12] pt-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8">
-
-                    {{-- Contact info --}}
-                    <div class="shrink-0">
-                        <div class="text-white/35 text-[10px] uppercase tracking-widest font-bold mb-1.5">{{ app()->getLocale() == 'ar' ? 'للتواصل والاستفسار' : 'Contact & Inquiries' }}</div>
-                        <div class="text-white font-black text-sm leading-relaxed" dir="ltr">+965 556 651 61</div>
-                        <div class="text-white/60 font-semibold text-sm leading-relaxed" dir="ltr">+965 998 801 40</div>
-                        <div class="flex items-center gap-1.5 mt-1.5">
-                            <svg class="w-3 h-3 text-primary/70 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span class="text-white/40 text-xs font-medium">{{ app()->getLocale() == 'ar' ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}</span>
+                {{-- Contact + CTA --}}
+                <div class="border-t border-white/[0.12] pt-5 flex flex-wrap items-center gap-x-8 gap-y-4">
+                    <div>
+                        <div class="text-white/35 text-[10px] uppercase tracking-widest font-bold mb-1">{{ app()->getLocale() == 'ar' ? 'للتواصل والاستفسار' : 'Contact' }}</div>
+                        <div class="text-white font-black text-sm leading-snug" dir="ltr">+965 556 651 61</div>
+                        <div class="text-white/55 font-semibold text-sm leading-snug" dir="ltr">+965 998 801 40</div>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <svg class="w-3 h-3 text-primary/60 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <span class="text-white/35 text-xs">{{ app()->getLocale() == 'ar' ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}</span>
                         </div>
                     </div>
-
-                    {{-- CTA Button --}}
-                    <div class="{{ app()->getLocale() == 'ar' ? 'sm:mr-auto' : 'sm:ml-auto' }}">
-                        <a href="https://wa.me/96555665161" target="_blank"
-                           class="group inline-flex items-center gap-2.5 font-black text-sm px-6 py-3.5 rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-6px_rgba(255,255,255,0.25)] active:scale-95 whitespace-nowrap"
-                           style="background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.18); color: #fff;">
-                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            {{ app()->getLocale() == 'ar' ? 'احجز الآن' : 'Book Now' }}
-                        </a>
-                    </div>
-
+                    <a href="https://wa.me/96555665161" target="_blank"
+                       class="inline-flex items-center gap-2 font-black text-sm px-5 py-3 rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                       style="background: rgba(255,255,255,0.11); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.16); color: #fff;">
+                        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        {{ app()->getLocale() == 'ar' ? 'احجز الآن' : 'Book Now' }}
+                    </a>
                 </div>
 
             </div>
-
         </div>
     </div>
 </section>
