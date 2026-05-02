@@ -57,17 +57,6 @@
 
         <div class="min-h-screen flex flex-col">
 
-            <!-- ═══════ ANNOUNCEMENT BANNER ═══════ -->
-            <div id="announcement-bar" class="bg-gradient-to-r from-primary via-primary-dark to-primary text-white text-center py-2 px-4 text-[10px] sm:text-sm font-bold relative z-[51] transition-all duration-300">
-                <div class="container mx-auto flex items-center justify-center gap-2 sm:gap-3 pr-6 sm:pr-0">
-                    <span class="animate-pulse shrink-0">🔥</span>
-                    <span class="leading-tight">{{ app()->getLocale() == 'ar' ? 'خصم 20% على جميع الدورات لفترة محدودة!' : '20% off all courses for a limited time!' }}</span>
-                    <a href="#courses" class="bg-white/20 hover:bg-white/30 px-2 sm:px-3 py-0.5 rounded-full text-[9px] sm:text-xs transition-all border border-white/20 shrink-0">{{ app()->getLocale() == 'ar' ? 'تسوّق الآن' : 'Shop Now' }}</a>
-                    <button onclick="document.getElementById('announcement-bar').style.display='none'" class="absolute {{ app()->getLocale() == 'ar' ? 'left-2' : 'right-2' }} top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            </div>
 
             <header class="bg-[var(--bg-color)]/90 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--border-color)] shadow-sm">
                 <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
