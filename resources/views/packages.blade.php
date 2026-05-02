@@ -22,7 +22,7 @@
         <p class="text-sm sm:text-base lg:text-lg text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed reveal">
             {{ app()->getLocale() == 'ar' 
                 ? 'برامج تنموية متكاملة تشمل دعم السلوك والمهارات والنمو الشامل عند الأطفال بأقصى معايير الجودة.' 
-                : 'Comprehensive therapeutic and developmental programs covering behavior, skills, and holistic growth for children at the highest quality standards.' }}
+                : 'Comprehensive developmental and support programs covering behavior, skills, and holistic growth for children at the highest quality standards.' }}
         </p>
     </div>
 </section>
@@ -58,7 +58,7 @@
 
             $packages = [
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'التوحد' : 'Autism',
+                    'title' => app()->getLocale() == 'ar' ? 'تنمية التواصل الاجتماعي' : 'Social Communication Development',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a2 2 0 01-2 2 2 2 0 01-2-2V4zm-3 8a3 3 0 01-3-3V7a3 3 0 013-3h.5a3 3 0 013 3v2a3 3 0 01-3 3H8zm10-5a3 3 0 00-3 3v2a3 3 0 003 3h.5a3 3 0 003-3V7a3 3 0 00-3-3H18zM6 20a1 1 0 01-1-1v-1a5 5 0 015-5h4a5 5 0 015 5v1a1 1 0 01-1 1H6z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنمية التواصل اللفظي والبصري', 'تحسين المهارات الاجتماعية', 'دعم السلوك وتعديله']
@@ -152,7 +152,7 @@
                             'Neglect or lack of encouragement and appreciation',
                             'Absence of positive role models in the child\'s life',
                         ]],
-                        ['category' => 'Social & Psychological Factors', 'items' => [
+                        ['category' => 'Social & Environmental Factors', 'items' => [
                             'Negative social experiences (bullying, difficulty making friends)',
                             'Excessively high parental expectations and pressure for perfection',
                             'Exposure to trauma (divorce, frequent relocation)',
@@ -196,26 +196,24 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'الصمت الاختياري' : 'Selective Mutism',
+                    'title' => app()->getLocale() == 'ar' ? 'دعم التواصل الاجتماعي' : 'Social Communication Support',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['برنامج تدريجي ومنظم للتواصل', 'تعزيز الثقة الاجتماعية', 'تدريب لفظي ومهاري متخصص']
-                        : ['Gradual Communication Therapy', 'Social Anxiety Reduction', 'Verbal & Skill Training'],
+                        : ['Gradual Communication Program', 'Social Confidence Building', 'Verbal & Skill Training'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'التحديات المرتبطة بالحالة', 'items' => [
-                            'تأثر المستوى الأكاديمي عند الطفل بسبب ضعف المشاركة في المدرسة',
-                            'بسبب طابع القلق والخجل عند الطفل المصاب، فإنه يكون أكثر عرضة للإصابة بصعوبات التكيف الاجتماعي',
-                            'مع استمرارية الاضطراب، يواجه الطفل صعوبة في تكوين العلاقات الاجتماعية',
-                            'يتسم بعض الأطفال المصابين بالصمت الاختياري بالسلبية والعدوانية والسلوكيات القهرية في المنزل',
+                        ['category' => 'العلامات التي ندعم فيها', 'items' => [
+                            'تأثر المستوى الأكاديمي بسبب ضعف المشاركة في المدرسة',
+                            'صعوبة التكيف الاجتماعي والخجل الشديد',
+                            'صعوبة في تكوين الصداقات والعلاقات الاجتماعية',
                             'يمكن للطفل أن يتحسن مع البرامج التدريبية المناسبة',
                         ]],
                     ] : [
-                        ['category' => 'Effects of the Disorder', 'items' => [
-                            'Academic level affected due to poor school participation',
-                            'More susceptible to anxiety and depression due to nature of anxiety/shyness',
-                            'Difficulty forming social relationships with continued disorder',
-                            'Some children exhibit negativity, aggression, and compulsive behaviors at home',
-                            'An affected child can improve with appropriate treatments or sometimes without intervention',
+                        ['category' => 'Signs We Can Help With', 'items' => [
+                            'Academic performance affected by limited school participation',
+                            'Difficulty with social adaptation and shyness',
+                            'Difficulty forming friendships and social relationships',
+                            'Children can improve significantly with the right training programs',
                         ]],
                     ],
                 ],
@@ -224,7 +222,7 @@
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['التعامل مع مخاوف النوم والظلام', 'توتر المدرسة والانفصال', 'تنظيم المشاعر والانفعالات']
-                        : ['Sleep & Darkness Fear Therapy', 'School Separation Anxiety', 'Anxiety & Emotion Regulation'],
+                        : ['Sleep & Nighttime Support', 'School Transition Support', 'Emotion & Feelings Regulation'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
                         ['category' => 'أسباب تطورية وبيئية', 'items' => [
                             'توتر الانفصال الطبيعي (بين 6 أشهر و 3 سنوات)',
@@ -237,9 +235,9 @@
                             'أسلوب التربية (الحماية الزائدة أو النقد القاسي)',
                             'التنمر، الضغط الدراسي، وصعوبة التكيف الاجتماعي',
                         ]],
-                        ['category' => 'عوامل بيولوجية', 'items' => [
-                            'الوراثة والعوامل البيئية',
+                        ['category' => 'عوامل التطور والحساسية الحسية', 'items' => [
                             'الحساسية الحسية المفرطة تجاه الأصوات أو الإضاءة',
+                            'الاستعداد الطبيعي والعوامل الفردية للطفل',
                         ]],
                     ] : [
                         ['category' => 'Developmental Causes', 'items' => [
@@ -253,9 +251,9 @@
                             'Parenting style (overprotection or harsh criticism)',
                             'Bullying, academic pressure, and social adaptation',
                         ]],
-                        ['category' => 'Biological Factors', 'items' => [
-                            'Genetics (anxiety traits from parents)',
+                        ['category' => 'Developmental & Sensory Factors', 'items' => [
                             'Sensory hypersensitivity to sound or light',
+                            'Individual temperament and natural tendencies',
                         ]],
                     ],
                 ],
@@ -266,9 +264,9 @@
                         ? ['جلسات النطق والتواصل الفعّال', 'تحسين الطلاقة اللغوية', 'تقنيات تخفيف التوتر وزيادة الثقة']
                         : ['Speech & Communication Sessions', 'Language Fluency Improvement', 'Tension Reduction Techniques'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'عوامل حيوية وعصبية', 'items' => [
-                            'عوامل وراثية وجينية تؤثر على الكلام',
-                            'اختلافات في وظائف الدماغ والتنسيق العضلي العصبي للنطق',
+                        ['category' => 'عوامل التطور الطبيعي', 'items' => [
+                            'استعداد فردي يؤثر على طلاقة الكلام',
+                            'تسارع في التطور اللغوي مع بطء في التنسيق الحركي للنطق',
                         ]],
                         ['category' => 'عوامل نمو اللغة', 'items' => [
                             'تسابق الأفكار مع قدرات النطق (العقل أسرع من العضلات)',
@@ -281,15 +279,15 @@
                             'الحساسية الزائدة لردود الفعل',
                         ]],
                     ] : [
-                        ['category' => 'Biological & Neuro', 'items' => [
-                            'Genetic factors affecting speech processing',
-                            'Brain function differences and neuromuscular coordination',
+                        ['category' => 'Natural Development Factors', 'items' => [
+                            'Individual traits affecting speech fluency',
+                            'Fast language development with slower speech coordination',
                         ]],
                         ['category' => 'Language Development', 'items' => [
                             'Racing thoughts vs speech abilities (mind faster than tongue)',
                             'Using complex sentences before skills are ready',
                         ]],
-                        ['category' => 'Environmental & Psych', 'items' => [
+                        ['category' => 'Environmental & Social', 'items' => [
                             'Pressure to speak quickly or in public',
                             'Family stress and anxiety-charged environment',
                             'Negative reactions (mockery or interruptions)',
@@ -298,13 +296,13 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'فرط الحركة (ADHD)' : 'ADHD',
+                    'title' => app()->getLocale() == 'ar' ? 'تنمية الانتباه والتركيز' : 'Attention & Focus Development',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنظيم السلوك والطاقة الزائدة', 'تحسين التركيز والانتباه', 'خطط متابعة مدرسية شاملة']
                         : ['Behavior & Energy Management', 'Focus & Attention Improvement', 'Comprehensive School Plans'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'أعراض فرط الحركة وتشتت الانتباه', 'items' => [
+                        ['category' => 'العلامات التي ندعم فيها', 'items' => [
                             'الحركة الدائمة',
                             'عدم القدرة على الإصغاء',
                             'العجز عن اتباع التعليمات',
@@ -318,7 +316,7 @@
                             'عدم القدرة على التعامل مع الخبرات البيئية بالشكل السليم',
                         ]],
                     ] : [
-                        ['category' => 'ADHD Symptoms', 'items' => [
+                        ['category' => 'Signs We Can Help With', 'items' => [
                             'Constant movement',
                             'Inability to listen',
                             'Unable to follow instructions',
@@ -338,7 +336,7 @@
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['اختبارات الذكاء والسلوك المعتمدة', 'تقييمات تربوية ومدرسية', 'تقييم شامل ودقيق']
-                        : ['Accredited IQ & Behavior Tests', 'Educational & School Evaluations', 'Comprehensive Mental Assessment'],
+                        : ['Accredited IQ & Behavior Tests', 'Educational & School Evaluations', 'Comprehensive Educational Assessment'],
                     'symptoms' => [],
                 ],
                 [
@@ -346,11 +344,11 @@
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تعديل السلوك العدواني والانفجاري', 'إدارة الغضب والعناد', 'ضبط الانفعالات وتوجيهها']
-                        : ['Aggressive Behavior Therapy', 'Anger & Stubbornness Management', 'Emotional Control & Guidance'],
+                        : ['Positive Behavior Development', 'Anger & Stubbornness Management', 'Emotional Control & Guidance'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
                         ['category' => 'العوامل المؤثرة في تشكيل السلوك', 'items' => [
                             'التقليد والمحاكاة: الطفل مرآة لوالديه ويتعلم بالملاحظة',
-                            'النمو العصبي: عدم اكتمال نمو فص الدماغ المسؤول عن التحكم',
+                            'تفاوت في مستوى التطور والتحكم الذاتي',
                             'تلبية الاحتياجات: وسيلة لجذب الانتباه أو التعبير عن رغباته',
                         ]],
                         ['category' => 'أنواع السلوكيات وأسبابها المحتملة', 'items' => [
@@ -368,7 +366,7 @@
                     ] : [
                         ['category' => 'Factors Affecting Behavior', 'items' => [
                             'Imitation: Children mirror parents and learn by observation',
-                            'Neural Growth: Incomplete development of control centers',
+                            'Developmental differences in self-regulation',
                             'Meeting Needs: A way to get attention or express desires',
                         ]],
                         ['category' => 'Common Behaviors & Causes', 'items' => [
@@ -393,105 +391,93 @@
                         : ['Life & Communication Skills', 'Emotion & Behavior Regulation', 'Social & Interactive Skills'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
                         ['category' => 'عوامل اكتساب المهارات', 'items' => [
-                            'النضج البيولوجي (نمو العضلات ومراكز النطق)',
-                            'الاستمرارية والتكرار لبناء مسارات عصبية قوية',
+                            'النمو الطبيعي للعضلات وقدرات الكلام',
+                            'الاستمرارية والتكرار لترسيخ المهارات المكتسبة',
                             'نوعية المحفزات في البيئة (قصص، تفاعل، لعب حر)',
                             'الدعم العاطفي والشعور بالأمان ينمي شجاعة التجربة',
                         ]],
                     ] : [
                         ['category' => 'Skill Acquisition', 'items' => [
-                            'Biological maturity (muscle & speech center growth)',
-                            'Consistency and repetition to build neural pathways',
+                            'Natural growth of muscles and speech capabilities',
+                            'Consistency and repetition to reinforce acquired skills',
                             'Quality of environment (stories, interaction, play)',
                             'Emotional security builds courage to experiment',
                         ]],
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'متلازمة توريت' : 'Tourette Syndrome',
+                    'title' => app()->getLocale() == 'ar' ? 'دعم التحديات السلوكية' : 'Behavioral Challenges Support',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
-                        ? ['دعم الحركات اللاإرادية (Tics)', 'تدريب سلوكي متخصص', 'تنسيق تأهيلي ومتابعة متخصصة']
-                        : ['Tics Management Support', 'Specialized Behavior Therapy', 'Medical & Rehab Coordination'],
+                        ? ['تعديل السلوك غير المرغوب', 'تدريب مهارات التحكم الذاتي', 'متابعة تخصصية ودعم أسري']
+                        : ['Unwanted Behavior Modification', 'Self-Control Skills Training', 'Specialized Follow-up & Family Support'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'الأسباب', 'items' => [
-                            'السبب الدقيق وراء الإصابة بمتلازمة توريت يعد غير معروف، وفي العادة يحدث هذا الاضطراب المعقد بسبب مزيج من الصفات الموروثة (الجينية)',
-                            'المواد الكيميائية في النواقل العصبية قد تلعب دوراً في الدماغ فهي التي تنقل نبضات العصب، والتي تتضمن الدوبامين والسيروتونين',
+                        ['category' => 'العلامات التي ندعم فيها', 'items' => [
+                            'تكرار حركات أو أصوات لا إرادية بشكل مزعج',
+                            'صعوبة في التحكم بالسلوك الانفعالي في المواقف الاجتماعية',
+                            'تأثر الأداء الأكاديمي والاجتماعي جراء الحركات المتكررة',
                         ]],
                     ] : [
-                        ['category' => 'Causes', 'items' => [
-                            'The exact cause of Tourette syndrome is unknown, usually a mix of inherited/genetic traits',
-                            'Chemicals in neural transmitters may play a role in the brain by transmitting nerve impulses, including Dopamine and Serotonin',
+                        ['category' => 'Signs We Can Help With', 'items' => [
+                            'Repeated involuntary movements or sounds',
+                            'Difficulty controlling impulsive behaviors in social settings',
+                            'Academic and social performance affected by repetitive patterns',
                         ]],
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'قلق الانفصال' : 'Separation Anxiety',
+                    'title' => app()->getLocale() == 'ar' ? 'تعزيز الاستقلالية والثقة' : 'Independence & Confidence Building',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
-                        ? ['تحسين أنماط التعلق', 'تخفيف توتر الانفصال المدرسي', 'تمكين الاستقلالية والثقة']
-                        : ['Attachment Therapy', 'School Anxiety Reduction', 'Independence & Confidence Building'],
+                        ? ['بناء الثقة الاجتماعية', 'دعم التكيّف المدرسي', 'تمكين الاستقلالية والثقة']
+                        : ['Building Social Confidence', 'School Adjustment Support', 'Independence & Confidence Building'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'الأعراض والعلامات التحذيرية', 'items' => [
-                            'توتر شديد عند الفراق عن المنزل أو الأشخاص المقربين، ولحظات وداع مؤلمة طويلاً',
-                            'بكاء مستمر وتوسل للوالدين لمنعهم من المغادرة، مما يزيد من صعوبة الانفصال',
-                            'خوف دائم من فقدان الوالدين بسبب (الخطف، المرض، أو الوفاة) وقلق حيال مكان تواجدهم',
-                            'رفض الذهاب للمدرسة أو التخييم أو النوم بعيداً عن المنزل، وصعوبة البقاء وحيداً في الغرفة',
-                            'مشاكل في النوم والإصرار على وجود أحد الوالدين عند النوم، وكوابيس متكررة عن الكوارث',
-                            'ظهور أعراض جسدية عند محاولة الانفصال مثل الصداع أو آلام المعدة تختفي بوجود الوالدين',
+                        ['category' => 'العلامات التي ندعم فيها', 'items' => [
+                            'توتر شديد عند الفراق عن الوالدين أو الأشخاص المقربين',
+                            'بكاء مستمر وصعوبة في التكيّف مع مواقف الانفصال اليومية',
+                            'قلق مستمر حول سلامة الأشخاص المحيطين وأماكن وجودهم',
+                            'رفض الذهاب للمدرسة أو النوم بعيداً عن المنزل',
+                            'صعوبة النوم والإصرار على وجود أحد الوالدين',
+                            'شكاوى جسدية (صداع، آلام بطن) تختفي عند وجود الوالدين',
                         ]],
                     ] : [
-                        ['category' => 'Warning Signs & Symptoms', 'items' => [
-                            'Extreme distress when separating from home or attachment figures, and painful farewells',
-                            'Persistent crying and begging parents not to leave, making separation difficult',
-                            'Constant fear of losing parents (kidnapping, illness, or death) and anxiety about their location',
-                            'Refusal to go to school, camps, or sleep away from home, and difficulty staying alone',
-                            'Sleep problems and insisting on a parent being present at bedtime, with recurring nightmares',
-                            'Physical symptoms like headaches or stomach aches when separation is attempted',
+                        ['category' => 'Signs We Can Help With', 'items' => [
+                            'Extreme distress when separating from parents or attachment figures',
+                            'Persistent crying and difficulty adapting to daily separation situations',
+                            'Ongoing worry about the safety and whereabouts of loved ones',
+                            'Refusal to go to school or sleep away from home',
+                            'Sleep difficulties and insisting on a parent being present at bedtime',
+                            'Physical complaints (headaches, stomach aches) that ease when parents are present',
                         ]],
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'الإعاقة الذهنية' : 'Intellectual Disability',
+                    'title' => app()->getLocale() == 'ar' ? 'دعم الاحتياجات الخاصة' : 'Special Needs Support',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنمية المهارات المعرفية الأساسية', 'مهارات الحياة اليومية المستقلة', 'تدريب أكاديمي مبسط ومنظم']
                         : ['Core Cognitive Skills Development', 'Independent Daily Life Skills', 'Structured Academic Training'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'أسباب ما قبل الولادة (الجنين)', 'items' => [
-                            'خلل الكروموسومات (مثل متلازمة داون)',
-                            'انتقال جينات وراثية معينة تؤثر على تطور المخ',
-                            'أمراض الأم أثناء الحمل (الحصبة، التسمم، سوء التغذية)',
-                            'تناول الأدوية الخطيرة أو التعرض للإشعاع',
+                        ['category' => 'المهارات التي ندعم تطويرها', 'items' => [
+                            'مهارات التواصل اللفظي وغير اللفظي',
+                            'مهارات الاعتناء بالنفس والاستقلالية',
+                            'المهارات الاجتماعية والاندماج مع الآخرين',
                         ]],
-                        ['category' => 'أسباب أثناء الولادة (المخاض)', 'items' => [
-                            'نقص الأكسجين الحاد عن دماغ الجنين',
-                            'الولادة المبتسرة (قبل الأوان) للخدج',
-                            'إصابات الرأس والنزيف الدماغي وقت الولادة',
-                        ]],
-                        ['category' => 'أسباب ما بعد الولادة', 'items' => [
-                            'العدوى والالتهابات (مثل التهاب السحايا أو الدماغ)',
-                            'الحوادث والسقوط القوي على الرأس',
-                            'التسمم الكيميائي أو الرصاص',
-                            'سوء التغذية الحاد في أول عامين من العمر',
+                        ['category' => 'أسلوب الدعم المتبع', 'items' => [
+                            'تقييم شامل لتحديد احتياجات الطفل الفردية',
+                            'برامج مخصصة وفق الإيقاع الخاص بكل طفل',
+                            'متابعة مستمرة مع الأهل لتحقيق أفضل النتائج',
                         ]],
                     ] : [
-                        ['category' => 'Prenatal Causes', 'items' => [
-                            'Chromosomal defects (e.g., Down Syndrome)',
-                            'Genetic traits affecting brain development',
-                            'Maternal illnesses (Measles, infections, toxins)',
-                            'Dangerous drugs or radiation exposure',
+                        ['category' => 'Skills We Support', 'items' => [
+                            'Verbal and non-verbal communication skills',
+                            'Self-care and independent daily living skills',
+                            'Social skills and integration with peers',
                         ]],
-                        ['category' => 'Perinatal Causes', 'items' => [
-                            'Severe partial/total oxygen deficiency',
-                            'Premature birth (preterm fragile brain)',
-                            'Head injuries or brain hemorrhage during labor',
-                        ]],
-                        ['category' => 'Postnatal Causes', 'items' => [
-                            'Infections like Meningitis or Encephalitis',
-                            'Accidents and severe head impacts',
-                            'Chemical or lead poisoning',
-                            'Severe malnutrition in first two years',
+                        ['category' => 'Our Support Approach', 'items' => [
+                            'Comprehensive assessment to identify each child\'s needs',
+                            'Customized programs designed around each child\'s pace',
+                            'Ongoing parent involvement for best outcomes',
                         ]],
                     ],
                 ],
