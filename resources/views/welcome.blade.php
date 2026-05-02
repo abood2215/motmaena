@@ -183,19 +183,27 @@
 </section>
 
 {{-- ════════════════ SPECIAL EVENT: DR. TARIQ VISIT ════════════════ --}}
-<section id="special-event" class="relative overflow-hidden" style="min-height: 680px; background: linear-gradient(160deg, #0c1525 0%, #111827 35%, #1a0c0c 70%, #0d0606 100%);">
+<section id="special-event" class="relative overflow-hidden dark:bg-[#09111f] bg-[#0e1a2e]" style="min-height: 680px;">
 
-    {{-- Kuwait Towers background (place kuwait-towers.webp in public/) --}}
+    {{-- Kuwait Towers background --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="{{ asset('kuwait-towers.webp') }}" alt=""
-             class="w-full h-full object-cover object-center opacity-25"
+             class="w-full h-full object-cover object-center dark:opacity-40 opacity-55"
              onerror="this.style.display='none'">
-        <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(12,21,37,0.88) 0%, rgba(12,21,37,0.55) 40%, rgba(12,21,37,0.40) 100%)"></div>
-        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(10,6,6,0.80) 0%, transparent 60%)"></div>
+        {{-- Light mode: medium overlay so text is readable but image is clear --}}
+        <div class="absolute inset-0 dark:hidden"
+             style="background: linear-gradient(to right, rgba(8,18,36,0.82) 0%, rgba(8,18,36,0.50) 40%, rgba(8,18,36,0.35) 100%)"></div>
+        <div class="absolute inset-0 dark:hidden"
+             style="background: linear-gradient(to top, rgba(8,18,36,0.75) 0%, transparent 55%)"></div>
+        {{-- Dark mode: heavier overlay --}}
+        <div class="absolute inset-0 hidden dark:block"
+             style="background: linear-gradient(to right, rgba(5,10,20,0.92) 0%, rgba(5,10,20,0.65) 40%, rgba(5,10,20,0.45) 100%)"></div>
+        <div class="absolute inset-0 hidden dark:block"
+             style="background: linear-gradient(to top, rgba(5,5,10,0.85) 0%, transparent 55%)"></div>
     </div>
 
     {{-- Red glow bottom --}}
-    <div class="absolute bottom-0 left-1/4 w-96 h-48 pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.15) 0%, transparent 70%); filter: blur(40px);"></div>
+    <div class="absolute bottom-0 left-1/4 w-96 h-48 pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.18) 0%, transparent 70%); filter: blur(40px);"></div>
 
     {{-- ══ Dr. Photo: anchored bottom-left (absolute) ══ --}}
     <div class="{{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} absolute bottom-0 z-10 pointer-events-none"
