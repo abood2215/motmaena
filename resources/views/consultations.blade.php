@@ -5,6 +5,14 @@
 @section('content')
 
 <style>
+/* ── Hide global layout WA button on this page (has its own) ── */
+#global-float-wa { display: none !important; }
+
+/* ── Directional reveal variants ── */
+.reveal-left  { opacity: 0; transform: translateX({{ app()->getLocale() === 'ar' ? '40px' : '-40px' }}); transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1); }
+.reveal-right { opacity: 0; transform: translateX({{ app()->getLocale() === 'ar' ? '-40px' : '40px' }}); transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1); }
+.reveal-left.active, .reveal-right.active { opacity: 1; transform: none; }
+
 /* ── Variables ── */
 .consult-page {
   --red:    #b04141;
@@ -909,6 +917,41 @@
   .stats-inner { grid-template-columns: 1fr 1fr; }
   .dr-img-wrap .ring { width: 200px; height: 200px; }
   .dr-img-wrap img, .dr-img-placeholder { width: 176px; height: 176px; }
+  /* hero mobile */
+  .hero-consult h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+  .hero-consult .sub { font-size: 14px; }
+  .hero-cta-group { flex-direction: column; gap: 12px; }
+  .btn-hero-primary, .btn-hero-secondary { width: 100%; justify-content: center; }
+  /* pain cards compact on small phones */
+  .pain-card { padding: 16px 14px; }
+  .pain-card .emoji { font-size: 28px; }
+  /* steps */
+  .step-num { width: 40px; height: 40px; font-size: 18px; }
+  /* testimonials */
+  .testimonial-card { padding: 20px 16px; }
+  /* advisors */
+  .advisor-card { padding: 20px 16px; }
+  /* outcomes */
+  .outcome-item { padding: 14px 16px; }
+  /* dr section */
+  .dr-inner { gap: 24px; }
+  /* live bar scroll on mobile */
+  .live-bar { overflow-x: auto; white-space: nowrap; flex-wrap: nowrap; gap: 12px; padding: 10px 16px; }
+  .live-bar .sep { display: none; }
+}
+/* Stagger reveal for grid children on mobile */
+@media (max-width: 768px) {
+  .pain-grid .pain-card:nth-child(1) { transition-delay: 0s; }
+  .pain-grid .pain-card:nth-child(2) { transition-delay: .12s; }
+  .pain-grid .pain-card:nth-child(3) { transition-delay: .24s; }
+  .pain-grid .pain-card:nth-child(4) { transition-delay: .36s; }
+  .testimonials-grid .testimonial-card:nth-child(1) { transition-delay: 0s; }
+  .testimonials-grid .testimonial-card:nth-child(2) { transition-delay: .15s; }
+  .testimonials-grid .testimonial-card:nth-child(3) { transition-delay: .30s; }
+  .advisors-grid .advisor-card:nth-child(1) { transition-delay: 0s; }
+  .advisors-grid .advisor-card:nth-child(2) { transition-delay: .12s; }
+  .advisors-grid .advisor-card:nth-child(3) { transition-delay: .24s; }
+  .advisors-grid .advisor-card:nth-child(4) { transition-delay: .36s; }
 }
 </style>
 
@@ -1053,7 +1096,7 @@
   {{-- ── Dr. Tariq Featured ── --}}
   <section class="dr-section">
     <div class="dr-inner">
-      <div>
+      <div class="reveal-left">
         <div class="dr-badge">
           <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
           {{ app()->getLocale() === 'ar' ? 'مستشار بارز في الإرشاد الأسري والتربوي' : 'Leading Advisor in Family & Educational Counseling' }}
@@ -1613,10 +1656,10 @@ function updatePhoneField() {
   function toAr(n){ return String(n).split('').map(d => arabicNums[+d]||d).join(''); }
 
   /* ── Reveal on scroll ── */
-  const reveals = document.querySelectorAll('.consult-page .reveal');
+  const reveals = document.querySelectorAll('.consult-page .reveal, .consult-page .reveal-left, .consult-page .reveal-right');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); obs.unobserve(e.target); } });
-  }, { threshold: 0.10 });
+  }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
 
   /* ── Animated counters ── */

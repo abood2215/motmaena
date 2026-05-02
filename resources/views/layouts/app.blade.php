@@ -382,6 +382,7 @@
         </script>
         <!-- Floating WhatsApp Button -->
         <a href="https://wa.me/96555665161" target="_blank"
+           id="global-float-wa"
            class="fixed bottom-5 sm:bottom-8 {{ app()->getLocale() == 'ar' ? 'left-4 sm:left-8' : 'right-4 sm:right-8' }} z-[60] group flex items-center gap-3"
            title="{{ __('Contact us on WhatsApp') }}">
             <div class="bg-white dark:bg-dark-surface px-4 py-2 rounded-full shadow-2xl border border-primary/10 opacity-0 -translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 hidden md:flex items-center gap-2">
