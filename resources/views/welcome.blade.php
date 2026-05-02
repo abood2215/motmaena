@@ -216,11 +216,11 @@
     </div>
 
     {{-- ══ Content: right column (or left for EN) ══ --}}
-    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-white">
         <div class="flex {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }}">
             <div class="w-full sm:w-[80%] lg:w-[58%] xl:w-[54%]"
                  dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
-                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }} text-shadow: 0 2px 12px rgba(0,0,0,0.9);">
+                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }} text-shadow: 0 2px 10px rgba(0,0,0,0.85);">
 
 
                 {{-- Logo row --}}
