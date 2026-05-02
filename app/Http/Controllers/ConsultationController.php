@@ -22,9 +22,13 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $msg = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n📱 رقم التواصل: {$phone}\n📋 نوع الاستشارة: {$type}";
+        $phone_em = "\u{1F4F1}";
+        $clip_em  = "\u{1F4CB}";
+        $note_em  = "\u{1F4DD}";
+
+        $msg = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n{$phone_em} رقم التواصل: {$phone}\n{$clip_em} نوع الاستشارة: {$type}";
         if ($notes) {
-            $msg .= "\n📝 تفاصيل إضافية: {$notes}";
+            $msg .= "\n{$note_em} تفاصيل إضافية: {$notes}";
         }
 
         return redirect('https://wa.me/96555665161?text=' . urlencode($msg));
