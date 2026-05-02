@@ -18,20 +18,22 @@ class ConsultationController extends Controller
 
         ConsultationBooking::create($data);
 
+        // JS (String.fromCodePoint) builds the WhatsApp URL client-side for correct emoji rendering
+        if ($request->expectsJson()) {
+            return response()->json(['ok' => true]);
+        }
+
+        // Fallback for non-JS: plain text without emoji
         $type  = $data['problem_type'];
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $star = mb_chr(0x1F31F, 'UTF-8'); // 🌟 glowing star
-        $chk  = mb_chr(0x2705,  'UTF-8'); // ✅ check mark
-        $pin  = mb_chr(0x1F4DD, 'UTF-8'); // 📝 memo
-
-        $msg  = "{$star} مرحباً مركز مطمئنة\n";
+        $msg  = "مرحباً مركز مطمئنة\n";
         $msg .= "أريد حجز استشارة\n\n";
-        $msg .= "{$chk} *رقم التواصل:* {$phone}\n";
-        $msg .= "{$chk} *نوع الاستشارة:* {$type}";
+        $msg .= "رقم التواصل: {$phone}\n";
+        $msg .= "نوع الاستشارة: {$type}";
         if ($notes) {
-            $msg .= "\n{$pin} *ملاحظات:* {$notes}";
+            $msg .= "\nملاحظات: {$notes}";
         }
 
         return redirect('https://wa.me/96555665161?text=' . rawurlencode($msg));

@@ -1457,7 +1457,7 @@
 
           {{-- Booking Form — appears after agreeing --}}
           <div class="booking-form-wrap" id="booking-form-wrap">
-            <form class="booking-form" method="POST" action="{{ route('consultations.book') }}" id="booking-form" onsubmit="updatePhoneField()">
+            <form class="booking-form" method="POST" action="{{ route('consultations.book') }}" id="booking-form">
               @csrf
 
               <h4>
@@ -1645,10 +1645,54 @@ function updatePhoneField() {
   const selectedCode = code.value === 'other' ? '' : code.value;
   const raw = num.value.replace(/\D/g, '');
   hidden.value = selectedCode ? ('+' + selectedCode + raw) : raw;
-  /* also update the real phone input name so only hidden submits */
   num.removeAttribute('name');
   hidden.setAttribute('name', 'phone');
 }
+
+/* ── Booking form AJAX submit — builds WhatsApp URL via JS for correct emoji ── */
+(function () {
+  const form = document.getElementById('booking-form');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    updatePhoneField();
+
+    const fd = new FormData(form);
+    const phone = fd.get('phone') || '';
+    const type  = fd.get('problem_type') || '';
+    const notes = fd.get('notes') || '';
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: fd
+    })
+    .then(r => r.ok ? r.json() : Promise.reject(r))
+    .then(json => {
+      if (!json.ok) return;
+
+      const star = String.fromCodePoint(0x1F31F); // 🌟
+      const chk  = String.fromCodePoint(0x2705);  // ✅
+      const pin  = String.fromCodePoint(0x1F4DD); // 📝
+
+      let msg = star + ' مرحباً مركز مطمئنة\n'
+              + 'أريد حجز استشارة\n\n'
+              + chk + ' *رقم التواصل:* ' + phone + '\n'
+              + chk + ' *نوع الاستشارة:* ' + type;
+      if (notes.trim()) {
+        msg += '\n' + pin + ' *ملاحظات:* ' + notes;
+      }
+
+      window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
+    })
+    .catch(() => {
+      // Fallback: plain POST (no emoji but still works)
+      form.removeEventListener('submit', arguments.callee);
+      form.submit();
+    });
+  });
+})();
 
 (function(){
   const isAr = '{{ app()->getLocale() }}' === 'ar';
