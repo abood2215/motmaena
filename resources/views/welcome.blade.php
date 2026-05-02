@@ -188,18 +188,17 @@
     {{-- Kuwait Towers background --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="{{ asset('kuwait-towers.webp') }}" alt=""
-             class="w-full h-full object-cover object-center dark:opacity-40 opacity-55"
+             class="w-full h-full object-cover object-center opacity-50"
              onerror="this.style.display='none'">
-        {{-- Light mode: medium overlay so text is readable but image is clear --}}
-        <div class="absolute inset-0 dark:hidden"
-             style="background: linear-gradient(to right, rgba(8,18,36,0.82) 0%, rgba(8,18,36,0.50) 40%, rgba(8,18,36,0.35) 100%)"></div>
-        <div class="absolute inset-0 dark:hidden"
-             style="background: linear-gradient(to top, rgba(8,18,36,0.75) 0%, transparent 55%)"></div>
-        {{-- Dark mode: heavier overlay --}}
-        <div class="absolute inset-0 hidden dark:block"
-             style="background: linear-gradient(to right, rgba(5,10,20,0.92) 0%, rgba(5,10,20,0.65) 40%, rgba(5,10,20,0.45) 100%)"></div>
-        <div class="absolute inset-0 hidden dark:block"
-             style="background: linear-gradient(to top, rgba(5,5,10,0.85) 0%, transparent 55%)"></div>
+        {{-- Heavy dark overlay on the right (content side) — both modes --}}
+        <div class="absolute inset-0"
+             style="background: linear-gradient(to left, rgba(5,12,25,0.93) 0%, rgba(5,12,25,0.88) 35%, rgba(5,12,25,0.55) 58%, transparent 100%)"></div>
+        {{-- Darken bottom for readability --}}
+        <div class="absolute inset-0"
+             style="background: linear-gradient(to top, rgba(5,12,25,0.80) 0%, transparent 50%)"></div>
+        {{-- Extra subtle tint on left (photo side) so photo stands out --}}
+        <div class="absolute inset-0"
+             style="background: linear-gradient(to right, rgba(5,12,25,0.55) 0%, transparent 45%)"></div>
     </div>
 
     {{-- Red glow bottom --}}
@@ -221,7 +220,8 @@
         <div class="flex {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }}">
             <div class="w-full sm:w-[80%] lg:w-[58%] xl:w-[54%]"
                  dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
-                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }}">
+                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }} text-shadow: 0 2px 12px rgba(0,0,0,0.9);">
+
 
                 {{-- Logo row --}}
                 <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2.5 mb-7">
