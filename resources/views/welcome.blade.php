@@ -530,7 +530,7 @@
                         <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="text-xs font-bold mb-1 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'سعر الاشتراك في الدورة' : 'Course Price' }}</div>
+                        <div class="text-xs font-bold mb-1 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'سعر الاشتراك في الدورتين' : 'Bundle Price (Both Courses)' }}</div>
                         <div class="flex items-baseline gap-2 sm:gap-3">
                             <span class="text-primary font-black text-xl sm:text-2xl lg:text-3xl">{{ app()->getLocale() == 'ar' ? '50 دينار' : '50 KWD' }}</span>
                             <span class="text-sm font-bold line-through opacity-40 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '60' : '60 KWD' }}</span>
@@ -543,7 +543,7 @@
 
                 {{-- Per-course price note --}}
                 <p class="text-xs font-medium mb-6 text-gray-500 dark:text-gray-400">
-                    {{ app()->getLocale() == 'ar' ? '* الأربعاء من 7–9 م · حضوري · مركز مطمئنة الكويت' : '* Every Wednesday 7–9 PM · In-person · Motmaena Center Kuwait' }}
+                    {{ app()->getLocale() == 'ar' ? '* سعر كل دورة منفردة 30 دينار كويتي' : '* Each course individually: 30 KWD' }}
                 </p>
 
                 {{-- CTA --}}
