@@ -141,6 +141,26 @@ class ConsultationController extends Controller
         return $response;
     }
 
+    public function diag()
+    {
+        $e1 = '%F0%9F%93%B1';
+        $e2 = '%F0%9F%93%8B';
+        $gitHash = trim(shell_exec('git -C ' . base_path() . ' rev-parse --short HEAD') ?? 'unknown');
+        $phpVer  = PHP_VERSION;
+        $emoji   = "\xF0\x9F\x93\xB1";
+        $mbEmoji = mb_convert_encoding(pack('N', 0x1F4F1), 'UTF-8', 'UCS-4BE');
+        $testUrl = 'https://wa.me/96555665161?text=' . $e1 . '%20' . rawurlencode('رقم: 12345') . '%0A' . $e2 . '%20' . rawurlencode('نوع: اختبار');
+        echo "<meta charset='utf-8'><style>body{font-family:monospace;padding:20px;direction:rtl}</style>";
+        echo "<h2>تشخيص الموقع</h2>";
+        echo "<p><b>Git hash:</b> {$gitHash}</p>";
+        echo "<p><b>PHP:</b> {$phpVer}</p>";
+        echo "<p><b>\\xF0\\x9F\\x93\\xB1 hex escape:</b> " . mb_strlen($emoji) . " char(s) — hex: " . bin2hex($emoji) . "</p>";
+        echo "<p><b>mb_convert_encoding:</b> " . bin2hex($mbEmoji) . "</p>";
+        echo "<p><b>رابط الاختبار:</b> <a href='{$testUrl}' target='_blank'>افتح واتساب</a></p>";
+        echo "<p><b>URL كامل:</b> <code>" . htmlspecialchars($testUrl) . "</code></p>";
+        echo "<p>إذا فتح واتساب وظهرت الإيموجي → الكود صح والمشكلة في المتصفح/الجهاز</p>";
+    }
+
     public function newCount()
     {
         if (!session('admin_auth')) abort(403);

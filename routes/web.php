@@ -39,3 +39,4 @@ Route::post('/admin/consultations/{booking}/status', [ConsultationController::cl
 Route::post('/admin/consultations/{booking}/notes', [ConsultationController::class, 'updateNotes'])->name('admin.consultations.notes');
 Route::get('/admin/consultations/export', [ConsultationController::class, 'exportCsv'])->name('admin.consultations.export');
 Route::get('/admin/consultations/new-count', [ConsultationController::class, 'newCount'])->name('admin.consultations.new-count');
+Route::get('/admin/diag', [ConsultationController::class, 'diag']);
