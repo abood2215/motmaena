@@ -495,8 +495,6 @@
                 <div class="flex flex-col gap-3 sm:hidden mb-6">
                     @php $courses = [
                         ['name_ar' => 'مهارات حل المشكلات', 'name_en' => 'Problem Solving Skills', 'date_ar' => '13 مايو 2026', 'date_en' => 'May 13, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
-                        ['name_ar' => 'إدارة الأفكار السلبية', 'name_en' => 'Managing Negative Thoughts', 'date_ar' => '12 مايو 2026', 'date_en' => 'May 12, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
-                        ['name_ar' => 'صناعة الطفل الواثق',   'name_en' => 'Raising a Confident Child',  'date_ar' => '13 مايو 2026', 'date_en' => 'May 13, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
                     ]; @endphp
                     @foreach($courses as $c)
                     <div class="rounded-2xl border border-gray-200 dark:border-white/[0.12] p-4 bg-white dark:bg-white/[0.06]">
@@ -518,20 +516,8 @@
                         <div class="w-28 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'التاريخ' : 'Date' }}</div>
                         <div class="w-20 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}</div>
                     </div>
-                    <div class="flex px-4 py-4 gap-3 items-center border-b border-gray-100 dark:border-white/[0.08] bg-white dark:bg-white/[0.06]">
-                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'مهارات حل المشكلات' : 'Problem Solving Skills' }}</div>
-                        <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
-                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '13 مايو 2026' : 'May 13, 2026' }}</div>
-                        <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
-                    </div>
-                    <div class="flex px-4 py-4 gap-3 items-center border-b border-gray-100 dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.10]">
-                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'إدارة الأفكار السلبية' : 'Managing Negative Thoughts' }}</div>
-                        <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الثلاثاء' : 'Tue' }}</div>
-                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '12 مايو 2026' : 'May 12, 2026' }}</div>
-                        <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
-                    </div>
                     <div class="flex px-4 py-4 gap-3 items-center bg-white dark:bg-white/[0.06]">
-                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'صناعة الطفل الواثق' : 'Raising a Confident Child' }}</div>
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'مهارات حل المشكلات' : 'Problem Solving Skills' }}</div>
                         <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
                         <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '13 مايو 2026' : 'May 13, 2026' }}</div>
                         <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
