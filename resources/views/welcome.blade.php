@@ -461,8 +461,8 @@
                          class="w-20 h-24 object-contain object-bottom shrink-0 drop-shadow-md">
                     <div class="flex-1 min-w-0">
                         <div class="inline-flex items-center gap-1.5 bg-primary text-white text-[10px] font-black px-2.5 py-1 rounded-full mb-2 shadow-sm">
-                            <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                            {{ app()->getLocale() == 'ar' ? 'أونلاين عبر زووم' : 'Online via Zoom' }}
+                            <svg class="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            {{ app()->getLocale() == 'ar' ? 'حضوري' : 'In-Person' }}
                         </div>
                         <p class="text-primary font-black text-lg leading-tight">{{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq' }}</p>
                         <p class="text-xs font-medium mt-0.5 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'بروفسور وخبير الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية' : 'Prof. & Social Guidance Expert' }}</p>
@@ -524,27 +524,49 @@
                     </div>
                 </div>
 
-                {{-- Bundle Price --}}
-                <div class="flex items-center gap-3 sm:gap-4 border border-primary/20 rounded-2xl px-4 sm:px-5 py-4 mb-6 shadow-sm bg-white dark:bg-white/[0.06]">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-xs font-bold mb-1 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'سعر الاشتراك في الدورتين' : 'Bundle Price (Both Courses)' }}</div>
-                        <div class="flex items-baseline gap-2 sm:gap-3">
-                            <span class="text-primary font-black text-xl sm:text-2xl lg:text-3xl">{{ app()->getLocale() == 'ar' ? '50 دينار' : '50 KWD' }}</span>
-                            <span class="text-sm font-bold line-through opacity-40 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '60' : '60 KWD' }}</span>
-                        </div>
-                    </div>
-                    <div class="shrink-0">
-                        <div class="text-white text-[10px] font-black px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm" style="background:#16a34a;">{{ app()->getLocale() == 'ar' ? 'وفّر 10 د.ك' : 'Save 10 KWD' }}</div>
-                    </div>
+                {{-- Course Topics --}}
+                <div class="mb-5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-2xl px-5 py-4">
+                    <div class="text-xs font-black uppercase tracking-widest text-primary mb-3">{{ app()->getLocale() == 'ar' ? 'المحاور' : 'Topics' }}</div>
+                    <ul class="space-y-2">
+                        @foreach([
+                            ['ar'=>'مفهوم حل المشكلات','en'=>'Understanding Problem Solving'],
+                            ['ar'=>'الأركان الأساسية لحل المشكلات','en'=>'Core Pillars of Problem Solving'],
+                            ['ar'=>'تصنيف المشكلات وأنواعها','en'=>'Types & Classification of Problems'],
+                            ['ar'=>'استراتيجيات حل المشكلات','en'=>'Problem Solving Strategies'],
+                            ['ar'=>'خطوات ومراحل حل المشكلات','en'=>'Steps & Stages of Problem Solving'],
+                        ] as $topic)
+                        <li class="flex items-center gap-2.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+                            {{ app()->getLocale() == 'ar' ? $topic['ar'] : $topic['en'] }}
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
 
-                {{-- Per-course price note --}}
-                <p class="text-xs font-medium mb-6 text-gray-500 dark:text-gray-400">
-                    {{ app()->getLocale() == 'ar' ? '* سعر كل دورة منفردة 30 دينار كويتي' : '* Each course individually: 30 KWD' }}
-                </p>
+                {{-- Price + Deema + Certificate --}}
+                <div class="mb-5 rounded-2xl overflow-hidden border border-primary/20 shadow-sm">
+                    {{-- Price row --}}
+                    <div class="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 bg-white dark:bg-white/[0.06]">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-xs font-bold mb-1 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'رسوم الاشتراك' : 'Registration Fee' }}</div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-primary font-black text-2xl sm:text-3xl">{{ app()->getLocale() == 'ar' ? '30 دينار' : '30 KWD' }}</span>
+                            </div>
+                        </div>
+                        {{-- Deema --}}
+                        <div class="shrink-0 text-center border border-blue-200 dark:border-blue-400/30 rounded-xl px-3 py-2 bg-blue-50 dark:bg-blue-900/20">
+                            <div class="text-blue-700 dark:text-blue-300 font-black text-[11px]">{{ app()->getLocale() == 'ar' ? 'قسط على' : 'Pay in' }}</div>
+                            <div class="text-blue-700 dark:text-blue-300 font-black text-lg leading-none">4</div>
+                            <div class="text-blue-600 dark:text-blue-400 font-black text-[10px]">{{ app()->getLocale() == 'ar' ? 'دفعات' : 'Payments' }}</div>
+                            <div class="text-blue-500 font-black text-[9px] mt-0.5">deema</div>
+                        </div>
+                    </div>
+                    {{-- Certificate row --}}
+                    <div class="flex items-center gap-3 px-4 sm:px-5 py-3 bg-green-50 dark:bg-green-900/10 border-t border-green-100 dark:border-green-400/10">
+                        <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        <span class="text-xs font-bold text-green-700 dark:text-green-400">{{ app()->getLocale() == 'ar' ? 'شهادة معتمدة من ديوان الخدمة المدنية والتطبيقي' : 'Certificate accredited by Civil Service Bureau' }}</span>
+                    </div>
+                </div>
 
                 {{-- CTA --}}
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
