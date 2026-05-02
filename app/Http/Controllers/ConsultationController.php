@@ -22,9 +22,9 @@ class ConsultationController extends Controller
         $phone = $data['phone'];
         $notes = $data['notes'] ?? '';
 
-        $phone_em = "\u{1F4F1}";
-        $clip_em  = "\u{1F4CB}";
-        $note_em  = "\u{1F4DD}";
+        $phone_em = "\xF0\x9F\x93\xB1"; // 📱
+        $clip_em  = "\xF0\x9F\x93\x8B"; // 📋
+        $note_em  = "\xF0\x9F\x93\x9D"; // 📝
 
         $msg = "مرحباً مركز مطمئنة،\nأريد حجز استشارة\n\n{$phone_em} رقم التواصل: {$phone}\n{$clip_em} نوع الاستشارة: {$type}";
         if ($notes) {
