@@ -249,10 +249,10 @@
 
                 {{-- خلال شهر stamp + مايو 2026 --}}
                 <div class="flex items-center gap-4 mb-7">
-                    <div class="shrink-0 w-[60px] h-[60px] rounded-full flex flex-col items-center justify-center border-2 border-primary"
-                         style="background: rgba(176,65,65,0.85);">
-                        <span class="text-white text-[10px] font-black leading-none">خلال</span>
-                        <span class="text-white text-[10px] font-black leading-none mt-0.5">شهر</span>
+                    <div class="shrink-0 w-[52px] h-[52px] rounded-full flex flex-col items-center justify-center border border-white/40"
+                         style="background: rgba(255,255,255,0.08); backdrop-filter: blur(6px);">
+                        <span class="text-white/80 text-[9px] font-bold leading-none">خلال</span>
+                        <span class="text-white/80 text-[9px] font-bold leading-none mt-0.5">شهر</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-white font-black leading-none" style="font-size: clamp(2.2rem, 5vw, 3.5rem);">{{ app()->getLocale() == 'ar' ? 'مايو' : 'May' }}</span>
