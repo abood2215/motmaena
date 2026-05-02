@@ -780,8 +780,8 @@ function saveNotes() {
 
 // ── WhatsApp quick button (table row) ──
 function quickWA(phone, type) {
-  const s = '⭐'; // ⭐ BMP
-  const c = '✅'; // ✅ BMP
+  const s = '\u2B50'; // ⭐
+  const c = '\u2705'; // ✅
   const msg = s + ' السلام عليكم\nمعاك فريق مركز مطمئنة\n\n' + c + ' وصلنا طلبك بخصوص *' + type + '*\nمتى يناسبك نحدد موعدًا؟';
   window.open('https://wa.me/' + phone.replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent(msg), '_blank');
 }
@@ -790,10 +790,9 @@ function quickWA(phone, type) {
 function sendTpl(n) {
   const p = mPhone.replace(/[^0-9]/g, '');
   const t = mType;
-  const s = '⭐'; // ⭐
-  const c = '✅'; // ✅
-  const h = '❤'; // ❤
-  const b = '\u{1F514}' in String ? '❗' : '❗'; // ❗ BMP fallback
+  const s = '\u2B50'; // ⭐
+  const c = '\u2705'; // ✅
+  const h = '\u2764'; // ❤
   const msgs = {
     1: s + ' السلام عليكم\nمعاك فريق مركز مطمئنة\n\n' + c + ' وصلنا طلبك بخصوص *' + t + '*\nوشكرًا على ثقتك فينا\n\nودّنا نحجزلك موعد في أقرب وقت يناسبك\nمتى تكون متاحًا؟',
     2: s + ' السلام عليكم\n\n' + c + ' تم تأكيد موعدك في مركز مطمئنة\n- الخدمة: *' + t + '*\n\nسيتواصل معك أحد الفريق في الوقت المحدد\n' + h + ' نتمنى لك تجربة مثمرة\nمركز مطمئنة',
