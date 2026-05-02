@@ -290,7 +290,7 @@
                                 <div class="w-2.5 h-2.5 bg-green-400 rounded-full"></div>
                                 <div class="absolute inset-0 w-2.5 h-2.5 bg-green-400 rounded-full animate-ping opacity-60"></div>
                             </div>
-                            <div class="text-white text-xs font-black whitespace-nowrap">{{ app()->getLocale() == 'ar' ? 'متاح ● أبريل 2026' : 'Available ● April 2026' }}</div>
+                            <div class="text-white text-xs font-black whitespace-nowrap">{{ app()->getLocale() == 'ar' ? 'متاح ● مايو 2026' : 'Available ● May 2026' }}</div>
                         </div>
                     </div>
                 </div>
@@ -334,7 +334,7 @@
                     <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <span class="text-gray-400 dark:text-white/50 text-xs font-bold uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'خلال شهر' : 'During' }}</span>
                     <div class="w-px h-4 bg-gray-200 dark:bg-white/15"></div>
-                    <span class="text-primary font-black text-base sm:text-lg">{{ app()->getLocale() == 'ar' ? 'أبريل 2026' : 'April 2026' }}</span>
+                    <span class="text-primary font-black text-base sm:text-lg">{{ app()->getLocale() == 'ar' ? 'مايو 2026' : 'May 2026' }}</span>
                 </div>
 
                 {{-- Dates Grid — 3×2 --}}
@@ -343,18 +343,15 @@
                     <div class="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-[320px]">
                         @php
                             $visitDates = [
-                                6  => ['ar' => 'الإثنين',   'en' => 'Monday'],
-                                7  => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
-                                8  => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
-                                21 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
-                                22 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
+                                12 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
+                                13 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
                             ];
                         @endphp
                         @foreach($visitDates as $date => $day)
                         <div class="group relative bg-white dark:bg-white/[0.04] hover:bg-primary/[0.07] dark:hover:bg-primary/20 border border-gray-200 dark:border-white/[0.08] hover:border-primary/50 dark:hover:border-primary/50 rounded-xl p-2.5 sm:p-3 text-center cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_28px_-8px_rgba(176,65,65,0.25)] dark:hover:shadow-[0_16px_36px_-8px_rgba(176,65,65,0.55)] overflow-hidden shadow-sm dark:shadow-none">
                             <div class="absolute inset-0 bg-gradient-to-b from-primary/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                             <div class="relative z-10">
-                                <div class="text-[8px] font-black text-gray-300 dark:text-white/20 group-hover:text-primary/60 transition-colors leading-none">04 | أبريل</div>
+                                <div class="text-[8px] font-black text-gray-300 dark:text-white/20 group-hover:text-primary/60 transition-colors leading-none">05 | مايو</div>
                                 <div class="text-2xl sm:text-3xl font-black text-gray-800 dark:text-white leading-tight my-0.5">{{ str_pad($date, 2, '0', STR_PAD_LEFT) }}</div>
                                 <div class="text-[8px] font-bold text-gray-300 dark:text-white/15 group-hover:text-primary/40 dark:group-hover:text-white/30 transition-colors leading-none">{{ app()->getLocale() == 'ar' ? $day['ar'] : $day['en'] }}</div>
                             </div>
@@ -497,8 +494,9 @@
                 {{-- MOBILE CARDS --}}
                 <div class="flex flex-col gap-3 sm:hidden mb-6">
                     @php $courses = [
-                        ['name_ar' => 'إدارة الأفكار السلبية', 'name_en' => 'Managing Negative Thoughts', 'date_ar' => '8 أبريل 2026', 'date_en' => 'Apr 8, 2026'],
-                        ['name_ar' => 'صناعة الطفل الواثق',   'name_en' => 'Raising a Confident Child',  'date_ar' => '22 أبريل 2026', 'date_en' => 'Apr 22, 2026'],
+                        ['name_ar' => 'مهارات حل المشكلات', 'name_en' => 'Problem Solving Skills', 'date_ar' => '13 مايو 2026', 'date_en' => 'May 13, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
+                        ['name_ar' => 'إدارة الأفكار السلبية', 'name_en' => 'Managing Negative Thoughts', 'date_ar' => '12 مايو 2026', 'date_en' => 'May 12, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
+                        ['name_ar' => 'صناعة الطفل الواثق',   'name_en' => 'Raising a Confident Child',  'date_ar' => '13 مايو 2026', 'date_en' => 'May 13, 2026', 'time_ar' => '7–9 م', 'time_en' => '7–9 PM'],
                     ]; @endphp
                     @foreach($courses as $c)
                     <div class="rounded-2xl border border-gray-200 dark:border-white/[0.12] p-4 bg-white dark:bg-white/[0.06]">
@@ -521,15 +519,21 @@
                         <div class="w-20 text-center shrink-0">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}</div>
                     </div>
                     <div class="flex px-4 py-4 gap-3 items-center border-b border-gray-100 dark:border-white/[0.08] bg-white dark:bg-white/[0.06]">
-                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'إدارة الأفكار السلبية' : 'Managing Negative Thoughts' }}</div>
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'مهارات حل المشكلات' : 'Problem Solving Skills' }}</div>
                         <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
-                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '8 أبريل 2026' : 'Apr 8, 2026' }}</div>
+                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '13 مايو 2026' : 'May 13, 2026' }}</div>
                         <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
                     </div>
-                    <div class="flex px-4 py-4 gap-3 items-center bg-gray-50 dark:bg-white/[0.10]">
+                    <div class="flex px-4 py-4 gap-3 items-center border-b border-gray-100 dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.10]">
+                        <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'إدارة الأفكار السلبية' : 'Managing Negative Thoughts' }}</div>
+                        <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الثلاثاء' : 'Tue' }}</div>
+                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '12 مايو 2026' : 'May 12, 2026' }}</div>
+                        <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
+                    </div>
+                    <div class="flex px-4 py-4 gap-3 items-center bg-white dark:bg-white/[0.06]">
                         <div class="flex-1 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-sm text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? 'صناعة الطفل الواثق' : 'Raising a Confident Child' }}</div>
                         <div class="w-20 text-center text-xs font-medium shrink-0 text-gray-500 dark:text-gray-400">{{ app()->getLocale() == 'ar' ? 'الأربعاء' : 'Wed' }}</div>
-                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '22 أبريل 2026' : 'Apr 22, 2026' }}</div>
+                        <div class="w-28 text-center text-primary font-black text-xs shrink-0">{{ app()->getLocale() == 'ar' ? '13 مايو 2026' : 'May 13, 2026' }}</div>
                         <div class="w-20 text-center font-black text-xs shrink-0 text-gray-900 dark:text-gray-100">{{ app()->getLocale() == 'ar' ? '30 د.ك' : '30 KWD' }}</div>
                     </div>
                 </div>
