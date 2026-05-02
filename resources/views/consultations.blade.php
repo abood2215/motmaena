@@ -1649,44 +1649,37 @@ function updatePhoneField() {
   hidden.setAttribute('name', 'phone');
 }
 
-/* ── Booking form AJAX submit — builds WhatsApp URL via JS for correct emoji ── */
+/* ── Booking form submit — saves to DB in background, opens WhatsApp immediately ── */
 (function () {
-  const form = document.getElementById('booking-form');
+  var form = document.getElementById('booking-form');
   if (!form) return;
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     updatePhoneField();
 
-    const fd = new FormData(form);
-    const phone = fd.get('phone') || '';
-    const type  = fd.get('problem_type') || '';
-    const notes = fd.get('notes') || '';
+    var fd   = new FormData(form);
+    var phone = fd.get('phone') || '';
+    var type  = fd.get('problem_type') || '';
+    var notes = fd.get('notes') || '';
 
+    // Save to DB silently in the background
     fetch(form.action, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       body: fd
-    })
-    .then(r => r.ok ? r.json() : Promise.reject(r))
-    .then(json => {
-      if (!json.ok) return;
+    }).catch(function(){});
 
-      let msg = '★ مرحباً مركز مطمئنة\n'
-              + 'أريد حجز استشارة\n\n'
-              + '✔ *رقم التواصل:* ' + phone + '\n'
-              + '✔ *نوع الاستشارة:* ' + type;
-      if (notes.trim()) {
-        msg += '\n✏ *ملاحظات:* ' + notes;
-      }
+    // Open WhatsApp immediately without waiting
+    var msg = '★ مرحباً مركز مطمئنة\n'
+            + 'أريد حجز استشارة\n\n'
+            + '✔ *رقم التواصل:* ' + phone + '\n'
+            + '✔ *نوع الاستشارة:* ' + type;
+    if (notes.trim()) {
+      msg += '\n✏ *ملاحظات:* ' + notes;
+    }
 
-      window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
-    })
-    .catch(() => {
-      // Fallback: plain POST (no emoji but still works)
-      form.removeEventListener('submit', arguments.callee);
-      form.submit();
-    });
+    window.location.href = 'https://wa.me/96555665161?text=' + encodeURIComponent(msg);
   });
 })();
 
