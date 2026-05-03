@@ -73,7 +73,6 @@
                             </a>
                             <a href="{{ route('sessions') }}" class="nav-link {{ request()->routeIs('sessions') ? 'text-primary font-bold' : '' }}">{{ __('Sessions') }}</a>
                             <a href="{{ route('consultations') }}" class="nav-link {{ request()->routeIs('consultations') ? 'text-primary font-bold' : '' }}">{{ __('Consultations') }}</a>
-                            <a href="{{ url('/#app-section') }}" class="nav-link">{{ __('App') }}</a>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
@@ -138,12 +137,6 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" /></svg>
                         </div>
                         {{ __('Consultations') }}
-                    </a>
-                    <a href="{{ url('/#app-section') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group">
-                        <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                        </div>
-                        {{ __('App') }}
                     </a>
                 </nav>
             </div>
