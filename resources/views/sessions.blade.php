@@ -527,7 +527,7 @@
 .sp-btn:hover { background: rgba(176,65,65,.5); color: #fff; border-color: transparent; }
 .spec-pkg.sp-feat .sp-btn { background: #fff; color: var(--red); border-color: transparent; }
 .spec-pkg.sp-feat .sp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-.spec-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.spec-bottom { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .spec-daily {
   background: rgba(176,65,65,.15);
   border: 1px solid rgba(176,65,65,.3);
@@ -554,6 +554,7 @@
   border-radius: 24px; padding: 40px 36px;
   display: flex; flex-direction: column;
   transition: border-color .3s;
+  max-width: 680px; margin-inline: auto; width: 100%;
 }
 .spec-club:hover { border-color: rgba(176,65,65,.4); }
 .spec-club-icon {
