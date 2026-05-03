@@ -860,21 +860,6 @@
         <a href="https://wa.me/96555665161" class="plan-btn">{{ __('Select Package') }}</a>
       </div>
 
-      <!-- يومي -->
-      <div class="plan-card daily">
-        <div class="plan-sessions" style="color:rgba(255,255,255,.4);">{{ __('Daily Subscription') }}</div>
-        <div class="plan-price-wrap">
-          <span class="plan-price" style="font-size:3rem;">1950</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:24px;">{{ __('KD') }} / {{ __('Month') }}</p>
-        <div class="plan-divider"></div>
-        <div class="daily-pills">
-          <div class="daily-pill"><span class="daily-pill-dot"></span>{{ __('Comprehensive Daily Care') }}</div>
-          <div class="daily-pill"><span class="daily-pill-dot"></span>{{ __('Club + Sessions + Reinforcement') }}</div>
-          <div class="daily-pill"><span class="daily-pill-dot"></span>{{ __('Continuous Follow-up') }}</div>
-        </div>
-        <a href="https://wa.me/96555665161" class="plan-btn" style="background:var(--red);color:#fff;border:none;">{{ __('Inquire Now') }}</a>
-      </div>
 
     </div>
   </div>
@@ -980,19 +965,18 @@
           <h3 class="club-title">{{ __('Monthly Subscriptions') }}</h3>
           <div class="club-prices">
             <div class="club-price-row">
-              <div><div class="club-price-amount">150 {{ __('KD') }}</div></div>
-              <div class="club-price-label">{{ __('Per Month') }}</div>
+              <div><div class="club-price-amount">250 {{ __('KD') }}</div></div>
+              <div class="club-price-label">{{ app()->getLocale() == 'ar' ? 'اشتراك يومي · مدة شهر' : 'Daily · One Month' }}</div>
             </div>
             <div class="club-price-row">
-              <div><div class="club-price-amount">250 {{ __('KD') }}</div></div>
-              <div class="club-price-label">{{ __('For 2 Months') }}</div>
+              <div><div class="club-price-amount">150 {{ __('KD') }}</div></div>
+              <div class="club-price-label">{{ app()->getLocale() == 'ar' ? '٣ أيام بالأسبوع · ٤٥ دقيقة' : '3 Days/Week · 45 Min' }}</div>
             </div>
           </div>
           <div class="sibling-box">
             <div>
               <div class="sibling-label">{{ __('Sibling Discount') }}</div>
-              <div class="sibling-amount">135 {{ __('KD') }}</div>
-              <div class="sibling-sub">{{ __('Per person / Month only') }}</div>
+              <div class="sibling-sub">{{ app()->getLocale() == 'ar' ? 'تواصل معنا للاستفسار' : 'Contact us for details' }}</div>
             </div>
             <div class="sibling-icon">
               <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1120,21 +1104,6 @@
     </div>
 
     <div class="spec-bottom reveal">
-      <div class="spec-daily">
-        <div class="spec-daily-eyebrow">
-          <span style="width:6px;height:6px;background:var(--red-2);border-radius:50%;display:inline-block;"></span>
-          {{ __('All-Inclusive') }}
-        </div>
-        <h3 class="spec-daily-title">{{ __('Daily Specialized Subscription') }}</h3>
-        <div class="spec-daily-price">1950</div>
-        <div class="spec-daily-unit">{{ __('KD / Month') }}</div>
-        <div class="spec-daily-items">
-          <span class="spec-daily-item">{{ __('The Club') }}</span>
-          <span class="spec-daily-item">{{ __('Clinical Sessions') }}</span>
-          <span class="spec-daily-item">{{ __('Academic Support') }}</span>
-        </div>
-      </div>
-
       <div class="spec-club">
         <div class="spec-club-icon">
           <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">

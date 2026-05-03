@@ -699,7 +699,7 @@
                     <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'يمكنك التسجيل عبر الموقع الإلكتروني أو من خلال تطبيق مطمئنة المتاح على App Store و Google Play. اختر الدورة المناسبة لك واضغط على "سجل الآن" لإتمام عملية التسجيل والدفع.' : 'You can register through the website or the Motmaena app on App Store and Google Play. Choose your course and click "Register Now" to complete registration and payment.' }}</p>
+                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'يمكنك التسجيل عبر الموقع الإلكتروني. اختر الدورة المناسبة لك واضغط على "سجل الآن" لإتمام عملية التسجيل والدفع.' : 'You can register through the website. Choose your course and click "Register Now" to complete registration and payment.' }}</p>
                 </div>
             </div>
             {{-- FAQ 2 --}}

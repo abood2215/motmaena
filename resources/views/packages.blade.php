@@ -218,42 +218,42 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'الخوف والقلق' : 'Fear & Anxiety',
+                    'title' => app()->getLocale() == 'ar' ? 'التكيف والسلوك لدى الطفل' : 'Child Adaptation & Behavior',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
-                        ? ['التعامل مع مخاوف النوم والظلام', 'توتر المدرسة والانفصال', 'تنظيم المشاعر والانفعالات']
-                        : ['Sleep & Nighttime Support', 'School Transition Support', 'Emotion & Feelings Regulation'],
+                        ? ['دعم الطفل في التكيف مع مواقف النوم والاستقلال', 'مساعدة الطفل على الاندماج في البيئة المدرسية', 'تنمية مهارات التحكم بالسلوك والتعبير المناسب']
+                        : ['Sleep & Independence Support', 'School Integration Support', 'Behavior & Expression Skills'],
                     'symptoms' => app()->getLocale() == 'ar' ? [
-                        ['category' => 'أسباب تطورية وبيئية', 'items' => [
-                            'توتر الانفصال الطبيعي (بين 6 أشهر و 3 سنوات)',
-                            'الخوف من الغرباء كآلية دفاعية فطرية',
-                            'المخاوف الخيالية (الظلام، الوحوش، الأصوات العالية)',
+                        ['category' => 'عوامل مرتبطة بالنمو والتعلم', 'items' => [
+                            'مراحل النمو الطبيعي وتأثيرها على سلوك الطفل',
+                            'تأثر الطفل بالمواقف اليومية والخبرات الجديدة',
+                            'استجابة الطفل للبيئة المحيطة',
                         ]],
-                        ['category' => 'البيئة والأسرة والمجتمع', 'items' => [
-                            'الخلافات الوالدية والشجار المستمر يؤثران على الطفل',
-                            'التغييرات الكبيرة (منزل جديد، مدرسة، مولود جديد)',
-                            'أسلوب التربية (الحماية الزائدة أو النقد القاسي)',
-                            'التنمر، الضغط الدراسي، وصعوبة التكيف الاجتماعي',
+                        ['category' => 'دور الأسرة والبيئة التعليمية', 'items' => [
+                            'أساليب التعامل داخل الأسرة وتأثيرها على السلوك',
+                            'التغيرات الحياتية (انتقال، مدرسة جديدة...)',
+                            'طبيعة التفاعل داخل المدرسة',
+                            'دعم الطفل في التكيف الاجتماعي',
                         ]],
-                        ['category' => 'عوامل التطور والحساسية الحسية', 'items' => [
-                            'الحساسية الحسية المفرطة تجاه الأصوات أو الإضاءة',
-                            'الاستعداد الطبيعي والعوامل الفردية للطفل',
+                        ['category' => 'الفروق الفردية لدى الأطفال', 'items' => [
+                            'اختلاف استجابة الأطفال للمؤثرات (صوت، ضوء...)',
+                            'خصائص الطفل الفردية وكيفية دعمه تربوياً',
                         ]],
                     ] : [
-                        ['category' => 'Developmental Causes', 'items' => [
-                            'Natural separation anxiety (6m - 3y)',
-                            'Fear of strangers as a defense mechanism',
-                            'Imaginary fears (darkness, monsters, loud noises)',
+                        ['category' => 'Growth & Learning Factors', 'items' => [
+                            'Natural developmental stages and their effect on child behavior',
+                            'How daily situations and new experiences shape the child',
+                            'The child\'s response to the surrounding environment',
                         ]],
-                        ['category' => 'Environmental & Social', 'items' => [
-                            'Parental conflicts and constant arguing',
-                            'Major changes (new home, school, new baby)',
-                            'Parenting style (overprotection or harsh criticism)',
-                            'Bullying, academic pressure, and social adaptation',
+                        ['category' => 'Family & Educational Environment', 'items' => [
+                            'Family interaction styles and their impact on behavior',
+                            'Life transitions (relocation, new school...)',
+                            'Nature of interaction within the school setting',
+                            'Supporting the child in social adaptation',
                         ]],
-                        ['category' => 'Developmental & Sensory Factors', 'items' => [
-                            'Sensory hypersensitivity to sound or light',
-                            'Individual temperament and natural tendencies',
+                        ['category' => 'Individual Differences', 'items' => [
+                            'Varied child responses to stimuli (sound, light...)',
+                            'Each child\'s unique traits and how to support them educationally',
                         ]],
                     ],
                 ],
@@ -296,7 +296,7 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تنمية الانتباه والتركيز' : 'Attention & Focus Development',
+                    'title' => app()->getLocale() == 'ar' ? 'تنمية القدرات الاجتماعية والأكاديمية' : 'Social & Academic Development',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تنظيم السلوك والطاقة الزائدة', 'تحسين التركيز والانتباه', 'خطط متابعة مدرسية شاملة']
@@ -332,15 +332,7 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'التقييمات التخصصية' : 'Specialized Assessments',
-                    'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
-                        ? ['اختبارات الذكاء والسلوك المعتمدة', 'تقييمات تربوية ومدرسية', 'تقييم شامل ودقيق']
-                        : ['Accredited IQ & Behavior Tests', 'Educational & School Evaluations', 'Comprehensive Educational Assessment'],
-                    'symptoms' => [],
-                ],
-                [
-                    'title' => app()->getLocale() == 'ar' ? 'السلوكيات' : 'Behaviors',
+                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي والاجتماعي' : 'Educational & Social Behavior',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تعديل السلوك العدواني والانفجاري', 'إدارة الغضب والعناد', 'ضبط الانفعالات وتوجيهها']
@@ -406,7 +398,7 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'دعم التحديات السلوكية' : 'Behavioral Challenges Support',
+                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي الغير مرغوب' : 'Unwanted Behavior Modification',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تعديل السلوك غير المرغوب', 'تدريب مهارات التحكم الذاتي', 'متابعة تخصصية ودعم أسري']
