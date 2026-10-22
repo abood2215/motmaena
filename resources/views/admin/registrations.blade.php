@@ -87,11 +87,8 @@
           </td>
           <td class="small">
             @if($gift = $r->rewardCode())
-              {{ $gift->kind === 'self' ? '🙋 لنفسه' : '👥 لصديق' }}
-              <div><span class="tag code">{{ $gift->code }}</span></div>
-              <div>{{ $gift->kind === 'self' ? ($gift->used_count ? '✓ استخدمه' : 'لسا ما استخدمه') : 'استخدمه ' . $gift->used_count . ' صديق' }}</div>
-            @elseif($r->rewardEligible())
-              <span style="color:#d97706">لسا ما اختار</span>
+              <span class="tag code">{{ $gift->code }}</span>
+              <div>{{ rtrim(rtrim(number_format((float) $gift->value, 3), '0'), '.') }} د.ك · {{ $gift->used_count ? '✓ مستخدم' : 'لسا ما انستخدم' }}</div>
             @else
               —
             @endif

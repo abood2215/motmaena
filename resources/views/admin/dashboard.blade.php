@@ -72,16 +72,10 @@
   </div>
 
   <div class="card">
-    <h3>🎁 الإحالات (سجّل مع صديق)</h3>
-    @forelse($referrals as $r)
-      <div class="bar-row">
-        <span class="bar-label"><strong>{{ $r['owner']?->name ?? '—' }}</strong> <span class="small ltr">{{ $r['owner']?->phone }}</span> <span class="tag code">{{ $r['code'] }}</span></span>
-        <span class="bar"><span style="width: {{ max(4, round($r['friends'] / max(1, $referrals->max('friends')) * 100)) }}%"></span></span>
-        <span class="bar-num">{{ $r['friends'] }} صديق · رصيد {{ $kwd($r['credit']) }} د.ك</span>
-      </div>
-    @empty
-      <p class="small">لسا ما حدا سجّل بكود صديق. الكود بيطلع لكل عميل بعد الدفع مع زر مشاركة واتساب.</p>
-    @endforelse
+    <h3>🎁 أكواد الهدايا</h3>
+    <div class="bar-row"><span class="bar-label">أكواد انعطت</span><span></span><span class="bar-num"><strong>{{ $gifts['issued'] }}</strong></span></div>
+    <div class="bar-row"><span class="bar-label">انستخدمت بتسجيل مدفوع</span><span></span><span class="bar-num"><strong>{{ $gifts['used'] }}</strong>{{ $gifts['issued'] ? ' (' . round($gifts['used'] / $gifts['issued'] * 100) . '%)' : '' }}</span></div>
+    <div class="bar-row"><span class="bar-label">إيراد جابته الأكواد</span><span></span><span class="bar-num"><strong>{{ $kwd($gifts['revenue']) }}</strong> د.ك (خصم {{ $kwd($gifts['discount']) }} د.ك)</span></div>
   </div>
 
   <div class="card">

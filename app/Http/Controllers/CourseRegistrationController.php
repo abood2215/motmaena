@@ -73,7 +73,7 @@ class CourseRegistrationController extends Controller
         $reason = match (true) {
             $quote['error'] !== null || !$owner                                     => null,
             $quote['code']->kind === 'self' && $owner->phone !== $data['phone']     => 'not_yours',
-            $quote['code']->kind !== 'self' && $owner->phone === $data['phone']     => 'own_code',
+            $quote['code']->kind === 'referral' && $owner->phone === $data['phone'] => 'own_code',
             default                                                                 => null,
         };
         if ($reason) {
@@ -159,15 +159,6 @@ class CourseRegistrationController extends Controller
         $registration = CourseRegistration::where('review_token', $token)->where('status', 'paid')->firstOrFail();
 
         return $this->result($registration);
-    }
-
-    public function claimReward(string $token, string $kind)
-    {
-        abort_unless(in_array($kind, ['referral', 'self'], true), 404);
-        $registration = CourseRegistration::where('review_token', $token)->where('status', 'paid')->firstOrFail();
-        $registration->claimReward($kind);
-
-        return redirect()->route('registration.done', $token);
     }
 
     /**

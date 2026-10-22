@@ -28,8 +28,6 @@
     @keyframes pay-shine { 60%, 100% { transform: translateX(120%); } }
     .total-amount { background: linear-gradient(135deg, var(--c1), var(--cb)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .dark .total-amount { background: none; color: var(--ca); }
-    .gift-box { background: linear-gradient(135deg, #fff7e6, #ffedd5); border: 1.5px dashed #f59e0b; }
-    .dark .gift-box { background: rgba(245, 158, 11, .1); }
 </style>
 <section class="reg-bg py-10 sm:py-16" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme']) }}">
     <div class="container mx-auto px-4 max-w-6xl">
@@ -150,25 +148,6 @@
                         <p id="code-msg" class="text-xs font-bold mt-1 {{ $errors->has('code') ? 'text-red-600' : 'hidden' }}">{{ $errors->first('code') }}</p>
                     </div>
 
-                    {{-- Reward for paying without a code --}}
-                    @php
-                        $giftOptions = (new \App\Models\CourseRegistration)->rewardOptions();
-                        $pct = fn ($v) => rtrim(rtrim(number_format((float) $v, 2), '0'), '.');
-                    @endphp
-                    @if($giftOptions)
-                    <div id="gift-box" class="gift-box rounded-2xl p-4 text-sm">
-                        <p class="font-black text-[#9a3412] dark:text-amber-300 mb-1">🎁 {{ $isAr ? 'هدية مع تسجيلك!' : 'A gift with your booking!' }}</p>
-                        <p class="font-bold text-[#7c2d12] dark:text-amber-100/90 leading-relaxed">
-                            {{ $isAr ? 'سجّل بدون كود خصم، وبعد الدفع بتاخد كود هدية — إنت بتختار:' : 'Book without a discount code and get a gift code after paying — you choose:' }}
-                        </p>
-                        <ul class="mt-2 space-y-1 font-bold text-[#7c2d12] dark:text-amber-100/90">
-                            @isset($giftOptions['referral'])<li>👥 {{ $isAr ? 'لصديق أو شريك: خصم ' . $pct($giftOptions['referral']) . '% إله' : 'For a friend: ' . $pct($giftOptions['referral']) . '% off for them' }}@if((float) ($site['referral_reward_kwd'] ?? 0) > 0){{ $isAr ? ' + رصيد ' . $pct($site['referral_reward_kwd']) . ' د.ك إلك' : ' + ' . $pct($site['referral_reward_kwd']) . ' KWD credit for you' }}@endif</li>@endisset
-                            @isset($giftOptions['self'])<li>🙋 {{ $isAr ? 'لنفسك: خصم ' . $pct($giftOptions['self']) . '% على دورتك الجاية' : 'For you: ' . $pct($giftOptions['self']) . '% off your next course' }}</li>@endisset
-                        </ul>
-                        <p id="gift-off" class="hidden mt-2 text-xs font-black text-[#9a3412] dark:text-amber-300">{{ $isAr ? '* الهدية للتسجيل بدون كود — شيل الكود إذا بدك الهدية.' : '* The gift is for bookings without a code — remove the code to get it.' }}</p>
-                    </div>
-                    @endif
-
                     {{-- Price breakdown --}}
                     <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-4 space-y-2 text-sm font-bold">
                         <div class="flex justify-between text-gray-600 dark:text-gray-300">
@@ -229,15 +208,7 @@
         msg.className = 'text-xs font-bold mt-1 ' + (ok ? 'text-green-600' : 'text-red-600');
     }
 
-    function giftState(codeApplied) {
-        var off = document.getElementById('gift-off'), box = document.getElementById('gift-box');
-        if (!box) return;
-        off.classList.toggle('hidden', !codeApplied);
-        box.style.opacity = codeApplied ? '.55' : '1';
-    }
-
     function resetPrice() {
-        giftState(false);
         document.getElementById('discount-row').classList.replace('flex', 'hidden');
         document.getElementById('p-final').textContent = document.getElementById('p-original').textContent;
     }
@@ -258,7 +229,6 @@
                 document.getElementById('p-discount').textContent = fmt(data.discount);
                 document.getElementById('p-final').textContent = fmt(data.final);
                 document.getElementById('discount-row').classList.replace('hidden', 'flex');
-                giftState(true);
                 showMsg(@json($isAr ? 'تم تطبيق كود الخصم ✓' : 'Discount applied ✓'), true);
             } else {
                 resetPrice();

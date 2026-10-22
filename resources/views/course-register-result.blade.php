@@ -24,62 +24,28 @@
                 <h1 class="text-2xl font-black text-gray-900 dark:text-white mb-2">{{ $isAr ? 'تم تسجيلك بنجاح!' : 'You are registered!' }}</h1>
                 <p class="text-gray-500 dark:text-gray-400 font-bold mb-7">{{ $isAr ? 'شكراً لك، سيتواصل معك فريق مطمئنة قبل موعد الدورة.' : 'Thank you! The Motmaena team will contact you before the course.' }}</p>
 
-                @php
-                    $rewardCode = $registration->rewardCode();
-                    $options = $registration->rewardOptions();
-                    $fmtPct = fn ($v) => rtrim(rtrim(number_format((float) $v, 2), '0'), '.');
-                    $credit = (float) ($site['referral_reward_kwd'] ?? 0);
-                @endphp
-
-                @if($rewardCode)
+                @if($gift = $registration->rewardCode())
                     @php
-                        $percent = $fmtPct($rewardCode->value);
-                        $shareLink = route('course.register', $registration->course_key);
+                        $amount = rtrim(rtrim(number_format((float) $gift->value, 3), '0'), '.');
                         $shareText = $isAr
-                            ? 'سجّلت في ' . ($offer['title']['ar'] ?? 'دورة') . ' بمركز مطمئنة 🌷 سجّل معي واستخدم كودي ' . $rewardCode->code . ' وخذ خصم ' . $percent . '%: ' . $shareLink
-                            : 'I signed up for ' . ($offer['title']['en'] ?? 'a course') . ' at Motmaena Center. Join me with my code ' . $rewardCode->code . ' for ' . $percent . '% off: ' . $shareLink;
+                            ? 'هدية إلك من مركز مطمئنة 🎁 كود خصم ' . $amount . ' دنانير على أي دورة: ' . $gift->code . ' — ' . route('home')
+                            : 'A gift for you from Motmaena Center 🎁 ' . $amount . ' KWD off any course: ' . $gift->code . ' — ' . route('home');
                     @endphp
-                    <div class="reward-card rounded-2xl p-5 mb-7 text-white">
-                        @if($rewardCode->kind === 'self')
-                            <p class="font-black mb-1">🎁 {{ $isAr ? 'كود الخصم الخاص فيك' : 'Your personal discount code' }}</p>
-                            <p class="text-sm font-bold text-white/85 mb-3">{{ $isAr ? 'خصم ' . $percent . '% على دورتك الجاية — مرة وحدة، وبنفس رقم هاتفك. احفظه!' : $percent . '% off your next course — one time, with this phone number. Keep it!' }}</p>
-                        @else
-                            <p class="font-black mb-1">🎁 {{ $isAr ? 'كود صديقك' : 'Your friend code' }}</p>
-                            <p class="text-sm font-bold text-white/85 mb-3">
-                                {{ $isAr ? 'صديقك ياخد خصم ' . $percent . '% بهذا الكود' : 'Your friend gets ' . $percent . '% off with this code' }}@if($credit > 0){{ $isAr ? '، وإنت بتاخد رصيد ' . $fmtPct($credit) . ' د.ك عن كل صديق يسجّل.' : ', and you earn ' . $fmtPct($credit) . ' KWD credit for each friend who joins.' }}@else.@endif
-                            </p>
-                        @endif
-                        <div class="inline-block bg-white text-[color:var(--c1)] rounded-xl px-5 py-2 text-3xl font-black tracking-widest mb-4" dir="ltr">{{ $rewardCode->code }}</div>
-                        <div class="flex flex-wrap justify-center gap-2">
-                            <button type="button" onclick="navigator.clipboard.writeText('{{ $rewardCode->code }}');this.textContent='{{ $isAr ? 'تم النسخ ✓' : 'Copied ✓' }}'" class="rounded-xl px-5 py-2.5 font-black bg-white/20 border border-white/30">{{ $isAr ? 'نسخ الكود' : 'Copy code' }}</button>
-                            @if($rewardCode->kind !== 'self')
-                            <a href="https://wa.me/?text={{ rawurlencode($shareText) }}" target="_blank" class="rounded-xl px-5 py-2.5 font-black bg-[#25d366] text-white">{{ $isAr ? 'شارك عبر واتساب' : 'Share on WhatsApp' }}</a>
-                            @endif
+                    <div class="reward-card rounded-3xl p-6 mb-7 text-white">
+                        <div class="text-4xl mb-2">🎁</div>
+                        <p class="text-xl font-black mb-1">{{ $isAr ? 'مفاجأة إلك!' : 'A surprise for you!' }}</p>
+                        <p class="text-sm font-bold text-white/90 mb-4 leading-relaxed">
+                            {{ $isAr ? 'شكراً لثقتك فينا، هاد كود خصم بقيمة ' . $amount . ' دنانير على أي دورة جاية بمركز مطمئنة.' : 'Thank you for trusting us — here is ' . $amount . ' KWD off any upcoming course at Motmaena Center.' }}
+                        </p>
+                        <div class="inline-flex flex-col items-center bg-white rounded-2xl px-6 py-3 mb-3">
+                            <span class="text-[11px] font-black text-gray-400">{{ $isAr ? 'كود الخصم' : 'Discount code' }}</span>
+                            <span class="text-3xl font-black tracking-widest text-[color:var(--c1)]" dir="ltr">{{ $gift->code }}</span>
+                            <span class="text-xs font-black text-[#b45309]">{{ $isAr ? 'خصم ثابت ' . $amount . ' د.ك' : 'Fixed ' . $amount . ' KWD off' }}</span>
                         </div>
-                    </div>
-                @elseif($registration->rewardEligible())
-                    <div class="reward-card rounded-2xl p-5 mb-7 text-white">
-                        <p class="text-lg font-black mb-1">🎁 {{ $isAr ? 'هديتك جاهزة! اختار لمين الكود:' : 'Your gift is ready! Who is the code for?' }}</p>
-                        <p class="text-sm font-bold text-white/80 mb-4">{{ $isAr ? 'اختيار واحد بس — بعدها بيطلعلك الكود فوراً.' : 'One choice only — your code appears right away.' }}</p>
-                        <div class="grid gap-3 {{ count($options) > 1 ? 'sm:grid-cols-2' : '' }}">
-                            @isset($options['referral'])
-                            <form method="POST" action="{{ route('registration.reward', [$registration->review_token, 'referral']) }}">@csrf
-                                <button class="w-full h-full rounded-2xl bg-white text-[color:var(--c1)] p-4 font-black hover:-translate-y-0.5 transition text-center">
-                                    <span class="block text-2xl mb-1">👥</span>
-                                    {{ $isAr ? 'لصديق أو شريك' : 'For a friend' }}
-                                    <span class="block text-xs font-bold text-gray-500 mt-1">{{ $isAr ? 'هو بياخد خصم ' . $fmtPct($options['referral']) . '%' : 'They get ' . $fmtPct($options['referral']) . '% off' }}@if($credit > 0){{ $isAr ? ' وإنت رصيد ' . $fmtPct($credit) . ' د.ك' : ', you earn ' . $fmtPct($credit) . ' KWD' }}@endif</span>
-                                </button>
-                            </form>
-                            @endisset
-                            @isset($options['self'])
-                            <form method="POST" action="{{ route('registration.reward', [$registration->review_token, 'self']) }}">@csrf
-                                <button class="w-full h-full rounded-2xl bg-white text-[color:var(--c1)] p-4 font-black hover:-translate-y-0.5 transition text-center">
-                                    <span class="block text-2xl mb-1">🙋</span>
-                                    {{ $isAr ? 'لنفسي' : 'For me' }}
-                                    <span class="block text-xs font-bold text-gray-500 mt-1">{{ $isAr ? 'خصم ' . $fmtPct($options['self']) . '% على دورتي الجاية' : $fmtPct($options['self']) . '% off my next course' }}</span>
-                                </button>
-                            </form>
-                            @endisset
+                        <p class="text-xs font-bold text-white/80 mb-4">{{ $isAr ? 'إلك أو اهديه لحدا بتحبه — بينستخدم مرة وحدة.' : 'Use it yourself or gift it to someone — valid for one use.' }}</p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <button type="button" onclick="navigator.clipboard.writeText('{{ $gift->code }}');this.textContent='{{ $isAr ? 'تم النسخ ✓' : 'Copied ✓' }}'" class="rounded-xl px-5 py-2.5 font-black bg-white/20 border border-white/30">{{ $isAr ? 'نسخ الكود' : 'Copy code' }}</button>
+                            <a href="https://wa.me/?text={{ rawurlencode($shareText) }}" target="_blank" class="rounded-xl px-5 py-2.5 font-black bg-[#25d366] text-white">{{ $isAr ? 'اهديه عبر واتساب' : 'Gift it on WhatsApp' }}</a>
                         </div>
                     </div>
                 @endif

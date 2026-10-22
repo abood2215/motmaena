@@ -51,13 +51,16 @@ class DashboardController extends Controller
 
         $latest = CourseRegistration::where('status', 'paid')->latest('paid_at')->take(6)->get();
 
-        // Referral codes that brought paying friends, with the credit their owners earned
-        $reward = (float) (\App\Models\SiteSetting::current()['referral_reward_kwd'] ?? 0);
-        $referrals = \App\Models\DiscountCode::where('kind', 'referral')->with('owner')->get()
-            ->map(fn ($c) => ['code' => $c->code, 'owner' => $c->owner, 'friends' => $paidRows->where('discount_code_id', $c->id)->count()])
-            ->filter(fn ($r) => $r['friends'] > 0)->sortByDesc('friends')->values()
-            ->map(fn ($r) => $r + ['credit' => $r['friends'] * $reward]);
+        // Gift codes handed out after paying without a code, and the paid registrations they brought back
+        $giftCodes = \App\Models\DiscountCode::whereNotNull('owner_registration_id')->get();
+        $giftUses = $paidRows->whereIn('discount_code_id', $giftCodes->pluck('id'));
+        $gifts = [
+            'issued'   => $giftCodes->count(),
+            'used'     => $giftUses->count(),
+            'revenue'  => $giftUses->sum('final_amount'),
+            'discount' => $giftUses->sum('discount_amount'),
+        ];
 
-        return view('admin.dashboard', compact('stats', 'chart', 'sources', 'codes', 'courses', 'latest', 'referrals'));
+        return view('admin.dashboard', compact('stats', 'chart', 'sources', 'codes', 'courses', 'latest', 'gifts'));
     }
 }

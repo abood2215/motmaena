@@ -23,9 +23,7 @@ class SiteSetting extends Model
         'address_en'      => 'Kuwait - Burj Ahmed - near Al-Amiri Hospital',
         'announcement_ar' => '',
         'announcement_en' => '',
-        'referral_discount_percent' => '10', // friend's discount; 0 turns referrals off
-        'referral_reward_kwd'       => '5',  // credit the referrer earns per paid friend
-        'self_discount_percent'     => '10', // customer's own code for a later course; 0 turns it off
+        'gift_code_kwd'   => '10', // gift code (fixed KWD) for paying without a code; 0 turns it off
     ];
 
     public static function current(): array

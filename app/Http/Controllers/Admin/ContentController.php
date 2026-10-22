@@ -31,9 +31,7 @@ class ContentController extends Controller
             'address_en'      => 'nullable|string|max:200',
             'announcement_ar' => 'nullable|string|max:160',
             'announcement_en' => 'nullable|string|max:160',
-            'referral_discount_percent' => 'nullable|numeric|min:0|max:100',
-            'referral_reward_kwd'       => 'nullable|numeric|min:0|max:1000',
-            'self_discount_percent'     => 'nullable|numeric|min:0|max:100',
+            'gift_code_kwd'   => 'nullable|numeric|min:0|max:1000',
         ], [
             'whatsapp.digits_between' => 'رقم الواتساب غير صحيح — اكتبه مع مفتاح الدولة مثل 96555665161',
             'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96599880140',
