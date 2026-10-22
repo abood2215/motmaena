@@ -10,9 +10,9 @@
 @section('title', ($paid ? ($isAr ? 'تم التسجيل بنجاح' : 'Registration confirmed') : ($isAr ? 'لم يكتمل الدفع' : 'Payment not completed')) . ' - ' . __('Motmaena Center'))
 
 @section('content')
-<section class="py-14 sm:py-24 bg-[#eef1f6] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+<section class="py-14 sm:py-24 bg-[color:var(--cbg)] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme'] ?? null) }}">
     <div class="container mx-auto px-4 max-w-lg">
-        <div class="rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[#dbe3ef] dark:border-white/10 p-7 sm:p-10 text-center">
+        <div class="rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[color:var(--cbd)] dark:border-white/10 p-7 sm:p-10 text-center">
 
             @if($paid)
                 <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-green-100 dark:bg-green-500/15 flex items-center justify-center">
@@ -30,12 +30,12 @@
                         ? 'سجّلت في ' . ($offer['title']['ar'] ?? 'دورة') . ' بمركز مطمئنة 🌷 سجّل معي واستخدم كودي ' . $referral->code . ' وخذ خصم ' . $percent . '%: ' . $shareLink
                         : 'I signed up for ' . ($offer['title']['en'] ?? 'a course') . ' at Motmaena Center. Join me with my code ' . $referral->code . ' for ' . $percent . '% off: ' . $shareLink;
                 @endphp
-                <div class="rounded-2xl border-2 border-dashed border-[#1565c0]/30 bg-[#eef3fa] dark:bg-white/5 p-5 mb-7">
-                    <p class="font-black text-[#1d4e89] dark:text-white mb-1">🎁 {{ $isAr ? 'سجّل مع صديق' : 'Bring a friend' }}</p>
+                <div class="rounded-2xl border-2 border-dashed border-[color:var(--cb)]/30 bg-[color:var(--ct)] dark:bg-white/5 p-5 mb-7">
+                    <p class="font-black text-[color:var(--c1)] dark:text-white mb-1">🎁 {{ $isAr ? 'سجّل مع صديق' : 'Bring a friend' }}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-300 font-bold mb-3">
                         {{ $isAr ? 'صديقك ياخد خصم ' . $percent . '% بهذا الكود' : 'Your friend gets ' . $percent . '% off with this code' }}@if($reward > 0){{ $isAr ? '، وإنت بتاخد رصيد ' . $reward . ' د.ك عن كل صديق يسجّل.' : ', and you earn ' . $reward . ' KWD credit for each friend who joins.' }}@else.@endif
                     </p>
-                    <div class="text-3xl font-black tracking-widest text-[#1565c0] mb-4" dir="ltr">{{ $referral->code }}</div>
+                    <div class="text-3xl font-black tracking-widest text-[color:var(--cb)] mb-4" dir="ltr">{{ $referral->code }}</div>
                     <a href="https://wa.me/?text={{ rawurlencode($shareText) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-black bg-[#25d366] text-white">
                         {{ $isAr ? 'شارك عبر واتساب' : 'Share on WhatsApp' }}
                     </a>
@@ -49,7 +49,7 @@
                 <p class="text-gray-500 dark:text-gray-400 font-bold mb-7">{{ $isAr ? 'لم يتم خصم أي مبلغ. يمكنك المحاولة مرة أخرى أو التواصل معنا.' : 'You were not charged. You can try again or contact us.' }}</p>
             @endif
 
-            <div class="rounded-2xl bg-[#eef3fa] dark:bg-white/5 p-4 text-sm font-bold space-y-2 {{ $isAr ? 'text-right' : 'text-left' }} mb-7">
+            <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-4 text-sm font-bold space-y-2 {{ $isAr ? 'text-right' : 'text-left' }} mb-7">
                 <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'الدورة' : 'Course' }}</span><span class="text-gray-900 dark:text-white">{{ $offer['title'][$lang] ?? '' }}</span></div>
                 @if($offer)
                 <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'الموعد' : 'When' }}</span><span class="text-gray-900 dark:text-white">{{ $offer['day'][$lang] }} {{ \Carbon\Carbon::parse($offer['date'])->format('Y/m/d') }} — {{ $offer['time'][$lang] }}</span></div>
@@ -60,7 +60,7 @@
 
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
                 @unless($paid)
-                <a href="{{ route('course.register', $registration->course_key) }}" class="rounded-xl px-6 py-3 font-black text-white" style="background: linear-gradient(135deg, #1565c0, #1d4e89);">
+                <a href="{{ route('course.register', $registration->course_key) }}" class="rounded-xl px-6 py-3 font-black text-white" style="background: linear-gradient(135deg, var(--cb), var(--c1));">
                     {{ $isAr ? 'حاول مرة أخرى' : 'Try again' }}
                 </a>
                 @endunless

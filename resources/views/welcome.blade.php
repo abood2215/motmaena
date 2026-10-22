@@ -8,8 +8,8 @@
     $isAr = $lang === 'ar';
     $customAnnouncement = $site['announcement_' . $lang] ?? '';
 @endphp
-@if($featured && file_exists(public_path('og-' . $featured['slug'] . '.jpg')))
-    @section('og_image', asset('og-' . $featured['slug'] . '.jpg'))
+@if($featured && $featured['share_image'])
+    @section('og_image', asset($featured['share_image']))
 @endif
 
 @section('content')
@@ -17,9 +17,9 @@
 {{-- ════════════════ ANNOUNCEMENT STRIP ════════════════ --}}
 @if($featured || $customAnnouncement)
 <a href="{{ $featured ? route('course.register', $featured['slug']) : route('courses') }}"
-   class="group block bg-gradient-to-l from-[#1d4e89] to-[#3b5f95] text-white">
+   class="group block bg-gradient-to-l from-[color:var(--c1)] to-[color:var(--c2)] text-white" style="{{ \App\Models\CourseOffer::paletteCss($featured['theme'] ?? null) }}">
     <div class="container mx-auto px-4 py-2.5 flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-bold text-center">
-        <span class="w-2 h-2 rounded-full bg-[#8fd3ff] animate-pulse shrink-0"></span>
+        <span class="w-2 h-2 rounded-full bg-[color:var(--ca)] animate-pulse shrink-0"></span>
         <span>
             @if($customAnnouncement)
                 {{ $customAnnouncement }}
@@ -31,7 +31,7 @@
                 {{ $featured['price'] }} {{ $isAr ? 'د.ك' : 'KWD' }}
             @endif
         </span>
-        <span class="shrink-0 inline-flex items-center gap-1 bg-white text-[#1d4e89] font-black px-2.5 py-1 rounded-full transition group-hover:bg-[#bfe3ff]">
+        <span class="shrink-0 inline-flex items-center gap-1 bg-white text-[color:var(--c1)] font-black px-2.5 py-1 rounded-full transition group-hover:bg-[color:var(--ca)]">
             {{ app()->getLocale() == 'ar' ? 'سجّل الآن' : 'Register' }}
             <svg class="w-3 h-3 {{ app()->getLocale() == 'ar' ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </span>
@@ -223,33 +223,33 @@
     $offer = $featured;
     $titleWords = explode(' ', $offer['title'][$lang], 2);
 @endphp
-<section id="special-event" class="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-[#eef1f6] dark:bg-[#0b1220]">
-    <div class="absolute -top-24 {{ $isAr ? '-left-24' : '-right-24' }} w-96 h-96 rounded-full bg-[#1565c0]/10 blur-3xl pointer-events-none"></div>
+<section id="special-event" class="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-[color:var(--cbg)] dark:bg-[#0b1220]" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme']) }}">
+    <div class="absolute -top-24 {{ $isAr ? '-left-24' : '-right-24' }} w-96 h-96 rounded-full bg-[color:var(--cb)]/10 blur-3xl pointer-events-none"></div>
 
     <div class="relative container mx-auto px-4 sm:px-6 lg:px-8" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
-        <div class="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1d4e89]/20"
-             style="background: linear-gradient({{ $isAr ? '270deg' : '90deg' }}, #1d4e89 0%, #3b5f95 50%, #7f97bf 100%);">
+        <div class="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-[color:var(--c1)]/20"
+             style="background: linear-gradient({{ $isAr ? '270deg' : '90deg' }}, var(--c1) 0%, var(--c2) 50%, var(--c4) 100%);">
             <div class="flex flex-col lg:flex-row">
 
                 {{-- Content --}}
                 <div class="flex-1 p-6 sm:p-10 lg:p-12 text-white">
                     <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-full bg-white/15 border border-white/25 mb-5">
-                        <span class="w-2 h-2 rounded-full bg-[#8fd3ff] animate-pulse"></span>
-                        {{ $isAr ? 'دورة جديدة · التسجيل مفتوح' : 'New course · Registration open' }}
+                        <span class="w-2 h-2 rounded-full bg-[color:var(--ca)] animate-pulse"></span>
+                        {{ $offer['badge'][$lang] }}
                     </span>
 
                     <h2 class="font-black leading-tight mb-2" style="font-size: clamp(2rem, 5vw, 3.4rem);">
-                        <span class="text-[#bfe3ff]">{{ $titleWords[0] }}</span> {{ $titleWords[1] ?? '' }}
+                        <span class="text-[color:var(--ca)]">{{ $titleWords[0] }}</span> {{ $titleWords[1] ?? '' }}
                     </h2>
                     <p class="text-white/80 text-lg sm:text-xl font-black mb-7">{{ $offer['trainer'][$lang] }}</p>
 
                     {{-- Topics --}}
-                    <p class="inline-block text-[#1d4e89] bg-white text-xs font-black px-3 py-1 rounded-md mb-3">{{ $isAr ? 'المحاور' : 'Topics' }}</p>
+                    <p class="inline-block text-[color:var(--c1)] bg-white text-xs font-black px-3 py-1 rounded-md mb-3">{{ $isAr ? 'المحاور' : 'Topics' }}</p>
                     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
                         @foreach($offer['topics'][$lang] as $topic)
                         <li class="flex items-start gap-2 text-sm sm:text-[15px] font-bold text-white/90 leading-snug">
-                            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#8fd3ff] shrink-0"></span>
+                            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[color:var(--ca)] shrink-0"></span>
                             {{ $topic }}
                         </li>
                         @endforeach
@@ -264,9 +264,9 @@
                         ];
                     @endphp
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-                        @foreach($infoItems as $info)
+                        @foreach(array_filter($infoItems, fn ($i) => trim((string) $i['bottom']) !== '') as $info)
                         <div class="flex items-center gap-3 rounded-2xl bg-white/10 border border-white/15 p-3">
-                            <span class="w-10 h-10 rounded-xl bg-[#1d4e89] border border-white/20 flex items-center justify-center shrink-0">
+                            <span class="w-10 h-10 rounded-xl bg-[color:var(--c1)] border border-white/20 flex items-center justify-center shrink-0">
                                 <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $info['icon'] }}"/></svg>
                             </span>
                             <span>
@@ -288,16 +288,18 @@
                     </div>
 
                     {{-- Price + CTA --}}
-                    <div class="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 rounded-2xl bg-white p-4 sm:p-5 text-[#1d4e89]">
+                    <div class="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 rounded-2xl bg-white p-4 sm:p-5 text-[color:var(--c1)]">
                         <div class="flex items-center gap-4">
                             <div class="whitespace-nowrap">
                                 <span class="block text-xs font-bold text-gray-500">{{ $isAr ? 'رسوم الاشتراك' : 'Course fee' }}</span>
                                 <span class="font-black leading-none" style="font-size: clamp(2rem, 4vw, 2.6rem);">{{ $offer['price'] }}</span>
                                 <span class="font-black">{{ $isAr ? 'دينار' : 'KWD' }}</span>
                             </div>
+                            @if($offer['show_installments'])
                             <span class="text-center whitespace-nowrap text-[11px] font-black leading-tight px-3 py-2 rounded-2xl bg-[#fdecef] text-[#d6334b]">
                                 deema<br>{{ $isAr ? 'قسّط على 4 دفعات' : 'Split in 4 payments' }}
                             </span>
+                            @endif
                         </div>
                         @if($offer['is_full'])
                         <div class="flex-1 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
@@ -307,13 +309,13 @@
                         @else
                         <div class="flex flex-col sm:flex-row gap-2 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
                             <a href="{{ route('course.register', $offer['slug']) }}"
-                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-7 py-3.5 font-black text-white shadow-lg shadow-[#1565c0]/30 transition hover:-translate-y-0.5 active:scale-95"
-                               style="background: linear-gradient(135deg, #1565c0, #1d4e89);">
+                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-7 py-3.5 font-black text-white shadow-lg shadow-[color:var(--cb)]/30 transition hover:-translate-y-0.5 active:scale-95"
+                               style="background: linear-gradient(135deg, var(--cb), var(--c1));">
                                 {{ $isAr ? 'سجّل وادفع الآن' : 'Register & pay now' }}
                                 <svg class="w-4 h-4 {{ $isAr ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                             </a>
                             <a href="https://wa.me/{{ $site['whatsapp'] }}?text={{ rawurlencode(($isAr ? 'مرحباً، أريد الاستفسار عن ' : 'Hello, I would like to ask about ') . $offer['title'][$lang]) }}" target="_blank"
-                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-3.5 font-black text-[#1d4e89] border-2 border-[#1d4e89]/15 hover:bg-[#1d4e89]/5 transition">
+                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-3.5 font-black text-[color:var(--c1)] border-2 border-[color:var(--c1)]/15 hover:bg-[color:var(--c1)]/5 transition">
                                 {{ $isAr ? 'استفسار واتساب' : 'Ask on WhatsApp' }}
                             </a>
                         </div>
@@ -321,16 +323,18 @@
                     </div>
 
                     {{-- Certificate --}}
+                    @if($offer['certificate'][$lang])
                     <p class="flex items-center gap-2 mt-5 text-sm font-black text-white/90">
-                        <span class="w-6 h-6 rounded-full bg-[#1565c0] border border-white/30 flex items-center justify-center shrink-0">
+                        <span class="w-6 h-6 rounded-full bg-[color:var(--cb)] border border-white/30 flex items-center justify-center shrink-0">
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         </span>
                         {{ $offer['certificate'][$lang] }}
                     </p>
+                    @endif
                 </div>
 
                 {{-- Photo --}}
-                <div class="relative lg:w-[38%] min-h-[300px] sm:min-h-[380px] lg:min-h-0 bg-[#5f7aa8]/40 flex items-end justify-center overflow-hidden">
+                <div class="relative lg:w-[38%] min-h-[300px] sm:min-h-[380px] lg:min-h-0 bg-[color:var(--c3)]/40 flex items-end justify-center overflow-hidden">
                     <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 70%, rgba(255,255,255,0.25), transparent 65%);"></div>
                     <img src="{{ asset($offer['image']) }}" alt="{{ $offer['trainer'][$lang] }}"
                          class="relative w-[78%] sm:w-[60%] lg:w-[92%] h-auto object-contain object-bottom drop-shadow-2xl">
@@ -340,7 +344,7 @@
 
         {{-- Contact --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mt-6 text-sm font-bold text-gray-600 dark:text-gray-300">
-            <span>{{ $isAr ? 'للتواصل والاستفسار:' : 'Contact:' }} <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">{{ \App\Models\SiteSetting::pretty($site['whatsapp']) }}</span> · <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">{{ \App\Models\SiteSetting::pretty($site['phone']) }}</span></span>
+            <span>{{ $isAr ? 'للتواصل والاستفسار:' : 'Contact:' }} <span dir="ltr" class="text-[color:var(--c1)] dark:text-[color:var(--ca)] font-black">{{ \App\Models\SiteSetting::pretty($site['whatsapp']) }}</span> · <span dir="ltr" class="text-[color:var(--c1)] dark:text-[color:var(--ca)] font-black">{{ \App\Models\SiteSetting::pretty($site['phone']) }}</span></span>
             <span>{{ $site['address_' . $lang] }}</span>
         </div>
     </div>
@@ -350,18 +354,18 @@
 {{-- ════════════════ UPCOMING COURSES (every open course except the featured one) ════════════════ --}}
 @php $others = \App\Models\CourseOffer::upcoming()->reject(fn ($o) => $featuredModel && $o->id === $featuredModel->id)->map->toOfferArray(); @endphp
 @if($others->isNotEmpty())
-<section class="py-12 sm:py-16 bg-white dark:bg-dark-bg" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+<section class="py-12 sm:py-16 bg-white dark:bg-dark-bg" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(null) }}">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8 sm:mb-10">
-            <span class="inline-block bg-[#1565c0]/10 text-[#1565c0] dark:text-[#8fd3ff] px-4 py-1.5 rounded-full text-xs font-black mb-3">{{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}</span>
+            <span class="inline-block bg-[color:var(--cb)]/10 text-[color:var(--cb)] dark:text-[color:var(--ca)] px-4 py-1.5 rounded-full text-xs font-black mb-3">{{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}</span>
             <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">{{ $isAr ? 'الدورات القادمة' : 'Upcoming Courses' }}</h2>
         </div>
         <div class="flex flex-wrap justify-center gap-5">
             @foreach($others as $o)
-            <div class="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] rounded-3xl overflow-hidden border border-[#dbe3ef] dark:border-white/10 bg-white dark:bg-[#111a2b] shadow-sm hover:shadow-xl transition flex flex-col">
-                <div class="relative h-40 flex items-end justify-center overflow-hidden" style="background: linear-gradient(135deg, #1d4e89, #5f7aa8);">
+            <div style="{{ \App\Models\CourseOffer::paletteCss($o['theme']) }}" class="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] rounded-3xl overflow-hidden border border-[color:var(--cbd)] dark:border-white/10 bg-white dark:bg-[#111a2b] shadow-sm hover:shadow-xl transition flex flex-col">
+                <div class="relative h-40 flex items-end justify-center overflow-hidden" style="background: linear-gradient(135deg, var(--c1), var(--c3));">
                     <img src="{{ asset($o['image']) }}" alt="" class="h-[92%] w-auto object-contain object-bottom">
-                    <span class="absolute top-3 {{ $isAr ? 'right-3' : 'left-3' }} bg-white text-[#1d4e89] text-xs font-black px-3 py-1 rounded-full">
+                    <span class="absolute top-3 {{ $isAr ? 'right-3' : 'left-3' }} bg-white text-[color:var(--c1)] text-xs font-black px-3 py-1 rounded-full">
                         {{ $o['day'][$lang] }} {{ \Carbon\Carbon::parse($o['date'])->locale($lang)->translatedFormat('j F') }}
                     </span>
                     @if($o['seats_left'] !== null)
@@ -376,16 +380,16 @@
                     @if($o['topics'][$lang])
                     <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1 mb-4">
                         @foreach(array_slice($o['topics'][$lang], 0, 3) as $t)
-                            <li class="flex items-start gap-2"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#1565c0] shrink-0"></span>{{ $t }}</li>
+                            <li class="flex items-start gap-2"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[color:var(--cb)] shrink-0"></span>{{ $t }}</li>
                         @endforeach
                     </ul>
                     @endif
                     <div class="mt-auto flex items-center justify-between gap-3 pt-4 border-t border-gray-100 dark:border-white/10">
-                        <span class="font-black text-[#1d4e89] dark:text-[#8fd3ff] text-xl">{{ $o['price'] }} <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
+                        <span class="font-black text-[color:var(--c1)] dark:text-[color:var(--ca)] text-xl">{{ $o['price'] }} <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
                         @if($o['is_full'])
                             <span class="text-xs font-black text-red-500">{{ $isAr ? 'اكتمل العدد' : 'Fully booked' }}</span>
                         @else
-                            <a href="{{ route('course.register', $o['slug']) }}" class="rounded-xl px-5 py-2.5 text-sm font-black text-white" style="background: linear-gradient(135deg, #1565c0, #1d4e89);">{{ $isAr ? 'سجّل الآن' : 'Register' }}</a>
+                            <a href="{{ route('course.register', $o['slug']) }}" class="rounded-xl px-5 py-2.5 text-sm font-black text-white" style="background: linear-gradient(135deg, var(--cb), var(--c1));">{{ $isAr ? 'سجّل الآن' : 'Register' }}</a>
                         @endif
                     </div>
                 </div>

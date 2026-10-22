@@ -7,22 +7,24 @@
 
 @section('title', ($isAr ? 'التسجيل في ' : 'Register: ') . $offer['title'][$lang] . ' - ' . __('Motmaena Center'))
 
-@section('og_image', asset('og-anger-management.jpg'))
+@if($offer['share_image'])
+    @section('og_image', asset($offer['share_image']))
+@endif
 @section('meta_description', $offer['title'][$lang] . ' — ' . $offer['trainer'][$lang] . ' · ' . $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->format('Y/m/d') . ' · ' . $offer['price'] . ($isAr ? ' د.ك' : ' KWD'))
 
 @section('content')
 
-{{-- Poster palette: navy #1d4e89, slate #5f7aa8, mist #c7d2e4, accent #1565c0 --}}
-<section class="py-10 sm:py-16 bg-[#eef1f6] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+{{-- Poster palette: navy var(--c1), slate var(--c3), mist var(--cbd), accent var(--cb) --}}
+<section class="py-10 sm:py-16 bg-[color:var(--cbg)] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme']) }}">
     <div class="container mx-auto px-4 max-w-6xl">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-start">
 
             {{-- ═══ Course summary ═══ --}}
             <div class="lg:col-span-3 rounded-3xl overflow-hidden shadow-xl text-white"
-                 style="background: linear-gradient(135deg, #1d4e89 0%, #3b5f95 55%, #5f7aa8 100%);">
+                 style="background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 55%, var(--c3) 100%);">
                 <div class="p-6 sm:p-9">
                     <span class="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-full bg-white/15 border border-white/20 mb-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#8fd3ff] animate-pulse"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--ca)] animate-pulse"></span>
                         {{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}
                     </span>
                     <h1 class="font-black leading-tight mb-2" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">{{ $offer['title'][$lang] }}</h1>
@@ -43,8 +45,9 @@
                             ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'label' => $isAr ? 'الوقت' : 'Time', 'value' => $offer['time'][$lang]],
                             ['icon' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z', 'label' => $isAr ? 'المكان' : 'Location', 'value' => $offer['location'][$lang]],
                         ] as $meta)
+                        @continue(trim((string) $meta['value']) === '')
                         <div class="rounded-2xl bg-white/10 border border-white/15 p-4">
-                            <svg class="w-5 h-5 text-[#bfe3ff] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $meta['icon'] }}"/></svg>
+                            <svg class="w-5 h-5 text-[color:var(--ca)] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $meta['icon'] }}"/></svg>
                             <div class="text-white/55 text-[11px] font-bold mb-0.5">{{ $meta['label'] }}</div>
                             <div class="text-sm font-black leading-snug">{{ $meta['value'] }}</div>
                         </div>
@@ -55,24 +58,26 @@
                     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-7">
                         @foreach($offer['topics'][$lang] as $topic)
                         <li class="flex items-start gap-2 text-sm font-bold text-white/90 leading-snug">
-                            <svg class="w-4 h-4 mt-0.5 text-[#8fd3ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            <svg class="w-4 h-4 mt-0.5 text-[color:var(--ca)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                             {{ $topic }}
                         </li>
                         @endforeach
                     </ul>
 
-                    <div class="flex items-center gap-3 rounded-2xl bg-white text-[#1d4e89] p-4">
-                        <span class="w-9 h-9 rounded-full bg-[#1565c0] text-white flex items-center justify-center shrink-0">
+                    @if($offer['certificate'][$lang])
+                    <div class="flex items-center gap-3 rounded-2xl bg-white text-[color:var(--c1)] p-4">
+                        <span class="w-9 h-9 rounded-full bg-[color:var(--cb)] text-white flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         </span>
                         <span class="text-sm font-black">{{ $offer['certificate'][$lang] }}</span>
                     </div>
+                    @endif
                 </div>
             </div>
 
             {{-- ═══ Registration form ═══ --}}
-            <div class="lg:col-span-2 rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[#dbe3ef] dark:border-white/10 p-6 sm:p-8">
-                <h2 class="text-xl font-black text-[#1d4e89] dark:text-white mb-1">{{ $isAr ? 'سجّل الآن' : 'Register Now' }}</h2>
+            <div class="lg:col-span-2 rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[color:var(--cbd)] dark:border-white/10 p-6 sm:p-8">
+                <h2 class="text-xl font-black text-[color:var(--c1)] dark:text-white mb-1">{{ $isAr ? 'سجّل الآن' : 'Register Now' }}</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ $isAr ? 'عبّئ بياناتك وادفع إلكترونياً بأمان عبر ماي فاتورة' : 'Fill in your details and pay securely via MyFatoorah' }}</p>
 
                 @if($errors->has('payment'))
@@ -82,15 +87,15 @@
                 @endif
 
                 @if($offer['is_full'])
-                <div class="rounded-2xl bg-[#eef3fa] dark:bg-white/5 p-5">
-                    <p class="font-black text-[#1d4e89] dark:text-white mb-1">{{ $isAr ? 'اكتمل العدد في هذا الموعد 🙏' : 'This date is fully booked 🙏' }}</p>
+                <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-5">
+                    <p class="font-black text-[color:var(--c1)] dark:text-white mb-1">{{ $isAr ? 'اكتمل العدد في هذا الموعد 🙏' : 'This date is fully booked 🙏' }}</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 font-bold mb-4">{{ $isAr ? 'اترك رقم الواتساب ونبلّغك أول ما ينفتح موعد جديد.' : 'Leave your WhatsApp number and we will tell you when a new date opens.' }}</p>
                     @include('partials.notify-form', ['courseKey' => $offerKey])
                 </div>
                 @else
                 <form method="POST" action="{{ route('course.register.store', $offerKey) }}" id="reg-form" class="space-y-4">
                     @csrf
-                    @php $input = 'w-full rounded-xl border border-[#dbe3ef] dark:border-white/10 bg-[#f7f9fc] dark:bg-white/5 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-[#1565c0] focus:ring-2 focus:ring-[#1565c0]/20 transition'; @endphp
+                    @php $input = 'w-full rounded-xl border border-[color:var(--cbd)] dark:border-white/10 bg-[color:var(--ct)] dark:bg-white/5 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-[color:var(--cb)] focus:ring-2 focus:ring-[color:var(--cb)]/20 transition'; @endphp
 
                     <div>
                         <label class="block text-xs font-black text-gray-600 dark:text-gray-300 mb-1.5">{{ $isAr ? 'الاسم الكامل' : 'Full name' }} *</label>
@@ -115,7 +120,7 @@
                         <label class="block text-xs font-black text-gray-600 dark:text-gray-300 mb-1.5">{{ $isAr ? 'كود الخصم (إن وجد)' : 'Discount code (optional)' }}</label>
                         <div class="flex gap-2">
                             <input type="text" name="code" id="code" value="{{ old('code') }}" maxlength="40" dir="ltr" autocomplete="off" class="{{ $input }} uppercase">
-                            <button type="button" id="apply-code" class="shrink-0 rounded-xl px-4 text-sm font-black text-[#1565c0] border-2 border-[#1565c0]/30 hover:bg-[#1565c0]/5 transition">
+                            <button type="button" id="apply-code" class="shrink-0 rounded-xl px-4 text-sm font-black text-[color:var(--cb)] border-2 border-[color:var(--cb)]/30 hover:bg-[color:var(--cb)]/5 transition">
                                 {{ $isAr ? 'تطبيق' : 'Apply' }}
                             </button>
                         </div>
@@ -123,7 +128,7 @@
                     </div>
 
                     {{-- Price breakdown --}}
-                    <div class="rounded-2xl bg-[#eef3fa] dark:bg-white/5 p-4 space-y-2 text-sm font-bold">
+                    <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-4 space-y-2 text-sm font-bold">
                         <div class="flex justify-between text-gray-600 dark:text-gray-300">
                             <span>{{ $isAr ? 'رسوم الاشتراك' : 'Course fee' }}</span>
                             <span><span id="p-original">{{ number_format($offer['price'], 3) }}</span> {{ $isAr ? 'د.ك' : 'KWD' }}</span>
@@ -132,23 +137,23 @@
                             <span>{{ $isAr ? 'الخصم' : 'Discount' }}</span>
                             <span>- <span id="p-discount">0</span> {{ $isAr ? 'د.ك' : 'KWD' }}</span>
                         </div>
-                        <div class="flex justify-between items-baseline border-t border-[#d3ddeb] dark:border-white/10 pt-2">
+                        <div class="flex justify-between items-baseline border-t border-[color:var(--cbd)] dark:border-white/10 pt-2">
                             <span class="text-gray-900 dark:text-white">{{ $isAr ? 'الإجمالي' : 'Total' }}</span>
-                            <span class="text-2xl font-black text-[#1d4e89] dark:text-[#8fd3ff]"><span id="p-final">{{ number_format($offer['price'], 3) }}</span> <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
+                            <span class="text-2xl font-black text-[color:var(--c1)] dark:text-[color:var(--ca)]"><span id="p-final">{{ number_format($offer['price'], 3) }}</span> <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
                         </div>
                     </div>
 
                     <button type="submit" id="pay-btn"
-                            class="w-full rounded-xl py-4 text-base font-black text-white shadow-lg shadow-[#1565c0]/25 transition hover:-translate-y-0.5 active:scale-[.98] disabled:opacity-60"
-                            style="background: linear-gradient(135deg, #1565c0, #1d4e89);">
+                            class="w-full rounded-xl py-4 text-base font-black text-white shadow-lg shadow-[color:var(--cb)]/25 transition hover:-translate-y-0.5 active:scale-[.98] disabled:opacity-60"
+                            style="background: linear-gradient(135deg, var(--cb), var(--c1));">
                         {{ $isAr ? 'متابعة الدفع' : 'Proceed to payment' }}
                     </button>
 
                     <p class="text-center text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-relaxed">
                         {{ $isAr ? 'بالضغط على "متابعة الدفع" فإنك توافق على' : 'By continuing you agree to the' }}
-                        <a href="{{ route('policies') }}#terms" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
+                        <a href="{{ route('policies') }}#terms" target="_blank" class="underline text-[color:var(--cb)]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
                         {{ $isAr ? 'و' : 'and' }}
-                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
+                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[color:var(--cb)]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
                     </p>
 
                     <p class="flex items-center justify-center gap-1.5 text-[11px] font-bold text-gray-400">

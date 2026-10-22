@@ -9,6 +9,10 @@
 @section('content')
 @php $v = fn ($field) => old($field, $offer->$field); @endphp
 
+@isset($duplicateOf)
+<div class="alert ok">نسخة من «{{ $duplicateOf->title_ar }}» — غيّر الاسم والتاريخ واللي بدك ياه، والباقي (التصميم، الصورة، المحاور) محفوظ.</div>
+@endisset
+
 <form method="POST" enctype="multipart/form-data"
       action="{{ $offer->exists ? route('admin.courses.update', $offer) : route('admin.courses.store') }}">
   @csrf
@@ -83,6 +87,44 @@
   </div>
 
   <div class="card">
+    <h3>🎨 تصميم الإعلان</h3>
+    <div class="field-grid">
+      <div class="full">
+        <label>لون الإعلان والإطار</label>
+        <div class="row-actions" id="theme-swatches">
+          @foreach(\App\Models\CourseOffer::THEMES as $hex => $name)
+            <button type="button" title="{{ $name }}" data-hex="{{ $hex }}" onclick="pickTheme('{{ $hex }}')"
+                    style="width:38px;height:38px;border-radius:12px;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--border);cursor:pointer;background:linear-gradient(135deg, {{ $hex }}, {{ $hex }}99)"></button>
+          @endforeach
+          <label class="check" style="margin:0 8px">أو لون مخصص:
+            <input type="color" name="theme_color" id="theme_color" value="{{ old('theme_color', $offer->theme_color ?: \App\Models\CourseOffer::DEFAULT_THEME) }}" oninput="previewTheme()" style="width:46px;height:34px;padding:0;border:none;background:none">
+          </label>
+        </div>
+        <div id="theme-preview" style="margin-top:12px;border-radius:16px;padding:16px 18px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div>
+            <div id="pv-badge" style="display:inline-block;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.18);margin-bottom:6px"></div>
+            <div style="font-size:20px;font-weight:900"><span id="pv-accent"></span> <span id="pv-rest"></span></div>
+          </div>
+          <span id="pv-btn" style="font-weight:900;font-size:13px;padding:9px 16px;border-radius:10px;background:#fff">سجّل وادفع الآن</span>
+        </div>
+        <p class="hint">معاينة تقريبية — كل ألوان الإعلان وصفحة الدفع بتتولّد من هاللون.</p>
+      </div>
+      <div>
+        <label>النص الصغير فوق العنوان (عربي)</label>
+        <input name="badge_ar" id="badge_ar" value="{{ $v('badge_ar') }}" maxlength="80" placeholder="دورة جديدة · التسجيل مفتوح" oninput="previewTheme()">
+      </div>
+      <div>
+        <label>النص الصغير فوق العنوان (إنجليزي)</label>
+        <input name="badge_en" value="{{ $v('badge_en') }}" maxlength="80" dir="ltr" placeholder="New course · Registration open">
+      </div>
+      <div class="full">
+        <input type="hidden" name="show_installments" value="0">
+        <label class="check"><input type="checkbox" name="show_installments" value="1" @checked(old('show_installments', $offer->show_installments ?? true))> إظهار "deema — قسّط على 4 دفعات" جنب السعر</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
     <h3>الصورة والرابط</h3>
     <div class="field-grid">
       <div>
@@ -91,9 +133,23 @@
         <div class="row-actions" style="margin-top:8px">
           <img class="thumb" src="{{ asset($offer->image ?: \App\Models\CourseOffer::DEFAULT_IMAGE) }}" alt="">
           @if($offer->image)
+            <input type="hidden" name="copy_image" value="{{ $offer->exists ? '' : $offer->image }}">
             <label class="check"><input type="checkbox" name="remove_image" value="1"> رجوع للصورة الافتراضية</label>
           @else
             <span class="hint">حالياً: صورة الدكتور الافتراضية</span>
+          @endif
+        </div>
+      </div>
+      <div>
+        <label>صورة المشاركة (اللي بتطلع لما حدا يبعت الرابط على واتساب/إنستغرام) — البوستر مثلاً</label>
+        <input type="file" name="share_file" accept="image/png,image/jpeg,image/webp">
+        <div class="row-actions" style="margin-top:8px">
+          @if($offer->share_image)
+            <img src="{{ asset($offer->share_image) }}" alt="" style="height:44px;border-radius:8px">
+            <input type="hidden" name="copy_share" value="{{ $offer->exists ? '' : $offer->share_image }}">
+            <label class="check"><input type="checkbox" name="remove_share" value="1"> إزالة</label>
+          @else
+            <span class="hint">بدون صورة بيطلع شعار المركز. الأفضل مقاس 1200×630.</span>
           @endif
         </div>
       </div>
@@ -114,4 +170,28 @@
     </div>
   </div>
 </form>
+
+<script>
+function mixWhite(hex, w) {
+  var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  var f = function (c) { return Math.round(c + (255 - c) * w).toString(16).padStart(2, '0'); };
+  return '#' + f(r) + f(g) + f(b);
+}
+function previewTheme() {
+  var hex = document.getElementById('theme_color').value;
+  var title = (document.querySelector('[name=title_ar]').value || 'دورة إدارة الغضب').split(' ');
+  document.getElementById('theme-preview').style.background = 'linear-gradient(270deg,' + hex + ',' + mixWhite(hex, .18) + ',' + mixWhite(hex, .5) + ')';
+  document.getElementById('pv-accent').style.color = mixWhite(hex, .72);
+  document.getElementById('pv-accent').textContent = title[0];
+  document.getElementById('pv-rest').textContent = title.slice(1).join(' ');
+  document.getElementById('pv-badge').textContent = document.getElementById('badge_ar').value || 'دورة جديدة · التسجيل مفتوح';
+  document.getElementById('pv-btn').style.color = hex;
+  document.querySelectorAll('#theme-swatches [data-hex]').forEach(function (b) {
+    b.style.boxShadow = b.dataset.hex === hex ? '0 0 0 3px ' + hex : '0 0 0 1.5px var(--border)';
+  });
+}
+function pickTheme(hex) { document.getElementById('theme_color').value = hex; previewTheme(); }
+document.querySelector('[name=title_ar]').addEventListener('input', previewTheme);
+previewTheme();
+</script>
 @endsection

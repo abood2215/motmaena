@@ -21,14 +21,22 @@ class CourseOfferController extends Controller
         return view('admin.courses.index', compact('offers', 'counts'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        if ($source = CourseOffer::find($request->query('from'))) {
+            $copy = $source->replicate(['slug', 'date', 'is_featured']);
+            $copy->is_active = true;
+            return view('admin.courses.form', ['offer' => $copy, 'duplicateOf' => $source]);
+        }
+
         return view('admin.courses.form', ['offer' => new CourseOffer([
             'trainer_ar' => 'أ.د. طارق الحبيب',
             'trainer_en' => 'Prof. Dr. Tariq Al-Habib',
             'location_ar' => 'حضوري - الكويت، برج أحمد، بجوار المستشفى الأميري',
             'location_en' => 'In-person - Kuwait, Burj Ahmed, near Al-Amiri Hospital',
             'is_active' => true,
+            'show_installments' => true,
+            'theme_color' => CourseOffer::DEFAULT_THEME,
         ])]);
     }
 
@@ -112,6 +120,12 @@ class CourseOfferController extends Controller
             'topics_ar'      => 'nullable|string|max:3000',
             'topics_en'      => 'nullable|string|max:3000',
             'image_file'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'theme_color'    => ['nullable', 'regex:/^#[0-9a-fA-F]{6}$/'],
+            'badge_ar'       => 'nullable|string|max:80',
+            'badge_en'       => 'nullable|string|max:80',
+            'share_file'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'copy_image'     => 'nullable|string|max:255',
+            'copy_share'     => 'nullable|string|max:255',
         ], [
             'slug.unique' => 'هذا الرابط مستخدم لدورة أخرى',
             'image_file.image' => 'الملف يجب أن يكون صورة',
@@ -120,16 +134,34 @@ class CourseOfferController extends Controller
 
         $data['is_active'] = $request->boolean('is_active');
         $data['is_featured'] = $request->boolean('is_featured');
+        $data['show_installments'] = $request->boolean('show_installments');
+        $data['theme_color'] = strtolower($data['theme_color'] ?? CourseOffer::DEFAULT_THEME);
+
+        $upload = function (string $input, string $suffix) use ($request, $data) {
+            $file = $request->file($input);
+            $name = $data['slug'] . $suffix . '-' . time() . '.' . $file->extension();
+            $file->move(public_path('uploads/courses'), $name);
+            return 'uploads/courses/' . $name;
+        };
+        // A duplicated course keeps the original's pictures unless new ones are uploaded
+        $existingFile = fn (?string $path) => $path && is_file(public_path($path)) ? $path : null;
 
         if ($request->hasFile('image_file')) {
-            $file = $request->file('image_file');
-            $name = $data['slug'] . '-' . time() . '.' . $file->extension();
-            $file->move(public_path('uploads/courses'), $name);
-            $data['image'] = 'uploads/courses/' . $name;
+            $data['image'] = $upload('image_file', '');
         } elseif ($request->boolean('remove_image')) {
             $data['image'] = null;
+        } elseif ($copy = $existingFile($request->input('copy_image'))) {
+            $data['image'] = $copy;
         }
-        unset($data['image_file']);
+
+        if ($request->hasFile('share_file')) {
+            $data['share_image'] = $upload('share_file', '-share');
+        } elseif ($request->boolean('remove_share')) {
+            $data['share_image'] = null;
+        } elseif ($copy = $existingFile($request->input('copy_share'))) {
+            $data['share_image'] = $copy;
+        }
+        unset($data['image_file'], $data['share_file'], $data['copy_image'], $data['copy_share']);
 
         return $data;
     }

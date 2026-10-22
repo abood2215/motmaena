@@ -8,11 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class CourseOffer extends Model
 {
     public const DEFAULT_IMAGE = 'courses-img/dr-tariq.png';
+    public const DEFAULT_THEME = '#1d4e89';
+
+    /** Ready-made banner colours offered in the admin (any colour can still be picked). */
+    public const THEMES = [
+        '#1d4e89' => 'أزرق',
+        '#8a2f2f' => 'أحمر (لون المركز)',
+        '#0f5e4a' => 'أخضر',
+        '#4c2a85' => 'بنفسجي',
+        '#0e5a6b' => 'تركوازي',
+        '#7a4b14' => 'بني ذهبي',
+        '#9d2c5f' => 'وردي',
+        '#1f2937' => 'كحلي غامق',
+    ];
 
     protected $fillable = [
         'slug', 'title_ar', 'title_en', 'trainer_ar', 'trainer_en', 'price', 'seats', 'date',
         'time_ar', 'time_en', 'location_ar', 'location_en', 'certificate_ar', 'certificate_en',
-        'topics_ar', 'topics_en', 'image', 'is_active', 'is_featured',
+        'topics_ar', 'topics_en', 'image', 'theme_color', 'badge_ar', 'badge_en', 'show_installments', 'share_image',
+        'is_active', 'is_featured',
     ];
 
     protected $casts = [
@@ -20,6 +34,7 @@ class CourseOffer extends Model
         'date'        => 'date',
         'is_active'   => 'boolean',
         'is_featured' => 'boolean',
+        'show_installments' => 'boolean',
     ];
 
     /** Open for registration: switched on and the course date hasn't passed. */
@@ -83,11 +98,37 @@ class CourseOffer extends Model
             'certificate' => $pair('certificate'),
             'topics'      => ['ar' => $lines($this->topics_ar), 'en' => $lines($this->topics_en) ?: $lines($this->topics_ar)],
             'image'       => $this->image ?: self::DEFAULT_IMAGE,
+            'theme'       => $this->theme_color ?: self::DEFAULT_THEME,
+            'badge'       => [
+                'ar' => $this->badge_ar ?: 'دورة جديدة · التسجيل مفتوح',
+                'en' => $this->badge_en ?: ($this->badge_ar ?: 'New course · Registration open'),
+            ],
+            'show_installments' => (bool) ($this->show_installments ?? true),
+            'share_image' => $this->share_image,
             'seats'       => $this->seats,
             'seats_left'  => $this->seatsLeft(),
             'is_full'     => $this->isFull(),
             'starts_at'   => $date->toDateString() . 'T' . $this->startTime() . '+03:00', // Kuwait time
         ];
+    }
+
+    /**
+     * CSS custom properties for a course's colour, derived from one base colour so any pick
+     * still looks right: --c1 (deep) … --c4 (soft), --cb (buttons), --ca (light accent on the
+     * coloured panel), --cbg/--ct (page and box tints), --cbd (borders).
+     */
+    public static function paletteCss(?string $hex): string
+    {
+        $hex = preg_match('/^#[0-9a-f]{6}$/i', (string) $hex) ? $hex : self::DEFAULT_THEME;
+        $rgb = array_map('hexdec', str_split(substr($hex, 1), 2));
+        $mix = function (float $white) use ($rgb) {
+            return '#' . implode('', array_map(fn ($c) => str_pad(dechex((int) round($c + (255 - $c) * $white)), 2, '0', STR_PAD_LEFT), $rgb));
+        };
+
+        return implode(';', [
+            "--c1:{$hex}", '--c2:' . $mix(.18), '--c3:' . $mix(.35), '--c4:' . $mix(.5),
+            '--cb:' . $mix(.1), '--ca:' . $mix(.72), '--cbg:' . $mix(.92), '--ct:' . $mix(.94), '--cbd:' . $mix(.82),
+        ]);
     }
 
     /** Best-effort start time for the countdown, read from the Arabic/English time text ("7:00 - 9:00 مساءً"). */

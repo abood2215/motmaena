@@ -60,6 +60,29 @@ class AdminPanelTest extends TestCase
         $this->get('/register/self-confidence')->assertNotFound();
     }
 
+    public function test_next_course_is_set_up_from_admin_without_code_changes(): void
+    {
+        $old = CourseOffer::where('slug', 'anger-management')->first();
+
+        // "Duplicate as new course" pre-fills the form with the old design and content
+        $this->get('/admin/courses/create?from=' . $old->id)->assertOk()
+            ->assertSee('نسخة من')->assertSee('مفهوم الغضب وأنواعه')->assertSee('#1d4e89');
+
+        $this->post('/admin/courses', [
+            'title_ar' => 'دورة الذكاء العاطفي', 'title_en' => 'Emotional Intelligence', 'trainer_ar' => 'أ.د. طارق الحبيب',
+            'price' => '35', 'date' => '2026-11-25', 'theme_color' => '#0F5E4A', 'badge_ar' => 'الدورة القادمة',
+            'show_installments' => '0', 'is_active' => '1', 'is_featured' => '1',
+        ])->assertSessionHasNoErrors();
+
+        $page = $this->get('/')->assertOk();
+        $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة')->assertSee('--c1:#0f5e4a', false);
+        $this->assertStringNotContainsString('قسّط على 4 دفعات', $page->getContent());
+        $this->get('/register/emotional-intelligence')->assertOk()->assertSee('--c1:#0f5e4a', false);
+
+        $this->post('/admin/courses', ['title_ar' => 'x', 'trainer_ar' => 'y', 'price' => 1, 'date' => '2026-12-01', 'theme_color' => 'red'])
+            ->assertSessionHasErrors('theme_color');
+    }
+
     public function test_content_settings_change_the_site(): void
     {
         $this->post('/admin/content/settings', [

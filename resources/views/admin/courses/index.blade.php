@@ -24,7 +24,7 @@
         @foreach($offers as $o)
         @php $c = $counts[$o->slug] ?? null; @endphp
         <tr>
-          <td><img class="thumb" src="{{ asset($o->image ?: \App\Models\CourseOffer::DEFAULT_IMAGE) }}" alt=""></td>
+          <td><img class="thumb" src="{{ asset($o->image ?: \App\Models\CourseOffer::DEFAULT_IMAGE) }}" alt="" style="background: {{ $o->theme_color }}"></td>
           <td>
             <strong>{{ $o->title_ar }}</strong>
             <div class="small ltr">{{ route('course.register', $o->slug) }}</div>
@@ -43,6 +43,7 @@
           <td>
             <div class="row-actions">
               <a href="{{ route('admin.courses.edit', $o) }}" class="btn btn-outline btn-sm">تعديل</a>
+              <a href="{{ route('admin.courses.create', ['from' => $o->id]) }}" class="btn btn-outline btn-sm" title="دورة جديدة بنفس التصميم والمعلومات — بتغيّر بس اللي بدك ياه">⧉ نسخ كدورة جديدة</a>
               <a href="{{ route('admin.courses.reviews', $o) }}" class="btn btn-outline btn-sm">⭐ طلب تقييم</a>
               <a href="{{ route('course.register', $o->slug) }}" target="_blank" class="btn btn-outline btn-sm">عرض</a>
               <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText('{{ route('course.register', $o->slug) }}');this.textContent='تم النسخ ✓'">نسخ الرابط</button>
