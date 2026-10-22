@@ -46,7 +46,7 @@
         <div id="preloader" class="fixed inset-0 z-[9999] bg-[var(--bg-color)] flex items-center justify-center transition-opacity duration-700">
             <div class="flex flex-col items-center gap-6">
                 <div class="preloader-logo">
-                    <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-20 md:h-24">
+                    <img src="{{ asset('logo.png') }}" alt="{{ __('Motmaena Center') }}" class="h-14 md:h-16">
                 </div>
                 <div class="flex gap-1.5">
                     <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0s"></span>
@@ -63,7 +63,7 @@
                 <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center gap-8 md:gap-12">
                         <a href="/" class="flex items-center group shrink-0">
-                            <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 md:h-14 transition-transform group-hover:scale-105 dark:brightness-110">
+                            <img src="{{ asset('logo.png') }}" alt="{{ __('Motmaena Center') }}" class="h-11 sm:h-12 md:h-14 transition-transform group-hover:scale-105 dark:brightness-110">
                         </a>
                         <div class="hidden lg:flex items-center gap-8">
                             <a href="/" class="nav-link {{ request()->is('/') ? 'text-primary font-bold' : '' }}">{{ __('Home') }}</a>
@@ -155,7 +155,7 @@
 
                         {{-- Brand --}}
                         <div>
-                            <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-14 mb-4 dark:brightness-110">
+                            <img src="{{ asset('logo.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-14 mb-4 dark:brightness-110">
                             <p class="text-sm text-[var(--muted-color)] leading-relaxed mb-5">
                                 {{ $isArF ? 'مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بإشراف أ.د. طارق الحبيب.' : 'Motmaena Center for social & educational guidance and life skills, supervised by Prof. Dr. Tariq Al-Habib.' }}
                             </p>
