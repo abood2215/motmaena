@@ -182,140 +182,118 @@
     </div>
 </section>
 
-{{-- ════════════════ SPECIAL EVENT: ANGER MANAGEMENT COURSE ════════════════ --}}
-<section id="special-event" class="relative overflow-hidden dark:bg-[#09111f] bg-[#0e1a2e]" style="min-height: 680px;">
+{{-- ════════════════ FEATURED COURSE: ANGER MANAGEMENT (poster palette) ════════════════ --}}
+@php
+    $lang  = app()->getLocale() == 'ar' ? 'ar' : 'en';
+    $isAr  = $lang === 'ar';
+    $offer = config('course_offers.anger-management');
+@endphp
+<section id="special-event" class="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-[#eef1f6] dark:bg-[#0b1220]">
+    <div class="absolute -top-24 {{ $isAr ? '-left-24' : '-right-24' }} w-96 h-96 rounded-full bg-[#1565c0]/10 blur-3xl pointer-events-none"></div>
 
-    {{-- Kuwait Towers background --}}
-    <div class="absolute inset-0 z-0 pointer-events-none">
-        <img src="{{ asset('kuwait-towers.webp') }}" alt=""
-             class="w-full h-full object-cover object-center opacity-50"
-             onerror="this.style.display='none'">
-        {{-- Heavy dark overlay on the right (content side) — both modes --}}
-        <div class="absolute inset-0"
-             style="background: linear-gradient(to left, rgba(5,12,25,0.93) 0%, rgba(5,12,25,0.88) 35%, rgba(5,12,25,0.55) 58%, transparent 100%)"></div>
-        {{-- Darken bottom for readability --}}
-        <div class="absolute inset-0"
-             style="background: linear-gradient(to top, rgba(5,12,25,0.80) 0%, transparent 50%)"></div>
-        {{-- Extra subtle tint on left (photo side) so photo stands out --}}
-        <div class="absolute inset-0"
-             style="background: linear-gradient(to right, rgba(5,12,25,0.55) 0%, transparent 45%)"></div>
-    </div>
+    <div class="relative container mx-auto px-4 sm:px-6 lg:px-8" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
-    {{-- Red glow bottom --}}
-    <div class="absolute bottom-0 left-1/4 w-96 h-48 pointer-events-none" style="background: radial-gradient(ellipse, rgba(176,65,65,0.18) 0%, transparent 70%); filter: blur(40px);"></div>
+        <div class="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1d4e89]/20"
+             style="background: linear-gradient({{ $isAr ? '270deg' : '90deg' }}, #1d4e89 0%, #3b5f95 50%, #7f97bf 100%);">
+            <div class="flex flex-col lg:flex-row">
 
-    {{-- ══ Dr. Photo: anchored bottom-left (absolute) ══ --}}
-    <div class="{{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} absolute bottom-0 z-10 pointer-events-none"
-         style="width: clamp(260px, 42vw, 560px);">
-        <img src="{{ asset('courses-img/dr-tariq.png') }}"
-             alt="{{ app()->getLocale() == 'ar' ? 'أ.د طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}"
-             class="w-full h-auto object-contain object-bottom drop-shadow-[0_0_80px_rgba(176,65,65,0.45)]"
-             style="max-height: 680px;">
-        {{-- fade bottom of photo into section bg --}}
-        <div class="absolute bottom-0 inset-x-0 h-24" style="background: linear-gradient(to top, rgba(13,6,6,1) 0%, transparent 100%)"></div>
-    </div>
+                {{-- Content --}}
+                <div class="flex-1 p-6 sm:p-10 lg:p-12 text-white">
+                    <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-full bg-white/15 border border-white/25 mb-5">
+                        <span class="w-2 h-2 rounded-full bg-[#8fd3ff] animate-pulse"></span>
+                        {{ $isAr ? 'دورة جديدة · التسجيل مفتوح' : 'New course · Registration open' }}
+                    </span>
 
-    {{-- ══ Content: right column (or left for EN) ══ --}}
-    <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-white">
-        <div class="flex {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }}">
-            <div class="w-full sm:w-[80%] lg:w-[58%] xl:w-[54%]"
-                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
-                 style="{{ app()->getLocale() == 'ar' ? 'text-align: right;' : 'text-align: left;' }} text-shadow: 0 2px 10px rgba(0,0,0,0.85);">
-
-
-                {{-- Logo row --}}
-                <div class="flex items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2.5 mb-7">
-                    <img src="{{ asset('image.png') }}" alt="مطمئنة" class="h-6 brightness-0 invert opacity-60">
-                    <div class="w-px h-4 bg-white/15"></div>
-                    <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 brightness-0 invert opacity-50">
-                </div>
-
-                @php $isAr = app()->getLocale() == 'ar'; @endphp
-
-                {{-- دورة جديدة --}}
-                <p class="text-white/55 text-base sm:text-lg font-bold mb-2 tracking-wider">
-                    {{ $isAr ? 'دورة جديدة · حضوري' : 'New Course · In-Person' }}
-                </p>
-
-                {{-- Course title in red box --}}
-                <div class="inline-block mb-3" style="background: rgba(176,65,65,0.82); border-radius: 8px; padding: 8px 20px;">
-                    <h2 class="text-white font-black leading-tight" style="font-size: clamp(1.6rem, 4vw, 2.8rem);">
-                        {{ $isAr ? 'دورة إدارة الغضب' : 'Anger Management Course' }}
+                    <h2 class="font-black leading-tight mb-2" style="font-size: clamp(2rem, 5vw, 3.4rem);">
+                        @if($isAr)
+                            <span class="text-[#bfe3ff]">دورة</span> إدارة الغضب
+                        @else
+                            Anger <span class="text-[#bfe3ff]">Management</span>
+                        @endif
                     </h2>
-                </div>
+                    <p class="text-white/80 text-lg sm:text-xl font-black mb-7">{{ $offer['trainer'][$lang] }}</p>
 
-                {{-- Trainer --}}
-                <p class="text-white/70 text-base sm:text-lg font-bold mb-6">
-                    {{ $isAr ? 'مع أ.د. طارق الحبيب - مركز مطمئنة، الكويت' : 'with Prof. Dr. Tariq Al-Habib - Motmaena Center, Kuwait' }}
-                </p>
-
-                {{-- Date + time --}}
-                <div class="flex items-center gap-5 mb-6">
-                    <div class="text-center">
-                        <div class="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-0.5">Oct 2026</div>
-                        <div class="text-white font-black leading-none" style="font-size: clamp(2.8rem, 6vw, 4rem);">28</div>
-                        <div class="text-white/55 text-sm font-bold mt-0.5">{{ $isAr ? 'الأربعاء' : 'Wednesday' }}</div>
-                    </div>
-                    <div class="w-px bg-white/15 self-stretch my-1"></div>
-                    <div>
-                        <div class="text-white font-black leading-none" style="font-size: clamp(1.4rem, 3vw, 2rem);" dir="ltr">7:00 - 9:00</div>
-                        <div class="text-white/55 text-sm font-bold mt-1.5">{{ $isAr ? 'مساءً' : 'PM' }}</div>
-                    </div>
-                </div>
-
-                {{-- Course topics --}}
-                @php
-                    $courseTopics = $isAr
-                        ? ['مفهوم الغضب وأنواعه', 'مراحل الغضب', 'أسباب الغضب', 'الخبرة المتكاملة الضابطة للغضب', 'أنماط التفكير السلبي المحفزة للغضب', 'استراتيجيات التعامل مع الغضب', 'دور الجانب الروحي في إدارة الغضب', 'برنامج التحكم في الغضب']
-                        : ['The concept and types of anger', 'Stages of anger', 'Causes of anger', 'An integrated approach to controlling anger', 'Negative thinking patterns that trigger anger', 'Strategies for dealing with anger', 'The spiritual side of anger management', 'Anger control program'];
-                @endphp
-                <div class="{{ $isAr ? 'border-r-[3px] pr-4' : 'border-l-[3px] pl-4' }} border-primary mb-6">
-                    <p class="text-white/40 text-[10px] uppercase tracking-widest font-bold mb-2">{{ $isAr ? 'محاور الدورة' : 'Course Topics' }}</p>
-                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                        @foreach($courseTopics as $topic)
-                        <li class="flex items-start gap-2 text-white/85 text-sm font-bold leading-snug">
-                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+                    {{-- Topics --}}
+                    <p class="inline-block text-[#1d4e89] bg-white text-xs font-black px-3 py-1 rounded-md mb-3">{{ $isAr ? 'المحاور' : 'Topics' }}</p>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
+                        @foreach($offer['topics'][$lang] as $topic)
+                        <li class="flex items-start gap-2 text-sm sm:text-[15px] font-bold text-white/90 leading-snug">
+                            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#8fd3ff] shrink-0"></span>
                             {{ $topic }}
                         </li>
                         @endforeach
                     </ul>
-                </div>
 
-                {{-- Price + installments + certificate --}}
-                <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-7">
-                    <div class="flex items-baseline gap-1.5">
-                        <span class="text-white font-black leading-none" style="font-size: clamp(2rem, 4.5vw, 2.8rem);">30</span>
-                        <span class="text-white/70 font-bold">{{ $isAr ? 'دينار' : 'KWD' }}</span>
+                    {{-- Date / time / place --}}
+                    @php
+                        $infoItems = [
+                            ['icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'top' => $offer['day'][$lang], 'bottom' => \Carbon\Carbon::parse($offer['date'])->format('Y/m/d'), 'dir' => 'ltr'],
+                            ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'top' => $isAr ? 'مساءً' : 'Evening', 'bottom' => '7:00 - 9:00', 'dir' => 'ltr'],
+                            ['icon' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z', 'top' => $isAr ? 'حضوري' : 'In-person', 'bottom' => $isAr ? 'برج أحمد - الكويت' : 'Burj Ahmed, Kuwait', 'dir' => 'auto'],
+                        ];
+                    @endphp
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                        @foreach($infoItems as $info)
+                        <div class="flex items-center gap-3 rounded-2xl bg-white/10 border border-white/15 p-3">
+                            <span class="w-10 h-10 rounded-xl bg-[#1d4e89] border border-white/20 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $info['icon'] }}"/></svg>
+                            </span>
+                            <span>
+                                <span class="block text-white/65 text-xs font-bold">{{ $info['top'] }}</span>
+                                <span class="block font-black text-sm" dir="{{ $info['dir'] }}">{{ $info['bottom'] }}</span>
+                            </span>
+                        </div>
+                        @endforeach
                     </div>
-                    <span class="text-xs font-black px-3 py-1.5 rounded-full" style="background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.16);">
-                        {{ $isAr ? 'قسّطها على 4 دفعات مع deema' : 'Split into 4 payments with deema' }}
-                    </span>
-                    <span class="flex items-center gap-1.5 text-white/70 text-xs font-bold">
-                        <svg class="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                        {{ $isAr ? 'شهادة معتمدة من ديوان الخدمة المدنية والتطبيقي' : 'Certificate accredited by the Civil Service Commission & PAAET' }}
-                    </span>
-                </div>
 
-                {{-- Contact + CTA --}}
-                <div class="border-t border-white/[0.12] pt-5 flex flex-wrap items-center gap-x-8 gap-y-4">
-                    <div>
-                        <div class="text-white/35 text-[10px] uppercase tracking-widest font-bold mb-1">{{ app()->getLocale() == 'ar' ? 'للتواصل والاستفسار' : 'Contact' }}</div>
-                        <div class="text-white font-black text-sm leading-snug" dir="ltr">+965 556 651 61</div>
-                        <div class="text-white/55 font-semibold text-sm leading-snug" dir="ltr">+965 998 801 40</div>
-                        <div class="flex items-center gap-1.5 mt-1">
-                            <svg class="w-3 h-3 text-primary/60 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span class="text-white/35 text-xs">{{ app()->getLocale() == 'ar' ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}</span>
+                    {{-- Price + CTA --}}
+                    <div class="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 rounded-2xl bg-white p-4 sm:p-5 text-[#1d4e89]">
+                        <div class="flex items-center gap-4">
+                            <div class="whitespace-nowrap">
+                                <span class="block text-xs font-bold text-gray-500">{{ $isAr ? 'رسوم الاشتراك' : 'Course fee' }}</span>
+                                <span class="font-black leading-none" style="font-size: clamp(2rem, 4vw, 2.6rem);">{{ $offer['price'] }}</span>
+                                <span class="font-black">{{ $isAr ? 'دينار' : 'KWD' }}</span>
+                            </div>
+                            <span class="text-center whitespace-nowrap text-[11px] font-black leading-tight px-3 py-2 rounded-2xl bg-[#fdecef] text-[#d6334b]">
+                                deema<br>{{ $isAr ? 'قسّط على 4 دفعات' : 'Split in 4 payments' }}
+                            </span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
+                            <a href="{{ route('course.register', 'anger-management') }}"
+                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-7 py-3.5 font-black text-white shadow-lg shadow-[#1565c0]/30 transition hover:-translate-y-0.5 active:scale-95"
+                               style="background: linear-gradient(135deg, #1565c0, #1d4e89);">
+                                {{ $isAr ? 'سجّل وادفع الآن' : 'Register & pay now' }}
+                                <svg class="w-4 h-4 {{ $isAr ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                            </a>
+                            <a href="https://wa.me/96555665161?text={{ rawurlencode($isAr ? 'مرحباً، أريد الاستفسار عن دورة إدارة الغضب' : 'Hello, I would like to ask about the Anger Management course') }}" target="_blank"
+                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-3.5 font-black text-[#1d4e89] border-2 border-[#1d4e89]/15 hover:bg-[#1d4e89]/5 transition">
+                                {{ $isAr ? 'استفسار واتساب' : 'Ask on WhatsApp' }}
+                            </a>
                         </div>
                     </div>
-                    <a href="https://wa.me/96555665161" target="_blank"
-                       class="inline-flex items-center gap-2 font-black text-sm px-5 py-3 rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
-                       style="background: rgba(255,255,255,0.11); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.16); color: #fff;">
-                        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        {{ app()->getLocale() == 'ar' ? 'احجز الآن' : 'Book Now' }}
-                    </a>
+
+                    {{-- Certificate --}}
+                    <p class="flex items-center gap-2 mt-5 text-sm font-black text-white/90">
+                        <span class="w-6 h-6 rounded-full bg-[#1565c0] border border-white/30 flex items-center justify-center shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </span>
+                        {{ $offer['certificate'][$lang] }}
+                    </p>
                 </div>
 
+                {{-- Photo --}}
+                <div class="relative lg:w-[38%] min-h-[300px] sm:min-h-[380px] lg:min-h-0 bg-[#5f7aa8]/40 flex items-end justify-center overflow-hidden">
+                    <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 70%, rgba(255,255,255,0.25), transparent 65%);"></div>
+                    <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="{{ $offer['trainer'][$lang] }}"
+                         class="relative w-[78%] sm:w-[60%] lg:w-[92%] h-auto object-contain object-bottom drop-shadow-2xl">
+                </div>
             </div>
+        </div>
+
+        {{-- Contact --}}
+        <div class="flex flex-wrap items-center justify-between gap-4 mt-6 text-sm font-bold text-gray-600 dark:text-gray-300">
+            <span>{{ $isAr ? 'للتواصل والاستفسار:' : 'Contact:' }} <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">+965 556 651 61</span> · <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">+965 998 801 40</span></span>
+            <span>{{ $isAr ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}</span>
         </div>
     </div>
 </section>

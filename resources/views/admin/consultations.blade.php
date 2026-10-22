@@ -392,26 +392,7 @@ tr.row-new:hover td{background:#fef9e0}
 <div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
 
 {{-- ═══ SIDEBAR ═══ --}}
-<aside class="sidebar" id="sidebar">
-  <div class="sb-logo">
-    <div class="brand">
-      <span class="brand-dot"></span>مطمئنة
-    </div>
-    <div class="sub">لوحة التحكم الإدارية</div>
-  </div>
-  <nav class="sb-nav">
-    <a href="{{ route('admin.consultations') }}" class="active">
-      <span class="sb-icon">&#128203;</span>
-      الاستشارات
-      <span class="sb-badge" id="sb-badge">0</span>
-    </a>
-  </nav>
-  <div class="sb-footer">
-    <a href="{{ route('admin.logout') }}" class="logout-btn">
-      <span>&#x2BA8;</span> تسجيل الخروج
-    </a>
-  </div>
-</aside>
+@include('admin.partials.sidebar')
 
 {{-- ═══ MAIN ═══ --}}
 <div class="main">

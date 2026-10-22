@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Course;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\CourseRegistrationController;
+use App\Http\Controllers\Admin\CourseAdminController;
+use App\Http\Middleware\AdminAuth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,3 +43,22 @@ Route::post('/admin/consultations/{booking}/notes', [ConsultationController::cla
 Route::get('/admin/consultations/export', [ConsultationController::class, 'exportCsv'])->name('admin.consultations.export');
 Route::get('/admin/consultations/new-count', [ConsultationController::class, 'newCount'])->name('admin.consultations.new-count');
 Route::get('/admin/diag', [ConsultationController::class, 'diag']);
+
+// Course registration + MyFatoorah payment
+Route::get('/register/{offer}', [CourseRegistrationController::class, 'show'])->name('course.register');
+Route::post('/register/{offer}/check-code', [CourseRegistrationController::class, 'checkCode'])
+    ->middleware('throttle:15,1')->name('course.register.check-code');
+Route::post('/register/{offer}', [CourseRegistrationController::class, 'store'])
+    ->middleware('throttle:10,1')->name('course.register.store');
+Route::get('/payment/callback', [CourseRegistrationController::class, 'callback'])->name('payment.callback');
+
+Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/registrations', [CourseAdminController::class, 'registrations'])->name('registrations');
+    Route::get('/registrations/export', [CourseAdminController::class, 'exportRegistrations'])->name('registrations.export');
+    Route::post('/registrations/{registration}/verify', [CourseAdminController::class, 'verify'])->name('registrations.verify');
+
+    Route::get('/discount-codes', [CourseAdminController::class, 'codes'])->name('codes');
+    Route::post('/discount-codes', [CourseAdminController::class, 'storeCode'])->name('codes.store');
+    Route::post('/discount-codes/{code}/toggle', [CourseAdminController::class, 'toggleCode'])->name('codes.toggle');
+    Route::delete('/discount-codes/{code}', [CourseAdminController::class, 'destroyCode'])->name('codes.destroy');
+});
