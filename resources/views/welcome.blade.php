@@ -182,7 +182,7 @@
     </div>
 </section>
 
-{{-- ════════════════ SPECIAL EVENT: DR. TARIQ VISIT ════════════════ --}}
+{{-- ════════════════ SPECIAL EVENT: ANGER MANAGEMENT COURSE ════════════════ --}}
 <section id="special-event" class="relative overflow-hidden dark:bg-[#09111f] bg-[#0e1a2e]" style="min-height: 680px;">
 
     {{-- Kuwait Towers background --}}
@@ -230,64 +230,70 @@
                     <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 brightness-0 invert opacity-50">
                 </div>
 
-                {{-- يتواجد --}}
+                @php $isAr = app()->getLocale() == 'ar'; @endphp
+
+                {{-- دورة جديدة --}}
                 <p class="text-white/55 text-base sm:text-lg font-bold mb-2 tracking-wider">
-                    {{ app()->getLocale() == 'ar' ? 'يتواجد' : 'Now Present' }}
+                    {{ $isAr ? 'دورة جديدة · حضوري' : 'New Course · In-Person' }}
                 </p>
 
-                {{-- Name in red box --}}
+                {{-- Course title in red box --}}
                 <div class="inline-block mb-3" style="background: rgba(176,65,65,0.82); border-radius: 8px; padding: 8px 20px;">
                     <h2 class="text-white font-black leading-tight" style="font-size: clamp(1.6rem, 4vw, 2.8rem);">
-                        {{ app()->getLocale() == 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}
+                        {{ $isAr ? 'دورة إدارة الغضب' : 'Anger Management Course' }}
                     </h2>
                 </div>
 
-                {{-- في مركز مطمئنة --}}
-                <p class="text-white/70 text-base sm:text-lg font-bold mb-7">
-                    {{ app()->getLocale() == 'ar' ? 'في مركز مطمئنة - الكويت' : 'at Motmaena Center - Kuwait' }}
+                {{-- Trainer --}}
+                <p class="text-white/70 text-base sm:text-lg font-bold mb-6">
+                    {{ $isAr ? 'مع أ.د. طارق الحبيب - مركز مطمئنة، الكويت' : 'with Prof. Dr. Tariq Al-Habib - Motmaena Center, Kuwait' }}
                 </p>
 
-                {{-- خلال شهر stamp + مايو 2026 --}}
-                <div class="flex items-center gap-4 mb-7">
-                    <div class="shrink-0 w-[52px] h-[52px] rounded-full flex flex-col items-center justify-center border border-white/40"
-                         style="background: rgba(255,255,255,0.08); backdrop-filter: blur(6px);">
-                        <span class="text-white/80 text-[9px] font-bold leading-none">خلال</span>
-                        <span class="text-white/80 text-[9px] font-bold leading-none mt-0.5">شهر</span>
-                    </div>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-white font-black leading-none" style="font-size: clamp(2.2rem, 5vw, 3.5rem);">{{ app()->getLocale() == 'ar' ? 'مايو' : 'May' }}</span>
-                        <span class="text-white/55 font-bold leading-none" style="font-size: clamp(1.3rem, 3vw, 2rem);">2026</span>
-                    </div>
-                </div>
-
-                {{-- Date cards --}}
-                @php
-                    $visitDates = [
-                        13 => ['ar' => 'الأربعاء', 'en' => 'Wednesday'],
-                        12 => ['ar' => 'الثلاثاء', 'en' => 'Tuesday'],
-                    ];
-                @endphp
-                <div class="flex items-start gap-5 mb-7">
-                    @foreach($visitDates as $date => $day)
+                {{-- Date + time --}}
+                <div class="flex items-center gap-5 mb-6">
                     <div class="text-center">
-                        <div class="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-0.5">May</div>
-                        <div class="text-white font-black leading-none" style="font-size: clamp(2.8rem, 6vw, 4rem);">{{ $date }}</div>
-                        <div class="text-white/55 text-sm font-bold mt-0.5">{{ app()->getLocale() == 'ar' ? $day['ar'] : $day['en'] }}</div>
+                        <div class="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-0.5">Oct 2026</div>
+                        <div class="text-white font-black leading-none" style="font-size: clamp(2.8rem, 6vw, 4rem);">28</div>
+                        <div class="text-white/55 text-sm font-bold mt-0.5">{{ $isAr ? 'الأربعاء' : 'Wednesday' }}</div>
                     </div>
-                    @if($date === 13)
                     <div class="w-px bg-white/15 self-stretch my-1"></div>
-                    @endif
-                    @endforeach
+                    <div>
+                        <div class="text-white font-black leading-none" style="font-size: clamp(1.4rem, 3vw, 2rem);" dir="ltr">7:00 - 9:00</div>
+                        <div class="text-white/55 text-sm font-bold mt-1.5">{{ $isAr ? 'مساءً' : 'PM' }}</div>
+                    </div>
                 </div>
 
-                {{-- Consultation line --}}
-                <div class="{{ app()->getLocale() == 'ar' ? 'border-r-[3px] pr-4' : 'border-l-[3px] pl-4' }} border-primary mb-7">
-                    <p class="text-white/80 text-base sm:text-lg font-bold leading-snug">
-                        {{ app()->getLocale() == 'ar' ? 'لتقديم الاستشارات الحياتية' : 'Offering life consultations' }}
-                    </p>
-                    <p class="text-white text-lg sm:text-xl font-black leading-snug">
-                        {{ app()->getLocale() == 'ar' ? 'والتربوية والاجتماعية' : 'Educational & Social' }}
-                    </p>
+                {{-- Course topics --}}
+                @php
+                    $courseTopics = $isAr
+                        ? ['مفهوم الغضب وأنواعه', 'مراحل الغضب', 'أسباب الغضب', 'الخبرة المتكاملة الضابطة للغضب', 'أنماط التفكير السلبي المحفزة للغضب', 'استراتيجيات التعامل مع الغضب', 'دور الجانب الروحي في إدارة الغضب', 'برنامج التحكم في الغضب']
+                        : ['The concept and types of anger', 'Stages of anger', 'Causes of anger', 'An integrated approach to controlling anger', 'Negative thinking patterns that trigger anger', 'Strategies for dealing with anger', 'The spiritual side of anger management', 'Anger control program'];
+                @endphp
+                <div class="{{ $isAr ? 'border-r-[3px] pr-4' : 'border-l-[3px] pl-4' }} border-primary mb-6">
+                    <p class="text-white/40 text-[10px] uppercase tracking-widest font-bold mb-2">{{ $isAr ? 'محاور الدورة' : 'Course Topics' }}</p>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                        @foreach($courseTopics as $topic)
+                        <li class="flex items-start gap-2 text-white/85 text-sm font-bold leading-snug">
+                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+                            {{ $topic }}
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- Price + installments + certificate --}}
+                <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-7">
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-white font-black leading-none" style="font-size: clamp(2rem, 4.5vw, 2.8rem);">30</span>
+                        <span class="text-white/70 font-bold">{{ $isAr ? 'دينار' : 'KWD' }}</span>
+                    </div>
+                    <span class="text-xs font-black px-3 py-1.5 rounded-full" style="background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.16);">
+                        {{ $isAr ? 'قسّطها على 4 دفعات مع deema' : 'Split into 4 payments with deema' }}
+                    </span>
+                    <span class="flex items-center gap-1.5 text-white/70 text-xs font-bold">
+                        <svg class="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        {{ $isAr ? 'شهادة معتمدة من ديوان الخدمة المدنية والتطبيقي' : 'Certificate accredited by the Civil Service Commission & PAAET' }}
+                    </span>
                 </div>
 
                 {{-- Contact + CTA --}}
