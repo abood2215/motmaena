@@ -53,7 +53,7 @@ class DashboardController extends Controller
 
         // Referral codes that brought paying friends, with the credit their owners earned
         $reward = (float) (\App\Models\SiteSetting::current()['referral_reward_kwd'] ?? 0);
-        $referrals = \App\Models\DiscountCode::whereNotNull('owner_registration_id')->with('owner')->get()
+        $referrals = \App\Models\DiscountCode::where('kind', 'referral')->with('owner')->get()
             ->map(fn ($c) => ['code' => $c->code, 'owner' => $c->owner, 'friends' => $paidRows->where('discount_code_id', $c->id)->count()])
             ->filter(fn ($r) => $r['friends'] > 0)->sortByDesc('friends')->values()
             ->map(fn ($r) => $r + ['credit' => $r['friends'] * $reward]);

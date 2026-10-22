@@ -18,6 +18,7 @@ class CourseRegistrationController extends Controller
         'expired'      => ['ar' => 'انتهت صلاحية كود الخصم', 'en' => 'This discount code has expired'],
         'used_up'      => ['ar' => 'تم استنفاد كود الخصم', 'en' => 'This discount code has been fully used'],
         'own_code'     => ['ar' => 'هذا كود الإحالة الخاص بك — شاركه مع أصدقائك ليحصلوا على الخصم', 'en' => 'This is your own referral code — share it with friends'],
+        'not_yours'    => ['ar' => 'هذا الكود شخصي لصاحبه — سجّل بنفس رقم الهاتف اللي أخذت عليه الكود', 'en' => 'This personal code only works with the phone number it was issued to'],
     ];
 
     public function __construct(private MyFatoorah $myFatoorah) {}
@@ -68,8 +69,15 @@ class CourseRegistrationController extends Controller
         }
 
         $quote = $this->quote($offerKey, $offer, $data['code'] ?? null);
-        if (!$quote['error'] && $quote['code']?->owner?->phone === $data['phone']) {
-            $quote['error'] = self::CODE_ERRORS['own_code'][app()->getLocale()] ?? self::CODE_ERRORS['own_code']['ar'];
+        $owner = $quote['code']?->owner;
+        $reason = match (true) {
+            $quote['error'] !== null || !$owner                                     => null,
+            $quote['code']->kind === 'self' && $owner->phone !== $data['phone']     => 'not_yours',
+            $quote['code']->kind !== 'self' && $owner->phone === $data['phone']     => 'own_code',
+            default                                                                 => null,
+        };
+        if ($reason) {
+            $quote['error'] = self::CODE_ERRORS[$reason][app()->getLocale()] ?? self::CODE_ERRORS[$reason]['ar'];
         }
         if ($quote['error']) {
             return back()->withInput()->withErrors(['code' => $quote['error']]);
@@ -90,7 +98,7 @@ class CourseRegistrationController extends Controller
         // 100% discount: nothing to charge
         if ($quote['final'] <= 0) {
             $registration->markPaid(null, 'discount');
-            return $this->result($registration);
+            return redirect()->route('registration.done', $registration->review_token);
         }
 
         try {
@@ -141,7 +149,25 @@ class CourseRegistrationController extends Controller
         $registration = CourseRegistration::where('invoice_id', (string) $status['InvoiceId'])->firstOrFail();
         $this->applyStatus($registration, $status, $paymentId);
 
+        return $registration->status === 'paid'
+            ? redirect()->route('registration.done', $registration->review_token)
+            : $this->result($registration);
+    }
+
+    public function done(string $token)
+    {
+        $registration = CourseRegistration::where('review_token', $token)->where('status', 'paid')->firstOrFail();
+
         return $this->result($registration);
+    }
+
+    public function claimReward(string $token, string $kind)
+    {
+        abort_unless(in_array($kind, ['referral', 'self'], true), 404);
+        $registration = CourseRegistration::where('review_token', $token)->where('status', 'paid')->firstOrFail();
+        $registration->claimReward($kind);
+
+        return redirect()->route('registration.done', $token);
     }
 
     /**

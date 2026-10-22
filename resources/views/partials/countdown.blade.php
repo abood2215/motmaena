@@ -1,15 +1,24 @@
-{{-- Countdown to $startsAt (ISO string). Hidden once the time has passed. --}}
+{{-- Countdown to $startsAt (ISO string), in a warm accent that stands out on any course colour. Hidden once the time has passed. --}}
 @php $isArC = app()->getLocale() == 'ar'; @endphp
 <div class="countdown flex items-center gap-2 {{ $class ?? '' }}" data-target="{{ $startsAt }}">
+    <span class="hidden sm:inline text-xs font-black opacity-90 {{ !empty($dark) ? 'text-white' : 'text-gray-700 dark:text-gray-200' }}">⏳ {{ $isArC ? 'باقي على الدورة' : 'Starts in' }}</span>
     @foreach([['d', $isArC ? 'يوم' : 'days'], ['h', $isArC ? 'ساعة' : 'hrs'], ['m', $isArC ? 'دقيقة' : 'min'], ['s', $isArC ? 'ثانية' : 'sec']] as [$unit, $label])
-    <div class="text-center min-w-[52px] rounded-xl px-2 py-1.5 {{ !empty($dark) ? 'bg-white/12 border border-white/20' : 'bg-[#eef3fa] dark:bg-white/5' }}">
-        <div class="font-black text-xl leading-none" data-unit="{{ $unit }}">--</div>
-        <div class="text-[10px] font-bold opacity-70 mt-1">{{ $label }}</div>
+    <div class="countdown-box text-center min-w-[54px] rounded-xl px-2 py-1.5 text-[#3b1d00]">
+        <div class="font-black text-xl leading-none tabular-nums" data-unit="{{ $unit }}">--</div>
+        <div class="text-[10px] font-black opacity-75 mt-1">{{ $label }}</div>
     </div>
     @endforeach
 </div>
 
 @once
+<style>
+    .countdown-box {
+        background: linear-gradient(160deg, #fde68a 0%, #fbbf24 45%, #f59e0b 100%);
+        box-shadow: 0 6px 16px -6px rgba(245, 158, 11, .75), inset 0 1px 0 rgba(255, 255, 255, .6);
+    }
+    .countdown-box [data-unit="s"] { animation: cd-tick 1s steps(1) infinite; }
+    @keyframes cd-tick { 50% { opacity: .85; } }
+</style>
 <script>
 (function () {
     function tick() {

@@ -53,7 +53,7 @@
     <table>
       <thead>
         <tr>
-          <th>#</th><th>الاسم</th><th>الهاتف</th><th>الدورة</th><th>كود الخصم</th><th>المبلغ</th><th>الحالة</th><th>المصدر</th><th>التاريخ</th><th></th>
+          <th>#</th><th>الاسم</th><th>الهاتف</th><th>الدورة</th><th>كود الخصم</th><th>المبلغ</th><th>الحالة</th><th>🎁 الهدية</th><th>المصدر</th><th>التاريخ</th><th></th>
         </tr>
       </thead>
       <tbody>
@@ -84,6 +84,17 @@
             <span class="tag {{ $r->status }}">{{ $labels[$r->status] ?? $r->status }}</span>
             @if($r->payment_method)<div class="small">{{ $r->payment_method }}</div>@endif
             @if($r->followed_up_at)<div class="small">✓ تم التواصل</div>@endif
+          </td>
+          <td class="small">
+            @if($gift = $r->rewardCode())
+              {{ $gift->kind === 'self' ? '🙋 لنفسه' : '👥 لصديق' }}
+              <div><span class="tag code">{{ $gift->code }}</span></div>
+              <div>{{ $gift->kind === 'self' ? ($gift->used_count ? '✓ استخدمه' : 'لسا ما استخدمه') : 'استخدمه ' . $gift->used_count . ' صديق' }}</div>
+            @elseif($r->rewardEligible())
+              <span style="color:#d97706">لسا ما اختار</span>
+            @else
+              —
+            @endif
           </td>
           <td class="small">{{ $r->sourceLabel() }}@if($r->utm_campaign)<div>{{ $r->utm_campaign }}</div>@endif</td>
           <td class="small">

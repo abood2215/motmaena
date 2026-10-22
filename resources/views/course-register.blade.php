@@ -14,18 +14,33 @@
 
 @section('content')
 
-{{-- Poster palette: navy var(--c1), slate var(--c3), mist var(--cbd), accent var(--cb) --}}
-<section class="py-10 sm:py-16 bg-[color:var(--cbg)] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme']) }}">
+{{-- Colours come from the course theme: --c1 (deep) … --c4, --cb buttons, --ca light accent, --ct/--cbd tints --}}
+<style>
+    .reg-bg { background:
+        radial-gradient(60rem 30rem at 85% -10%, color-mix(in srgb, var(--c3) 45%, transparent), transparent 60%),
+        radial-gradient(40rem 26rem at 0% 100%, color-mix(in srgb, #f59e0b 22%, transparent), transparent 60%),
+        var(--cbg); }
+    .dark .reg-bg { background: radial-gradient(60rem 30rem at 85% -10%, color-mix(in srgb, var(--c1) 55%, transparent), transparent 60%), #0b1220; }
+    .reg-panel { background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 55%, var(--c3) 100%); box-shadow: 0 30px 70px -28px var(--c1); }
+    .reg-ribbon { background: linear-gradient(90deg, var(--c1), var(--cb), #f59e0b); }
+    .pay-btn { background: linear-gradient(135deg, var(--cb), var(--c1)); box-shadow: 0 16px 34px -12px var(--c1); position: relative; overflow: hidden; }
+    .pay-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); animation: pay-shine 2.8s ease-in-out infinite; }
+    @keyframes pay-shine { 60%, 100% { transform: translateX(120%); } }
+    .total-amount { background: linear-gradient(135deg, var(--c1), var(--cb)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .dark .total-amount { background: none; color: var(--ca); }
+    .gift-box { background: linear-gradient(135deg, #fff7e6, #ffedd5); border: 1.5px dashed #f59e0b; }
+    .dark .gift-box { background: rgba(245, 158, 11, .1); }
+</style>
+<section class="reg-bg py-10 sm:py-16" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme']) }}">
     <div class="container mx-auto px-4 max-w-6xl">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-start">
 
             {{-- ═══ Course summary ═══ --}}
-            <div class="lg:col-span-3 rounded-3xl overflow-hidden shadow-xl text-white"
-                 style="background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 55%, var(--c3) 100%);">
+            <div class="reg-panel lg:col-span-3 rounded-3xl overflow-hidden text-white">
                 <div class="p-6 sm:p-9">
                     <span class="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-full bg-white/15 border border-white/20 mb-4">
                         <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--ca)] animate-pulse"></span>
-                        {{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}
+                        {{ $offer['badge'][$lang] }}
                     </span>
                     <h1 class="font-black leading-tight mb-2" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">{{ $offer['title'][$lang] }}</h1>
                     <p class="text-white/75 text-lg font-bold mb-5">{{ $offer['trainer'][$lang] }}</p>
@@ -38,6 +53,12 @@
                             </span>
                         @endif
                     </div>
+
+                    @unless($offer['is_full'])
+                    <a href="#reg-card" class="lg:hidden flex items-center justify-center gap-2 w-full rounded-2xl bg-white text-[color:var(--c1)] font-black py-3.5 mb-6 shadow-lg">
+                        {{ $isAr ? 'احجز مقعدك الآن — ' . $offer['price'] . ' د.ك' : 'Book your seat — ' . $offer['price'] . ' KWD' }} ↓
+                    </a>
+                    @endunless
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
                         @foreach([
@@ -76,8 +97,10 @@
             </div>
 
             {{-- ═══ Registration form ═══ --}}
-            <div class="lg:col-span-2 rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[color:var(--cbd)] dark:border-white/10 p-6 sm:p-8">
-                <h2 class="text-xl font-black text-[color:var(--c1)] dark:text-white mb-1">{{ $isAr ? 'سجّل الآن' : 'Register Now' }}</h2>
+            <div id="reg-card" class="scroll-mt-24 lg:col-span-2 rounded-3xl bg-white dark:bg-[#111a2b] shadow-2xl border border-[color:var(--cbd)] dark:border-white/10 overflow-hidden lg:sticky lg:top-28">
+                <div class="reg-ribbon h-1.5"></div>
+                <div class="p-6 sm:p-8">
+                <h2 class="text-2xl font-black text-[color:var(--c1)] dark:text-white mb-1">{{ $isAr ? 'احجز مقعدك الآن' : 'Book your seat' }}</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ $isAr ? 'عبّئ بياناتك وادفع إلكترونياً بأمان عبر ماي فاتورة' : 'Fill in your details and pay securely via MyFatoorah' }}</p>
 
                 @if($errors->has('payment'))
@@ -127,6 +150,25 @@
                         <p id="code-msg" class="text-xs font-bold mt-1 {{ $errors->has('code') ? 'text-red-600' : 'hidden' }}">{{ $errors->first('code') }}</p>
                     </div>
 
+                    {{-- Reward for paying without a code --}}
+                    @php
+                        $giftOptions = (new \App\Models\CourseRegistration)->rewardOptions();
+                        $pct = fn ($v) => rtrim(rtrim(number_format((float) $v, 2), '0'), '.');
+                    @endphp
+                    @if($giftOptions)
+                    <div id="gift-box" class="gift-box rounded-2xl p-4 text-sm">
+                        <p class="font-black text-[#9a3412] dark:text-amber-300 mb-1">🎁 {{ $isAr ? 'هدية مع تسجيلك!' : 'A gift with your booking!' }}</p>
+                        <p class="font-bold text-[#7c2d12] dark:text-amber-100/90 leading-relaxed">
+                            {{ $isAr ? 'سجّل بدون كود خصم، وبعد الدفع بتاخد كود هدية — إنت بتختار:' : 'Book without a discount code and get a gift code after paying — you choose:' }}
+                        </p>
+                        <ul class="mt-2 space-y-1 font-bold text-[#7c2d12] dark:text-amber-100/90">
+                            @isset($giftOptions['referral'])<li>👥 {{ $isAr ? 'لصديق أو شريك: خصم ' . $pct($giftOptions['referral']) . '% إله' : 'For a friend: ' . $pct($giftOptions['referral']) . '% off for them' }}@if((float) ($site['referral_reward_kwd'] ?? 0) > 0){{ $isAr ? ' + رصيد ' . $pct($site['referral_reward_kwd']) . ' د.ك إلك' : ' + ' . $pct($site['referral_reward_kwd']) . ' KWD credit for you' }}@endif</li>@endisset
+                            @isset($giftOptions['self'])<li>🙋 {{ $isAr ? 'لنفسك: خصم ' . $pct($giftOptions['self']) . '% على دورتك الجاية' : 'For you: ' . $pct($giftOptions['self']) . '% off your next course' }}</li>@endisset
+                        </ul>
+                        <p id="gift-off" class="hidden mt-2 text-xs font-black text-[#9a3412] dark:text-amber-300">{{ $isAr ? '* الهدية للتسجيل بدون كود — شيل الكود إذا بدك الهدية.' : '* The gift is for bookings without a code — remove the code to get it.' }}</p>
+                    </div>
+                    @endif
+
                     {{-- Price breakdown --}}
                     <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-4 space-y-2 text-sm font-bold">
                         <div class="flex justify-between text-gray-600 dark:text-gray-300">
@@ -139,29 +181,36 @@
                         </div>
                         <div class="flex justify-between items-baseline border-t border-[color:var(--cbd)] dark:border-white/10 pt-2">
                             <span class="text-gray-900 dark:text-white">{{ $isAr ? 'الإجمالي' : 'Total' }}</span>
-                            <span class="text-2xl font-black text-[color:var(--c1)] dark:text-[color:var(--ca)]"><span id="p-final">{{ number_format($offer['price'], 3) }}</span> <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
+                            <span class="text-3xl font-black total-amount"><span id="p-final">{{ number_format($offer['price'], 3) }}</span> <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
                         </div>
                     </div>
 
                     <button type="submit" id="pay-btn"
-                            class="w-full rounded-xl py-4 text-base font-black text-white shadow-lg shadow-[color:var(--cb)]/25 transition hover:-translate-y-0.5 active:scale-[.98] disabled:opacity-60"
-                            style="background: linear-gradient(135deg, var(--cb), var(--c1));">
-                        {{ $isAr ? 'متابعة الدفع' : 'Proceed to payment' }}
+                            class="pay-btn w-full rounded-2xl py-4 text-lg font-black text-white transition hover:-translate-y-0.5 active:scale-[.98] disabled:opacity-60 inline-flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <span id="pay-label">{{ $isAr ? 'ادفع واحجز مقعدك' : 'Pay & book your seat' }}</span>
                     </button>
 
+                    <div class="flex flex-wrap items-center justify-center gap-1.5">
+                        @foreach(['KNET', 'VISA', 'Mastercard', 'Apple Pay'] as $method)
+                            <span class="text-[11px] font-black px-2.5 py-1 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-white/5" dir="ltr">{{ $method }}</span>
+                        @endforeach
+                    </div>
+
                     <p class="text-center text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-relaxed">
-                        {{ $isAr ? 'بالضغط على "متابعة الدفع" فإنك توافق على' : 'By continuing you agree to the' }}
+                        {{ $isAr ? 'بالضغط على "ادفع واحجز مقعدك" فإنك توافق على' : 'By continuing you agree to the' }}
                         <a href="{{ route('policies') }}#terms" target="_blank" class="underline text-[color:var(--cb)]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
                         {{ $isAr ? 'و' : 'and' }}
                         <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[color:var(--cb)]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
                     </p>
 
                     <p class="flex items-center justify-center gap-1.5 text-[11px] font-bold text-gray-400">
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        {{ $isAr ? 'دفع آمن — كي نت، فيزا، ماستركارد، Apple Pay' : 'Secure payment — KNET, Visa, Mastercard, Apple Pay' }}
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        {{ $isAr ? 'دفع آمن ومشفّر عبر ماي فاتورة' : 'Secure, encrypted payment via MyFatoorah' }}
                     </p>
                 </form>
                 @endif
+                </div>
             </div>
 
         </div>
@@ -180,7 +229,15 @@
         msg.className = 'text-xs font-bold mt-1 ' + (ok ? 'text-green-600' : 'text-red-600');
     }
 
+    function giftState(codeApplied) {
+        var off = document.getElementById('gift-off'), box = document.getElementById('gift-box');
+        if (!box) return;
+        off.classList.toggle('hidden', !codeApplied);
+        box.style.opacity = codeApplied ? '.55' : '1';
+    }
+
     function resetPrice() {
+        giftState(false);
         document.getElementById('discount-row').classList.replace('flex', 'hidden');
         document.getElementById('p-final').textContent = document.getElementById('p-original').textContent;
     }
@@ -201,6 +258,7 @@
                 document.getElementById('p-discount').textContent = fmt(data.discount);
                 document.getElementById('p-final').textContent = fmt(data.final);
                 document.getElementById('discount-row').classList.replace('hidden', 'flex');
+                giftState(true);
                 showMsg(@json($isAr ? 'تم تطبيق كود الخصم ✓' : 'Discount applied ✓'), true);
             } else {
                 resetPrice();
@@ -220,7 +278,7 @@
         window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD' });
         const btn = document.getElementById('pay-btn');
         btn.disabled = true;
-        btn.textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
+        document.getElementById('pay-label').textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
     });
 
     @if(old('code') && !$errors->has('code'))

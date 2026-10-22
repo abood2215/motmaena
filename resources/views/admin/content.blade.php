@@ -45,6 +45,11 @@
         <input name="referral_reward_kwd" type="number" step="0.5" min="0" max="1000" value="{{ old('referral_reward_kwd', $settings['referral_reward_kwd']) }}" required>
         <p class="hint">بيطلع للعميل بصفحة النجاح، وإنت بتشوف المستحق بالرئيسية ← الإحالات.</p>
       </div>
+      <div>
+        <label>🎁 خصم العميل لنفسه على دورته الجاية (%) — 0 يوقفه</label>
+        <input name="self_discount_percent" type="number" step="0.5" min="0" max="100" value="{{ old('self_discount_percent', $settings['self_discount_percent']) }}" required>
+        <p class="hint">اللي بيسجّل بدون كود بيختار بعد الدفع: كود لصديقه (فوق) أو كود لنفسه (هون) — مرة وحدة وبنفس رقمه.</p>
+      </div>
     </div>
     <div style="margin-top:12px"><button class="btn btn-primary">حفظ</button></div>
   </form>

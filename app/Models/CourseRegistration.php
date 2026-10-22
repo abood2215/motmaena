@@ -95,30 +95,52 @@ class CourseRegistration extends Model
 
         if ($newlyPaid) {
             $this->update(['review_token' => $this->review_token ?: Str::random(32)]);
-            $this->referralCode(create: true);
             $this->notifyAdmin();
         }
     }
 
-    /**
-     * The personal code this customer shares with friends. Created on first payment while
-     * referrals are switched on (referral_discount_percent > 0); one per phone number.
-     */
-    public function referralCode(bool $create = false): ?DiscountCode
+    /** Paid without any discount code → may claim a reward code (for a friend or for themselves). */
+    public function rewardEligible(): bool
     {
-        $existing = DiscountCode::whereHas('owner', fn ($q) => $q->where('phone', $this->phone))->first();
-        if ($existing || !$create || $this->status !== 'paid') return $existing;
+        return $this->status === 'paid' && !$this->discount_code_id && $this->rewardOptions() !== [];
+    }
 
-        $percent = (float) (SiteSetting::current()['referral_discount_percent'] ?? 0);
-        if ($percent <= 0) return null;
+    /** Reward kinds that are switched on in the admin, with their discount percentages. */
+    public function rewardOptions(): array
+    {
+        $settings = SiteSetting::current();
+
+        return array_filter([
+            'referral' => (float) ($settings['referral_discount_percent'] ?? 0),
+            'self'     => (float) ($settings['self_discount_percent'] ?? 0),
+        ], fn ($percent) => $percent > 0);
+    }
+
+    /** The reward code this registration earned (whichever kind was chosen). */
+    public function rewardCode(): ?DiscountCode
+    {
+        return DiscountCode::where('owner_registration_id', $this->id)->first();
+    }
+
+    /**
+     * Creates the reward code once. 'referral': friends get a discount and the owner earns credit
+     * (the owner can't use it). 'self': a one-time discount the owner uses on a later course.
+     */
+    public function claimReward(string $kind): ?DiscountCode
+    {
+        if ($existing = $this->rewardCode()) return $existing;
+
+        $percent = $this->rewardOptions()[$kind] ?? null;
+        if (!$percent || !$this->rewardEligible()) return null;
 
         do {
-            $code = 'MT' . strtoupper(Str::random(5));
+            $code = ($kind === 'self' ? 'MY' : 'MT') . strtoupper(Str::random(5));
         } while (DiscountCode::where('code', $code)->exists());
 
         return DiscountCode::create([
             'code' => $code, 'type' => 'percent', 'value' => min($percent, 100),
-            'owner_registration_id' => $this->id, 'is_active' => true,
+            'owner_registration_id' => $this->id, 'kind' => $kind, 'is_active' => true,
+            'max_uses' => $kind === 'self' ? 1 : null,
         ]);
     }
 

@@ -25,6 +25,7 @@ class SiteSetting extends Model
         'announcement_en' => '',
         'referral_discount_percent' => '10', // friend's discount; 0 turns referrals off
         'referral_reward_kwd'       => '5',  // credit the referrer earns per paid friend
+        'self_discount_percent'     => '10', // customer's own code for a later course; 0 turns it off
     ];
 
     public static function current(): array

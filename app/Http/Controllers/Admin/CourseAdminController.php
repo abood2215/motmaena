@@ -76,7 +76,7 @@ class CourseAdminController extends Controller
         $response = new StreamedResponse(function () use ($registrations) {
             $handle = fopen('php://output', 'w');
             fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // UTF-8 BOM
-            fputcsv($handle, ['#', 'الدورة', 'الاسم', 'الهاتف', 'الإيميل', 'كود الخصم', 'السعر', 'الخصم', 'المدفوع', 'الحالة', 'رقم الفاتورة', 'طريقة الدفع', 'المصدر', 'الحملة', 'تاريخ الدفع', 'تاريخ التسجيل']);
+            fputcsv($handle, ['#', 'الدورة', 'الاسم', 'الهاتف', 'الإيميل', 'كود الخصم', 'السعر', 'الخصم', 'المدفوع', 'الحالة', 'رقم الفاتورة', 'طريقة الدفع', 'كود الهدية', 'نوع الهدية', 'المصدر', 'الحملة', 'تاريخ الدفع', 'تاريخ التسجيل']);
             foreach ($registrations as $r) {
                 fputcsv($handle, [
                     $r->id,
@@ -91,6 +91,8 @@ class CourseAdminController extends Controller
                     $this->statusLabel($r->status),
                     $r->invoice_id,
                     $r->payment_method,
+                    $r->rewardCode()?->code,
+                    ['self' => 'لنفسه', 'referral' => 'لصديق'][$r->rewardCode()?->kind] ?? '',
                     $r->sourceLabel(),
                     $r->utm_campaign,
                     $r->paid_at?->format('Y-m-d H:i'),

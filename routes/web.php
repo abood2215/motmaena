@@ -73,6 +73,9 @@ Route::post('/notify', [LeadController::class, 'store'])->middleware('throttle:6
 Route::get('/review/{token}', [ReviewController::class, 'show'])->name('review.show');
 Route::post('/review/{token}', [ReviewController::class, 'store'])->middleware('throttle:6,1')->name('review.store');
 
+Route::get('/done/{token}', [CourseRegistrationController::class, 'done'])->name('registration.done');
+Route::post('/done/{token}/reward/{kind}', [CourseRegistrationController::class, 'claimReward'])->middleware('throttle:10,1')->name('registration.reward');
+
 Route::get('/payment/callback', [CourseRegistrationController::class, 'callback'])->name('payment.callback');
 
 Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(function () {

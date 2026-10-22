@@ -79,31 +79,60 @@ class GrowthFeaturesTest extends TestCase
         $this->withSession(['admin_auth' => true])->get('/admin/leads')->assertOk()->assertSee('55551234');
     }
 
-    public function test_referral_code_gives_friend_a_discount_and_credits_the_owner(): void
+    public function test_paying_without_a_code_lets_the_customer_pick_a_friend_code(): void
     {
-        $owner = $this->paid('51111111');
-        $code = $owner->referralCode();
-        $this->assertNotNull($code);
-        $this->assertSame('10.000', $code->value);
+        $this->get('/register/anger-management')->assertSee('هدية مع تسجيلك');
 
-        // Owner can't use their own code
+        $owner = $this->paid('51111111');
+        $this->get('/done/' . $owner->review_token)->assertSee('اختار لمين الكود');
+
+        // Choose "for a friend"
+        $this->followingRedirects()->post('/done/' . $owner->review_token . '/reward/referral')->assertSee('كود صديقك');
+        $code = $owner->rewardCode();
+        $this->assertSame('referral', $code->kind);
+        // A second choice is ignored
+        $this->post('/done/' . $owner->review_token . '/reward/self');
+        $this->assertSame(1, DiscountCode::where('owner_registration_id', $owner->id)->count());
+
+        // Owner can't use their own friend code
         $this->post('/register/anger-management', ['name' => 'Self', 'phone' => '+965 51111111', 'code' => $code->code])->assertSessionHasErrors('code');
 
-        // Friend gets 10% off and pays
+        // Friend gets 10% off and pays; paying with a code earns no gift
         $this->fakePaid(27);
         $this->postJson('/register/anger-management/check-code', ['code' => $code->code])->assertJson(['final' => 27]);
         $this->post('/register/anger-management', ['name' => 'Friend', 'phone' => '52222222', 'code' => $code->code])->assertRedirect('https://pay.test');
-        $friend = CourseRegistration::where('name', 'Friend')->first();
-        $this->get('/payment/callback?paymentId=P2')->assertSee($friend->fresh()->referralCode()->code); // friend gets their own code
+        $this->followingRedirects()->get('/payment/callback?paymentId=P2')->assertSee('تم تسجيلك بنجاح')->assertDontSee('اختار لمين الكود');
 
         $this->withSession(['admin_auth' => true])->get('/admin')->assertSee($code->code)->assertSee('1 صديق');
+        $this->get('/admin/registrations')->assertSee('👥 لصديق');
         $this->get('/admin/discount-codes')->assertDontSee($code->code);
     }
 
-    public function test_referrals_can_be_switched_off(): void
+    public function test_self_code_works_once_and_only_for_its_owner(): void
     {
-        \App\Models\SiteSetting::setMany(['referral_discount_percent' => '0']);
-        $this->assertNull($this->paid('51111111')->referralCode());
+        $owner = $this->paid('51111111');
+        $this->post('/done/' . $owner->review_token . '/reward/self');
+        $code = $owner->rewardCode();
+        $this->assertSame('self', $code->kind);
+        $this->assertSame(1, $code->max_uses);
+
+        CourseOffer::create(['slug' => 'next', 'title_ar' => 'الدورة الجاية', 'price' => 20, 'date' => '2026-12-01', 'is_active' => true]);
+        $this->post('/register/next', ['name' => 'Other', 'phone' => '59999999', 'code' => $code->code])->assertSessionHasErrors('code');
+
+        $this->fakePaid(18);
+        $this->post('/register/next', ['name' => 'Owner', 'phone' => '51111111', 'code' => $code->code])->assertRedirect('https://pay.test');
+        $this->get('/payment/callback?paymentId=P2');
+        $this->assertSame(1, $code->fresh()->used_count);
+        $this->postJson('/register/next/check-code', ['code' => $code->code])->assertStatus(422);
+    }
+
+    public function test_rewards_can_be_switched_off(): void
+    {
+        \App\Models\SiteSetting::setMany(['referral_discount_percent' => '0', 'self_discount_percent' => '0']);
+        $owner = $this->paid('51111111');
+        $this->assertFalse($owner->rewardEligible());
+        $this->assertNull($owner->claimReward('referral'));
+        $this->get('/register/anger-management')->assertDontSee('هدية مع تسجيلك');
     }
 
     public function test_review_link_creates_a_hidden_testimonial(): void

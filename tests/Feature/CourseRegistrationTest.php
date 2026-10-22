@@ -56,8 +56,8 @@ class CourseRegistrationTest extends TestCase
         Http::assertSent(fn ($r) => str_contains($r->url(), 'SendPayment') && $r['InvoiceValue'] == 24 && $r['CustomerMobile'] === '55566161');
 
         // Callback twice: must only count the code once
-        $this->get('/payment/callback?paymentId=PAY1')->assertOk()->assertSee('تم تسجيلك بنجاح');
-        $this->get('/payment/callback?paymentId=PAY1')->assertOk();
+        $this->followingRedirects()->get('/payment/callback?paymentId=PAY1')->assertOk()->assertSee('تم تسجيلك بنجاح');
+        $this->get('/payment/callback?paymentId=PAY1')->assertRedirect();
 
         $this->assertSame('paid', $reg->fresh()->status);
         $this->assertSame(1, DiscountCode::first()->used_count);
@@ -90,7 +90,7 @@ class CourseRegistrationTest extends TestCase
         Http::fake();
         DiscountCode::create(['code' => 'FREE', 'type' => 'percent', 'value' => 100]);
 
-        $this->post('/register/anger-management', ['name' => 'Test', 'phone' => '55566161', 'code' => 'FREE'])
+        $this->followingRedirects()->post('/register/anger-management', ['name' => 'Test', 'phone' => '55566161', 'code' => 'FREE'])
             ->assertOk()->assertSee('تم تسجيلك بنجاح');
 
         Http::assertNothingSent();
