@@ -43,7 +43,7 @@
                     {{ $isAr ? 'حاول مرة أخرى' : 'Try again' }}
                 </a>
                 @endunless
-                <a href="https://wa.me/96555665161?text={{ $waText }}" target="_blank" class="rounded-xl px-6 py-3 font-black bg-[#25d366] text-white">
+                <a href="https://wa.me/{{ $site['whatsapp'] }}?text={{ $waText }}" target="_blank" class="rounded-xl px-6 py-3 font-black bg-[#25d366] text-white">
                     {{ $isAr ? 'تواصل عبر واتساب' : 'WhatsApp us' }}
                 </a>
                 <a href="{{ route('home') }}" class="rounded-xl px-6 py-3 font-black text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CourseRegistrationController;
+use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
 use App\Services\MyFatoorah;
@@ -89,7 +90,7 @@ class CourseAdminController extends Controller
     {
         return view('admin.discount-codes', [
             'codes'  => DiscountCode::latest()->get(),
-            'offers' => config('course_offers'),
+            'offers' => CourseOffer::orderByDesc('date')->get()->mapWithKeys(fn ($o) => [$o->slug => $o->toOfferArray()])->all(),
         ]);
     }
 
@@ -101,7 +102,7 @@ class CourseAdminController extends Controller
             'code'       => ['required', 'alpha_dash', 'max:40', Rule::unique('discount_codes', 'code')],
             'type'       => 'required|in:percent,fixed',
             'value'      => ['required', 'numeric', 'gt:0', $request->type === 'percent' ? 'max:100' : 'max:100000'],
-            'course_key' => ['nullable', Rule::in(array_keys(config('course_offers')))],
+            'course_key' => ['nullable', Rule::in(CourseOffer::pluck('slug')->all())],
             'max_uses'   => 'nullable|integer|min:1',
             'expires_at' => 'nullable|date',
         ], [

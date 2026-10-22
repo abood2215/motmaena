@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
 use App\Services\MyFatoorah;
@@ -184,10 +185,10 @@ class CourseRegistrationController extends Controller
 
     private function offerOrFail(string $offerKey): array
     {
-        $offer = config("course_offers.{$offerKey}");
-        abort_unless($offer && ($offer['active'] ?? false), 404);
+        $offer = CourseOffer::findActive($offerKey);
+        abort_unless($offer, 404);
 
-        return $offer;
+        return $offer->toOfferArray();
     }
 
     /** MyFatoorah wants the number without the country code (max 11 digits). */

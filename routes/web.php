@@ -43,7 +43,7 @@ Route::redirect('/refund-policy', '/policies#refund');
 
 Route::get('/sitemap.xml', function () {
     $urls = collect(['home', 'courses', 'packages', 'sessions', 'consultations', 'policies'])->map(fn ($r) => route($r))
-        ->merge(collect(config('course_offers'))->filter(fn ($o) => $o['active'] ?? false)->keys()->map(fn ($k) => route('course.register', $k)));
+        ->merge(\App\Models\CourseOffer::where('is_active', true)->pluck('slug')->map(fn ($k) => route('course.register', $k)));
 
     return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml');
 })->name('sitemap');

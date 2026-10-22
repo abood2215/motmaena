@@ -1,23 +1,35 @@
 ﻿@extends('layouts.app')
 
 @section('title', __('Welcome') . ' - ' . __('Motmaena Center'))
-@section('og_image', asset('og-anger-management.jpg'))
+@php
+    $featuredModel = \App\Models\CourseOffer::featured();
+    $featured = $featuredModel?->toOfferArray();
+    $lang = app()->getLocale() == 'ar' ? 'ar' : 'en';
+    $isAr = $lang === 'ar';
+    $customAnnouncement = $site['announcement_' . $lang] ?? '';
+@endphp
+@if($featured && file_exists(public_path('og-' . $featured['slug'] . '.jpg')))
+    @section('og_image', asset('og-' . $featured['slug'] . '.jpg'))
+@endif
 
 @section('content')
 
 {{-- ════════════════ ANNOUNCEMENT STRIP ════════════════ --}}
-@php $announce = config('course_offers.anger-management'); @endphp
-@if($announce && $announce['active'])
-<a href="{{ route('course.register', 'anger-management') }}"
+@if($featured || $customAnnouncement)
+<a href="{{ $featured ? route('course.register', $featured['slug']) : route('courses') }}"
    class="group block bg-gradient-to-l from-[#1d4e89] to-[#3b5f95] text-white">
     <div class="container mx-auto px-4 py-2.5 flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-bold text-center">
         <span class="w-2 h-2 rounded-full bg-[#8fd3ff] animate-pulse shrink-0"></span>
         <span>
-            {{ $announce['title'][app()->getLocale() == 'ar' ? 'ar' : 'en'] }}
-            <span class="text-white/70">·</span>
-            {{ app()->getLocale() == 'ar' ? 'الأربعاء 28 أكتوبر' : 'Wed, Oct 28' }}
-            <span class="text-white/70">·</span>
-            {{ $announce['price'] }} {{ app()->getLocale() == 'ar' ? 'د.ك' : 'KWD' }}
+            @if($customAnnouncement)
+                {{ $customAnnouncement }}
+            @else
+                {{ $featured['title'][$lang] }}
+                <span class="text-white/70">·</span>
+                {{ $featured['day'][$lang] }} {{ \Carbon\Carbon::parse($featured['date'])->locale($lang)->translatedFormat('j F') }}
+                <span class="text-white/70">·</span>
+                {{ $featured['price'] }} {{ $isAr ? 'د.ك' : 'KWD' }}
+            @endif
         </span>
         <span class="shrink-0 inline-flex items-center gap-1 bg-white text-[#1d4e89] font-black px-2.5 py-1 rounded-full transition group-hover:bg-[#bfe3ff]">
             {{ app()->getLocale() == 'ar' ? 'سجّل الآن' : 'Register' }}
@@ -205,11 +217,11 @@
     </div>
 </section>
 
-{{-- ════════════════ FEATURED COURSE: ANGER MANAGEMENT (poster palette) ════════════════ --}}
+{{-- ════════════════ FEATURED COURSE (poster palette, managed from /admin/courses) ════════════════ --}}
+@if($featured)
 @php
-    $lang  = app()->getLocale() == 'ar' ? 'ar' : 'en';
-    $isAr  = $lang === 'ar';
-    $offer = config('course_offers.anger-management');
+    $offer = $featured;
+    $titleWords = explode(' ', $offer['title'][$lang], 2);
 @endphp
 <section id="special-event" class="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-[#eef1f6] dark:bg-[#0b1220]">
     <div class="absolute -top-24 {{ $isAr ? '-left-24' : '-right-24' }} w-96 h-96 rounded-full bg-[#1565c0]/10 blur-3xl pointer-events-none"></div>
@@ -228,11 +240,7 @@
                     </span>
 
                     <h2 class="font-black leading-tight mb-2" style="font-size: clamp(2rem, 5vw, 3.4rem);">
-                        @if($isAr)
-                            <span class="text-[#bfe3ff]">دورة</span> إدارة الغضب
-                        @else
-                            Anger <span class="text-[#bfe3ff]">Management</span>
-                        @endif
+                        <span class="text-[#bfe3ff]">{{ $titleWords[0] }}</span> {{ $titleWords[1] ?? '' }}
                     </h2>
                     <p class="text-white/80 text-lg sm:text-xl font-black mb-7">{{ $offer['trainer'][$lang] }}</p>
 
@@ -251,8 +259,8 @@
                     @php
                         $infoItems = [
                             ['icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'top' => $offer['day'][$lang], 'bottom' => \Carbon\Carbon::parse($offer['date'])->format('Y/m/d'), 'dir' => 'ltr'],
-                            ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'top' => $isAr ? 'مساءً' : 'Evening', 'bottom' => '7:00 - 9:00', 'dir' => 'ltr'],
-                            ['icon' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z', 'top' => $isAr ? 'حضوري' : 'In-person', 'bottom' => $isAr ? 'برج أحمد - الكويت' : 'Burj Ahmed, Kuwait', 'dir' => 'auto'],
+                            ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'top' => $isAr ? 'الوقت' : 'Time', 'bottom' => $offer['time'][$lang], 'dir' => 'auto'],
+                            ['icon' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z', 'top' => $isAr ? 'المكان' : 'Location', 'bottom' => $offer['location'][$lang], 'dir' => 'auto'],
                         ];
                     @endphp
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
@@ -282,13 +290,13 @@
                             </span>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-2 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
-                            <a href="{{ route('course.register', 'anger-management') }}"
+                            <a href="{{ route('course.register', $offer['slug']) }}"
                                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-7 py-3.5 font-black text-white shadow-lg shadow-[#1565c0]/30 transition hover:-translate-y-0.5 active:scale-95"
                                style="background: linear-gradient(135deg, #1565c0, #1d4e89);">
                                 {{ $isAr ? 'سجّل وادفع الآن' : 'Register & pay now' }}
                                 <svg class="w-4 h-4 {{ $isAr ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                             </a>
-                            <a href="https://wa.me/96555665161?text={{ rawurlencode($isAr ? 'مرحباً، أريد الاستفسار عن دورة إدارة الغضب' : 'Hello, I would like to ask about the Anger Management course') }}" target="_blank"
+                            <a href="https://wa.me/{{ $site['whatsapp'] }}?text={{ rawurlencode(($isAr ? 'مرحباً، أريد الاستفسار عن ' : 'Hello, I would like to ask about ') . $offer['title'][$lang]) }}" target="_blank"
                                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-3.5 font-black text-[#1d4e89] border-2 border-[#1d4e89]/15 hover:bg-[#1d4e89]/5 transition">
                                 {{ $isAr ? 'استفسار واتساب' : 'Ask on WhatsApp' }}
                             </a>
@@ -307,7 +315,7 @@
                 {{-- Photo --}}
                 <div class="relative lg:w-[38%] min-h-[300px] sm:min-h-[380px] lg:min-h-0 bg-[#5f7aa8]/40 flex items-end justify-center overflow-hidden">
                     <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 70%, rgba(255,255,255,0.25), transparent 65%);"></div>
-                    <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="{{ $offer['trainer'][$lang] }}"
+                    <img src="{{ asset($offer['image']) }}" alt="{{ $offer['trainer'][$lang] }}"
                          class="relative w-[78%] sm:w-[60%] lg:w-[92%] h-auto object-contain object-bottom drop-shadow-2xl">
                 </div>
             </div>
@@ -315,11 +323,12 @@
 
         {{-- Contact --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mt-6 text-sm font-bold text-gray-600 dark:text-gray-300">
-            <span>{{ $isAr ? 'للتواصل والاستفسار:' : 'Contact:' }} <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">+965 556 651 61</span> · <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">+965 998 801 40</span></span>
-            <span>{{ $isAr ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}</span>
+            <span>{{ $isAr ? 'للتواصل والاستفسار:' : 'Contact:' }} <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">{{ \App\Models\SiteSetting::pretty($site['whatsapp']) }}</span> · <span dir="ltr" class="text-[#1d4e89] dark:text-[#8fd3ff] font-black">{{ \App\Models\SiteSetting::pretty($site['phone']) }}</span></span>
+            <span>{{ $site['address_' . $lang] }}</span>
         </div>
     </div>
 </section>
+@endif
 {{-- ════════════════ ABOUT SECTION ════════════════ --}}
 <section id="about" class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
     <div class="container mx-auto px-4">
@@ -425,6 +434,40 @@
     </div>
 </section>
 
+{{-- ════════════════ TESTIMONIALS (managed from /admin/content) ════════════════ --}}
+@php $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('sort')->get(); @endphp
+@if($testimonials->isNotEmpty())
+<section class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-10 sm:mb-16 reveal">
+            <span class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold mb-5 tracking-widest uppercase">{{ $isAr ? 'آراء المتدربين' : 'Testimonials' }}</span>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white">{{ $isAr ? 'ماذا يقول متدربونا؟' : 'What Our Trainees Say' }}</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+            @foreach($testimonials as $t)
+            <div class="card-premium p-6 sm:p-8 reveal">
+                <div class="flex items-center gap-1 mb-4 text-yellow-400">
+                    @for($i = 0; $i < $t->rating; $i++)
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    @endfor
+                </div>
+                <p class="text-[var(--muted-color)] text-sm leading-relaxed mb-6">"{{ $t->quote }}"</p>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-dark-border">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">{{ mb_substr($t->name, 0, 1) }}</div>
+                    <div>
+                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ $t->name }}</div>
+                        @if($t->subtitle)<div class="text-xs text-[var(--muted-color)]">{{ $t->subtitle }}</div>@endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+@php $faqs = \App\Models\Faq::where('is_active', true)->orderBy('sort')->get(); @endphp
+@if($faqs->isNotEmpty())
 {{-- ════════════════ FAQ SECTION ════════════════ --}}
 <section class="py-14 sm:py-20 md:py-24 bg-secondary dark:bg-dark-surface relative overflow-hidden">
     <div class="container mx-auto px-4 max-w-3xl">
@@ -435,59 +478,21 @@
             </h2>
         </div>
         <div class="space-y-3 sm:space-y-4 reveal">
-            {{-- FAQ 1 --}}
+            @foreach($faqs as $faq)
             <div class="faq-item bg-white dark:bg-dark-bg rounded-2xl border border-gray-100 dark:border-dark-border overflow-hidden shadow-sm">
-                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }} gap-4">
-                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'كيف أسجل في الدورات؟' : 'How do I register for courses?' }}</span>
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ $isAr ? 'right' : 'left' }} gap-4">
+                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ $faq->question($lang) }}</span>
                     <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'يمكنك التسجيل عبر الموقع الإلكتروني. اختر الدورة المناسبة لك واضغط على "سجل الآن" لإتمام عملية التسجيل والدفع.' : 'You can register through the website. Choose your course and click "Register Now" to complete registration and payment.' }}</p>
+                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed whitespace-pre-line">{{ $faq->answer($lang) }}</p>
                 </div>
             </div>
-            {{-- FAQ 2 --}}
-            <div class="faq-item bg-white dark:bg-dark-bg rounded-2xl border border-gray-100 dark:border-dark-border overflow-hidden shadow-sm">
-                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }} gap-4">
-                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'هل الدورات مسجلة أم مباشرة؟' : 'Are courses recorded or live?' }}</span>
-                    <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-                <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'نقدم دورات مسجلة يمكنك مشاهدتها في أي وقت يناسبك، بالإضافة إلى بعض الدورات المباشرة التي يتم الإعلان عنها بشكل دوري.' : 'We offer recorded courses you can watch anytime, plus some live courses announced periodically.' }}</p>
-                </div>
-            </div>
-            {{-- FAQ 3 --}}
-            <div class="faq-item bg-white dark:bg-dark-bg rounded-2xl border border-gray-100 dark:border-dark-border overflow-hidden shadow-sm">
-                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }} gap-4">
-                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'هل أحصل على شهادة بعد إتمام الدورة؟' : 'Do I get a certificate after completing the course?' }}</span>
-                    <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-                <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'نعم، يحصل كل متدرب على شهادة إتمام معتمدة من مركز مطمئنة بعد إنهاء جميع محتويات الدورة بنجاح.' : 'Yes, every trainee receives a completion certificate accredited by Motmaena Center after finishing all course content.' }}</p>
-                </div>
-            </div>
-            {{-- FAQ 4 --}}
-            <div class="faq-item bg-white dark:bg-dark-bg rounded-2xl border border-gray-100 dark:border-dark-border overflow-hidden shadow-sm">
-                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }} gap-4">
-                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'ما هي طرق الدفع المتاحة؟' : 'What payment methods are available?' }}</span>
-                    <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-                <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'نقبل الدفع عبر البطاقات البنكية (فيزا، ماستركارد)، كي نت، وApple Pay. كما يمكن الدفع عبر التحويل البنكي.' : 'We accept bank cards (Visa, Mastercard), KNET, Apple Pay, and bank transfers.' }}</p>
-                </div>
-            </div>
-            {{-- FAQ 5 --}}
-            <div class="faq-item bg-white dark:bg-dark-bg rounded-2xl border border-gray-100 dark:border-dark-border overflow-hidden shadow-sm">
-                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }} gap-4">
-                    <span class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'هل يمكنني مشاهدة الدورة أكثر من مرة؟' : 'Can I watch the course more than once?' }}</span>
-                    <svg class="faq-icon h-5 w-5 text-primary shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-                <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-                    <p class="px-5 sm:px-6 pb-5 sm:pb-6 text-[var(--muted-color)] text-sm leading-relaxed">{{ app()->getLocale() == 'ar' ? 'بالتأكيد! بمجرد التسجيل في الدورة، يمكنك إعادة مشاهدة المحتوى عدد غير محدود من المرات طوال فترة اشتراكك.' : 'Absolutely! Once enrolled, you can re-watch the content unlimited times throughout your subscription period.' }}</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
 
 @endsection

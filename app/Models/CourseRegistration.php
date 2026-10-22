@@ -30,7 +30,7 @@ class CourseRegistration extends Model
 
     public function offer(): ?array
     {
-        return config("course_offers.{$this->course_key}");
+        return CourseOffer::where('slug', $this->course_key)->first()?->toOfferArray();
     }
 
     /**

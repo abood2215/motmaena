@@ -36,7 +36,7 @@ class ConsultationController extends Controller
             $msg .= "\nملاحظات: {$notes}";
         }
 
-        return redirect('https://wa.me/96555665161?text=' . rawurlencode($msg));
+        return redirect('https://wa.me/' . \App\Models\SiteSetting::current()['whatsapp'] . '?text=' . rawurlencode($msg));
     }
 
     public function adminLogin(Request $request)
