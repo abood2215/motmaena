@@ -412,7 +412,7 @@
                 <div class="text-white/70 text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'دورة متخصصة' : 'Specialized Courses' }}</div>
             </div>
             <div class="text-center reveal">
-                <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="15">0</div>
+                <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="12">0</div>
                 <div class="w-10 h-1 bg-white/30 rounded-full mx-auto mb-2"></div>
                 <div class="text-white/70 text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'سنة من التميز' : 'Years of Excellence' }}</div>
             </div>

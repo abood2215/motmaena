@@ -724,7 +724,7 @@
           <span class="stat-lbl">{{ __('Children Benefited') }}</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num" data-target="10">0</span>
+          <span class="stat-num" data-target="12">0</span>
           <span class="stat-lbl">{{ __('Years Experience') }}</span>
         </div>
         <div class="stat-item">
