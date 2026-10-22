@@ -13,7 +13,7 @@
 <style>
     .reward-card { background: linear-gradient(135deg, var(--c1), var(--c2) 60%, #f59e0b 140%); box-shadow: 0 18px 40px -16px var(--c1); }
 </style>
-<section class="py-14 sm:py-24 bg-[color:var(--cbg)] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss($offer['theme'] ?? null) }}">
+<section class="py-14 sm:py-24 bg-[color:var(--cbg)] dark:bg-[#0b1220]" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
     <div class="container mx-auto px-4 max-w-lg">
         <div class="rounded-3xl bg-white dark:bg-[#111a2b] shadow-xl border border-[color:var(--cbd)] dark:border-white/10 p-7 sm:p-10 text-center">
 

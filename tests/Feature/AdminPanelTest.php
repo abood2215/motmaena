@@ -77,7 +77,7 @@ class AdminPanelTest extends TestCase
         $page = $this->get('/')->assertOk();
         $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة')->assertSee('--c1:#0f5e4a', false);
         $this->assertStringNotContainsString('قسّط على 4 دفعات', $page->getContent());
-        $this->get('/register/emotional-intelligence')->assertOk()->assertSee('--c1:#0f5e4a', false);
+        $this->get('/register/emotional-intelligence')->assertOk()->assertSee('--c1:#6d1b2b', false); // checkout keeps the wine palette
 
         $this->post('/admin/courses', ['title_ar' => 'x', 'trainer_ar' => 'y', 'price' => 1, 'date' => '2026-12-01', 'theme_color' => 'red'])
             ->assertSessionHasErrors('theme_color');

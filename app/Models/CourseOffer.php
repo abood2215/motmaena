@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class CourseOffer extends Model
 {
     public const DEFAULT_IMAGE = 'courses-img/dr-tariq.png';
-    public const DEFAULT_THEME = '#1d4e89';
+    public const DEFAULT_THEME = '#6d1b2b';
+    /** Registration, payment and thank-you pages always use the center's wine colour. */
+    public const CHECKOUT_THEME = '#6d1b2b';
 
     /** Ready-made banner colours offered in the admin (any colour can still be picked). */
     public const THEMES = [
+        '#6d1b2b' => 'عنابي خمري (لون المركز)',
         '#1d4e89' => 'أزرق',
-        '#8a2f2f' => 'أحمر (لون المركز)',
+        '#8a2f2f' => 'أحمر',
         '#0f5e4a' => 'أخضر',
         '#4c2a85' => 'بنفسجي',
         '#0e5a6b' => 'تركوازي',
