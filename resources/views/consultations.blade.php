@@ -1299,7 +1299,7 @@
           ['q' => 'ما الفرق بين الاستشارة هنا وعند أي مستشار آخر؟', 'a' => 'المستشارون في مركز مطمئنة يجمعون بين الخبرة الأكاديمية والتطبيق الميداني. الجلسة مبنية على فهم وضعك تحديداً — ليست نصائح عامة بل خطة عمل مخصصة لك أنت.'],
           ['q' => 'هل الجلسة سرية؟', 'a' => 'نعم تماماً. جميع ما يُقال في الجلسة يبقى بيننا وبينك بشكل كامل. لا يُشارك أي معلومة مع أي طرف ثالث تحت أي ظرف.'],
           ['q' => 'كيف يتم اختيار المستشار المناسب لي؟', 'a' => 'عند التواصل عبر واتساب سيسألك الفريق بعض الأسئلة البسيطة ثم يرشدك إلى المستشار الأنسب لطبيعة استشارتك سواء كانت أسرية أو تربوية أو اجتماعية.'],
-          ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك طلب حجز جلسة مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الإتاحة الحالية.'],
+          ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك حجز جلسة هاتفية مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الموعد المتاح.'],
           ['q' => 'كم مدة الجلسة؟', 'a' => 'الجلسة الاعتيادية مدتها 50 دقيقة. في بعض الحالات قد تُعقد جلسة أولية للتقييم تكون أقصر.'],
           ['q' => 'هل يمكن الحجز عن بعد (أونلاين)؟', 'a' => 'نعم، نوفر جلسات عن بعد لمن لا يستطيع الحضور الشخصي. تتم الجلسات عبر منصات تواصل مشفّرة وآمنة.'],
           ['q' => 'ما سياسة الإلغاء؟', 'a' => 'يمكن تأجيل الموعد دون أي رسوم قبل 24 ساعة على الأقل من موعده. لا يوجد استرجاع نقدي للمبالغ المدفوعة، ويمكنك استخدام المبلغ في أي خدمة أخرى داخل المركز.'],
@@ -1307,7 +1307,7 @@
           ['q' => 'What makes your consultations different?', 'a' => 'Motmaena\'s specialists combine academic expertise with real-world application. The session is built around your specific situation — not generic advice, but a personalized action plan made for you.'],
           ['q' => 'Is the session confidential?', 'a' => 'Absolutely. Everything discussed in your session remains strictly between you and your specialist. No information is shared with any third party under any circumstances.'],
           ['q' => 'How is the right specialist chosen for me?', 'a' => 'When you contact us via WhatsApp, the team will ask a few simple questions and then guide you to the specialist best suited for your consultation type — family, educational, or social.'],
-          ['q' => 'Can I book directly with Dr. Tariq?', 'a' => 'Yes, you can request a session with Dr. Tariq Al-Habib directly based on appointment availability. Contact the team and they\'ll confirm current availability for you.'],
+          ['q' => 'Can I book directly with Dr. Tariq?', 'a' => 'Yes, you can book a phone session with Dr. Tariq Al-Habib directly, based on appointment availability. Contact the team and they\'ll confirm an available time.'],
           ['q' => 'How long is a session?', 'a' => 'A standard session is 50 minutes. In some cases, a shorter initial evaluation session may be arranged first.'],
           ['q' => 'Can I book online (remote sessions)?', 'a' => 'Yes, we offer remote sessions for those who cannot attend in person. Sessions are conducted via secure, encrypted communication platforms.'],
           ['q' => 'What is the cancellation policy?', 'a' => 'Appointments can be rescheduled free of charge at least 24 hours in advance. Payments are not refunded in cash, but you can use the amount for any other service at the Center.'],
@@ -1439,13 +1439,13 @@
                     <option value="استشارة تربوية">📚 استشارة تربوية</option>
                     <option value="استشارة اجتماعية">🤝 استشارة اجتماعية</option>
                     <option value="تطوير الذات">🎯 تطوير الذات</option>
-                    <option value="استشارة مع د. طارق">⭐ استشارة مع د. طارق الحبيب</option>
+                    <option value="استشارة هاتفية مع د. طارق">⭐ استشارة هاتفية مع د. طارق الحبيب</option>
                   @else
                     <option value="Family Consultation">👨‍👩‍👧 Family Consultation</option>
                     <option value="Educational Consultation">📚 Educational Consultation</option>
                     <option value="Social Consultation">🤝 Social Consultation</option>
                     <option value="Self Development">🎯 Self Development</option>
-                    <option value="Session with Dr. Tariq">⭐ Session with Dr. Tariq</option>
+                    <option value="Phone session with Dr. Tariq">⭐ Phone session with Dr. Tariq</option>
                   @endif
                 </select>
               </div>
