@@ -26,12 +26,14 @@
         'refund' => [
             'title' => $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy',
             'items' => $isAr ? [
+                ['تأكيد الحجز', ['بمجرد إتمام الدفع يُعد مقعدك في الدورة محجوزاً لك، سواء حضرت أو لم تحضر.']],
                 ['لا يوجد استرجاع نقدي', ['المبالغ المدفوعة غير قابلة للاسترجاع النقدي، ويمكنك بدلاً من ذلك استخدام كامل المبلغ في أي خدمة أخرى داخل المركز (دورة، جلسة، استشارة، أو باقة).']],
                 ['إذا لم تتمكن من الحضور', ['يبقى المبلغ رصيداً لك تستخدمه في أي خدمة أخرى داخل المركز، حتى لو لم تتمكن من إبلاغنا مسبقاً. نرجو إبلاغنا متى أمكن لنحجز مقعدك لشخص آخر.']],
                 ['إلغاء الدورة من قبل المركز', ['إذا ألغى المركز الدورة أو غيّر موعدها، يمكنك اختيار التحويل إلى الموعد الجديد أو استخدام المبلغ في أي خدمة أخرى داخل المركز.']],
                 ['الجلسات والاستشارات', ['يمكن تأجيل الموعد دون رسوم قبل 24 ساعة على الأقل من موعده.']],
                 ['طريقة الطلب', ['تواصل معنا عبر واتساب على الرقم +965 5566 5161 مع ذكر رقم التسجيل، وسنساعدك في اختيار الخدمة البديلة.']],
             ] : [
+                ['Booking confirmation', ['Once payment is complete, your seat in the course is reserved for you, whether you attend or not.']],
                 ['No cash refunds', ['Payments are non-refundable. Instead, you can use the full amount for any other service at the Center (a course, session, consultation or package).']],
                 ['If you cannot attend', ['The amount stays as credit for any other service at the Center, even if you could not let us know in advance. Please tell us when you can, so we can offer your seat to someone else.']],
                 ['Course cancelled by the Center', ['If the Center cancels or reschedules a course, you can move to the new date or use the amount for any other service at the Center.']],
