@@ -189,6 +189,19 @@
                         <p id="code-msg" class="text-xs font-bold mt-2 {{ $errors->has('code') ? 'text-red-600' : 'hidden' }}">{{ $errors->first('code') }}</p>
                     </details>
 
+                    {{-- Gift code promise (only for paying without a discount code) --}}
+                    @php $giftAmount = \App\Models\CourseRegistration::giftAmount(); @endphp
+                    @if($giftAmount > 0)
+                    <div id="gift-note" class="flex items-start gap-3 rounded-2xl border border-[color:var(--cbd)] bg-[color:var(--ct)] dark:bg-white/5 dark:border-white/10 p-4 transition">
+                        <span class="w-10 h-10 rounded-xl bg-[color:var(--c1)] text-white flex items-center justify-center text-lg shrink-0">🎁</span>
+                        <div class="text-sm">
+                            <p class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'هدية إلك بعد الدفع: كود خصم بقيمة ' . rtrim(rtrim(number_format($giftAmount, 3), '0'), '.') . ' دنانير' : 'Your gift after paying: a ' . rtrim(rtrim(number_format($giftAmount, 3), '0'), '.') . ' KWD discount code' }}</p>
+                            <p class="font-semibold text-gray-600 dark:text-gray-300 mt-0.5">{{ $isAr ? 'اهديه لصديقك، أو استخدمه إنت على دورتك الجاية.' : 'Gift it to a friend, or use it yourself on your next course.' }}</p>
+                            <p id="gift-off" class="hidden font-bold text-[color:var(--c1)] dark:text-[color:var(--ca)] text-xs mt-1">{{ $isAr ? '* الهدية للتسجيل بدون كود خصم.' : '* The gift applies to bookings without a discount code.' }}</p>
+                        </div>
+                    </div>
+                    @endif
+
                     <button type="submit" id="pay-btn"
                             class="co-pay w-full rounded-2xl py-4 text-base sm:text-lg font-black text-white disabled:opacity-60 inline-flex items-center justify-center gap-2.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -246,7 +259,15 @@
         document.getElementById('pay-amount').textContent = value;
     }
 
+    function giftState(codeApplied) {
+        var note = document.getElementById('gift-note');
+        if (!note) return;
+        note.style.opacity = codeApplied ? '.5' : '1';
+        document.getElementById('gift-off').classList.toggle('hidden', !codeApplied);
+    }
+
     function resetPrice() {
+        giftState(false);
         document.getElementById('discount-row').classList.replace('flex', 'hidden');
         setTotal(document.getElementById('p-original').textContent);
     }
@@ -267,6 +288,7 @@
                 document.getElementById('p-discount').textContent = fmt(data.discount);
                 setTotal(fmt(data.final));
                 document.getElementById('discount-row').classList.replace('hidden', 'flex');
+                giftState(true);
                 showMsg(@json($isAr ? 'تم تطبيق كود الخصم ✓' : 'Discount applied ✓'), true);
             } else {
                 resetPrice();
