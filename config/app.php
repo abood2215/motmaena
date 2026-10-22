@@ -97,6 +97,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    // Password for the /admin pages (must be read via config() so it survives config:cache)
+    'admin_key' => env('ADMIN_KEY'),
+
     'key' => env('APP_KEY'),
 
     'previous_keys' => [

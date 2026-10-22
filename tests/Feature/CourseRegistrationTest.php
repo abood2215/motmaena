@@ -97,6 +97,20 @@ class CourseRegistrationTest extends TestCase
         $this->assertSame('paid', CourseRegistration::first()->status);
     }
 
+    public function test_admin_login_uses_configured_key_only(): void
+    {
+        config(['app.admin_key' => 'secret-key']);
+
+        $this->post('/admin/login', ['password' => 'motmaena-admin-2025'])->assertSessionHasErrors('password');
+        $this->post('/admin/login', ['password' => 'secret-key'])->assertRedirect(route('admin.consultations'));
+        $this->assertTrue(session('admin_auth'));
+
+        // No key configured: nobody can log in
+        session()->flush();
+        config(['app.admin_key' => null]);
+        $this->post('/admin/login', ['password' => ''])->assertSessionHasErrors('password');
+    }
+
     public function test_admin_pages_require_login(): void
     {
         $this->get('/admin/registrations')->assertRedirect(route('admin.consultations'));

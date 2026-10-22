@@ -41,9 +41,9 @@ class ConsultationController extends Controller
 
     public function adminLogin(Request $request)
     {
-        $key = env('ADMIN_KEY', 'motmaena-admin-2025');
+        $key = (string) config('app.admin_key');
 
-        if ($request->input('password') === $key) {
+        if ($key !== '' && hash_equals($key, (string) $request->input('password'))) {
             session(['admin_auth' => true]);
             return redirect()->route('admin.consultations');
         }
