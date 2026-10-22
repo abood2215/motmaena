@@ -26,7 +26,16 @@
                         {{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}
                     </span>
                     <h1 class="font-black leading-tight mb-2" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">{{ $offer['title'][$lang] }}</h1>
-                    <p class="text-white/75 text-lg font-bold mb-7">{{ $offer['trainer'][$lang] }}</p>
+                    <p class="text-white/75 text-lg font-bold mb-5">{{ $offer['trainer'][$lang] }}</p>
+
+                    <div class="flex flex-wrap items-center gap-3 mb-7">
+                        @include('partials.countdown', ['startsAt' => $offer['starts_at'], 'dark' => true])
+                        @if($offer['seats_left'] !== null)
+                            <span class="inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-black {{ $offer['is_full'] ? 'bg-red-500/90' : ($offer['seats_left'] <= 10 ? 'bg-amber-400 text-[#1d1d1d]' : 'bg-white/15 border border-white/25') }}">
+                                🎟️ {{ $offer['is_full'] ? ($isAr ? 'اكتمل العدد' : 'Fully booked') : ($isAr ? 'متبقي ' . $offer['seats_left'] . ' مقعد' : $offer['seats_left'] . ' seats left') }}
+                            </span>
+                        @endif
+                    </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
                         @foreach([
@@ -72,6 +81,13 @@
                 </div>
                 @endif
 
+                @if($offer['is_full'])
+                <div class="rounded-2xl bg-[#eef3fa] dark:bg-white/5 p-5">
+                    <p class="font-black text-[#1d4e89] dark:text-white mb-1">{{ $isAr ? 'اكتمل العدد في هذا الموعد 🙏' : 'This date is fully booked 🙏' }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 font-bold mb-4">{{ $isAr ? 'اترك رقم الواتساب ونبلّغك أول ما ينفتح موعد جديد.' : 'Leave your WhatsApp number and we will tell you when a new date opens.' }}</p>
+                    @include('partials.notify-form', ['courseKey' => $offerKey])
+                </div>
+                @else
                 <form method="POST" action="{{ route('course.register.store', $offerKey) }}" id="reg-form" class="space-y-4">
                     @csrf
                     @php $input = 'w-full rounded-xl border border-[#dbe3ef] dark:border-white/10 bg-[#f7f9fc] dark:bg-white/5 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-[#1565c0] focus:ring-2 focus:ring-[#1565c0]/20 transition'; @endphp
@@ -140,6 +156,7 @@
                         {{ $isAr ? 'دفع آمن — كي نت، فيزا، ماستركارد، Apple Pay' : 'Secure payment — KNET, Visa, Mastercard, Apple Pay' }}
                     </p>
                 </form>
+                @endif
             </div>
 
         </div>
@@ -148,6 +165,7 @@
 
 <script>
 (function () {
+    if (!document.getElementById('reg-form')) return;
     const codeInput = document.getElementById('code');
     const msg = document.getElementById('code-msg');
     const fmt = n => Number(n).toFixed(3);

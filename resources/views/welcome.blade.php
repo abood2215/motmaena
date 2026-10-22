@@ -277,6 +277,16 @@
                         @endforeach
                     </div>
 
+                    {{-- Countdown + real seats --}}
+                    <div class="flex flex-wrap items-center gap-3 mb-6">
+                        @include('partials.countdown', ['startsAt' => $offer['starts_at'], 'dark' => true])
+                        @if($offer['seats_left'] !== null)
+                            <span class="inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-black {{ $offer['is_full'] ? 'bg-red-500/90' : ($offer['seats_left'] <= 10 ? 'bg-amber-400 text-[#1d1d1d]' : 'bg-white/15 border border-white/25') }}">
+                                🎟️ {{ $offer['is_full'] ? ($isAr ? 'اكتمل العدد' : 'Fully booked') : ($isAr ? 'متبقي ' . $offer['seats_left'] . ' مقعد' : $offer['seats_left'] . ' seats left') }}
+                            </span>
+                        @endif
+                    </div>
+
                     {{-- Price + CTA --}}
                     <div class="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 rounded-2xl bg-white p-4 sm:p-5 text-[#1d4e89]">
                         <div class="flex items-center gap-4">
@@ -289,6 +299,12 @@
                                 deema<br>{{ $isAr ? 'قسّط على 4 دفعات' : 'Split in 4 payments' }}
                             </span>
                         </div>
+                        @if($offer['is_full'])
+                        <div class="flex-1 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
+                            <p class="text-xs font-bold text-gray-500 mb-2">{{ $isAr ? 'اكتمل العدد — اترك رقمك ونبلّغك بالموعد القادم' : 'Fully booked — leave your number for the next date' }}</p>
+                            @include('partials.notify-form', ['courseKey' => $offer['slug']])
+                        </div>
+                        @else
                         <div class="flex flex-col sm:flex-row gap-2 {{ $isAr ? 'xl:mr-auto' : 'xl:ml-auto' }}">
                             <a href="{{ route('course.register', $offer['slug']) }}"
                                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-7 py-3.5 font-black text-white shadow-lg shadow-[#1565c0]/30 transition hover:-translate-y-0.5 active:scale-95"
@@ -301,6 +317,7 @@
                                 {{ $isAr ? 'استفسار واتساب' : 'Ask on WhatsApp' }}
                             </a>
                         </div>
+                        @endif
                     </div>
 
                     {{-- Certificate --}}
@@ -329,6 +346,68 @@
     </div>
 </section>
 @endif
+
+{{-- ════════════════ UPCOMING COURSES (every open course except the featured one) ════════════════ --}}
+@php $others = \App\Models\CourseOffer::upcoming()->reject(fn ($o) => $featuredModel && $o->id === $featuredModel->id)->map->toOfferArray(); @endphp
+@if($others->isNotEmpty())
+<section class="py-12 sm:py-16 bg-white dark:bg-dark-bg" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8 sm:mb-10">
+            <span class="inline-block bg-[#1565c0]/10 text-[#1565c0] dark:text-[#8fd3ff] px-4 py-1.5 rounded-full text-xs font-black mb-3">{{ $isAr ? 'التسجيل مفتوح' : 'Registration open' }}</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">{{ $isAr ? 'الدورات القادمة' : 'Upcoming Courses' }}</h2>
+        </div>
+        <div class="flex flex-wrap justify-center gap-5">
+            @foreach($others as $o)
+            <div class="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] rounded-3xl overflow-hidden border border-[#dbe3ef] dark:border-white/10 bg-white dark:bg-[#111a2b] shadow-sm hover:shadow-xl transition flex flex-col">
+                <div class="relative h-40 flex items-end justify-center overflow-hidden" style="background: linear-gradient(135deg, #1d4e89, #5f7aa8);">
+                    <img src="{{ asset($o['image']) }}" alt="" class="h-[92%] w-auto object-contain object-bottom">
+                    <span class="absolute top-3 {{ $isAr ? 'right-3' : 'left-3' }} bg-white text-[#1d4e89] text-xs font-black px-3 py-1 rounded-full">
+                        {{ $o['day'][$lang] }} {{ \Carbon\Carbon::parse($o['date'])->locale($lang)->translatedFormat('j F') }}
+                    </span>
+                    @if($o['seats_left'] !== null)
+                    <span class="absolute top-3 {{ $isAr ? 'left-3' : 'right-3' }} text-xs font-black px-3 py-1 rounded-full {{ $o['is_full'] ? 'bg-red-500 text-white' : 'bg-amber-400 text-[#1d1d1d]' }}">
+                        {{ $o['is_full'] ? ($isAr ? 'اكتمل العدد' : 'Full') : ($isAr ? 'متبقي ' . $o['seats_left'] : $o['seats_left'] . ' left') }}
+                    </span>
+                    @endif
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="text-lg font-black text-gray-900 dark:text-white mb-1">{{ $o['title'][$lang] }}</h3>
+                    <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-3">{{ $o['trainer'][$lang] }}@if($o['time'][$lang]) · {{ $o['time'][$lang] }}@endif</p>
+                    @if($o['topics'][$lang])
+                    <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1 mb-4">
+                        @foreach(array_slice($o['topics'][$lang], 0, 3) as $t)
+                            <li class="flex items-start gap-2"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#1565c0] shrink-0"></span>{{ $t }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+                    <div class="mt-auto flex items-center justify-between gap-3 pt-4 border-t border-gray-100 dark:border-white/10">
+                        <span class="font-black text-[#1d4e89] dark:text-[#8fd3ff] text-xl">{{ $o['price'] }} <small class="text-xs">{{ $isAr ? 'د.ك' : 'KWD' }}</small></span>
+                        @if($o['is_full'])
+                            <span class="text-xs font-black text-red-500">{{ $isAr ? 'اكتمل العدد' : 'Fully booked' }}</span>
+                        @else
+                            <a href="{{ route('course.register', $o['slug']) }}" class="rounded-xl px-5 py-2.5 text-sm font-black text-white" style="background: linear-gradient(135deg, #1565c0, #1d4e89);">{{ $isAr ? 'سجّل الآن' : 'Register' }}</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ════════════════ NOTIFY ME ════════════════ --}}
+<section id="notify-me" class="py-10 sm:py-12 bg-[#1d4e89] text-white" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
+        <div class="flex-1 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
+            <h2 class="text-xl sm:text-2xl font-black mb-1">{{ $isAr ? 'لا تفوّتك الدورة الجاية 🔔' : "Don't miss the next course 🔔" }}</h2>
+            <p class="text-white/75 text-sm font-bold">{{ $isAr ? 'اترك رقم الواتساب ونبلّغك أول ما ينفتح التسجيل بدورة جديدة.' : 'Leave your WhatsApp number and we will tell you as soon as a new course opens.' }}</p>
+        </div>
+        <div class="w-full lg:w-[460px]">
+            @include('partials.notify-form', ['dark' => true])
+        </div>
+    </div>
+</section>
 {{-- ════════════════ ABOUT SECTION ════════════════ --}}
 <section id="about" class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
     <div class="container mx-auto px-4">

@@ -38,6 +38,11 @@
         <input name="price" type="number" step="0.001" min="0" value="{{ $v('price') !== null ? rtrim(rtrim(number_format((float) $v('price'), 3, '.', ''), '0'), '.') : '' }}" required>
       </div>
       <div>
+        <label>عدد المقاعد (فاضي = بدون حد)</label>
+        <input name="seats" type="number" min="1" max="10000" value="{{ $v('seats') }}" placeholder="مثلاً 30">
+        <p class="hint">لما تمتلي المقاعد المدفوعة، التسجيل بيتسكّر لحاله وبيطلع "اكتمل العدد".</p>
+      </div>
+      <div>
         <label>التاريخ *</label>
         <input name="date" type="date" value="{{ old('date', $offer->date?->format('Y-m-d')) }}" required>
       </div>

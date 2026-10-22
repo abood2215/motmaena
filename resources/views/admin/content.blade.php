@@ -35,6 +35,16 @@
         <label>نص شريط الإعلان (إنجليزي)</label>
         <input name="announcement_en" value="{{ old('announcement_en', $settings['announcement_en']) }}" maxlength="160" dir="ltr">
       </div>
+      <div>
+        <label>🎁 خصم الصديق بكود الإحالة (%) — 0 يوقف الإحالات</label>
+        <input name="referral_discount_percent" type="number" step="0.5" min="0" max="100" value="{{ old('referral_discount_percent', $settings['referral_discount_percent']) }}" required>
+        <p class="hint">كل عميل بيدفع بياخد كود خاص فيه يعطيه لأصحابه.</p>
+      </div>
+      <div>
+        <label>🎁 رصيد العميل عن كل صديق يدفع (د.ك)</label>
+        <input name="referral_reward_kwd" type="number" step="0.5" min="0" max="1000" value="{{ old('referral_reward_kwd', $settings['referral_reward_kwd']) }}" required>
+        <p class="hint">بيطلع للعميل بصفحة النجاح، وإنت بتشوف المستحق بالرئيسية ← الإحالات.</p>
+      </div>
     </div>
     <div style="margin-top:12px"><button class="btn btn-primary">حفظ</button></div>
   </form>
@@ -47,7 +57,7 @@
   @foreach($testimonials as $t)
   <details class="edit-box">
     <summary>
-      <span>{{ $t->name }} <span class="small">— {{ \Illuminate\Support\Str::limit($t->quote, 60) }}</span></span>
+      <span>@if($t->registration_id && !$t->is_active)<span class="tag pending">تقييم جديد من متدرب</span> @endif{{ $t->name }} <span style="color:#f59e0b">{{ str_repeat('★', $t->rating) }}</span> <span class="small">— {{ \Illuminate\Support\Str::limit($t->quote, 60) }}</span></span>
       <span class="tag {{ $t->is_active ? 'on' : 'off' }}">{{ $t->is_active ? 'ظاهر' : 'مخفي' }}</span>
     </summary>
     <form method="POST" action="{{ route('admin.content.testimonials.update', $t) }}" class="field-grid">

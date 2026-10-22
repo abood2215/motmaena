@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\CourseAdminController;
 use App\Http\Controllers\Admin\CourseOfferController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GrowthController;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('/', function () {
@@ -66,6 +69,10 @@ Route::post('/register/{offer}/check-code', [CourseRegistrationController::class
     ->middleware('throttle:15,1')->name('course.register.check-code');
 Route::post('/register/{offer}', [CourseRegistrationController::class, 'store'])
     ->middleware('throttle:10,1')->name('course.register.store');
+Route::post('/notify', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('leads.store');
+Route::get('/review/{token}', [ReviewController::class, 'show'])->name('review.show');
+Route::post('/review/{token}', [ReviewController::class, 'store'])->middleware('throttle:6,1')->name('review.store');
+
 Route::get('/payment/callback', [CourseRegistrationController::class, 'callback'])->name('payment.callback');
 
 Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(function () {
@@ -87,6 +94,14 @@ Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(func
     Route::post('/content/testimonials', [ContentController::class, 'storeTestimonial'])->name('content.testimonials.store');
     Route::put('/content/testimonials/{testimonial}', [ContentController::class, 'updateTestimonial'])->name('content.testimonials.update');
     Route::delete('/content/testimonials/{testimonial}', [ContentController::class, 'destroyTestimonial'])->name('content.testimonials.destroy');
+
+    Route::get('/courses/{offer}/reviews', [GrowthController::class, 'courseReviews'])->name('courses.reviews');
+    Route::post('/registrations/{registration}/review-requested', [GrowthController::class, 'markReviewRequested'])->name('registrations.review-requested');
+
+    Route::get('/leads', [GrowthController::class, 'leads'])->name('leads');
+    Route::get('/leads/export', [GrowthController::class, 'exportLeads'])->name('leads.export');
+    Route::post('/leads/{lead}/contacted', [GrowthController::class, 'markLeadContacted'])->name('leads.contacted');
+    Route::delete('/leads/{lead}', [GrowthController::class, 'destroyLead'])->name('leads.destroy');
 
     Route::get('/registrations', [CourseAdminController::class, 'registrations'])->name('registrations');
     Route::post('/registrations/{registration}/followed', [CourseAdminController::class, 'markFollowedUp'])->name('registrations.followed');

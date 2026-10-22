@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class CourseRegistration extends Model
 {
@@ -15,6 +16,7 @@ class CourseRegistration extends Model
         'original_amount', 'discount_amount', 'final_amount',
         'status', 'invoice_id', 'payment_id', 'payment_method', 'paid_at', 'admin_notes',
         'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'followed_up_at',
+        'review_token', 'review_requested_at',
     ];
 
     protected $casts = [
@@ -23,11 +25,18 @@ class CourseRegistration extends Model
         'final_amount'    => 'decimal:3',
         'paid_at'         => 'datetime',
         'followed_up_at'  => 'datetime',
+        'review_requested_at' => 'datetime',
     ];
 
     public function discountCode()
     {
         return $this->belongsTo(DiscountCode::class);
+    }
+
+    /** The review this trainee left through their review link. */
+    public function testimonial()
+    {
+        return $this->hasOne(Testimonial::class, 'registration_id');
     }
 
     /**
@@ -85,8 +94,32 @@ class CourseRegistration extends Model
         $this->refresh();
 
         if ($newlyPaid) {
+            $this->update(['review_token' => $this->review_token ?: Str::random(32)]);
+            $this->referralCode(create: true);
             $this->notifyAdmin();
         }
+    }
+
+    /**
+     * The personal code this customer shares with friends. Created on first payment while
+     * referrals are switched on (referral_discount_percent > 0); one per phone number.
+     */
+    public function referralCode(bool $create = false): ?DiscountCode
+    {
+        $existing = DiscountCode::whereHas('owner', fn ($q) => $q->where('phone', $this->phone))->first();
+        if ($existing || !$create || $this->status !== 'paid') return $existing;
+
+        $percent = (float) (SiteSetting::current()['referral_discount_percent'] ?? 0);
+        if ($percent <= 0) return null;
+
+        do {
+            $code = 'MT' . strtoupper(Str::random(5));
+        } while (DiscountCode::where('code', $code)->exists());
+
+        return DiscountCode::create([
+            'code' => $code, 'type' => 'percent', 'value' => min($percent, 100),
+            'owner_registration_id' => $this->id, 'is_active' => true,
+        ]);
     }
 
     /** Emails the center about a new paid registration. Never breaks the payment flow. */

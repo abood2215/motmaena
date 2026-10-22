@@ -101,6 +101,7 @@ class CourseOfferController extends Controller
             'trainer_ar'     => 'required|string|max:120',
             'trainer_en'     => 'nullable|string|max:120',
             'price'          => 'required|numeric|min:0|max:100000',
+            'seats'          => 'nullable|integer|min:1|max:10000',
             'date'           => 'required|date',
             'time_ar'        => 'nullable|string|max:80',
             'time_en'        => 'nullable|string|max:80',

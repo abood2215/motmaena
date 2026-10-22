@@ -10,7 +10,7 @@ class CourseOffer extends Model
     public const DEFAULT_IMAGE = 'courses-img/dr-tariq.png';
 
     protected $fillable = [
-        'slug', 'title_ar', 'title_en', 'trainer_ar', 'trainer_en', 'price', 'date',
+        'slug', 'title_ar', 'title_en', 'trainer_ar', 'trainer_en', 'price', 'seats', 'date',
         'time_ar', 'time_en', 'location_ar', 'location_en', 'certificate_ar', 'certificate_en',
         'topics_ar', 'topics_en', 'image', 'is_active', 'is_featured',
     ];
@@ -22,15 +22,42 @@ class CourseOffer extends Model
         'is_featured' => 'boolean',
     ];
 
+    /** Open for registration: switched on and the course date hasn't passed. */
+    public function scopeOpen($query)
+    {
+        return $query->where('is_active', true)->whereDate('date', '>=', now()->toDateString());
+    }
+
     public static function findActive(?string $slug): ?self
     {
-        return $slug ? static::where('slug', $slug)->where('is_active', true)->first() : null;
+        return $slug ? static::open()->where('slug', $slug)->first() : null;
     }
 
     /** The course shown in the homepage banner and announcement strip. */
     public static function featured(): ?self
     {
-        return static::where('is_active', true)->where('is_featured', true)->orderBy('date')->first();
+        return static::open()->where('is_featured', true)->orderBy('date')->first();
+    }
+
+    public static function upcoming()
+    {
+        return static::open()->orderBy('date')->get();
+    }
+
+    public function seatsTaken(): int
+    {
+        return CourseRegistration::where('course_key', $this->slug)->where('status', 'paid')->count();
+    }
+
+    /** null = no seat limit */
+    public function seatsLeft(): ?int
+    {
+        return $this->seats ? max(0, $this->seats - $this->seatsTaken()) : null;
+    }
+
+    public function isFull(): bool
+    {
+        return $this->seatsLeft() === 0;
     }
 
     /**
@@ -56,6 +83,21 @@ class CourseOffer extends Model
             'certificate' => $pair('certificate'),
             'topics'      => ['ar' => $lines($this->topics_ar), 'en' => $lines($this->topics_en) ?: $lines($this->topics_ar)],
             'image'       => $this->image ?: self::DEFAULT_IMAGE,
+            'seats'       => $this->seats,
+            'seats_left'  => $this->seatsLeft(),
+            'is_full'     => $this->isFull(),
+            'starts_at'   => $date->toDateString() . 'T' . $this->startTime() . '+03:00', // Kuwait time
         ];
+    }
+
+    /** Best-effort start time for the countdown, read from the Arabic/English time text ("7:00 - 9:00 مساءً"). */
+    private function startTime(): string
+    {
+        $text = (string) ($this->time_en ?: $this->time_ar);
+        if (!preg_match('/(\d{1,2})(?::(\d{2}))?/', $text, $m)) return '00:00:00';
+        $hour = (int) $m[1];
+        $isPm = preg_match('/pm|مساء/iu', $text) || ($hour < 9 && !preg_match('/am|صباح/iu', $text));
+        if ($isPm && $hour < 12) $hour += 12;
+        return sprintf('%02d:%02d:00', $hour, (int) ($m[2] ?? 0));
     }
 }

@@ -36,7 +36,7 @@ class CourseAdminController extends Controller
             'revenue' => (float) (clone $all)->where('status', 'paid')->sum('final_amount'),
         ];
 
-        $codes = DiscountCode::where('is_active', true)->get()->filter(fn ($c) => !$c->unusableReason($c->course_key ?? ''));
+        $codes = DiscountCode::where('is_active', true)->whereNull('owner_registration_id')->get()->filter(fn ($c) => !$c->unusableReason($c->course_key ?? ''));
 
         return view('admin.registrations', compact('registrations', 'stats', 'codes'));
     }
@@ -110,7 +110,7 @@ class CourseAdminController extends Controller
     public function codes()
     {
         return view('admin.discount-codes', [
-            'codes'  => DiscountCode::latest()->get(),
+            'codes'  => DiscountCode::whereNull('owner_registration_id')->latest()->get(), // referral codes live on the dashboard
             'offers' => CourseOffer::orderByDesc('date')->get()->mapWithKeys(fn ($o) => [$o->slug => $o->toOfferArray()])->all(),
         ]);
     }

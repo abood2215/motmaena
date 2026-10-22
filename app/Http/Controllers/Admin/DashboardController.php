@@ -42,6 +42,7 @@ class DashboardController extends Controller
             ->map(fn ($rows, $label) => ['label' => $label, 'count' => $rows->count(), 'revenue' => $rows->sum('final_amount')])
             ->sortByDesc('count')->values();
         $codes = $paidRows->whereNotNull('discount_code')->groupBy('discount_code')
+            ->reject(fn ($rows) => $rows->first()->discountCode?->owner_registration_id) // referrals shown separately
             ->map(fn ($rows, $code) => ['code' => $code, 'count' => $rows->count(), 'discount' => $rows->sum('discount_amount')])
             ->sortByDesc('count')->values();
         $courses = $paidRows->groupBy('course_key')
@@ -50,6 +51,13 @@ class DashboardController extends Controller
 
         $latest = CourseRegistration::where('status', 'paid')->latest('paid_at')->take(6)->get();
 
-        return view('admin.dashboard', compact('stats', 'chart', 'sources', 'codes', 'courses', 'latest'));
+        // Referral codes that brought paying friends, with the credit their owners earned
+        $reward = (float) (\App\Models\SiteSetting::current()['referral_reward_kwd'] ?? 0);
+        $referrals = \App\Models\DiscountCode::whereNotNull('owner_registration_id')->with('owner')->get()
+            ->map(fn ($c) => ['code' => $c->code, 'owner' => $c->owner, 'friends' => $paidRows->where('discount_code_id', $c->id)->count()])
+            ->filter(fn ($r) => $r['friends'] > 0)->sortByDesc('friends')->values()
+            ->map(fn ($r) => $r + ['credit' => $r['friends'] * $reward]);
+
+        return view('admin.dashboard', compact('stats', 'chart', 'sources', 'codes', 'courses', 'latest', 'referrals'));
     }
 }

@@ -31,6 +31,8 @@ class ContentController extends Controller
             'address_en'      => 'nullable|string|max:200',
             'announcement_ar' => 'nullable|string|max:160',
             'announcement_en' => 'nullable|string|max:160',
+            'referral_discount_percent' => 'nullable|numeric|min:0|max:100',
+            'referral_reward_kwd'       => 'nullable|numeric|min:0|max:1000',
         ], [
             'whatsapp.digits_between' => 'رقم الواتساب غير صحيح — اكتبه مع مفتاح الدولة مثل 96555665161',
             'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96599880140',
@@ -41,7 +43,9 @@ class ContentController extends Controller
             if (strlen($data[$k]) === 8) $data[$k] = '965' . $data[$k];
         }
 
-        SiteSetting::setMany($data);
+        // Text fields may be cleared; referral numbers left out of the form keep their current value
+        $clearable = ['address_en', 'announcement_ar', 'announcement_en'];
+        SiteSetting::setMany(array_filter($data, fn ($v, $k) => $v !== null || in_array($k, $clearable, true), ARRAY_FILTER_USE_BOTH));
 
         return back()->with('ok', 'تم حفظ معلومات الموقع');
     }

@@ -31,7 +31,7 @@
           </td>
           <td class="small">{{ $o->date->format('Y-m-d') }}<div>{{ $o->date->locale('ar')->dayName }}</div></td>
           <td><strong>{{ rtrim(rtrim(number_format((float) $o->price, 3), '0'), '.') }}</strong> <span class="small">د.ك</span></td>
-          <td class="small">{{ $c->c ?? 0 }} تسجيل<div>{{ rtrim(rtrim(number_format((float) ($c->total ?? 0), 3), '0'), '.') }} د.ك</div></td>
+          <td class="small">{{ $c->c ?? 0 }}{{ $o->seats ? ' / ' . $o->seats : '' }} تسجيل<div>{{ rtrim(rtrim(number_format((float) ($c->total ?? 0), 3), '0'), '.') }} د.ك</div></td>
           <td>
             <form method="POST" action="{{ route('admin.courses.toggle', [$o, 'is_active']) }}" class="inline">@csrf
               <button class="tag {{ $o->is_active ? 'on' : 'off' }}" style="cursor:pointer">{{ $o->is_active ? 'التسجيل مفتوح' : 'مغلق' }}</button>
@@ -43,6 +43,7 @@
           <td>
             <div class="row-actions">
               <a href="{{ route('admin.courses.edit', $o) }}" class="btn btn-outline btn-sm">تعديل</a>
+              <a href="{{ route('admin.courses.reviews', $o) }}" class="btn btn-outline btn-sm">⭐ طلب تقييم</a>
               <a href="{{ route('course.register', $o->slug) }}" target="_blank" class="btn btn-outline btn-sm">عرض</a>
               <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText('{{ route('course.register', $o->slug) }}');this.textContent='تم النسخ ✓'">نسخ الرابط</button>
               <form method="POST" action="{{ route('admin.courses.destroy', $o) }}" class="inline" onsubmit="return confirm('حذف الدورة؟')">@csrf @method('DELETE')

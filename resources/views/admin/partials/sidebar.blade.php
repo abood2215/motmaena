@@ -4,6 +4,7 @@
         ['route' => 'admin.dashboard',     'match' => 'admin.dashboard',      'icon' => '&#128202;', 'label' => 'الرئيسية'],
         ['route' => 'admin.courses',       'match' => 'admin.courses*',       'icon' => '&#127891;', 'label' => 'الدورات'],
         ['route' => 'admin.registrations', 'match' => 'admin.registrations*', 'icon' => '&#128179;', 'label' => 'التسجيلات والمتابعة', 'badge' => $followUpCount],
+        ['route' => 'admin.leads',         'match' => 'admin.leads*',         'icon' => '&#128276;', 'label' => 'قائمة "بلّغني"', 'badge' => \App\Models\Lead::whereNull('contacted_at')->count()],
         ['route' => 'admin.codes',         'match' => 'admin.codes*',         'icon' => '&#127991;', 'label' => 'أكواد الخصم'],
         ['route' => 'admin.content',       'match' => 'admin.content*',       'icon' => '&#9998;',   'label' => 'محتوى الموقع'],
         ['route' => 'admin.consultations', 'match' => 'admin.consultations',  'icon' => '&#128203;', 'label' => 'الاستشارات'],

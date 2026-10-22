@@ -17,6 +17,7 @@ class CourseRegistrationController extends Controller
         'wrong_course' => ['ar' => 'كود الخصم غير صالح لهذه الدورة', 'en' => 'This code is not valid for this course'],
         'expired'      => ['ar' => 'انتهت صلاحية كود الخصم', 'en' => 'This discount code has expired'],
         'used_up'      => ['ar' => 'تم استنفاد كود الخصم', 'en' => 'This discount code has been fully used'],
+        'own_code'     => ['ar' => 'هذا كود الإحالة الخاص بك — شاركه مع أصدقائك ليحصلوا على الخصم', 'en' => 'This is your own referral code — share it with friends'],
     ];
 
     public function __construct(private MyFatoorah $myFatoorah) {}
@@ -57,8 +58,19 @@ class CourseRegistrationController extends Controller
             'email' => 'nullable|email|max:150',
             'code'  => 'nullable|string|max:40',
         ]);
+        $data['phone'] = $this->localMobile($data['phone']);
+
+        if ($offer['is_full']) {
+            return back()->withInput()->withErrors(['payment' => $this->t(
+                'اكتمل العدد في هذه الدورة. اترك رقمك وسنبلغك بالموعد القادم.',
+                'This course is full. Leave your number and we will tell you about the next date.'
+            )]);
+        }
 
         $quote = $this->quote($offerKey, $offer, $data['code'] ?? null);
+        if (!$quote['error'] && $quote['code']?->owner?->phone === $data['phone']) {
+            $quote['error'] = self::CODE_ERRORS['own_code'][app()->getLocale()] ?? self::CODE_ERRORS['own_code']['ar'];
+        }
         if ($quote['error']) {
             return back()->withInput()->withErrors(['code' => $quote['error']]);
         }
@@ -87,7 +99,7 @@ class CourseRegistrationController extends Controller
                 'CustomerName'       => $data['name'],
                 'CustomerEmail'      => $data['email'] ?? null,
                 'MobileCountryCode'  => '+965',
-                'CustomerMobile'     => $this->localMobile($data['phone']),
+                'CustomerMobile'     => $data['phone'],
                 'CustomerReference'  => (string) $registration->id,
                 'Language'           => app()->getLocale() === 'ar' ? 'AR' : 'EN',
                 'CallBackUrl'        => route('payment.callback'),

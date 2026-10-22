@@ -20,6 +20,27 @@
                 </div>
                 <h1 class="text-2xl font-black text-gray-900 dark:text-white mb-2">{{ $isAr ? 'تم تسجيلك بنجاح!' : 'You are registered!' }}</h1>
                 <p class="text-gray-500 dark:text-gray-400 font-bold mb-7">{{ $isAr ? 'شكراً لك، سيتواصل معك فريق مطمئنة قبل موعد الدورة.' : 'Thank you! The Motmaena team will contact you before the course.' }}</p>
+
+                @if($referral = $registration->referralCode())
+                @php
+                    $percent = rtrim(rtrim(number_format((float) $referral->value, 2), '0'), '.');
+                    $reward = $site['referral_reward_kwd'] ?? 0;
+                    $shareLink = route('course.register', $registration->course_key);
+                    $shareText = $isAr
+                        ? 'سجّلت في ' . ($offer['title']['ar'] ?? 'دورة') . ' بمركز مطمئنة 🌷 سجّل معي واستخدم كودي ' . $referral->code . ' وخذ خصم ' . $percent . '%: ' . $shareLink
+                        : 'I signed up for ' . ($offer['title']['en'] ?? 'a course') . ' at Motmaena Center. Join me with my code ' . $referral->code . ' for ' . $percent . '% off: ' . $shareLink;
+                @endphp
+                <div class="rounded-2xl border-2 border-dashed border-[#1565c0]/30 bg-[#eef3fa] dark:bg-white/5 p-5 mb-7">
+                    <p class="font-black text-[#1d4e89] dark:text-white mb-1">🎁 {{ $isAr ? 'سجّل مع صديق' : 'Bring a friend' }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 font-bold mb-3">
+                        {{ $isAr ? 'صديقك ياخد خصم ' . $percent . '% بهذا الكود' : 'Your friend gets ' . $percent . '% off with this code' }}@if($reward > 0){{ $isAr ? '، وإنت بتاخد رصيد ' . $reward . ' د.ك عن كل صديق يسجّل.' : ', and you earn ' . $reward . ' KWD credit for each friend who joins.' }}@else.@endif
+                    </p>
+                    <div class="text-3xl font-black tracking-widest text-[#1565c0] mb-4" dir="ltr">{{ $referral->code }}</div>
+                    <a href="https://wa.me/?text={{ rawurlencode($shareText) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-black bg-[#25d366] text-white">
+                        {{ $isAr ? 'شارك عبر واتساب' : 'Share on WhatsApp' }}
+                    </a>
+                </div>
+                @endif
             @else
                 <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-red-100 dark:bg-red-500/15 flex items-center justify-center">
                     <svg class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
