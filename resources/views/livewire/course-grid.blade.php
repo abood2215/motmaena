@@ -37,7 +37,7 @@
         @foreach($courses as $course)
 
         {{-- Reveal wrapper: handles staggered entrance, no hover interference --}}
-        <div class="reveal-scale h-full" style="transition-delay: {{ $loop->index * 0.08 }}s">
+        <div class="reveal-scale h-full" style="transition-delay: {{ ($loop->index % 3) * 0.08 }}s">
 
             {{-- Card: handles hover effects with no delay --}}
             <div class="group relative flex flex-col h-full bg-white dark:bg-dark-surface rounded-[2rem] overflow-hidden cursor-pointer
@@ -58,7 +58,7 @@
                             origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out shrink-0"></div>
 
                 <!-- TOP SECTION: Presentation Graphic -->
-                <div class="relative h-52 overflow-hidden">
+                <div class="relative hidden sm:block h-52 overflow-hidden">
                     {{-- Warm gradient background --}}
                     <div class="absolute inset-0 bg-gradient-to-br from-[#fff4f4] via-[#fef8f5] to-[#fafafa]
                                 dark:from-[#201818] dark:via-[#1e1a18] dark:to-[#1a1a1a]
@@ -81,7 +81,7 @@
 
                     {{-- Profile image (circular, glows on hover) --}}
                     <div class="absolute bottom-3 left-4 z-20">
-                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden
+                        <div class="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden
                                     border-[3px] border-white dark:border-dark-surface shadow-lg
                                     transition-all duration-500
                                     group-hover:scale-105
@@ -110,34 +110,37 @@
 
                 <!-- BOTTOM SECTION: Academic Details -->
                 <div class="flex-1 p-5 flex flex-col bg-white dark:bg-dark-surface border-t border-[#f8eeee] dark:border-dark-border">
-                    <div class="flex flex-col items-end text-right w-full">
-                        {{-- "Recorded" badge with live dot --}}
-                        <span class="inline-flex items-center gap-1.5 bg-[#fff0f0] dark:bg-primary/10 text-primary
-                                     text-[10px] font-black px-3 py-1 rounded-lg mb-3 self-end">
-                            <span class="w-1.5 h-1.5 rounded-full bg-primary badge-live-dot shrink-0"></span>
-                            {{ app()->getLocale() == 'ar' ? 'مسجلة' : 'Recorded' }}
-                        </span>
+                    <div class="flex items-start gap-3 w-full">
+                        {{-- Phones: small avatar instead of the tall graphic --}}
+                        <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="" class="sm:hidden w-12 h-12 rounded-full object-cover object-top border-2 border-primary/15 shrink-0">
+                        <div class="flex flex-col items-start text-start w-full">
+                            {{-- "Recorded" badge with live dot --}}
+                            <span class="inline-flex items-center gap-1.5 bg-[#fff0f0] dark:bg-primary/10 text-primary
+                                         text-[10px] font-black px-3 py-1 rounded-lg mb-3 self-start">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary badge-live-dot shrink-0"></span>
+                                {{ app()->getLocale() == 'ar' ? 'مسجلة' : 'Recorded' }}
+                            </span>
 
-                        {{-- Title (detail row) --}}
-                        <h3 class="text-[16px] font-black text-[#5a4a42] dark:text-white mb-1 leading-tight line-clamp-2
-                                   transition-colors duration-300 group-hover:text-[#3d2e28] dark:group-hover:text-white">
-                            {{ $course->title }}
-                        </h3>
+                            {{-- Title (detail row) --}}
+                            <h3 class="text-[16px] font-black text-[#5a4a42] dark:text-white mb-1 leading-tight line-clamp-2
+                                       transition-colors duration-300 group-hover:text-[#3d2e28] dark:group-hover:text-white">
+                                {{ $course->title }}
+                            </h3>
 
-                        {{-- Instructor --}}
-                        <span class="text-xs font-semibold text-gray-400 mb-3 block">أ.د طارق الحبيب</span>
+                            {{-- Instructor --}}
+                            <span class="text-xs font-semibold text-gray-400 mb-3 block">أ.د طارق الحبيب</span>
 
-                        {{-- 5-Star Rating --}}
-                        <div class="flex items-center gap-0.5 text-[#f59e0b] mb-4">
-                            @for($i = 0; $i < 5; $i++)
-                            <svg class="w-3.5 h-3.5 fill-current transition-transform duration-300 group-hover:scale-110"
-                                 style="transition-delay: {{ $i * 0.05 }}s" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            @endfor
+                            {{-- 5-Star Rating --}}
+                            <div class="flex items-center gap-0.5 text-[#f59e0b] mb-4">
+                                @for($i = 0; $i < 5; $i++)
+                                <svg class="w-3.5 h-3.5 fill-current transition-transform duration-300 group-hover:scale-110"
+                                     style="transition-delay: {{ $i * 0.05 }}s" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                @endfor
+                            </div>
                         </div>
                     </div>
-
                     <!-- Footer: CTA Button -->
                     <div class="mt-auto pt-4 border-t border-gray-50 dark:border-dark-border">
                         <a href="{{ $course->external_url ?? '#' }}" target="_blank"

@@ -147,54 +147,81 @@
                 @yield('content')
             </main>
 
-            <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] py-10 sm:py-16 mt-auto">
+            @php $isArF = app()->getLocale() == 'ar'; @endphp
+            <footer class="bg-[var(--surface-color)] border-t border-[var(--border-color)] pt-12 sm:pt-16 pb-24 sm:pb-10 mt-auto">
                 <div class="container mx-auto px-4">
-                    <div class="flex flex-col items-center gap-5 sm:gap-8 text-center">
-                        <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-16 opacity-90 grayscale hover:grayscale-0 transition-all dark:brightness-110">
-                        
-                        <div class="flex flex-wrap justify-center gap-x-5 sm:gap-x-8 md:gap-x-10 gap-y-2 sm:gap-y-3">
-                            <a href="/" class="text-sm font-semibold text-[var(--text-color)] hover:text-primary transition-colors">{{ __('Home') }}</a>
-                            <a href="{{ route('courses') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('courses') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Courses') }}</a>
-                            <a href="{{ route('packages') }}" class="text-sm font-semibold text-[var(--text-color)] {{ request()->routeIs('packages') ? 'text-primary' : '' }} hover:text-primary transition-colors">{{ __('Packages') }}</a>
-                        </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 {{ $isArF ? 'text-right' : 'text-left' }}">
 
-                        <!-- Social Media Links -->
-                        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
-                            <a href="https://www.instagram.com/motmaena_kw/?hl=ar" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all hover:-translate-y-1 shadow-sm" title="Instagram">
+                        {{-- Brand --}}
+                        <div>
+                            <img src="{{ asset('image.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-14 mb-4 dark:brightness-110">
+                            <p class="text-sm text-[var(--muted-color)] leading-relaxed mb-5">
+                                {{ $isArF ? 'مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بإشراف أ.د. طارق الحبيب.' : 'Motmaena Center for social & educational guidance and life skills, supervised by Prof. Dr. Tariq Al-Habib.' }}
+                            </p>
+                            <div class="flex flex-wrap items-center gap-2.5">
+                                <a href="https://www.instagram.com/motmaena_kw/?hl=ar" target="_blank" class="p-2.5 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all hover:-translate-y-1 shadow-sm" title="Instagram">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                             </a>
-                            <a href="https://www.facebook.com/motmaenakw" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all hover:-translate-y-1 shadow-sm" title="Facebook">
+                            <a href="https://www.facebook.com/motmaenakw" target="_blank" class="p-2.5 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all hover:-translate-y-1 shadow-sm" title="Facebook">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                             </a>
-                            <a href="https://www.snapchat.com/@motmaenacenter/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYYWZnc3RpZXZnAZTP-JaEAZTP-IsuAAAAAQ" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#FFFC00] hover:bg-[#FFFC00]/20 transition-all hover:-translate-y-1 shadow-sm" title="Snapchat">
+                            <a href="https://www.snapchat.com/@motmaenacenter/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYYWZnc3RpZXZnAZTP-JaEAZTP-IsuAAAAAQ" target="_blank" class="p-2.5 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#FFFC00] hover:bg-[#FFFC00]/20 transition-all hover:-translate-y-1 shadow-sm" title="Snapchat">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12.065 2c.574 0 4.271.144 5.886 3.78.55 1.249.427 3.384.338 4.89l-.003.07a.438.438 0 0 0 .332.451c.268.08.71.21 1.374.315l.285.05a.573.573 0 0 1 .483.588c0 .247-.163.49-.432.621l-.003.002a5.276 5.276 0 0 1-.954.32 3.198 3.198 0 0 1-.335.04c-.185.006-.375.074-.517.223-.13.14-.178.322-.14.499.086.35.45.764 1.145.966l.037.012c.251.08.4.314.355.565-.033.18-.153.33-.327.4-.136.056-.305.1-.51.136-.326.054-.462.191-.571.438-.059.134-.077.253-.077.254-.006.018-.007.038-.007.058 0 .055.025.105.07.134.262.174.71.408 1.336.542l.033.008c.14.035.21.19.144.326-.025.052-.071.097-.129.124-1.009.48-1.64.98-1.857 1.495l-.007.014c-.07.169-.257.262-.437.218-1.021-.258-1.943-.78-3.001-.78-.17 0-.344.013-.517.04-1.03.157-1.898.712-2.931.712-.185 0-.368-.017-.544-.05-1.006-.19-1.844-.72-2.852-.72-.156 0-.312.01-.463.032-1.038.146-1.685.719-2.95.719-.025 0-.05 0-.075-.001-.16-.01-.297-.097-.352-.241l-.007-.015c-.215-.515-.847-1.015-1.857-1.495-.058-.027-.104-.072-.129-.124-.066-.136.004-.291.144-.326l.033-.008c.626-.134 1.074-.368 1.336-.542.045-.03.07-.08.07-.134 0-.02-.001-.04-.007-.058 0-.001-.018-.12-.077-.254-.11-.247-.245-.384-.57-.438-.207-.036-.376-.08-.511-.136-.174-.07-.294-.22-.327-.4-.044-.251.104-.485.355-.565l.037-.012c.695-.202 1.06-.616 1.145-.966.038-.177-.01-.36-.14-.499-.142-.149-.332-.217-.517-.223-.11-.005-.223-.017-.335-.04a4.944 4.944 0 0 1-.954-.32l-.003-.002c-.269-.131-.432-.374-.432-.621a.572.572 0 0 1 .483-.588l.285-.05c.664-.105 1.106-.235 1.374-.315a.437.437 0 0 0 .332-.451l-.003-.07c-.089-1.506-.212-3.641.338-4.89C7.794 2.144 11.491 2 12.065 2z"/>
                                 </svg>
                             </a>
-                            <a href="https://www.tiktok.com/@motmaena_kw" target="_blank" class="p-3 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all hover:-translate-y-1 shadow-sm" title="TikTok">
+                            <a href="https://www.tiktok.com/@motmaena_kw" target="_blank" class="p-2.5 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all hover:-translate-y-1 shadow-sm" title="TikTok">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
                             </a>
-                        </div>
-
-                        <div class="h-px w-24 bg-primary/20"></div>
-
-                        <!-- Google Maps -->
-                        <div class="w-full max-w-2xl mx-auto">
-                            <h4 class="text-sm font-bold text-[var(--text-color)] mb-4">{{ app()->getLocale() == 'ar' ? '📍 موقعنا' : '📍 Our Location' }}</h4>
-                            <div class="rounded-2xl overflow-hidden border border-[var(--border-color)] shadow-lg">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8!2d47.9907505!3d29.3901935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf85ac7308d461%3A0x108f7b378447d243!2z2YXYsdmD2LIg2YXYt9mF2KbZhtipINmE2YTYp9iz2KrYtNin2LHYp9iqINin2YTZhtmB2LPZitipIHwg2KXYtNix2KfZgSDYoy7YryDYt9in2LHZgiDYp9mE2K3YqNmK2Kg!5e0!3m2!1sar!2skw!4v1700000000000!5m2!1sar!2skw"
-                                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"
-                                    class="w-full"></iframe>
                             </div>
                         </div>
 
-                        <div class="h-px w-24 bg-primary/20"></div>
+                        {{-- Quick links --}}
+                        <div>
+                            <h4 class="text-sm font-black text-[var(--text-color)] mb-4">{{ $isArF ? 'روابط سريعة' : 'Quick Links' }}</h4>
+                            <ul class="space-y-2.5 text-sm font-semibold">
+                                <li><a href="/" class="text-[var(--muted-color)] hover:text-primary transition-colors">{{ __('Home') }}</a></li>
+                                <li><a href="{{ route('courses') }}" class="text-[var(--muted-color)] hover:text-primary transition-colors">{{ __('Courses') }}</a></li>
+                                <li><a href="{{ route('packages') }}" class="text-[var(--muted-color)] hover:text-primary transition-colors">{{ __('Packages') }}</a></li>
+                                <li><a href="{{ route('sessions') }}" class="text-[var(--muted-color)] hover:text-primary transition-colors">{{ __('Sessions') }}</a></li>
+                                <li><a href="{{ route('consultations') }}" class="text-[var(--muted-color)] hover:text-primary transition-colors">{{ __('Consultations') }}</a></li>
+                            </ul>
+                        </div>
 
-                        <p class="text-sm text-[var(--muted-color)] leading-relaxed">
-                            {{ __('Motmaena Center') }} &copy; {{ date('Y') }}. {{ __('All rights reserved.') }}
-                        </p>
+                        {{-- Contact --}}
+                        <div>
+                            <h4 class="text-sm font-black text-[var(--text-color)] mb-4">{{ $isArF ? 'تواصل معنا' : 'Contact Us' }}</h4>
+                            <ul class="space-y-3 text-sm">
+                                <li>
+                                    <a href="https://wa.me/96555665161" target="_blank" class="inline-flex items-center gap-2 font-bold text-[var(--text-color)] hover:text-[#25D366] transition-colors">
+                                        <svg class="w-4 h-4 text-[#25D366] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                        <span dir="ltr">+965 5566 5161</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:+96599880140" class="inline-flex items-center gap-2 font-bold text-[var(--text-color)] hover:text-primary transition-colors">
+                                        <svg class="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11.04 11.04 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z"/></svg>
+                                        <span dir="ltr">+965 9988 0140</span>
+                                    </a>
+                                </li>
+                                <li class="flex items-start gap-2 text-[var(--muted-color)]">
+                                    <svg class="w-4 h-4 mt-0.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.66 16.66L13.41 20.9a2 2 0 01-2.82 0l-4.25-4.24a8 8 0 1111.32 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    {{ $isArF ? 'الكويت - برج أحمد - بجوار المستشفى الأميري' : 'Kuwait - Burj Ahmed - near Al-Amiri Hospital' }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        {{-- Map --}}
+                        <div>
+                            <h4 class="text-sm font-black text-[var(--text-color)] mb-4">{{ $isArF ? 'موقعنا' : 'Our Location' }}</h4>
+                            <div class="rounded-2xl overflow-hidden border border-[var(--border-color)] shadow-sm">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8!2d47.9907505!3d29.3901935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf85ac7308d461%3A0x108f7b378447d243!2z2YXYsdmD2LIg2YXYt9mF2KbZhtipINmE2YTYp9iz2KrYtNin2LHYp9iqINin2YTZhtmB2LPZitipIHwg2KXYtNix2KfZgSDYoy7YryDYt9in2LHZgiDYp9mE2K3YqNmK2Kg!5e0!3m2!1sar!2skw!4v1700000000000!5m2!1sar!2skw" width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full" title="{{ $isArF ? 'موقع مركز مطمئنة' : 'Motmaena Center location' }}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 pt-6 border-t border-[var(--border-color)] text-center text-xs sm:text-sm text-[var(--muted-color)]">
+                        {{ __('Motmaena Center') }} &copy; {{ date('Y') }}. {{ __('All rights reserved.') }}
                     </div>
                 </div>
             </footer>
@@ -275,16 +302,21 @@
             document.addEventListener('livewire:updated', () => setTimeout(reveal, 40));
 
             // ═══════ PRELOADER ═══════
-            window.addEventListener('load', function() {
+            // Hide as soon as the page is usable; waiting for 'load' (maps iframe, images)
+            // kept mobile visitors on a blank screen for seconds.
+            function hidePreloader() {
                 const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    setTimeout(() => {
-                        preloader.style.opacity = '0';
-                        preloader.style.pointerEvents = 'none';
-                        setTimeout(() => preloader.remove(), 700);
-                    }, 800);
-                }
-            });
+                if (!preloader) return;
+                preloader.style.opacity = '0';
+                preloader.style.pointerEvents = 'none';
+                setTimeout(() => preloader.remove(), 700);
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 250));
+            } else {
+                setTimeout(hidePreloader, 250);
+            }
+            document.addEventListener('DOMContentLoaded', reveal);
 
             // ═══════ BACK TO TOP ═══════
             const backToTop = document.getElementById('back-to-top');

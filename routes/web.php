@@ -18,8 +18,10 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
+// The details page only had placeholder data (price, lessons) and a dead button;
+// send visitors to where the course is actually sold.
 Route::get('/course/{course}', function (Course $course) {
-    return view('course-details', compact('course'));
+    return $course->external_url ? redirect()->away($course->external_url) : redirect()->route('courses');
 })->name('course.show');
 Route::get('/sessions', function () {
     return view('sessions');
