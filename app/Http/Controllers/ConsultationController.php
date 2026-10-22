@@ -50,7 +50,7 @@ class ConsultationController extends Controller
         if ($emailOk && $passwordOk) {
             $request->session()->regenerate();
             session(['admin_auth' => true]);
-            return redirect()->to(session()->pull('admin_intended', route('admin.consultations')));
+            return redirect()->to(session()->pull('admin_intended', route('admin.dashboard')));
         }
 
         return back()->withInput($request->only('email'))->withErrors(['password' => 'الإيميل أو كلمة المرور غير صحيحة']);

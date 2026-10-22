@@ -27,7 +27,8 @@ main() {
     php artisan optimize
 
     echo "==> Fixing permissions..."
-    chown -R www-data:www-data storage bootstrap/cache
+    mkdir -p public/uploads/courses
+    chown -R www-data:www-data storage bootstrap/cache public/uploads
 
     # PHP-FPM's OPcache keeps serving the old compiled code until reloaded
     echo "==> Reloading PHP-FPM..."

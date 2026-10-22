@@ -14,6 +14,7 @@ class CourseRegistration extends Model
         'discount_code_id', 'discount_code',
         'original_amount', 'discount_amount', 'final_amount',
         'status', 'invoice_id', 'payment_id', 'payment_method', 'paid_at', 'admin_notes',
+        'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'followed_up_at',
     ];
 
     protected $casts = [
@@ -21,11 +22,36 @@ class CourseRegistration extends Model
         'discount_amount' => 'decimal:3',
         'final_amount'    => 'decimal:3',
         'paid_at'         => 'datetime',
+        'followed_up_at'  => 'datetime',
     ];
 
     public function discountCode()
     {
         return $this->belongsTo(DiscountCode::class);
+    }
+
+    /**
+     * Started but never paid, not yet contacted, and the same phone hasn't paid for that course since.
+     */
+    public function scopeNeedsFollowUp($query)
+    {
+        return $query->where('status', '!=', 'paid')
+            ->whereNull('followed_up_at')
+            ->whereNotExists(function ($q) {
+                $q->selectRaw('1')->from('course_registrations as paid_reg')
+                    ->whereColumn('paid_reg.phone', 'course_registrations.phone')
+                    ->whereColumn('paid_reg.course_key', 'course_registrations.course_key')
+                    ->where('paid_reg.status', 'paid');
+            });
+    }
+
+    /** Short label for where this registration came from, e.g. "instagram / story" or "google.com". */
+    public function sourceLabel(): string
+    {
+        if ($this->utm_source) {
+            return $this->utm_source . ($this->utm_medium ? ' / ' . $this->utm_medium : '');
+        }
+        return $this->referrer ?: 'مباشر';
     }
 
     public function offer(): ?array

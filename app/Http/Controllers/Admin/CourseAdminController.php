@@ -18,9 +18,15 @@ class CourseAdminController extends Controller
 
     public function registrations(Request $request)
     {
-        $registrations = CourseRegistration::latest()
-            ->when($request->status, fn ($q, $s) => $q->where('status', $s))
-            ->get();
+        if ($request->status === 'followup') {
+            // One row per person and course: their latest unpaid attempt
+            $registrations = CourseRegistration::needsFollowUp()->latest()->get()
+                ->unique(fn ($r) => $r->phone . '|' . $r->course_key)->values();
+        } else {
+            $registrations = CourseRegistration::latest()
+                ->when($request->status, fn ($q, $s) => $q->where('status', $s))
+                ->get();
+        }
 
         $all = CourseRegistration::query();
         $stats = [
@@ -30,7 +36,20 @@ class CourseAdminController extends Controller
             'revenue' => (float) (clone $all)->where('status', 'paid')->sum('final_amount'),
         ];
 
-        return view('admin.registrations', compact('registrations', 'stats'));
+        $codes = DiscountCode::where('is_active', true)->get()->filter(fn ($c) => !$c->unusableReason($c->course_key ?? ''));
+
+        return view('admin.registrations', compact('registrations', 'stats', 'codes'));
+    }
+
+    public function markFollowedUp(CourseRegistration $registration)
+    {
+        // Mark every unpaid attempt of this person for this course, so the list stays clean
+        CourseRegistration::where('phone', $registration->phone)
+            ->where('course_key', $registration->course_key)
+            ->where('status', '!=', 'paid')
+            ->update(['followed_up_at' => now()]);
+
+        return back()->with('ok', "تم تسجيل متابعة {$registration->name}");
     }
 
     public function verify(CourseRegistration $registration, MyFatoorah $myFatoorah)
@@ -57,7 +76,7 @@ class CourseAdminController extends Controller
         $response = new StreamedResponse(function () use ($registrations) {
             $handle = fopen('php://output', 'w');
             fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // UTF-8 BOM
-            fputcsv($handle, ['#', 'الدورة', 'الاسم', 'الهاتف', 'الإيميل', 'كود الخصم', 'السعر', 'الخصم', 'المدفوع', 'الحالة', 'رقم الفاتورة', 'طريقة الدفع', 'تاريخ الدفع', 'تاريخ التسجيل']);
+            fputcsv($handle, ['#', 'الدورة', 'الاسم', 'الهاتف', 'الإيميل', 'كود الخصم', 'السعر', 'الخصم', 'المدفوع', 'الحالة', 'رقم الفاتورة', 'طريقة الدفع', 'المصدر', 'الحملة', 'تاريخ الدفع', 'تاريخ التسجيل']);
             foreach ($registrations as $r) {
                 fputcsv($handle, [
                     $r->id,
@@ -72,6 +91,8 @@ class CourseAdminController extends Controller
                     $this->statusLabel($r->status),
                     $r->invoice_id,
                     $r->payment_method,
+                    $r->sourceLabel(),
+                    $r->utm_campaign,
                     $r->paid_at?->format('Y-m-d H:i'),
                     $r->created_at->format('Y-m-d H:i'),
                 ]);

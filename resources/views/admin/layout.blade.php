@@ -83,6 +83,34 @@ tr:hover td{background:#fdf9f5}
 .alert.err{background:#fee2e2;color:#991b1b}
 .inline{display:inline}
 
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dash-grid .card{margin-bottom:0}
+.bar-row{display:grid;grid-template-columns:minmax(110px,1.2fr) 2fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #f5ede2;font-size:13px}
+.bar-row:last-child{border-bottom:none}
+.bar{height:8px;background:#f5ede0;border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--red);border-radius:99px}
+.bar-num{font-size:12px;color:var(--muted);white-space:nowrap}
+
+.field-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.field-grid .full{grid-column:1/-1}
+.field-grid label,.stack label{display:block;font-size:11.5px;font-weight:800;color:var(--muted);margin-bottom:5px}
+.field-grid input,.field-grid textarea,.field-grid select,.stack input,.stack textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-size:13.5px;font-family:inherit;background:#fafafa;outline:none}
+.field-grid textarea,.stack textarea{min-height:90px;resize:vertical;line-height:1.6}
+.field-grid input:focus,.field-grid textarea:focus,.stack input:focus,.stack textarea:focus{border-color:var(--red);background:#fff}
+.check,.field-grid label.check{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--text);margin-inline-end:18px}
+.field-grid input[type=checkbox],.check input{width:auto;accent-color:var(--red)}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+.stack{display:grid;gap:10px}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;object-position:top;background:#f5ede0}
+details.edit-box{border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:10px;background:#fff}
+details.edit-box summary{cursor:pointer;font-weight:800;font-size:13.5px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.edit-box[open] summary{margin-bottom:12px}
+
+@media(max-width:960px){
+  .dash-grid,.field-grid{grid-template-columns:1fr}
+}
+
 @media(max-width:960px){
   .sidebar{transform:translateX(calc(100% + 4px))}
   .sidebar.open{transform:none}

@@ -73,7 +73,7 @@ class CourseRegistrationController extends Controller
             'original_amount'  => $quote['original'],
             'discount_amount'  => $quote['discount'],
             'final_amount'     => $quote['final'],
-        ]);
+        ] + array_filter(session('visit_source', []), fn ($v) => $v !== null));
 
         // 100% discount: nothing to charge
         if ($quote['final'] <= 0) {
