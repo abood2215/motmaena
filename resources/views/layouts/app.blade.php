@@ -12,13 +12,13 @@
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
         <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta property="og:image" content="{{ asset('image.png') }}">
+        <meta property="og:image" content="@yield('og_image', asset('image.png'))">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
         <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta name="twitter:image" content="{{ asset('image.png') }}">
+        <meta name="twitter:image" content="@yield('og_image', asset('image.png'))">
 
         <title>@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))</title>
 
@@ -30,6 +30,7 @@
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+        @include('partials.analytics')
 
         <script>
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -220,8 +221,13 @@
                         </div>
                     </div>
 
-                    <div class="mt-10 pt-6 border-t border-[var(--border-color)] text-center text-xs sm:text-sm text-[var(--muted-color)]">
-                        {{ __('Motmaena Center') }} &copy; {{ date('Y') }}. {{ __('All rights reserved.') }}
+                    <div class="mt-10 pt-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-[var(--muted-color)]">
+                        <span>{{ __('Motmaena Center') }} &copy; {{ date('Y') }}. {{ __('All rights reserved.') }}</span>
+                        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1">
+                            <a href="{{ route('policies') }}#terms" class="hover:text-primary transition-colors">{{ $isArF ? 'الشروط والأحكام' : 'Terms' }}</a>
+                            <a href="{{ route('policies') }}#refund" class="hover:text-primary transition-colors">{{ $isArF ? 'الإلغاء والاسترجاع' : 'Refunds' }}</a>
+                            <a href="{{ route('policies') }}#privacy" class="hover:text-primary transition-colors">{{ $isArF ? 'الخصوصية' : 'Privacy' }}</a>
+                        </div>
                     </div>
                 </div>
             </footer>

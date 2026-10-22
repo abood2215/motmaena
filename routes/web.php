@@ -36,6 +36,18 @@ Route::get('/consultations', function () {
     return view('consultations');
 })->name('consultations');
 
+Route::view('/policies', 'policies')->name('policies');
+Route::redirect('/terms', '/policies#terms');
+Route::redirect('/privacy', '/policies#privacy');
+Route::redirect('/refund-policy', '/policies#refund');
+
+Route::get('/sitemap.xml', function () {
+    $urls = collect(['home', 'courses', 'packages', 'sessions', 'consultations', 'policies'])->map(fn ($r) => route($r))
+        ->merge(collect(config('course_offers'))->filter(fn ($o) => $o['active'] ?? false)->keys()->map(fn ($k) => route('course.register', $k)));
+
+    return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml');
+})->name('sitemap');
+
 Route::post('/consultations/book', [ConsultationController::class, 'store'])->name('consultations.book');
 Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->name('admin.consultations');
 Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->name('admin.login');
@@ -44,7 +56,6 @@ Route::post('/admin/consultations/{booking}/status', [ConsultationController::cl
 Route::post('/admin/consultations/{booking}/notes', [ConsultationController::class, 'updateNotes'])->name('admin.consultations.notes');
 Route::get('/admin/consultations/export', [ConsultationController::class, 'exportCsv'])->name('admin.consultations.export');
 Route::get('/admin/consultations/new-count', [ConsultationController::class, 'newCount'])->name('admin.consultations.new-count');
-Route::get('/admin/diag', [ConsultationController::class, 'diag']);
 
 // Course registration + MyFatoorah payment
 Route::get('/register/{offer}', [CourseRegistrationController::class, 'show'])->name('course.register');

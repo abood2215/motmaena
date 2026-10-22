@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CourseRegistration extends Model
 {
@@ -36,9 +38,9 @@ class CourseRegistration extends Model
      */
     public function markPaid(?string $paymentId, ?string $method): void
     {
-        DB::transaction(function () use ($paymentId, $method) {
+        $newlyPaid = DB::transaction(function () use ($paymentId, $method) {
             $fresh = static::whereKey($this->id)->lockForUpdate()->first();
-            if ($fresh->status === 'paid') return;
+            if ($fresh->status === 'paid') return false;
 
             $fresh->update([
                 'status'         => 'paid',
@@ -50,8 +52,42 @@ class CourseRegistration extends Model
             if ($fresh->discount_code_id) {
                 DiscountCode::whereKey($fresh->discount_code_id)->increment('used_count');
             }
+
+            return true;
         });
 
         $this->refresh();
+
+        if ($newlyPaid) {
+            $this->notifyAdmin();
+        }
+    }
+
+    /** Emails the center about a new paid registration. Never breaks the payment flow. */
+    private function notifyAdmin(): void
+    {
+        $to = config('app.admin_notify_email');
+        if (!$to) return;
+
+        $lines = [
+            'تسجيل مدفوع جديد #' . $this->id,
+            '',
+            'الدورة: ' . ($this->offer()['title']['ar'] ?? $this->course_key),
+            'الاسم: ' . $this->name,
+            'الهاتف: ' . $this->phone,
+            'الإيميل: ' . ($this->email ?: '—'),
+            'المبلغ: ' . number_format((float) $this->final_amount, 3) . ' د.ك' . ($this->discount_code ? ' (كود: ' . $this->discount_code . ')' : ''),
+            'طريقة الدفع: ' . ($this->payment_method ?: '—'),
+            '',
+            route('admin.registrations'),
+        ];
+
+        try {
+            Mail::raw(implode("\n", $lines), function ($message) use ($to) {
+                $message->to($to)->subject('تسجيل مدفوع جديد #' . $this->id . ' — ' . $this->name);
+            });
+        } catch (\Throwable $e) {
+            Log::warning('Registration notification email failed', ['registration' => $this->id, 'error' => $e->getMessage()]);
+        }
     }
 }

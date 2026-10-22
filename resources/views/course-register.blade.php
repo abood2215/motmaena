@@ -7,6 +7,9 @@
 
 @section('title', ($isAr ? 'التسجيل في ' : 'Register: ') . $offer['title'][$lang] . ' - ' . __('Motmaena Center'))
 
+@section('og_image', asset('og-anger-management.jpg'))
+@section('meta_description', $offer['title'][$lang] . ' — ' . $offer['trainer'][$lang] . ' · ' . $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->format('Y/m/d') . ' · ' . $offer['price'] . ($isAr ? ' د.ك' : ' KWD'))
+
 @section('content')
 
 {{-- Poster palette: navy #1d4e89, slate #5f7aa8, mist #c7d2e4, accent #1565c0 --}}
@@ -125,6 +128,13 @@
                         {{ $isAr ? 'متابعة الدفع' : 'Proceed to payment' }}
                     </button>
 
+                    <p class="text-center text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-relaxed">
+                        {{ $isAr ? 'بالضغط على "متابعة الدفع" فإنك توافق على' : 'By continuing you agree to the' }}
+                        <a href="{{ route('policies') }}#terms" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
+                        {{ $isAr ? 'و' : 'and' }}
+                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'سياسة الاسترجاع' : 'Refund Policy' }}</a>
+                    </p>
+
                     <p class="flex items-center justify-center gap-1.5 text-[11px] font-bold text-gray-400">
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                         {{ $isAr ? 'دفع آمن — كي نت، فيزا، ماستركارد، Apple Pay' : 'Secure payment — KNET, Visa, Mastercard, Apple Pay' }}
@@ -184,6 +194,7 @@
     codeInput.addEventListener('input', () => { resetPrice(); msg.classList.add('hidden'); });
 
     document.getElementById('reg-form').addEventListener('submit', () => {
+        window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD' });
         const btn = document.getElementById('pay-btn');
         btn.disabled = true;
         btn.textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');

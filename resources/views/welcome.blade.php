@@ -1,6 +1,7 @@
 ﻿@extends('layouts.app')
 
 @section('title', __('Welcome') . ' - ' . __('Motmaena Center'))
+@section('og_image', asset('og-anger-management.jpg'))
 
 @section('content')
 
@@ -419,69 +420,6 @@
                 <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2" data-counter="4.9" data-decimal="true">0</div>
                 <div class="w-10 h-1 bg-white/30 rounded-full mx-auto mb-2"></div>
                 <div class="text-white/70 text-xs sm:text-sm font-medium">{{ app()->getLocale() == 'ar' ? 'تقييم المتدربين' : 'Trainee Rating' }}</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- ════════════════ TESTIMONIALS SECTION ════════════════ --}}
-<section class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-10 sm:mb-16 reveal">
-            <span class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold mb-5 tracking-widest uppercase">{{ app()->getLocale() == 'ar' ? 'آراء المتدربين' : 'Testimonials' }}</span>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
-                {{ app()->getLocale() == 'ar' ? 'ماذا يقول متدربونا؟' : 'What Our Trainees Say?' }}
-            </h2>
-            <p class="text-[var(--muted-color)] text-sm sm:text-base max-w-2xl mx-auto">{{ app()->getLocale() == 'ar' ? 'تجارب حقيقية من متدربين استفادوا من دوراتنا المتخصصة' : 'Real experiences from trainees who benefited from our courses' }}</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-            {{-- Testimonial 1 --}}
-            <div class="card-premium p-6 sm:p-8 hover:-translate-y-2 reveal" style="transition-delay: 0.1s">
-                <div class="flex items-center gap-1 mb-4">
-                    @for($i = 0; $i < 5; $i++)
-                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    @endfor
-                </div>
-                <p class="text-[var(--muted-color)] text-sm leading-relaxed mb-6">{{ app()->getLocale() == 'ar' ? '"دورة الذكاء العاطفي غيرت حياتي بالكامل! أصبحت أفهم مشاعري ومشاعر من حولي بشكل أعمق. شكراً للدكتور طارق على هذا المحتوى الرائع."' : '"The Emotional Intelligence course completely changed my life! I now understand my emotions and those around me much better. Thank you Dr. Tariq for this wonderful content."' }}</p>
-                <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-dark-border">
-                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">ن.ع</div>
-                    <div>
-                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'نورة العتيبي' : 'Noura Al-Otaibi' }}</div>
-                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'الكويت' : 'Kuwait' }}</div>
-                    </div>
-                </div>
-            </div>
-            {{-- Testimonial 2 --}}
-            <div class="card-premium p-6 sm:p-8 hover:-translate-y-2 reveal" style="transition-delay: 0.2s">
-                <div class="flex items-center gap-1 mb-4">
-                    @for($i = 0; $i < 5; $i++)
-                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    @endfor
-                </div>
-                <p class="text-[var(--muted-color)] text-sm leading-relaxed mb-6">{{ app()->getLocale() == 'ar' ? '"محتوى علمي ممتاز ومبني على أسس أكاديمية قوية. الدكتور طارق يقدم المعلومات بأسلوب مبسط وعملي. أنصح الجميع بالتسجيل في دوراته."' : '"Excellent scientific content built on strong academic foundations. Dr. Tariq presents information in a simple and practical way. I recommend everyone to enroll in his courses."' }}</p>
-                <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-dark-border">
-                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">م.ا</div>
-                    <div>
-                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'محمد الأحمدي' : 'Mohammed Al-Ahmadi' }}</div>
-                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'السعودية' : 'Saudi Arabia' }}</div>
-                    </div>
-                </div>
-            </div>
-            {{-- Testimonial 3 --}}
-            <div class="card-premium p-6 sm:p-8 hover:-translate-y-2 reveal" style="transition-delay: 0.3s">
-                <div class="flex items-center gap-1 mb-4">
-                    @for($i = 0; $i < 5; $i++)
-                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    @endfor
-                </div>
-                <p class="text-[var(--muted-color)] text-sm leading-relaxed mb-6">{{ app()->getLocale() == 'ar' ? '"دورة فنون تربية الأطفال كانت نقطة تحول في تعاملي مع أطفالي. تعلمت أساليب تربوية فعالة ومبنية على أسس تربوية علمية. شكراً مطمئنة!"' : '"The Parenting course was a turning point in dealing with my children. I learned effective parenting methods based on scientific educational foundations. Thank you Motmaena!"' }}</p>
-                <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-dark-border">
-                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">س.م</div>
-                    <div>
-                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ app()->getLocale() == 'ar' ? 'سارة المطيري' : 'Sara Al-Mutairi' }}</div>
-                        <div class="text-xs text-[var(--muted-color)]">{{ app()->getLocale() == 'ar' ? 'الإمارات' : 'UAE' }}</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

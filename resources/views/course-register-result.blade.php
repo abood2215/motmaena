@@ -53,4 +53,14 @@
         </div>
     </div>
 </section>
+@if($paid)
+<script>
+    // Count the conversion once, even if the page is refreshed
+    (function () {
+        var key = 'purchase-tracked-{{ $registration->id }}';
+        try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) {}
+        window.trackEvent && trackEvent('Purchase', { value: {{ (float) $registration->final_amount }}, currency: 'KWD' });
+    })();
+</script>
+@endif
 @endsection

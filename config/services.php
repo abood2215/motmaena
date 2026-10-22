@@ -34,6 +34,13 @@ return [
         'api_key' => env('MYFATOORAH_API_KEY'),
     ],
 
+    // Tracking IDs — each script is only added to the site when its ID is set
+    'analytics' => [
+        'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX
+        'meta_pixel' => env('META_PIXEL_ID'),     // digits only
+        'tiktok_pixel' => env('TIKTOK_PIXEL_ID'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

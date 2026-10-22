@@ -97,6 +97,29 @@ class CourseRegistrationTest extends TestCase
         $this->assertSame('paid', CourseRegistration::first()->status);
     }
 
+    public function test_paid_registration_emails_admin_once(): void
+    {
+        config(['app.admin_notify_email' => 'owner@example.com']);
+        $this->fakeMyFatoorah('Paid', 30);
+
+        $this->post('/register/anger-management', ['name' => 'Test', 'phone' => '55566161']);
+        $this->get('/payment/callback?paymentId=PAY1');
+        $this->get('/payment/callback?paymentId=PAY1');
+
+        // phpunit.xml uses the array mailer, which keeps sent messages in memory
+        $sent = app('mailer')->getSymfonyTransport()->messages();
+        $this->assertCount(1, $sent);
+        $this->assertStringContainsString('owner@example.com', $sent->first()->getEnvelope()->getRecipients()[0]->getAddress());
+    }
+
+    public function test_public_pages_and_removed_endpoints(): void
+    {
+        $this->get('/policies')->assertOk()->assertSee('سياسة الإلغاء والاسترجاع');
+        $this->get('/sitemap.xml')->assertOk()->assertSee('/register/anger-management', false);
+        $this->get('/admin/diag')->assertNotFound();
+        $this->get('/consultations')->assertOk()->assertDontSee('شخص يشاهد الصفحة الآن');
+    }
+
     public function test_admin_login_uses_configured_key_only(): void
     {
         config(['app.admin_key' => 'secret-key']);

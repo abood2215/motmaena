@@ -152,25 +152,6 @@
   backdrop-filter: blur(8px);
 }
 .btn-hero-secondary:hover { background: rgba(255,255,255,.18); }
-.spots-counter {
-  margin-top: 28px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-size: 14px;
-  color: rgba(255,255,255,.85);
-  animation: fadeSlideDown .8s .4s ease both;
-}
-.spots-counter .spots-num {
-  font-size: 22px;
-  font-weight: 900;
-  color: #fbbf24;
-}
-
 /* ── Pain Points ── */
 .pain-section {
   padding: 70px 24px;
@@ -826,32 +807,6 @@
 }
 .live-bar .sep { color: #86efac; }
 
-/* ── Last Booking Toast ── */
-.last-booking-toast {
-  position: fixed;
-  bottom: 90px;
-  {{ app()->getLocale() === 'ar' ? 'right' : 'left' }}: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-right: 3px solid #22c55e;
-  border-radius: 14px;
-  padding: 12px 16px;
-  font-size: 13px;
-  color: var(--text);
-  box-shadow: 0 8px 28px rgba(0,0,0,.12);
-  z-index: 999;
-  max-width: 240px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  animation: toastIn .5s ease;
-  cursor: pointer;
-}
-.last-booking-toast .t-icon { font-size: 22px; flex-shrink: 0; }
-.last-booking-toast .t-txt strong { display: block; font-size: 13px; color: var(--text); }
-.last-booking-toast .t-txt span { font-size: 12px; color: var(--muted); }
-@keyframes toastIn { from { opacity:0; transform: translateX({{ app()->getLocale() === 'ar' ? '20px' : '-20px' }}); } to { opacity:1; transform:none; } }
-
 /* ── Floating WhatsApp ── */
 .float-wa {
   position: fixed;
@@ -969,16 +924,8 @@
     </div>
     <span class="sep">|</span>
     <div class="live-item">
-      <span>👁</span>
-      <span id="live-viewers">{{ rand(8,22) }}</span>
-      {{ app()->getLocale() === 'ar' ? 'شخص يشاهد الصفحة الآن' : 'people viewing now' }}
-    </div>
-    <span class="sep">|</span>
-    <div class="live-item">
-      <span>✅</span>
-      {{ app()->getLocale() === 'ar' ? 'آخر حجز منذ' : 'Last booking' }}
-      <span id="last-book-time">{{ rand(4,18) }}</span>
-      {{ app()->getLocale() === 'ar' ? 'دقيقة' : 'min ago' }}
+      <span>🔒</span>
+      {{ app()->getLocale() === 'ar' ? 'جلسات سرية تماماً' : 'Fully confidential sessions' }}
     </div>
   </div>
 
@@ -986,9 +933,9 @@
   <div class="urgency-strip">
     <span class="pulse-dot"></span>
     @if(app()->getLocale() === 'ar')
-      <span>🔴 تبقّى <span id="spots-strip" style="font-size:18px;color:#fbbf24;">٣</span> أماكن فقط هذا الأسبوع — الحجز الآن قبل امتلاء المواعيد</span>
+      <span>📅 المواعيد محدودة — احجز موعدك مبكراً لضمان الوقت المناسب لك</span>
     @else
-      <span>🔴 Only <span id="spots-strip-en" style="font-size:18px;color:#fbbf24;">3</span> spots left this week — Book now before they fill up</span>
+      <span>📅 Appointments are limited — book early to get a time that suits you</span>
     @endif
   </div>
 
@@ -1027,14 +974,6 @@
         </a>
       </div>
 
-      <div class="spots-counter">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#fbbf24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        @if(app()->getLocale() === 'ar')
-          المواعيد المتاحة هذا الأسبوع: <span class="spots-num" id="spots-hero">٣</span> فقط
-        @else
-          Available spots this week: <span class="spots-num" id="spots-hero-en">3</span> only
-        @endif
-      </div>
     </div>
   </section>
 
@@ -1274,7 +1213,7 @@
           </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Tariq Al-Habib' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'مرشد أسري واجتماعي' : 'Family & Social Counselor' }}</div>
-          <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 25 سنة في الإرشاد الأسري وتطوير العلاقات' : 'Over 25 years experience in family counseling and relationship development' }}</p>
+          <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 30 سنة في الإرشاد الأسري وتطوير العلاقات' : 'Over 30 years experience in family counseling and relationship development' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-1">
           <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#1e40af);">
@@ -1549,9 +1488,7 @@
       </p>
       <div class="countdown reveal">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        {{ app()->getLocale() === 'ar' ? 'المواعيد تمتلئ بسرعة — تبقّى ' : 'Spots fill fast — only ' }}
-        <span id="spots-final" style="font-size:18px;font-weight:900;">{{ app()->getLocale() === 'ar' ? '٣' : '3' }}</span>
-        {{ app()->getLocale() === 'ar' ? ' أماكن هذا الأسبوع' : ' spots left this week' }}
+        {{ app()->getLocale() === 'ar' ? 'المواعيد محدودة — احجز مبكراً' : 'Appointments are limited — book early' }}
       </div>
       <div class="final-cta-btns reveal">
         <a href="https://wa.me/96555665161?text={{ urlencode(app()->getLocale() === 'ar' ? 'مرحباً، أريد حجز استشارة' : 'Hello, I want to book a consultation') }}" target="_blank" class="btn-final">
@@ -1573,7 +1510,7 @@
   <div class="sticky-bar" id="sticky-bar">
     <div class="sticky-text">
       {{ app()->getLocale() === 'ar' ? 'احجز استشارتك الآن' : 'Book Your Consultation Now' }}
-      <span id="sticky-spots-text">{{ app()->getLocale() === 'ar' ? 'تبقّى ٣ أماكن فقط هذا الأسبوع' : 'Only 3 spots left this week' }}</span>
+      <span>{{ app()->getLocale() === 'ar' ? 'تواصل معنا عبر واتساب' : 'Message us on WhatsApp' }}</span>
     </div>
     <a href="https://wa.me/96555665161?text={{ urlencode(app()->getLocale() === 'ar' ? 'مرحباً، أريد حجز استشارة' : 'Hello, I want to book a consultation') }}" target="_blank" class="sticky-btn">
       <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
@@ -1587,15 +1524,6 @@
     <span class="wa-label">{{ app()->getLocale() === 'ar' ? 'احجز الآن' : 'Book Now' }}</span>
     <svg fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
   </a>
-
-  {{-- ── Last Booking Toast ── --}}
-  <div class="last-booking-toast" id="booking-toast" style="display:none;" onclick="this.style.display='none'">
-    <span class="t-icon">✅</span>
-    <div class="t-txt">
-      <strong>{{ app()->getLocale() === 'ar' ? 'تم حجز موعد جديد' : 'New booking just made' }}</strong>
-      <span id="toast-msg">{{ app()->getLocale() === 'ar' ? 'من الكويت — منذ قليل' : 'From Kuwait — just now' }}</span>
-    </div>
-  </div>
 
 </div>
 
@@ -1744,60 +1672,6 @@ function updatePhoneField() {
     if(s !== shown){ shown = s; stickyBar.classList.toggle('visible', s); }
   }, { passive: true });
 
-  /* ── Spots FOMO counter ── */
-  let spots = 3;
-  const spotsEls = ['spots-strip','spots-strip-en','spots-hero','spots-hero-en','spots-final'].map(id => document.getElementById(id)).filter(Boolean);
-
-  function updateSpots(n){
-    spotsEls.forEach(el => {
-      const useAr = isAr && !el.id.endsWith('-en');
-      el.textContent = useAr ? toAr(n) : n;
-    });
-    const stickySpan = document.getElementById('sticky-spots-text');
-    if(stickySpan){
-      stickySpan.textContent = isAr
-        ? 'تبقّى ' + toAr(n) + ' أماكن فقط هذا الأسبوع'
-        : 'Only ' + n + ' spot' + (n===1?'':'s') + ' left this week';
-    }
-  }
-
-  setTimeout(() => {
-    if(spots > 1){ spots--; updateSpots(spots); }
-  }, 8000 + Math.random() * 14000);
-
-  /* ── Live viewers fluctuation ── */
-  const viewersEl = document.getElementById('live-viewers');
-  if(viewersEl){
-    let v = parseInt(viewersEl.textContent) || 12;
-    setInterval(() => {
-      v = Math.max(5, Math.min(30, v + (Math.random() > .5 ? 1 : -1)));
-      viewersEl.textContent = v;
-    }, 7000);
-  }
-
-  /* ── Last booking time update ── */
-  const lastBookEl = document.getElementById('last-book-time');
-  if(lastBookEl){
-    let mins = parseInt(lastBookEl.textContent) || 8;
-    setInterval(() => { mins++; lastBookEl.textContent = mins; }, 60000);
-  }
-
-  /* ── Booking toast notifications ── */
-  const toast = document.getElementById('booking-toast');
-  const toastMsg = document.getElementById('toast-msg');
-  const toastNames = isAr
-    ? ['من الكويت — منذ دقيقتين','من الرياض — منذ 5 دقائق','من الإمارات — منذ 7 دقائق','من الكويت — منذ لحظات','من قطر — منذ 3 دقائق']
-    : ['From Kuwait — 2 min ago','From UAE — 5 min ago','From Saudi — just now','From Kuwait — 3 min ago'];
-  let toastIdx = 0;
-  function showToast(){
-    if(!toast || !toastMsg) return;
-    toastMsg.textContent = toastNames[toastIdx % toastNames.length];
-    toastIdx++;
-    toast.style.display = 'flex';
-    setTimeout(() => { if(toast) toast.style.display = 'none'; }, 5000);
-  }
-  setTimeout(showToast, 6000);
-  setInterval(showToast, 35000 + Math.random() * 20000);
 
   /* ── Hide float-wa when sticky bar visible ── */
   const floatWa = document.getElementById('float-wa');

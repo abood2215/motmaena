@@ -100,6 +100,9 @@ return [
     // Password for the /admin pages (must be read via config() so it survives config:cache)
     'admin_key' => env('ADMIN_KEY'),
 
+    // Where to send an email for each paid course registration (empty = no email)
+    'admin_notify_email' => env('ADMIN_NOTIFY_EMAIL'),
+
     'key' => env('APP_KEY'),
 
     'previous_keys' => [
