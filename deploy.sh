@@ -29,6 +29,12 @@ main() {
     echo "==> Fixing permissions..."
     chown -R www-data:www-data storage bootstrap/cache
 
+    # PHP-FPM's OPcache keeps serving the old compiled code until reloaded
+    echo "==> Reloading PHP-FPM..."
+    for svc in $(systemctl list-units --type=service --no-legend | grep -o 'php[0-9.]*-fpm' | sort -u); do
+        systemctl reload "$svc"
+    done
+
     echo "==> Deployed: $(git log --oneline -1)"
 }
 
