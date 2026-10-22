@@ -41,14 +41,19 @@ class ConsultationController extends Controller
 
     public function adminLogin(Request $request)
     {
-        $key = (string) config('app.admin_key');
+        $email = strtolower(trim((string) config('app.admin_email')));
+        $key   = (string) config('app.admin_key');
 
-        if ($key !== '' && hash_equals($key, (string) $request->input('password'))) {
+        $emailOk    = $email !== '' && hash_equals($email, strtolower(trim((string) $request->input('email'))));
+        $passwordOk = $key !== '' && hash_equals($key, (string) $request->input('password'));
+
+        if ($emailOk && $passwordOk) {
+            $request->session()->regenerate();
             session(['admin_auth' => true]);
-            return redirect()->route('admin.consultations');
+            return redirect()->to(session()->pull('admin_intended', route('admin.consultations')));
         }
 
-        return back()->withErrors(['password' => 'كلمة المرور غير صحيحة']);
+        return back()->withInput($request->only('email'))->withErrors(['password' => 'الإيميل أو كلمة المرور غير صحيحة']);
     }
 
     public function admin(Request $request)

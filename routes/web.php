@@ -50,7 +50,7 @@ Route::get('/sitemap.xml', function () {
 
 Route::post('/consultations/book', [ConsultationController::class, 'store'])->name('consultations.book');
 Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->name('admin.consultations');
-Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->name('admin.login');
+Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->middleware('throttle:5,1')->name('admin.login');
 Route::get('/admin/logout', [ConsultationController::class, 'adminLogout'])->name('admin.logout');
 Route::post('/admin/consultations/{booking}/status', [ConsultationController::class, 'updateStatus'])->name('admin.consultations.status');
 Route::post('/admin/consultations/{booking}/notes', [ConsultationController::class, 'updateNotes'])->name('admin.consultations.notes');

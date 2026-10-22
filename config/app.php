@@ -97,8 +97,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    // Password for the /admin pages (must be read via config() so it survives config:cache)
-    'admin_key' => env('ADMIN_KEY'),
+    // Login for the /admin pages (must be read via config() so it survives config:cache)
+    'admin_email' => env('ADMIN_EMAIL'),
+    'admin_key' => env('ADMIN_PASSWORD', env('ADMIN_KEY')),
 
     // Where to send an email for each paid course registration (empty = no email)
     'admin_notify_email' => env('ADMIN_NOTIFY_EMAIL'),

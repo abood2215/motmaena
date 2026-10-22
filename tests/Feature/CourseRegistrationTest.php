@@ -120,18 +120,23 @@ class CourseRegistrationTest extends TestCase
         $this->get('/consultations')->assertOk()->assertDontSee('شخص يشاهد الصفحة الآن');
     }
 
-    public function test_admin_login_uses_configured_key_only(): void
+    public function test_admin_login_needs_configured_email_and_password(): void
     {
-        config(['app.admin_key' => 'secret-key']);
+        config(['app.admin_email' => 'Admin@Example.com', 'app.admin_key' => 'secret-key']);
 
-        $this->post('/admin/login', ['password' => 'motmaena-admin-2025'])->assertSessionHasErrors('password');
-        $this->post('/admin/login', ['password' => 'secret-key'])->assertRedirect(route('admin.consultations'));
+        $this->post('/admin/login', ['email' => 'admin@example.com', 'password' => 'wrong'])->assertSessionHasErrors('password');
+        $this->post('/admin/login', ['email' => 'other@example.com', 'password' => 'secret-key'])->assertSessionHasErrors('password');
+
+        // Lands back on the page that asked for login
+        $this->get('/admin/registrations')->assertRedirect(route('admin.consultations'));
+        $this->post('/admin/login', ['email' => ' ADMIN@example.com ', 'password' => 'secret-key'])
+            ->assertRedirect(url('/admin/registrations'));
         $this->assertTrue(session('admin_auth'));
 
-        // No key configured: nobody can log in
+        // Nothing configured: nobody can log in
         session()->flush();
-        config(['app.admin_key' => null]);
-        $this->post('/admin/login', ['password' => ''])->assertSessionHasErrors('password');
+        config(['app.admin_email' => null, 'app.admin_key' => null]);
+        $this->post('/admin/login', ['email' => '', 'password' => ''])->assertSessionHasErrors('password');
     }
 
     public function test_admin_pages_require_login(): void

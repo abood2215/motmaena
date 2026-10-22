@@ -86,7 +86,7 @@ button[type=submit]:hover { background: #8a3232; transform: translateY(-1px); }
 <body>
 <div class="login-box">
   <div class="logo">مطمئنة</div>
-  <div class="sub">لوحة تحكم الاستشارات — للإدارة فقط</div>
+  <div class="sub">لوحة التحكم — للإدارة فقط</div>
 
   @if($errors->has('password'))
     <div class="error-msg">{{ $errors->first('password') }}</div>
@@ -95,7 +95,10 @@ button[type=submit]:hover { background: #8a3232; transform: translateY(-1px); }
   <form method="POST" action="{{ route('admin.login') }}">
     @csrf
     <div class="field">
-      <input type="password" name="password" placeholder="كلمة المرور" required autofocus>
+      <input type="email" name="email" value="{{ old('email') }}" placeholder="الإيميل" required autofocus autocomplete="username" dir="ltr">
+    </div>
+    <div class="field">
+      <input type="password" name="password" placeholder="كلمة المرور" required autocomplete="current-password">
     </div>
     <button type="submit">دخول</button>
   </form>
