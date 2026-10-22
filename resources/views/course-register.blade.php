@@ -132,7 +132,7 @@
                         {{ $isAr ? 'بالضغط على "متابعة الدفع" فإنك توافق على' : 'By continuing you agree to the' }}
                         <a href="{{ route('policies') }}#terms" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
                         {{ $isAr ? 'و' : 'and' }}
-                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'سياسة الاسترجاع' : 'Refund Policy' }}</a>
+                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline text-[#1565c0]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
                     </p>
 
                     <p class="flex items-center justify-center gap-1.5 text-[11px] font-bold text-gray-400">

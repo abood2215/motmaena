@@ -225,7 +225,7 @@
                         <span>{{ __('Motmaena Center') }} &copy; {{ date('Y') }}. {{ __('All rights reserved.') }}</span>
                         <div class="flex flex-wrap justify-center gap-x-4 gap-y-1">
                             <a href="{{ route('policies') }}#terms" class="hover:text-primary transition-colors">{{ $isArF ? 'الشروط والأحكام' : 'Terms' }}</a>
-                            <a href="{{ route('policies') }}#refund" class="hover:text-primary transition-colors">{{ $isArF ? 'الإلغاء والاسترجاع' : 'Refunds' }}</a>
+                            <a href="{{ route('policies') }}#refund" class="hover:text-primary transition-colors">{{ $isArF ? 'سياسة الإلغاء' : 'Cancellation' }}</a>
                             <a href="{{ route('policies') }}#privacy" class="hover:text-primary transition-colors">{{ $isArF ? 'الخصوصية' : 'Privacy' }}</a>
                         </div>
                     </div>

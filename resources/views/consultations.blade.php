@@ -1302,7 +1302,7 @@
           ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك طلب حجز جلسة مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الإتاحة الحالية.'],
           ['q' => 'كم مدة الجلسة؟', 'a' => 'الجلسة الاعتيادية مدتها 50 دقيقة. في بعض الحالات قد تُعقد جلسة أولية للتقييم تكون أقصر.'],
           ['q' => 'هل يمكن الحجز عن بعد (أونلاين)؟', 'a' => 'نعم، نوفر جلسات عن بعد لمن لا يستطيع الحضور الشخصي. تتم الجلسات عبر منصات تواصل مشفّرة وآمنة.'],
-          ['q' => 'ما سياسة الإلغاء؟', 'a' => 'يمكن إلغاء الموعد أو تأجيله قبل 24 ساعة على الأقل من الموعد دون أي رسوم. الإلغاء بعد ذلك يخضع لرسوم رمزية بحسب السياسة المعتمدة.'],
+          ['q' => 'ما سياسة الإلغاء؟', 'a' => 'يمكن تأجيل الموعد دون أي رسوم قبل 24 ساعة على الأقل من موعده. لا يوجد استرجاع نقدي للمبالغ المدفوعة، ويمكنك استخدام المبلغ في أي خدمة أخرى داخل المركز.'],
         ] : [
           ['q' => 'What makes your consultations different?', 'a' => 'Motmaena\'s specialists combine academic expertise with real-world application. The session is built around your specific situation — not generic advice, but a personalized action plan made for you.'],
           ['q' => 'Is the session confidential?', 'a' => 'Absolutely. Everything discussed in your session remains strictly between you and your specialist. No information is shared with any third party under any circumstances.'],
@@ -1310,7 +1310,7 @@
           ['q' => 'Can I book directly with Dr. Tariq?', 'a' => 'Yes, you can request a session with Dr. Tariq Al-Habib directly based on appointment availability. Contact the team and they\'ll confirm current availability for you.'],
           ['q' => 'How long is a session?', 'a' => 'A standard session is 50 minutes. In some cases, a shorter initial evaluation session may be arranged first.'],
           ['q' => 'Can I book online (remote sessions)?', 'a' => 'Yes, we offer remote sessions for those who cannot attend in person. Sessions are conducted via secure, encrypted communication platforms.'],
-          ['q' => 'What is the cancellation policy?', 'a' => 'Appointments can be cancelled or rescheduled at least 24 hours in advance with no fees. Late cancellations are subject to a nominal fee per the approved policy.'],
+          ['q' => 'What is the cancellation policy?', 'a' => 'Appointments can be rescheduled free of charge at least 24 hours in advance. Payments are not refunded in cash, but you can use the amount for any other service at the Center.'],
         ];
         @endphp
 

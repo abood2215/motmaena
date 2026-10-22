@@ -114,7 +114,7 @@ class CourseRegistrationTest extends TestCase
 
     public function test_public_pages_and_removed_endpoints(): void
     {
-        $this->get('/policies')->assertOk()->assertSee('سياسة الإلغاء والاسترجاع');
+        $this->get('/policies')->assertOk()->assertSee('لا يوجد استرجاع نقدي');
         $this->get('/sitemap.xml')->assertOk()->assertSee('/register/anger-management', false);
         $this->get('/admin/diag')->assertNotFound();
         $this->get('/consultations')->assertOk()->assertDontSee('شخص يشاهد الصفحة الآن');

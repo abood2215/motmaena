@@ -24,17 +24,19 @@
             ],
         ],
         'refund' => [
-            'title' => $isAr ? 'سياسة الإلغاء والاسترجاع' : 'Cancellation & Refund Policy',
+            'title' => $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy',
             'items' => $isAr ? [
-                ['الدورات الحضورية', ['الإلغاء قبل 48 ساعة أو أكثر من موعد الدورة: استرجاع كامل للمبلغ المدفوع.', 'الإلغاء خلال أقل من 48 ساعة من موعد الدورة: يمكن تحويل التسجيل إلى دورة أو موعد آخر، دون استرجاع نقدي.', 'عدم الحضور دون إبلاغ مسبق: لا يُسترجع المبلغ.']],
-                ['إلغاء الدورة من قبل المركز', ['إذا ألغى المركز الدورة أو غيّر موعدها، يحق لك اختيار استرجاع المبلغ كاملاً أو التحويل إلى الموعد الجديد.']],
-                ['الجلسات والاستشارات', ['يمكن إلغاء الموعد أو تأجيله دون رسوم قبل 24 ساعة على الأقل من موعده.']],
-                ['طريقة الاسترجاع', ['لطلب الإلغاء أو الاسترجاع تواصل معنا عبر واتساب على الرقم +965 5566 5161 مع ذكر رقم التسجيل. يُعاد المبلغ إلى نفس وسيلة الدفع المستخدمة خلال 14 يوم عمل تقريباً، حسب البنك.']],
+                ['لا يوجد استرجاع نقدي', ['المبالغ المدفوعة غير قابلة للاسترجاع النقدي، ويمكنك بدلاً من ذلك استخدام كامل المبلغ في أي خدمة أخرى داخل المركز (دورة، جلسة، استشارة، أو باقة).']],
+                ['إذا لم تتمكن من الحضور', ['أبلغنا قبل موعد الدورة، ويبقى المبلغ رصيداً لك تستخدمه في أي خدمة أخرى داخل المركز.', 'عدم الحضور دون إبلاغ مسبق لا يُحتسب رصيداً.']],
+                ['إلغاء الدورة من قبل المركز', ['إذا ألغى المركز الدورة أو غيّر موعدها، يمكنك اختيار التحويل إلى الموعد الجديد أو استخدام المبلغ في أي خدمة أخرى داخل المركز.']],
+                ['الجلسات والاستشارات', ['يمكن تأجيل الموعد دون رسوم قبل 24 ساعة على الأقل من موعده.']],
+                ['طريقة الطلب', ['تواصل معنا عبر واتساب على الرقم +965 5566 5161 مع ذكر رقم التسجيل، وسنساعدك في اختيار الخدمة البديلة.']],
             ] : [
-                ['In-person courses', ['Cancellation 48 hours or more before the course: full refund.', 'Cancellation less than 48 hours before the course: your registration can be moved to another course or date, without a cash refund.', 'No-show without prior notice: no refund.']],
-                ['Course cancelled by the Center', ['If the Center cancels or reschedules a course, you may choose a full refund or a transfer to the new date.']],
-                ['Sessions & consultations', ['Appointments can be cancelled or rescheduled free of charge at least 24 hours in advance.']],
-                ['How to request', ['Contact us on WhatsApp at +965 5566 5161 with your registration number. Refunds go back to the original payment method, usually within about 14 business days depending on your bank.']],
+                ['No cash refunds', ['Payments are non-refundable. Instead, you can use the full amount for any other service at the Center (a course, session, consultation or package).']],
+                ['If you cannot attend', ['Let us know before the course date and the amount stays as credit for any other service at the Center.', 'A no-show without prior notice is not converted to credit.']],
+                ['Course cancelled by the Center', ['If the Center cancels or reschedules a course, you can move to the new date or use the amount for any other service at the Center.']],
+                ['Sessions & consultations', ['Appointments can be rescheduled free of charge at least 24 hours in advance.']],
+                ['How to request', ['Contact us on WhatsApp at +965 5566 5161 with your registration number and we will help you choose an alternative service.']],
             ],
         ],
         'privacy' => [
