@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta name="keywords" content="مطمئنة, دورات تنموية, طارق الحبيب, استشارات أسرية وتربوية, تطوير الذات, الكويت">
+        <meta name="keywords" content="مطمئنة, طارق الحبيب, بروفيسور الطب النفسي, دورات تنموية, استشارات أسرية وتربوية, تطوير الذات, الكويت">
         <meta name="author" content="Motmaena Center">
 
         <!-- Open Graph / Facebook -->

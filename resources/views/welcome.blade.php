@@ -133,7 +133,7 @@
                     </div>
                     <div class="absolute -bottom-5 {{ $isAr ? '-right-3 sm:-right-8' : '-left-3 sm:-left-8' }} bg-white dark:bg-[#1a1415] rounded-2xl shadow-xl px-4 py-3 border border-[#efe5e0] dark:border-white/10">
                         <p class="font-black text-sm mh-title">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</p>
-                        <p class="text-xs font-bold text-stone-500 dark:text-stone-400">{{ $t('أكثر من 30 سنة في الإرشاد', '30+ years in counselling') }}</p>
+                        <p class="text-xs font-bold text-stone-500 dark:text-stone-400">{{ config('doctor.title.' . $lang) }}</p>
                     </div>
                 </div>
             </div>
@@ -247,9 +247,9 @@
             </div>
         </div>
         <div class="lg:col-span-8 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
-            <p class="font-black text-sm mb-2" style="color: var(--gold-l)">{{ $t('بإشراف', 'Supervised by') }}</p>
+            <p class="font-black text-sm mb-2" style="color: var(--gold-l)">{{ config('doctor.title.' . $lang) }}</p>
             <h2 class="mh-section-title mb-4">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</h2>
-            <p class="text-white/85 font-semibold leading-loose mb-6 max-w-2xl {{ $isAr ? 'lg:ml-auto' : '' }}">{{ $t('بروفيسور وخبير في الإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بخبرة تزيد على 30 سنة. يشرف على برامج مركز مطمئنة ودوراته لمساعدة الأفراد والأسر على حياة أكثر توازناً.', 'Professor and expert in social & educational guidance and life skills with 30+ years of experience, supervising Motmaena\'s programmes to help individuals and families live more balanced lives.') }}</p>
+            <p class="text-white/85 font-semibold leading-loose mb-6 max-w-2xl {{ $isAr ? 'lg:ml-auto' : '' }}">{{ config('doctor.bio.' . $lang) }}</p>
             <div class="flex flex-wrap justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-8">
                 @foreach([['+30', $t('سنة خبرة', 'years')], ['+50', $t('دورة', 'courses')], ['+12', $t('سنة لمطمئنة', 'years of Motmaena')]] as [$n, $l])
                     <div><div class="text-3xl font-black" style="color: var(--gold)">{{ $n }}</div><div class="text-sm font-bold text-white/75">{{ $l }}</div></div>

@@ -1038,7 +1038,7 @@
       <div class="reveal-left">
         <div class="dr-badge">
           <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
-          {{ app()->getLocale() === 'ar' ? 'مستشار بارز في الإرشاد الأسري والتربوي' : 'Leading Advisor in Family & Educational Counseling' }}
+          {{ config('doctor.title.' . (app()->getLocale() === 'ar' ? 'ar' : 'en')) }}
         </div>
         <h2>
           @if(app()->getLocale() === 'ar')
@@ -1048,11 +1048,7 @@
           @endif
         </h2>
         <p class="bio">
-          @if(app()->getLocale() === 'ar')
-            خبير في الإرشاد الأسري والاجتماعي والتربوي، وصاحب منهجية فريدة قائمة على الفهم العميق للطبيعة الإنسانية. ساعد مئات الآلاف في مواجهة تحدياتهم الحياتية وبناء علاقات أكثر صحة ونضجاً.
-          @else
-            An expert in family, social, and educational counseling with a unique methodology built on deep understanding of human nature. He has helped hundreds of thousands face life's challenges and build healthier, more mature relationships.
-          @endif
+          {{ config('doctor.bio.' . (app()->getLocale() === 'ar' ? 'ar' : 'en')) }}
         </p>
         <div class="dr-stats">
           <div class="dr-stat">
@@ -1060,7 +1056,7 @@
             <span class="lbl">{{ app()->getLocale() === 'ar' ? '+ مستفيد' : '+ Beneficiaries' }}</span>
           </div>
           <div class="dr-stat">
-            <span class="num" data-target="25">0</span>
+            <span class="num" data-target="30">0</span>
             <span class="lbl">{{ app()->getLocale() === 'ar' ? 'سنة خبرة' : 'Years Experience' }}</span>
           </div>
           <div class="dr-stat">
@@ -1207,13 +1203,13 @@
       </div>
       <div class="advisors-grid">
         <div class="advisor-card reveal">
-          <div class="avatar" style="background:linear-gradient(135deg,#6d1b2b,#7c2d12);">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <div class="avatar" style="background:linear-gradient(135deg,#6d1b2b,#7c2d12);overflow:hidden;">
+            <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top;">
             <span class="online-dot"></span>
           </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Tariq Al-Habib' }}</h4>
-          <div class="spec">{{ app()->getLocale() === 'ar' ? 'مرشد أسري واجتماعي' : 'Family & Social Counselor' }}</div>
-          <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 30 سنة في الإرشاد الأسري وتطوير العلاقات' : 'Over 30 years experience in family counseling and relationship development' }}</p>
+          <div class="spec">{{ config('doctor.title.' . (app()->getLocale() === 'ar' ? 'ar' : 'en')) }}</div>
+          <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 30 سنة في الطب النفسي والإرشاد الأسري — جلسات هاتفية حسب توافر المواعيد' : '30+ years in psychiatry and family counselling — phone sessions subject to availability' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-1">
           <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#1e40af);">
