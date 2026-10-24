@@ -4,67 +4,19 @@
 @section('meta_description', app()->getLocale() == 'ar' ? 'باقات متكاملة لدعم طفلك: التواصل الاجتماعي، صعوبات التعلم، الثقة بالنفس، تعديل السلوك والمزيد — في مركز مطمئنة بالكويت.' : 'Complete packages to support your child: social communication, learning difficulties, confidence, behaviour and more — at Motmaena Center, Kuwait.')
 
 @section('content')
-
-{{-- ════════════════ HERO SECTION ════════════════ --}}
-<section class="relative py-12 sm:py-20 bg-secondary dark:bg-dark-surface overflow-hidden border-b border-gray-100 dark:border-dark-border">
-    {{-- Background Orbs --}}
-    <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'right-0' : 'left-0' }} w-1/2 h-full bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
-    
-    <div class="container mx-auto px-4 relative z-10 text-center">
-        <div class="inline-flex items-center gap-2 bg-white dark:bg-dark-border px-4 py-2 rounded-full shadow-sm mb-6 border border-primary/10 reveal">
-            <span class="w-2 h-2 bg-primary rounded-full animate-pulse shrink-0"></span>
-            <span class="text-primary font-bold text-xs uppercase tracking-widest">{{ app()->getLocale() == 'ar' ? 'باقات متكاملة' : 'Integrated Packages' }}</span>
-        </div>
-        
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 reveal">
-            {{ app()->getLocale() == 'ar' ? 'باقات متخصصة لدعم طفلك' : 'Specialized Packages for Your Child' }}
-        </h1>
-        
-        <p class="text-sm sm:text-base lg:text-lg text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed reveal">
-            {{ app()->getLocale() == 'ar' 
-                ? 'برامج تنموية متكاملة تشمل دعم السلوك والمهارات والنمو الشامل عند الأطفال بأقصى معايير الجودة.' 
-                : 'Comprehensive developmental and support programs covering behavior, skills, and holistic growth for children at the highest quality standards.' }}
-        </p>
-    </div>
-</section>
-
-{{-- ════════════════ CHILDREN SPECIALISED PACKAGES SECTION ════════════════ --}}
-<section id="packages-section" class="py-12 sm:py-20 md:py-28 bg-white dark:bg-dark-bg relative overflow-hidden">
-
-    {{-- Dot-grid pattern --}}
-    <div class="absolute inset-0 pointer-events-none opacity-[0.035] dark:opacity-[0.02]" style="background-image: radial-gradient(#6d1b2b 1px, transparent 1px); background-size: 26px 26px;"></div>
-
-    {{-- Ambient glows --}}
-    <div class="absolute top-1/4 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[200px] pointer-events-none"></div>
-    <div class="absolute bottom-1/4 -left-32 w-[500px] h-[500px] bg-primary/4 rounded-full blur-[180px] pointer-events-none"></div>
-
-    <div class="container mx-auto px-4 relative z-10">
-
-        {{-- ─── Packages Grid ─── --}}
-        @php
-            $pkgColors = [
-                ['g' => 'linear-gradient(135deg,#0ea5e9,#0284c7)', 'sh' => 'rgba(14,165,233,.4)',  'hex' => '#0ea5e9'],
-                ['g' => 'linear-gradient(135deg,#8b5cf6,#7c3aed)', 'sh' => 'rgba(139,92,246,.4)', 'hex' => '#8b5cf6'],
-                ['g' => 'linear-gradient(135deg,#f59e0b,#d97706)', 'sh' => 'rgba(245,158,11,.4)', 'hex' => '#f59e0b'],
-                ['g' => 'linear-gradient(135deg,#10b981,#059669)', 'sh' => 'rgba(16,185,129,.4)',  'hex' => '#10b981'],
-                ['g' => 'linear-gradient(135deg,#6366f1,#4f46e5)', 'sh' => 'rgba(99,102,241,.4)', 'hex' => '#6366f1'],
-                ['g' => 'linear-gradient(135deg,#f97316,#ea580c)', 'sh' => 'rgba(249,115,22,.4)', 'hex' => '#f97316'],
-                ['g' => 'linear-gradient(135deg,#ec4899,#db2777)', 'sh' => 'rgba(236,72,153,.4)', 'hex' => '#ec4899'],
-                ['g' => 'linear-gradient(135deg,#6d1b2b,#7f1d1d)', 'sh' => 'rgba(109,27,43,.4)',  'hex' => '#6d1b2b'],
-                ['g' => 'linear-gradient(135deg,#06b6d4,#0891b2)', 'sh' => 'rgba(6,182,212,.4)',  'hex' => '#06b6d4'],
-                ['g' => 'linear-gradient(135deg,#22c55e,#16a34a)', 'sh' => 'rgba(34,197,94,.4)',  'hex' => '#22c55e'],
-                ['g' => 'linear-gradient(135deg,#a855f7,#9333ea)', 'sh' => 'rgba(168,85,247,.4)', 'hex' => '#a855f7'],
-                ['g' => 'linear-gradient(135deg,#14b8a6,#0d9488)', 'sh' => 'rgba(20,184,166,.4)', 'hex' => '#14b8a6'],
-            ];
+@php
+    $isAr = app()->getLocale() == 'ar';
+    $waLink = fn ($text) => 'https://wa.me/' . $site['whatsapp'] . '?text=' . rawurlencode($text);
+    $waIcon = '<svg class="w-[18px] h-[18px] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
 
             $packages = [
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تنمية التواصل الاجتماعي' : 'Social Communication Development',
+                    'title' => $isAr ? 'تنمية التواصل الاجتماعي' : 'Social Communication Development',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a2 2 0 01-2 2 2 2 0 01-2-2V4zm-3 8a3 3 0 01-3-3V7a3 3 0 013-3h.5a3 3 0 013 3v2a3 3 0 01-3 3H8zm10-5a3 3 0 00-3 3v2a3 3 0 003 3h.5a3 3 0 003-3V7a3 3 0 00-3-3H18zM6 20a1 1 0 01-1-1v-1a5 5 0 015-5h4a5 5 0 015 5v1a1 1 0 01-1 1H6z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تنمية التواصل اللفظي والبصري', 'تحسين المهارات الاجتماعية', 'دعم السلوك وتعديله']
                         : ['Verbal & Visual Communication', 'Social Skills Enhancement', 'Behavior Support & Modification'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'المهارات الاجتماعية', 'items' => [
                             'لا يستجيب لمناداة اسمه',
                             'لا يُكثر من الاتصال البصري المباشر',
@@ -83,12 +35,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'صعوبات التعلم' : 'Learning Disabilities',
+                    'title' => $isAr ? 'صعوبات التعلم' : 'Learning Disabilities',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تنمية مهارات القراءة والكتابة', 'تحسين الانتباه والتركيز', 'خطط تعليمية فردية مخصصة']
                         : ['Reading & Writing Skills', 'Attention & Focus Improvement', 'Personalized Learning Plans'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'مرحلة ما قبل المدرسة', 'items' => [
                             'صعوبة في نطق الكلمات وصعوبة في العثور على الكلمة الصحيحة',
                             'وجود صعوبة في تعلم الأبجدية والأرقام والألوان والأشكال وأيام الأسبوع',
@@ -129,12 +81,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'نقص الثقة بالنفس' : 'Lack of Confidence',
+                    'title' => $isAr ? 'نقص الثقة بالنفس' : 'Lack of Confidence',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تعزيز الشخصية الإيجابية', 'رفع مستوى الثقة بالنفس', 'دعم مهارات التعبير الذاتي']
                         : ['Positive Personality Boost', 'Self-Confidence Raising', 'Self-Expression Skills'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'أسلوب التربية والبيئة المحيطة', 'items' => [
                             'أسلوب التربية القاسي أو الناقد المستمر',
                             'الحماية الزائدة والتدليل المفرط الذي يمنع الاستقلالية',
@@ -161,12 +113,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'الذكاء وتنمية القدرات' : 'Intelligence & Abilities',
+                    'title' => $isAr ? 'الذكاء وتنمية القدرات' : 'Intelligence & Abilities',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['اختبارات الذكاء والكفاءات', 'برامج تنمية التفكير الإبداعي', 'مهارات حل المشكلات']
                         : ['IQ & Aptitude Assessments', 'Creative Thinking Programs', 'Problem Solving Skills'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'أسباب تراجع الأداء الذهني', 'items' => [
                             'سوء التغذية (نقص الحديد، اليود، أوميغا 3)',
                             'الفقر البيئي ونقص التحفيز والتحدث مع الطفل',
@@ -197,12 +149,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'دعم التواصل الاجتماعي' : 'Social Communication Support',
+                    'title' => $isAr ? 'دعم التواصل الاجتماعي' : 'Social Communication Support',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['برنامج تدريجي ومنظم للتواصل', 'تعزيز الثقة الاجتماعية', 'تدريب لفظي ومهاري متخصص']
                         : ['Gradual Communication Program', 'Social Confidence Building', 'Verbal & Skill Training'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'العلامات التي ندعم فيها', 'items' => [
                             'تأثر المستوى الأكاديمي بسبب ضعف المشاركة في المدرسة',
                             'صعوبة التكيف الاجتماعي والخجل الشديد',
@@ -219,12 +171,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'التكيف والسلوك لدى الطفل' : 'Child Adaptation & Behavior',
+                    'title' => $isAr ? 'التكيف والسلوك لدى الطفل' : 'Child Adaptation & Behavior',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['دعم الطفل في التكيف مع مواقف النوم والاستقلال', 'مساعدة الطفل على الاندماج في البيئة المدرسية', 'تنمية مهارات التحكم بالسلوك والتعبير المناسب']
                         : ['Sleep & Independence Support', 'School Integration Support', 'Behavior & Expression Skills'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'عوامل مرتبطة بالنمو والتعلم', 'items' => [
                             'مراحل النمو الطبيعي وتأثيرها على سلوك الطفل',
                             'تأثر الطفل بالمواقف اليومية والخبرات الجديدة',
@@ -259,12 +211,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'التأتأة' : 'Stuttering',
+                    'title' => $isAr ? 'التأتأة' : 'Stuttering',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['جلسات النطق والتواصل الفعّال', 'تحسين الطلاقة اللغوية', 'تقنيات تخفيف التوتر وزيادة الثقة']
                         : ['Speech & Communication Sessions', 'Language Fluency Improvement', 'Tension Reduction Techniques'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'عوامل التطور الطبيعي', 'items' => [
                             'استعداد فردي يؤثر على طلاقة الكلام',
                             'تسارع في التطور اللغوي مع بطء في التنسيق الحركي للنطق',
@@ -297,12 +249,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تنمية القدرات الاجتماعية والأكاديمية' : 'Social & Academic Development',
+                    'title' => $isAr ? 'تنمية القدرات الاجتماعية والأكاديمية' : 'Social & Academic Development',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تنظيم السلوك والطاقة الزائدة', 'تحسين التركيز والانتباه', 'خطط متابعة مدرسية شاملة']
                         : ['Behavior & Energy Management', 'Focus & Attention Improvement', 'Comprehensive School Plans'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'العلامات التي ندعم فيها', 'items' => [
                             'الحركة الدائمة',
                             'عدم القدرة على الإصغاء',
@@ -333,12 +285,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي والاجتماعي' : 'Educational & Social Behavior',
+                    'title' => $isAr ? 'تعديل السلوك التربوي والاجتماعي' : 'Educational & Social Behavior',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تعديل السلوك العدواني والانفجاري', 'إدارة الغضب والعناد', 'ضبط الانفعالات وتوجيهها']
                         : ['Positive Behavior Development', 'Anger & Stubbornness Management', 'Emotional Control & Guidance'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'العوامل المؤثرة في تشكيل السلوك', 'items' => [
                             'التقليد والمحاكاة: الطفل مرآة لوالديه ويتعلم بالملاحظة',
                             'تفاوت في مستوى التطور والتحكم الذاتي',
@@ -377,12 +329,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'المهارات' : 'Skills',
+                    'title' => $isAr ? 'المهارات' : 'Skills',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['مهارات حياتية وتواصل فعّال', 'ضبط المشاعر والسلوك', 'مهارات اجتماعية وتفاعلية']
                         : ['Life & Communication Skills', 'Emotion & Behavior Regulation', 'Social & Interactive Skills'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'عوامل اكتساب المهارات', 'items' => [
                             'النمو الطبيعي للعضلات وقدرات الكلام',
                             'الاستمرارية والتكرار لترسيخ المهارات المكتسبة',
@@ -399,12 +351,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي غير المرغوب' : 'Unwanted Behavior Modification',
+                    'title' => $isAr ? 'تعديل السلوك التربوي غير المرغوب' : 'Unwanted Behavior Modification',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تعديل السلوك غير المرغوب', 'تدريب مهارات التحكم الذاتي', 'متابعة تخصصية ودعم أسري']
                         : ['Unwanted Behavior Modification', 'Self-Control Skills Training', 'Specialized Follow-up & Family Support'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'العلامات التي ندعم فيها', 'items' => [
                             'تكرار حركات أو أصوات لا إرادية بشكل مزعج',
                             'صعوبة في التحكم بالسلوك الانفعالي في المواقف الاجتماعية',
@@ -419,12 +371,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تعزيز الاستقلالية والثقة' : 'Independence & Confidence Building',
+                    'title' => $isAr ? 'تعزيز الاستقلالية والثقة' : 'Independence & Confidence Building',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['بناء الثقة الاجتماعية', 'دعم التكيّف المدرسي', 'تمكين الاستقلالية والثقة']
                         : ['Building Social Confidence', 'School Adjustment Support', 'Independence & Confidence Building'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'العلامات التي ندعم فيها', 'items' => [
                             'توتر شديد عند الفراق عن الوالدين أو الأشخاص المقربين',
                             'بكاء مستمر وصعوبة في التكيّف مع مواقف الانفصال اليومية',
@@ -445,12 +397,12 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'دعم الاحتياجات الخاصة' : 'Special Needs Support',
+                    'title' => $isAr ? 'دعم الاحتياجات الخاصة' : 'Special Needs Support',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>',
-                    'tags'  => app()->getLocale() == 'ar'
+                    'tags'  => $isAr
                         ? ['تنمية المهارات المعرفية الأساسية', 'مهارات الحياة اليومية المستقلة', 'تدريب أكاديمي مبسط ومنظم']
                         : ['Core Cognitive Skills Development', 'Independent Daily Life Skills', 'Structured Academic Training'],
-                    'symptoms' => app()->getLocale() == 'ar' ? [
+                    'symptoms' => $isAr ? [
                         ['category' => 'المهارات التي ندعم تطويرها', 'items' => [
                             'مهارات التواصل اللفظي وغير اللفظي',
                             'مهارات الاعتناء بالنفس والاستقلالية',
@@ -475,192 +427,186 @@
                     ],
                 ],
             ];
-        @endphp
+@endphp
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            @foreach($packages as $index => $package)
-            @php $c = $pkgColors[$index % count($pkgColors)]; @endphp
-            <div class="group relative bg-white dark:bg-dark-bg rounded-[1.75rem] overflow-hidden border border-gray-100 dark:border-dark-border shadow-sm hover:shadow-[0_28px_64px_-12px_rgba(0,0,0,0.14)] hover:-translate-y-2.5 transition-all duration-500 reveal" style="animation-delay:{{ $index * 0.06 }}s;">
+<style>
+    .pk { --wine: #6d1b2b; --gold: #9a7434; }
+    .pk h1, .pk h2, .pk h3 { text-wrap: balance; }
+    .pk-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 900; color: var(--gold); }
+    .pk-eyebrow::before, .pk-eyebrow::after { content: ''; width: 36px; height: 2px; border-radius: 2px; background: currentColor; opacity: .8; }
+    .dark .pk-eyebrow { color: #d4b06a; }
+    .pk-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; background: #fff; border: 1px solid #eadfd3; font-size: 13px; font-weight: 800; color: #4b3a33; white-space: nowrap; transition: border-color .15s, color .15s, background .15s; }
+    .pk-chip b { font-size: 11px; color: #b08a45; font-weight: 900; }
+    .pk-chip:hover { border-color: var(--wine); color: var(--wine); }
+    .dark .pk-chip { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: #e5e7eb; }
+    .pk-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #eee5dc; border-radius: 24px; padding: 26px; scroll-margin-top: 110px; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .pk-card:hover { border-color: #dcc7b6; box-shadow: 0 26px 50px -32px rgba(74,15,27,.4); transform: translateY(-3px); }
+    .pk-card:target { border-color: var(--wine); box-shadow: 0 0 0 4px rgba(109,27,43,.12); }
+    .dark .pk-card { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.08); }
+    .pk-icon { width: 52px; height: 52px; border-radius: 16px; padding: 13px; background: #f7efe9; color: var(--wine); flex-shrink: 0; transition: background .2s, color .2s; }
+    .pk-card:hover .pk-icon { background: var(--wine); color: #fff; }
+    .dark .pk-icon { background: rgba(255,255,255,.06); color: #e7a3ae; }
+    .pk-num { font-size: 13px; font-weight: 900; letter-spacing: .1em; color: #b08a45; }
+    .pk-check { width: 20px; height: 20px; border-radius: 99px; background: #f5ece6; color: var(--wine); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .dark .pk-check { background: rgba(255,255,255,.08); color: #e7a3ae; }
+    .pk-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 11px 0; border-top: 1px dashed #e7dbcf; font-size: 13px; font-weight: 800; color: #7a6253; }
+    .pk-more summary::-webkit-details-marker { display: none; }
+    .pk-more summary:hover { color: var(--wine); }
+    .pk-more[open] summary svg { transform: rotate(180deg); }
+    .dark .pk-more summary { border-color: rgba(255,255,255,.1); color: #c7b8ad; }
+    .pk-cta { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--wine); color: var(--wine); font-size: 14px; font-weight: 900; transition: background .2s, color .2s; }
+    .pk-cta:hover { background: var(--wine); color: #fff; }
+    .dark .pk-cta { border-color: #e7a3ae; color: #f3c6cd; }
+    .dark .pk-cta:hover { background: #e7a3ae; color: #2a0d13; }
+</style>
 
-                {{-- Colored top stripe --}}
-                <div class="h-1.5 w-full" style="background: {{ $c['g'] }};"></div>
+<div class="pk">
 
-                <div class="p-6 sm:p-7 relative">
-                    {{-- Large number watermark --}}
-                    <div class="absolute {{ app()->getLocale() == 'ar' ? 'left-3' : 'right-3' }} top-3 font-black text-gray-100 dark:text-dark-border/60 select-none pointer-events-none leading-none" style="font-size: 5rem; letter-spacing: -0.05em; line-height: 1; font-family: 'Inter', sans-serif;">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
+{{-- ════════════════ HERO ════════════════ --}}
+<section class="relative overflow-hidden bg-[#fbf6ee] dark:bg-dark-surface border-b border-[#efe4d6] dark:border-dark-border">
+    <div class="container mx-auto px-4 py-14 sm:py-20 text-center">
+        <span class="pk-eyebrow">{{ $isAr ? 'باقات متكاملة للأطفال' : 'Complete programs for children' }}</span>
 
-                    <div class="relative z-10">
-                        {{-- Gradient icon --}}
-                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-5 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 p-3.5"
-                             style="background: {{ $c['g'] }}; box-shadow: 0 12px 32px -6px {{ $c['sh'] }};">
-                            {!! $package['icon'] !!}
-                        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mt-4 mb-5 leading-tight">
+            {{ $isAr ? 'باقات متخصصة لدعم طفلك' : 'Specialised Packages for Your Child' }}
+        </h1>
 
-                        {{-- Title --}}
-                        <h3 class="text-[1.1rem] sm:text-[1.15rem] font-black text-gray-900 dark:text-white mb-4 leading-snug group-hover:text-primary transition-colors duration-300">
-                            {{ $package['title'] }}
-                        </h3>
+        <p class="text-[15px] sm:text-lg font-semibold text-[#6b5446] dark:text-gray-300 max-w-2xl mx-auto leading-loose">
+            {{ $isAr ? 'برامج فردية تساعد طفلك في السلوك والتعلّم والتواصل والثقة بالنفس، في مركز مطمئنة بإشراف ' . config('doctor.name.ar') . '.' : 'One-to-one programs that help your child with behaviour, learning, communication and confidence, at Motmaena Center, supervised by ' . config('doctor.name.en') . '.' }}
+        </p>
 
-                        {{-- Feature list --}}
-                        <ul class="space-y-2.5 mb-5">
-                            @foreach($package['tags'] as $tag)
-                            <li class="flex items-center gap-2.5 text-[0.8rem] sm:text-sm text-[var(--muted-color)]">
-                                <span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
-                                      style="background: {{ $c['g'] }}; box-shadow: 0 4px 12px -2px {{ $c['sh'] }};">
-                                    <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                </span>
-                                <span>{{ $tag }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-
-                        @if(!empty($package['symptoms']))
-                        {{-- Symptoms Toggle Button --}}
-                        <button onclick="toggleSymptoms(this)" class="symptoms-toggle-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl text-[0.78rem] sm:text-[0.82rem] font-bold transition-all duration-300 mb-4 border"
-                                style="color: {{ $c['hex'] }}; border-color: {{ $c['hex'] }}20; background: {{ $c['hex'] }}08;"
-                                onmouseenter="this.style.background='{{ $c['hex'] }}12'" onmouseleave="this.style.background='{{ $c['hex'] }}08'">
-                            <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                                {{ app()->getLocale() == 'ar' ? 'الأعراض والعلامات' : 'Signs & Symptoms' }}
-                            </span>
-                            <svg class="w-4 h-4 shrink-0 transition-transform duration-300 symptoms-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-
-                        {{-- Expandable Symptoms Section --}}
-                        <div class="symptoms-panel overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
-                            <div class="rounded-2xl p-4 mb-4 space-y-4 border" style="background: {{ $c['hex'] }}06; border-color: {{ $c['hex'] }}12;">
-                                @foreach($package['symptoms'] as $catIdx => $symptomGroup)
-                                <div>
-                                    {{-- Category Header --}}
-                                    <div class="flex items-center gap-2 mb-2.5">
-                                        <span class="w-1.5 h-6 rounded-full shrink-0" style="background: {{ $c['g'] }};"></span>
-                                        <h4 class="text-[0.8rem] sm:text-[0.85rem] font-black text-gray-800 dark:text-white">
-                                            {{ $symptomGroup['category'] }}
-                                        </h4>
-                                    </div>
-                                    {{-- Symptom Items --}}
-                                    <ul class="space-y-2 {{ app()->getLocale() == 'ar' ? 'pr-4' : 'pl-4' }}">
-                                        @foreach($symptomGroup['items'] as $symptom)
-                                        <li class="flex items-start gap-2 text-[0.75rem] sm:text-[0.8rem] text-[var(--muted-color)] leading-relaxed">
-                                            <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style="background: {{ $c['hex'] }};"></span>
-                                            <span>{{ $symptom }}</span>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @if(!$loop->last)
-                                <div class="h-px w-full" style="background: {{ $c['hex'] }}15;"></div>
-                                @endif
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-
-                        {{-- Divider --}}
-                        <div class="h-px bg-gray-100 dark:bg-dark-border mb-4"></div>
-
-                        {{-- CTA WhatsApp Button --}}
-                        <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank"
-                           class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-white text-[0.82rem] font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-                           style="background: {{ $c['g'] }}; box-shadow: 0 6px 20px -4px {{ $c['sh'] }};">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            {{ app()->getLocale() == 'ar' ? 'تواصل معنا عبر واتساب' : 'Contact via WhatsApp' }}
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-7 text-sm font-bold text-[#4b3a33] dark:text-gray-200">
+            @foreach([$isAr ? 'خطة فردية لكل طفل' : 'A personal plan for every child', $isAr ? 'متابعة مستمرة مع الأهل' : 'Ongoing follow-up with parents', $isAr ? 'تقسيط على 4 دفعات' : 'Pay in 4 installments'] as $point)
+                <span class="inline-flex items-center gap-2">
+                    <span class="pk-check"><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+                    {{ $point }}
+                </span>
             @endforeach
         </div>
 
-        {{-- ─── Deema Installment Banner ─── --}}
-        <div class="mt-12 sm:mt-20 reveal px-4 sm:px-0">
-            <div class="rounded-3xl overflow-hidden ring-1 ring-white/20 shadow-xl" style="background:linear-gradient(135deg,#4a0f1b 0%,#6d1b2b 50%,#7a2a2a 100%);position:relative;">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-9">
+            <a href="{{ $waLink($isAr ? 'مرحباً، بدي أستشير عن باقة مناسبة لطفلي' : 'Hello, I would like advice on the right package for my child') }}" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black shadow-[0_14px_30px_-14px_rgba(109,27,43,.8)] transition">
+                {!! $waIcon !!} {{ $isAr ? 'احكِ لنا عن طفلك' : 'Tell us about your child' }}
+            </a>
+            <a href="#packages-section" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-black text-[#6d1b2b] dark:text-[#f3c6cd] hover:bg-white/70 dark:hover:bg-white/5 transition">
+                {{ $isAr ? 'تصفّح الباقات' : 'Browse packages' }}
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
 
-                {{-- Animated background blobs --}}
-                <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,220,0.15),transparent 70%);animation:orbFloat 6s ease-in-out infinite;pointer-events:none;"></div>
-                <div style="position:absolute;bottom:-50px;left:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.08),transparent 70%);animation:orbFloat 8s ease-in-out infinite reverse;pointer-events:none;"></div>
+{{-- ════════════════ PACKAGES ════════════════ --}}
+<section id="packages-section" class="py-12 sm:py-16 bg-white dark:bg-dark-bg scroll-mt-20">
+    <div class="container mx-auto px-4">
 
-                {{-- Subtle dot pattern --}}
-                <div style="position:absolute;inset:0;pointer-events:none;opacity:0.07;background-image:radial-gradient(rgba(255,255,255,0.8) 1px,transparent 1px);background-size:20px 20px;"></div>
+        {{-- Quick jump: find the package by the child's need --}}
+        <div class="mb-10 sm:mb-12 text-center">
+            <p class="font-black text-gray-900 dark:text-white mb-4">{{ $isAr ? 'شو بيحتاج طفلك؟ اختر وانتقل للباقة مباشرة' : 'What does your child need? Jump straight to a package' }}</p>
+            <div class="flex sm:flex-wrap sm:justify-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible" style="scrollbar-width: none;">
+                @foreach($packages as $i => $package)
+                    <a href="#pkg-{{ $i + 1 }}" class="pk-chip"><b dir="ltr">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</b>{{ $package['title'] }}</a>
+                @endforeach
+            </div>
+        </div>
 
-                <div style="position:relative;z-index:1;" class="px-8 py-12 sm:px-14 sm:py-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            @foreach($packages as $i => $package)
+            <article id="pkg-{{ $i + 1 }}" class="pk-card reveal">
+                <div class="flex items-start justify-between mb-5">
+                    <div class="pk-icon">{!! $package['icon'] !!}</div>
+                    <span class="pk-num" dir="ltr">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                </div>
 
-                    {{-- Header: Partnership badge + Title --}}
-                    <div class="flex flex-col items-center text-center mb-10 sm:mb-12">
-                        <div class="inline-flex items-center gap-3 mb-5 px-5 py-2.5 rounded-2xl" style="background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.25);">
-                            <img src="{{ asset('deema-logo.png') }}" alt="Deema" class="h-6 sm:h-7 w-auto object-contain" style="filter:brightness(0) invert(1);">
-                            <div class="w-px h-5" style="background:rgba(255,255,255,0.3);"></div>
-                            <span class="text-white/80 text-[10px] sm:text-xs font-bold uppercase tracking-widest">
-                                {{ app()->getLocale() == 'ar' ? 'بالتعاون مع Deema' : 'In partnership with Deema' }}
-                            </span>
-                        </div>
-                        <h4 class="text-3xl sm:text-4xl font-black text-white leading-snug">
-                            {{ app()->getLocale() == 'ar' ? 'قسّط اشتراكك على' : 'Pay your subscription in' }}
-                            <span style="color:rgba(255,210,210,0.95);">
-                                {{ app()->getLocale() == 'ar' ? '4 دفعات ميسّرة' : '4 easy installments' }}
-                            </span>
-                        </h4>
-                    </div>
+                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-4 leading-snug">{{ $package['title'] }}</h3>
 
-                    {{-- Steps: 1 → 2 → 3 → 4 --}}
-                    <div class="flex items-center justify-center mb-10 sm:mb-12">
-                        @for($step = 1; $step <= 4; $step++)
-                            <div class="flex flex-col items-center gap-1.5 sm:gap-2 shrink-0">
-                                <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-lg sm:text-3xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 shrink-0"
-                                     style="background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.35);color:#fff;box-shadow:0 8px 24px -6px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.2);">
-                                    {{ $step }}
-                                </div>
-                                <span class="text-white/65 text-[9px] sm:text-[11px] font-bold tracking-wide">
-                                    {{ app()->getLocale() == 'ar' ? 'دفعة '.$step : 'Pay '.$step }}
-                                </span>
+                <ul class="space-y-2.5 mb-5">
+                    @foreach($package['tags'] as $tag)
+                    <li class="flex items-start gap-2.5 text-sm font-semibold text-[#5a463b] dark:text-gray-300 leading-relaxed">
+                        <span class="pk-check"><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+                        <span>{{ $tag }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+
+                <div class="mt-auto">
+                    @if(!empty($package['symptoms']))
+                    <details class="pk-more mb-4">
+                        <summary>
+                            {{ $isAr ? 'اعرف أكثر: العلامات والأسباب' : 'Learn more: signs & causes' }}
+                            <svg class="w-4 h-4 shrink-0 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="space-y-4 pt-1 pb-2">
+                            @foreach($package['symptoms'] as $group)
+                            <div>
+                                <h4 class="text-[13px] font-black text-[#6d1b2b] dark:text-[#f3c6cd] mb-2">{{ $group['category'] }}</h4>
+                                <ul class="space-y-1.5">
+                                    @foreach($group['items'] as $item)
+                                    <li class="flex items-start gap-2 text-[13px] font-semibold text-[#6b5446] dark:text-gray-400 leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#b08a45] shrink-0 mt-2"></span>
+                                        <span>{{ $item }}</span>
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            @if($step < 4)
-                                <div class="flex items-center gap-1 sm:gap-1.5 mb-5 mx-1 sm:mx-4">
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.55);"></span>
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full" style="background:rgba(255,255,255,0.28);"></span>
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full hidden xs:block" style="background:rgba(255,255,255,0.12);"></span>
-                                </div>
-                            @endif
-                        @endfor
-                    </div>
-
-                    {{-- Badges + CTA --}}
-                    <div class="flex flex-col items-center gap-5">
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold"
-                                  style="background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.22);">
-                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                {{ app()->getLocale() == 'ar' ? 'بدون رسوم إضافية' : 'Zero Extra Fees' }}
-                            </span>
-                            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold"
-                                  style="background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.22);">
-                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                {{ app()->getLocale() == 'ar' ? 'موافقة فورية' : 'Instant Approval' }}
-                            </span>
-                            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold"
-                                  style="background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.22);">
-                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                                {{ app()->getLocale() == 'ar' ? 'آمن 100%' : '100% Secure' }}
-                            </span>
+                            @endforeach
                         </div>
-                        <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank"
-                           class="shimmer-btn inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-1"
-                           style="background:#fff;color:#4a0f1b;box-shadow:0 10px 30px -8px rgba(0,0,0,0.35);">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            {{ app()->getLocale() == 'ar' ? 'تواصل معنا الآن' : 'Contact Us Now' }}
-                        </a>
-                    </div>
+                    </details>
+                    @endif
 
+                    <a href="{{ $waLink(($isAr ? 'مرحباً، بدي أستفسر عن باقة: ' : 'Hello, I would like to ask about the package: ') . $package['title']) }}" target="_blank" rel="noopener" class="pk-cta">
+                        {!! $waIcon !!} {{ $isAr ? 'استفسر عن هذه الباقة' : 'Ask about this package' }}
+                    </a>
+                </div>
+            </article>
+            @endforeach
+
+            {{-- Not sure? Fills the last row next to the final card --}}
+            <div class="reveal sm:col-span-1 lg:col-span-2 rounded-[24px] bg-[#6d1b2b] text-white p-8 sm:p-10 flex flex-col justify-center relative overflow-hidden">
+                <div class="absolute -top-16 {{ $isAr ? '-left-16' : '-right-16' }} w-56 h-56 rounded-full border-[28px] border-white/[.06]"></div>
+                <span class="text-[#e8c98f] text-sm font-black mb-2">{{ $isAr ? 'مش متأكد؟' : 'Not sure?' }}</span>
+                <h3 class="text-2xl sm:text-3xl font-black leading-snug mb-3">{{ $isAr ? 'ما بتعرف أي باقة تناسب طفلك؟' : "Don't know which package fits your child?" }}</h3>
+                <p class="text-white/80 font-semibold leading-loose mb-7 max-w-lg">{{ $isAr ? 'احكِ لنا عن طفلك على الواتساب، ونقترح لك الباقة الأنسب بعد تقييم أولي — أو احجز استشارة مع المختص.' : 'Tell us about your child on WhatsApp and we will suggest the right package after a first assessment — or book a consultation.' }}</p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{{ $waLink($isAr ? 'مرحباً، بدي أستشير عن باقة مناسبة لطفلي' : 'Hello, I would like advice on the right package for my child') }}" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-[#6d1b2b] font-black hover:bg-[#f5ebe6] transition">
+                        {!! $waIcon !!} {{ $isAr ? 'استشرنا على الواتساب' : 'Ask us on WhatsApp' }}
+                    </a>
+                    <a href="{{ route('consultations') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/30 font-black hover:bg-white/10 transition">
+                        {{ $isAr ? 'احجز استشارة' : 'Book a consultation' }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- ─── deema installments ─── --}}
+        <div class="mt-14 sm:mt-20 reveal">
+            <div class="rounded-[28px] bg-[#fbf6ee] dark:bg-white/[.03] border border-[#efe4d6] dark:border-white/10 p-7 sm:p-12 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
+                    <span class="inline-flex items-center gap-2.5 bg-white dark:bg-white/5 border border-[#eadfd3] dark:border-white/10 rounded-full px-4 py-2 mb-5">
+                        <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 w-auto">
+                        <span class="text-xs font-black text-[#7a6253] dark:text-gray-300">{{ $isAr ? 'بالتعاون مع deema' : 'In partnership with deema' }}</span>
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white leading-snug mb-3">
+                        {{ $isAr ? 'قسّط اشتراكك على' : 'Split your subscription into' }} <span class="text-[#6d1b2b] dark:text-[#f3c6cd]">{{ $isAr ? '4 دفعات' : '4 payments' }}</span>
+                    </h2>
+                    <p class="font-semibold text-[#6b5446] dark:text-gray-300 leading-loose mb-6">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات — بدون رسوم إضافية وبموافقة فورية.' : 'Pay the first part today and the rest over 3 payments — no extra fees, instant approval.' }}</p>
+                    <a href="{{ $waLink($isAr ? 'مرحباً، بدي أشترك بباقة وأقسّط مع deema' : 'Hello, I would like to subscribe to a package and pay with deema') }}" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black transition">
+                        {!! $waIcon !!} {{ $isAr ? 'تواصل معنا للاشتراك' : 'Contact us to subscribe' }}
+                    </a>
+                </div>
+
+                {{-- 4 payments: first today --}}
+                <div class="grid grid-cols-4 gap-2 sm:gap-3">
+                    @for($p = 1; $p <= 4; $p++)
+                    <div class="text-center">
+                        <div class="h-3 rounded-full mb-3 {{ $p === 1 ? 'bg-[#6d1b2b]' : 'bg-[#6d1b2b]/15 dark:bg-white/10' }}"></div>
+                        <div class="text-2xl sm:text-4xl font-black {{ $p === 1 ? 'text-[#6d1b2b] dark:text-[#f3c6cd]' : 'text-gray-400' }}">{{ $p }}</div>
+                        <div class="text-[11px] sm:text-xs font-bold text-[#8a7462] mt-1">{{ $p === 1 ? ($isAr ? 'اليوم' : 'Today') : ($isAr ? 'دفعة ' . $p : 'Payment ' . $p) }}</div>
+                    </div>
+                    @endfor
                 </div>
             </div>
         </div>
@@ -668,34 +614,10 @@
     </div>
 </section>
 
-{{-- Inline script (layout has no @stack) --}}
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof reveal === 'function') reveal();
-    });
-
-    function toggleSymptoms(btn) {
-        let panel = btn.nextElementSibling;
-        while (panel && !panel.classList.contains('symptoms-panel')) {
-            panel = panel.nextElementSibling;
-        }
-        if (!panel) return;
-
-        const chevron = btn.querySelector('.symptoms-chevron');
-        const isOpen = panel.getAttribute('data-open') === 'true';
-
-        if (isOpen) {
-            panel.style.maxHeight = '0px';
-            panel.style.opacity = '0';
-            panel.setAttribute('data-open', 'false');
-            if (chevron) chevron.style.transform = 'rotate(0deg)';
-        } else {
-            panel.style.maxHeight = panel.scrollHeight + 'px';
-            panel.style.opacity = '1';
-            panel.setAttribute('data-open', 'true');
-            if (chevron) chevron.style.transform = 'rotate(180deg)';
-        }
-    }
+    document.addEventListener('DOMContentLoaded', () => { if (typeof reveal === 'function') reveal(); });
 </script>
 
 @endsection
