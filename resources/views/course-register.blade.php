@@ -53,6 +53,17 @@
     .co-code summary::-webkit-details-marker { display: none; }
     .co-gift { background: linear-gradient(135deg, #fffaf0 0%, #fbf0dc 100%); border: 1.5px dashed #d9b877; transition: opacity .2s; }
     .dark .co-gift { background: rgba(251,191,36,.06); border-color: rgba(252,211,77,.3); }
+    /* WhatsApp number box */
+    .co-wa { background: #f1faf4; border: 1.5px solid #bfe8cd; border-radius: 18px; padding: 16px; transition: border-color .15s, box-shadow .15s; }
+    .co-wa:focus-within { border-color: #25d366; box-shadow: 0 0 0 4px rgba(37,211,102,.12); }
+    .co-wa.is-bad { background: #fef4f4; border-color: #f3b4b4; }
+    .dark .co-wa { background: rgba(37,211,102,.06); border-color: rgba(37,211,102,.28); }
+    .co-wa-icon { width: 30px; height: 30px; border-radius: 99px; background: #25d366; color: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 10px -3px rgba(37,211,102,.6); }
+    .co-wa-input { font-size: 19px; font-weight: 800; letter-spacing: .06em; padding-top: 14px; padding-bottom: 14px; border-color: #cfe9d8; font-variant-numeric: tabular-nums; padding-inline-end: 46px; }
+    .co-wa-input:focus { border-color: #25d366; box-shadow: none; }
+    .co-wa-input::placeholder { letter-spacing: .06em; font-weight: 600; }
+    .co-wa-hint { font-size: 12.5px; font-weight: 700; color: #3f6b4f; margin-top: 10px; line-height: 1.7; }
+    .dark .co-wa-hint { color: #9fd8b3; }
 </style>
 
 <section class="co-page py-8 sm:py-12" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
@@ -196,10 +207,18 @@
                                 @error('name')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
                             </div>
 
-                            <div>
-                                <label class="co-label">{{ $isAr ? 'رقم الهاتف (واتساب)' : 'Phone (WhatsApp)' }} <span class="text-[color:var(--c1)]">*</span></label>
-                                <input type="tel" name="phone" value="{{ old('phone') }}" required dir="ltr" autocomplete="tel" placeholder="5xxxxxxx" class="co-input {{ $isAr ? 'text-right' : '' }}">
-                                @error('phone')<p class="text-red-600 text-xs font-bold mt-1">{{ $isAr ? 'رقم الهاتف غير صحيح' : $message }}</p>@enderror
+                            {{-- WhatsApp number: highlighted, it is how the center reaches the attendee later --}}
+                            <div class="co-wa {{ $errors->has('phone') ? 'is-bad' : '' }}">
+                                <label for="phone" class="flex items-center gap-2.5 mb-2.5">
+                                    <span class="co-wa-icon"><svg viewBox="0 0 24 24" fill="currentColor" class="w-[18px] h-[18px]"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.44 9.44 0 0 1-1.45-5.03c0-5.22 4.25-9.46 9.48-9.46 2.53 0 4.9.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.22-4.25 9.46-9.47 9.46zm8.06-17.52A11.32 11.32 0 0 0 12.04.66C5.76.66.65 5.77.65 12.05c0 2 .52 3.96 1.52 5.69L.55 23.7l6.1-1.6a11.36 11.36 0 0 0 5.4 1.37h.01c6.27 0 11.38-5.1 11.39-11.38 0-3.04-1.18-5.9-3.34-8.05z"/></svg></span>
+                                    <span class="text-[15px] font-black text-gray-900 dark:text-white">{{ $isAr ? 'رقم الواتساب' : 'WhatsApp number' }} <span class="text-[color:var(--c1)]">*</span></span>
+                                </label>
+                                <div class="relative">
+                                    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required dir="ltr" inputmode="tel" autocomplete="tel" placeholder="5xxx xxxx" class="co-input co-wa-input {{ $isAr ? 'text-right' : '' }}">
+                                    <svg id="wa-ok" class="hidden absolute top-1/2 -translate-y-1/2 {{ $isAr ? 'left-3.5' : 'right-3.5' }} w-6 h-6 text-[#1da851]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                @error('phone')<p class="text-red-600 text-xs font-bold mt-2">{{ $isAr ? 'رقم الهاتف غير صحيح، تأكد منه وجرّب مرة ثانية' : $message }}</p>@enderror
+                                <p class="co-wa-hint">{{ $isAr ? 'على هذا الرقم نأكّد حجزك ونبلّغك بأي تحديث عن الدورة — تأكد إنه صحيح وعليه واتساب.' : 'We confirm your seat and send course updates to this number — make sure it is correct and on WhatsApp.' }}</p>
                             </div>
 
                             {{-- Discount code: a quiet link until needed --}}
@@ -303,6 +322,15 @@
     const codeInput = document.getElementById('code');
     const msg = document.getElementById('code-msg');
     const fmt = n => Number(n).toFixed(3);
+
+    // Green tick once the WhatsApp number has enough digits (same rule as the server)
+    const phone = document.getElementById('phone'), waOk = document.getElementById('wa-ok');
+    const checkPhone = () => {
+        const v = phone.value.trim();
+        waOk.classList.toggle('hidden', !/^\+?[0-9\s\-]{8,16}$/.test(v) || v.replace(/\D/g, '').length < 8);
+    };
+    phone.addEventListener('input', checkPhone);
+    checkPhone();
 
     function showMsg(text, ok) {
         msg.textContent = text;
