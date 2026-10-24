@@ -12,6 +12,13 @@
     $faqs = \App\Models\Faq::where('is_active', true)->orderBy('sort')->get();
     $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('sort')->get();
     $waLink = fn ($text) => 'https://wa.me/' . $site['whatsapp'] . '?text=' . rawurlencode($text);
+
+    // Gift code for paying without a discount code (Admin → Content → gift amount; 0 hides every mention)
+    $gift = \App\Models\CourseRegistration::giftAmount();
+    $giftTxt = \App\Models\CourseRegistration::giftAmountText();
+    $canBook = $featured && !$featured['is_full'];
+    $friendPrice = $featured ? (float) $featured['price'] - $gift : 0;
+    $fmt = fn ($v) => rtrim(rtrim(number_format((float) $v, 3, '.', ''), '0'), '.');
 @endphp
 
 @section('title', __('Welcome') . ' - ' . __('Motmaena Center'))
@@ -51,6 +58,31 @@
     .mh-num { font-family: inherit; font-weight: 900; color: var(--gold); }
     .mh-divider { height: 1px; background: linear-gradient(90deg, transparent, #e4d3cc, transparent); }
     .mh-section-title { font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 900; line-height: 1.25; }
+
+    .mh-accent { color: var(--wine); }
+    .dark .mh-accent { color: var(--gold-l); }
+
+    /* Gift offer */
+    .mh-gift-pill { display: flex; align-items: center; gap: 12px; background: #fffaf0; border: 1.5px dashed var(--gold); border-radius: 18px; padding: 12px 16px; transition: transform .15s, box-shadow .15s; }
+    .mh-gift-pill:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -18px var(--gold); }
+    .dark .mh-gift-pill { background: rgba(201,163,92,.08); }
+    .mh-gift-ico { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, var(--gold), #b38a3e); box-shadow: 0 8px 18px -8px #b38a3e; flex-shrink: 0; }
+    .mh-coupon { position: relative; border-radius: 28px; color: #fff; background: radial-gradient(120% 90% at 100% 0%, var(--wine-l), var(--wine) 50%, var(--wine-d)); box-shadow: 0 40px 70px -40px var(--wine-d); overflow: hidden; }
+    .mh-coupon::before { content: ''; position: absolute; inset: 10px; border: 1.5px solid color-mix(in srgb, var(--gold) 55%, transparent); border-radius: 20px; pointer-events: none; }
+    .mh-coupon-cut { position: relative; border-top: 2px dashed rgba(255,255,255,.28); }
+    .mh-coupon-cut::before, .mh-coupon-cut::after { content: ''; position: absolute; top: -15px; width: 28px; height: 28px; border-radius: 99px; background: var(--mh-bg, #fff); }
+    .dark .mh-coupon-cut::before, .dark .mh-coupon-cut::after { background: #0f0b0c; }
+    .mh-coupon-cut::before { left: -14px; } .mh-coupon-cut::after { right: -14px; }
+    .mh-step { display: flex; gap: 14px; align-items: flex-start; }
+    .mh-step-n { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; background: var(--wine); flex-shrink: 0; }
+
+    /* Sticky booking bar (phones) */
+    .mh-bar { transform: translateY(110%); transition: transform .3s ease; }
+    .mh-bar.on { transform: translateY(0); }
+    @media (max-width: 1023px) {
+        #global-float-wa, #back-to-top { transition: bottom .3s ease, opacity .5s, transform .5s; }
+        body.mh-bar-on #global-float-wa, body.mh-bar-on #back-to-top { bottom: 92px; }
+    }
 </style>
 
 @php $customAnnouncement = $site['announcement_' . $lang] ?? ''; @endphp
@@ -64,6 +96,8 @@
         <span>
             @if($customAnnouncement)
                 {{ $customAnnouncement }}
+            @elseif($canBook && $gift > 0)
+                🎁 {{ $t('احجز الآن وخذ كود هدية بقيمة ' . $giftTxt . ' د.ك', 'Book now and get a ' . $giftTxt . ' KWD gift code') }}
             @else
                 {{ $featured['title'][$lang] }} <span class="text-white/60">·</span> {{ $featured['day'][$lang] }} {{ \Carbon\Carbon::parse($featured['date'])->locale($lang)->translatedFormat('j F') }} <span class="text-white/60">·</span> {{ $featured['price'] }} {{ $t('د.ك', 'KWD') }}
             @endif
@@ -102,7 +136,7 @@
                         @include('partials.countdown', ['startsAt' => $featured['starts_at']])
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-3">
+                    <div id="hero-cta" class="flex flex-col sm:flex-row items-center justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-3">
                         @if($featured['is_full'])
                             <div class="w-full max-w-md">@include('partials.notify-form', ['courseKey' => $featured['slug']])</div>
                         @else
@@ -110,9 +144,18 @@
                                 {{ $t('احجز مقعدك', 'Book your seat') }} · {{ $featured['price'] }} {{ $t('د.ك', 'KWD') }}
                                 <svg class="w-5 h-5 {{ $isAr ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                             </a>
-                            <a href="#course" class="mh-btn mh-btn-ghost w-full sm:w-auto">{{ $t('محاور الدورة', 'What you will learn') }}</a>
+                            <a href="#course" class="mh-btn mh-btn-ghost max-sm:!hidden sm:w-auto">{{ $t('محاور الدورة', 'What you will learn') }}</a>
                         @endif
                     </div>
+                    @if($canBook && $gift > 0)
+                        <a href="#gift" class="mh-gift-pill mt-5 max-w-md mx-auto lg:mx-0 text-start">
+                            <span class="mh-gift-ico">🎁</span>
+                            <span class="min-w-0">
+                                <span class="block font-black text-[15px] mh-title">{{ $t('هدية مع حجزك: كود خصم بقيمة ' . $giftTxt . ' د.ك', 'Your booking comes with a ' . $giftTxt . ' KWD gift code') }}</span>
+                                <span class="block text-xs sm:text-sm font-bold text-stone-500 dark:text-stone-400 mt-0.5">{{ $t('لدورتك الجاية أو اهديه لصديقك', 'For your next course, or gift it to a friend') }} · <span class="mh-accent">{{ $t('كيف؟', 'How?') }}</span></span>
+                            </span>
+                        </a>
+                    @endif
                     @if($featured['show_installments'] && !$featured['is_full'])
                         <p class="text-xs font-bold text-stone-500 dark:text-stone-400 mt-3">{{ $t('أو قسّطها على 4 دفعات مع deema', 'or split into 4 payments with deema') }}</p>
                     @endif
@@ -169,9 +212,67 @@
     </div>
 </section>
 
+{{-- ═══════════════ GIFT OFFER ═══════════════ --}}
+@if($canBook && $gift > 0)
+<section id="gift" class="py-14 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20" style="--mh-bg: #fff">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+        {{-- Coupon --}}
+        <div class="lg:col-span-5">
+            <div class="mh-coupon max-w-sm mx-auto text-center">
+                <div class="px-7 pt-7 pb-6 sm:pt-8 sm:pb-7">
+                    <p class="font-black text-sm" style="color: var(--gold-l)">🎁 {{ $t('هدية من مركز مطمئنة', 'A gift from Motmaena Center') }}</p>
+                    <div class="flex items-baseline justify-center gap-2 my-2" dir="ltr">
+                        <span class="font-black leading-none text-[4.5rem] sm:text-[5.5rem]" style="color: var(--gold)">{{ $giftTxt }}</span>
+                        <span class="text-2xl font-black text-white/90">{{ $t('د.ك', 'KWD') }}</span>
+                    </div>
+                    <p class="font-bold text-white/85">{{ $t('خصم على أي دورة جاية', 'Off any upcoming course') }}</p>
+                </div>
+                <div class="mh-coupon-cut"></div>
+                <div class="px-7 pt-6 pb-8">
+                    <div class="inline-block bg-white rounded-xl px-5 py-2 font-black tracking-[.3em] text-lg" style="color: var(--wine)" dir="ltr">GIFT••••</div>
+                    <p class="text-xs font-bold text-white/75 mt-3">{{ $t('لك أو لصديقك · يُستخدم مرة وحدة', 'For you or a friend · single use') }}</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Copy + steps --}}
+        <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
+            <p class="mh-gold font-black text-sm mb-2">{{ $t('عرض الحجز', 'Booking offer') }}</p>
+            <h2 class="mh-section-title mh-title mb-3">{{ $t('احجز اليوم… وخذ هدية بقيمة ' . $giftTxt . ' د.ك', 'Book today… and get a ' . $giftTxt . ' KWD gift') }}</h2>
+            <p class="font-semibold text-stone-600 dark:text-stone-300 leading-relaxed mb-7 max-w-xl mx-auto lg:mx-0">{{ $t('كل من يحجز ويدفع بدون كود خصم، ياخذ فوراً كود هدية يقدر يستخدمه بنفسه أو يهديه لأحد يحبه.', 'Everyone who books and pays without a discount code instantly gets a gift code to use or pass on.') }}</p>
+
+            <ol class="space-y-5 max-w-xl mx-auto lg:mx-0 text-start mb-7">
+                @foreach([
+                    [$t('احجز وادفع', 'Book & pay'), $t('سجّل بالدورة وادفع أونلاين بدون كود خصم.', 'Register and pay online without a discount code.')],
+                    [$t('استلم كود الهدية', 'Get your gift code'), $t('يظهر لك كود بقيمة ' . $giftTxt . ' د.ك فور إتمام الدفع.', 'A ' . $giftTxt . ' KWD code appears as soon as you pay.')],
+                    [$t('استخدمه أو اهديه', 'Use it or gift it'), $t('على دورتك الجاية بمطمئنة، أو ارسله لصديقك بضغطة واتساب.', 'On your next Motmaena course, or send it to a friend on WhatsApp.')],
+                ] as $i => [$title, $desc])
+                    <li class="mh-step">
+                        <span class="mh-step-n">{{ $i + 1 }}</span>
+                        <span><span class="block font-black mh-title">{{ $title }}</span><span class="block text-sm font-semibold text-stone-600 dark:text-stone-300 mt-0.5">{{ $desc }}</span></span>
+                    </li>
+                @endforeach
+            </ol>
+
+            @if($friendPrice > 0)
+            <div class="rounded-2xl bg-[#faf6f1] dark:bg-white/5 border border-[#efe5e0] dark:border-white/10 px-4 py-3 text-sm font-bold text-stone-700 dark:text-stone-200 max-w-xl mx-auto lg:mx-0 mb-7 text-start">
+                💡 {{ $t('مثال: صديقك يحضر «' . $featured['title']['ar'] . '» بـ', 'Example: your friend joins "' . $featured['title']['en'] . '" for') }}
+                <span class="font-black mh-accent">{{ $fmt($friendPrice) }} {{ $t('د.ك', 'KWD') }}</span>
+                {{ $t('بدل', 'instead of') }} <span class="line-through text-stone-400">{{ $featured['price'] }} {{ $t('د.ك', 'KWD') }}</span>
+            </div>
+            @endif
+
+            <a href="{{ route('course.register', $featured['slug']) }}" class="mh-btn mh-btn-primary w-full sm:w-auto">{{ $t('احجز مقعدك وخذ هديتك', 'Book your seat & get your gift') }}</a>
+            <p class="text-xs font-semibold text-stone-400 mt-3">{{ $t('* الهدية للحجوزات المدفوعة بدون كود خصم، والكود يُستخدم مرة وحدة.', '* For paid bookings without a discount code. Each gift code works once.') }}</p>
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- ═══════════════ FEATURED COURSE DETAILS ═══════════════ --}}
 @if($featured && $featured['topics'][$lang])
-<section id="course" class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20">
+<section id="course" class="py-16 sm:py-20 mh-cream scroll-mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-12 gap-10 items-start">
             <div class="lg:col-span-4 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
@@ -182,10 +283,10 @@
                 <a href="{{ route('course.register', $featured['slug']) }}" class="mh-btn mh-btn-primary">{{ $t('احجز مقعدك', 'Book your seat') }}</a>
                 @endunless
             </div>
-            <div class="lg:col-span-8 grid sm:grid-cols-2 gap-4">
+            <div class="lg:col-span-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
                 @foreach($featured['topics'][$lang] as $i => $topic)
-                    <div class="mh-card p-5 flex items-start gap-4">
-                        <span class="mh-num text-2xl leading-none w-9 shrink-0">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                    <div class="mh-card p-4 sm:p-5 flex items-center sm:items-start gap-4">
+                        <span class="mh-num text-xl sm:text-2xl leading-none w-8 sm:w-9 shrink-0">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
                         <span class="font-bold text-stone-800 dark:text-stone-100 leading-snug pt-0.5">{{ $topic }}</span>
                     </div>
                 @endforeach
@@ -197,7 +298,7 @@
 
 {{-- ═══════════════ OTHER UPCOMING COURSES ═══════════════ --}}
 @if($others->isNotEmpty())
-<section class="py-16 sm:py-20 mh-cream">
+<section class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c]">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10">
             <p class="mh-gold font-black text-sm mb-2">{{ $t('التسجيل مفتوح', 'Registration open') }}</p>
@@ -211,7 +312,10 @@
                     @if($o['seats_left'] !== null)<span class="text-xs font-black {{ $o['is_full'] ? 'text-red-600' : 'text-amber-600' }}">{{ $o['is_full'] ? $t('اكتمل', 'Full') : $t('متبقي ' . $o['seats_left'], $o['seats_left'] . ' left') }}</span>@endif
                 </div>
                 <h3 class="text-xl font-black mh-title mb-1">{{ $o['title'][$lang] }}</h3>
-                <p class="text-sm font-bold text-stone-500 dark:text-stone-400 mb-5">{{ $o['trainer'][$lang] }}@if($o['time'][$lang]) · {{ $o['time'][$lang] }}@endif</p>
+                <p class="text-sm font-bold text-stone-500 dark:text-stone-400 {{ $gift > 0 && !$o['is_full'] ? 'mb-3' : 'mb-5' }}">{{ $o['trainer'][$lang] }}@if($o['time'][$lang]) · {{ $o['time'][$lang] }}@endif</p>
+                @if($gift > 0 && !$o['is_full'])
+                    <p class="text-xs font-black mb-5" style="color: #9a6b1f">🎁 {{ $t('+ كود هدية ' . $giftTxt . ' د.ك مع الحجز', '+ ' . $giftTxt . ' KWD gift code with booking') }}</p>
+                @endif
                 <div class="mt-auto flex items-center justify-between pt-4 border-t border-[#efe5e0] dark:border-white/10">
                     <span class="font-black text-xl" style="color: var(--wine)">{{ $o['price'] }} <small class="text-xs">{{ $t('د.ك', 'KWD') }}</small></span>
                     <span class="font-black text-sm" style="color: var(--wine)">{{ $t('التفاصيل والحجز ←', 'Details & booking →') }}</span>
@@ -224,7 +328,7 @@
 @endif
 
 {{-- ═══════════════ SERVICES ═══════════════ --}}
-<section class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c]">
+<section class="py-16 sm:py-20 mh-cream">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10">
             <p class="mh-gold font-black text-sm mb-2">{{ $t('خدماتنا', 'Our services') }}</p>
@@ -344,10 +448,13 @@
 @endif
 
 {{-- ═══════════════ FINAL CTA ═══════════════ --}}
-<section class="mh-wine text-white">
+<section id="final-cta" class="mh-wine text-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16 grid lg:grid-cols-2 gap-8 items-center">
         <div class="text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
-            <h2 class="text-2xl sm:text-3xl font-black mb-2">{{ $featured && !$featured['is_full'] ? $t('جاهز تحجز مقعدك؟', 'Ready to book your seat?') : $t('لا تفوّتك الدورة الجاية', "Don't miss the next course") }}</h2>
+            <h2 class="text-2xl sm:text-3xl font-black mb-2">{{ $canBook ? $t('جاهز تحجز مقعدك؟', 'Ready to book your seat?') : $t('لا تفوّتك الدورة الجاية', "Don't miss the next course") }}</h2>
+            @if($canBook && $gift > 0)
+                <p class="font-black mb-1" style="color: var(--gold-l)">🎁 {{ $t('ومع حجزك كود هدية بقيمة ' . $giftTxt . ' د.ك لك أو لصديقك.', 'Plus a ' . $giftTxt . ' KWD gift code for you or a friend.') }}</p>
+            @endif
             <p class="text-white/80 font-semibold">{{ $t('أو اترك رقمك ونبلّغك أول ما ينفتح التسجيل بدورة جديدة.', 'Or leave your number and we will tell you when a new course opens.') }}</p>
         </div>
         <div class="flex flex-col gap-3">
@@ -359,6 +466,38 @@
         </div>
     </div>
 </section>
+
+{{-- ═══════════════ STICKY BOOKING BAR (phones) ═══════════════ --}}
+@if($canBook)
+<div id="mh-bar" class="mh-bar lg:hidden fixed inset-x-0 bottom-0 z-[70] bg-white/95 dark:bg-[#1a1415]/95 backdrop-blur border-t border-[#efe5e0] dark:border-white/10 shadow-[0_-12px_30px_-18px_rgba(0,0,0,.35)]" style="padding-bottom: max(12px, env(safe-area-inset-bottom))">
+    <div class="container mx-auto px-4 pt-3 flex items-center gap-3">
+        <div class="min-w-0 flex-1">
+            <p class="font-black text-sm mh-title truncate">{{ $featured['title'][$lang] }}</p>
+            <p class="text-xs font-bold truncate">
+                <span class="mh-accent">{{ $featured['price'] }} {{ $t('د.ك', 'KWD') }}</span>
+                @if($gift > 0)<span class="text-stone-500 dark:text-stone-400"> · 🎁 {{ $t('+ هدية ' . $giftTxt . ' د.ك', '+ ' . $giftTxt . ' KWD gift') }}</span>@endif
+            </p>
+        </div>
+        <a href="{{ route('course.register', $featured['slug']) }}" class="mh-btn mh-btn-primary !py-3 !px-5 text-sm">{{ $t('احجز مقعدك', 'Book now') }}</a>
+    </div>
+</div>
+<script>
+    // Show the bar once the hero button is scrolled away; hide it again at the closing call-to-action
+    (function () {
+        var bar = document.getElementById('mh-bar'), hero = document.getElementById('hero-cta'), end = document.getElementById('final-cta');
+        if (!bar || !hero) return;
+        var ticking = false;
+        function update() {
+            ticking = false;
+            var on = hero.getBoundingClientRect().bottom < 0 && (!end || end.getBoundingClientRect().top > window.innerHeight);
+            bar.classList.toggle('on', on);
+            document.body.classList.toggle('mh-bar-on', on);
+        }
+        window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+        update();
+    })();
+</script>
+@endif
 
 </div>
 @endsection

@@ -5,6 +5,8 @@
     $isAr = $lang === 'ar';
     $kwd = $isAr ? 'د.ك' : 'KWD';
     $price = number_format((float) $offer['price'], 3);
+    $giftAmount = \App\Models\CourseRegistration::giftAmount();
+    $giftTxt = \App\Models\CourseRegistration::giftAmountText();
 @endphp
 
 @section('title', ($isAr ? 'التسجيل في ' : 'Register: ') . $offer['title'][$lang] . ' - ' . __('Motmaena Center'))
@@ -131,7 +133,20 @@
                         @if($offer['show_installments'])
                         <p class="text-xs font-bold text-gray-500 dark:text-gray-400 text-end">{{ $isAr ? 'أو قسّطها على 4 دفعات مع deema' : 'or split into 4 payments with deema' }}</p>
                         @endif
+                        @if($giftAmount > 0 && !$offer['is_full'])
+                        <div id="gift-row" class="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 mt-2 bg-[#fbf3e4] dark:bg-amber-400/10 border border-dashed border-[#d9b877] text-[#8a5a12] dark:text-amber-200 transition">
+                            <span class="font-black">🎁 {{ $isAr ? 'هديتك بعد الدفع' : 'Your gift after paying' }}</span>
+                            <span class="font-black">{{ $isAr ? 'كود ' . $giftTxt . ' د.ك' : $giftTxt . ' KWD code' }}</span>
+                        </div>
+                        @endif
                     </div>
+
+                    @unless($offer['is_full'])
+                    <a href="#reg-card" class="lg:hidden flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-black text-white co-pay">
+                        {{ $isAr ? 'أكمل الحجز' : 'Continue booking' }}
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7-7-7"/></svg>
+                    </a>
+                    @endunless
                 </div>
             </aside>
 
@@ -178,7 +193,7 @@
                     {{-- Discount code (tucked away until needed) --}}
                     <details class="rounded-xl border border-gray-200 dark:border-white/10 px-4 py-3" @if(old('code') || $errors->has('code')) open @endif>
                         <summary class="cursor-pointer list-none text-sm font-black text-[color:var(--c1)] dark:text-[color:var(--ca)]">
-                            {{ $isAr ? 'عندك كود خصم؟' : 'Have a discount code?' }}
+                            {{ $isAr ? 'عندك كود خصم أو كود هدية؟' : 'Have a discount or gift code?' }}
                         </summary>
                         <div class="flex gap-2 mt-3">
                             <input type="text" name="code" id="code" value="{{ old('code') }}" maxlength="40" dir="ltr" autocomplete="off" class="co-input uppercase" placeholder="CODE">
@@ -190,13 +205,12 @@
                     </details>
 
                     {{-- Gift code promise (only for paying without a discount code) --}}
-                    @php $giftAmount = \App\Models\CourseRegistration::giftAmount(); @endphp
                     @if($giftAmount > 0)
-                    <div id="gift-note" class="flex items-start gap-3 rounded-2xl border border-[color:var(--cbd)] bg-[color:var(--ct)] dark:bg-white/5 dark:border-white/10 p-4 transition">
-                        <span class="w-10 h-10 rounded-xl bg-[color:var(--c1)] text-white flex items-center justify-center text-lg shrink-0">🎁</span>
+                    <div id="gift-note" class="flex items-start gap-3 rounded-2xl border-[1.5px] border-dashed border-[#d9b877] bg-[#fffaf0] dark:bg-amber-400/5 dark:border-amber-300/30 p-4 transition">
+                        <span class="w-11 h-11 rounded-xl text-white flex items-center justify-center text-xl shrink-0" style="background: linear-gradient(135deg, #c9a35c, #b38a3e)">🎁</span>
                         <div class="text-sm">
-                            <p class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'هدية إلك بعد الدفع: كود خصم بقيمة ' . rtrim(rtrim(number_format($giftAmount, 3), '0'), '.') . ' دنانير' : 'Your gift after paying: a ' . rtrim(rtrim(number_format($giftAmount, 3), '0'), '.') . ' KWD discount code' }}</p>
-                            <p class="font-semibold text-gray-600 dark:text-gray-300 mt-0.5">{{ $isAr ? 'اهديه لصديقك، أو استخدمه إنت على دورتك الجاية.' : 'Gift it to a friend, or use it yourself on your next course.' }}</p>
+                            <p class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'هديتك بعد الدفع: كود خصم بقيمة ' . $giftTxt . ' د.ك' : 'Your gift after paying: a ' . $giftTxt . ' KWD discount code' }}</p>
+                            <p class="font-semibold text-gray-600 dark:text-gray-300 mt-0.5">{{ $isAr ? 'يظهر لك فور الدفع — استخدمه على دورتك الجاية أو اهديه لصديقك.' : 'Shown right after you pay — use it on your next course or gift it to a friend.' }}</p>
                             <p id="gift-off" class="hidden font-bold text-[color:var(--c1)] dark:text-[color:var(--ca)] text-xs mt-1">{{ $isAr ? '* الهدية للتسجيل بدون كود خصم.' : '* The gift applies to bookings without a discount code.' }}</p>
                         </div>
                     </div>
@@ -260,6 +274,8 @@
     }
 
     function giftState(codeApplied) {
+        var row = document.getElementById('gift-row');
+        if (row) row.style.display = codeApplied ? 'none' : '';
         var note = document.getElementById('gift-note');
         if (!note) return;
         note.style.opacity = codeApplied ? '.5' : '1';

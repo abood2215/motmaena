@@ -82,7 +82,8 @@ class GrowthFeaturesTest extends TestCase
     public function test_paying_without_a_code_earns_a_fixed_gift_code(): void
     {
         // Promised before paying
-        $this->get('/register/anger-management')->assertSee('هدية إلك بعد الدفع: كود خصم بقيمة 10 دنانير');
+        $this->get('/register/anger-management')->assertSee('هديتك بعد الدفع: كود خصم بقيمة 10 د.ك');
+        $this->get('/')->assertSee('احجز اليوم… وخذ هدية بقيمة 10 د.ك')->assertSee('احجز الآن وخذ كود هدية بقيمة 10 د.ك');
 
         $owner = $this->paid('51111111');
         $gift = $owner->rewardCode();
@@ -112,7 +113,8 @@ class GrowthFeaturesTest extends TestCase
         $owner = $this->paid('51111111');
         $this->assertNull($owner->rewardCode());
         $this->get('/done/' . $owner->review_token)->assertDontSee('مفاجأة إلك');
-        $this->get('/register/anger-management')->assertDontSee('هدية إلك بعد الدفع');
+        $this->get('/register/anger-management')->assertDontSee('هديتك بعد الدفع');
+        $this->get('/')->assertDontSee('id="gift"', false)->assertDontSee('كود هدية');
     }
 
     public function test_review_link_creates_a_hidden_testimonial(): void

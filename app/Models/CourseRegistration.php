@@ -105,6 +105,12 @@ class CourseRegistration extends Model
         return (float) (SiteSetting::current()['gift_code_kwd'] ?? 0);
     }
 
+    /** Gift amount for display: 10.000 -> "10", 7.5 -> "7.5". */
+    public static function giftAmountText(): string
+    {
+        return rtrim(rtrim(number_format(self::giftAmount(), 3), '0'), '.');
+    }
+
     /** Paid without any discount code while gift codes are switched on. */
     public function rewardEligible(): bool
     {

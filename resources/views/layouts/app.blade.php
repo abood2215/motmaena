@@ -42,19 +42,11 @@
     </head>
     <body class="bg-[var(--bg-color)] text-[var(--text-color)] antialiased transition-colors duration-300">
 
-        <!-- ═══════ PRELOADER ═══════ -->
-        <div id="preloader" class="fixed inset-0 z-[9999] bg-[var(--bg-color)] flex items-center justify-center transition-opacity duration-700">
-            <div class="flex flex-col items-center gap-6">
-                <div class="preloader-logo">
-                    <img src="{{ asset('logo.png') }}" alt="{{ __('Motmaena Center') }}" class="h-14 md:h-16">
-                </div>
-                <div class="flex gap-1.5">
-                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0s"></span>
-                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
-                    <span class="w-2.5 h-2.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
-                </div>
-            </div>
-        </div>
+        @php
+            // Featured course for the header "Book" button and the top of the phone menu
+            $navOffer = rescue(fn () => \App\Models\CourseOffer::featured()?->toOfferArray(), null, false);
+            $navOffer = ($navOffer && !$navOffer['is_full'] && !request()->routeIs('course.register')) ? $navOffer : null;
+        @endphp
 
         <div class="min-h-screen flex flex-col">
 
@@ -77,6 +69,11 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
+                        @if($navOffer)
+                            <a href="{{ route('course.register', $navOffer['slug']) }}" class="hidden lg:inline-flex items-center gap-2 bg-primary hover:opacity-90 text-white text-sm font-black px-5 py-2.5 rounded-xl shadow-sm transition">
+                                {{ app()->getLocale() == 'ar' ? 'احجز مقعدك' : 'Book your seat' }}
+                            </a>
+                        @endif
                         <!-- Hamburger (mobile only) -->
                         <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl bg-gray-50 dark:bg-dark-border text-gray-500 dark:text-gray-300 hover:bg-primary/10 hover:text-primary transition-all" aria-label="Menu">
                             <svg id="hamburger-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,6 +105,17 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden lg:hidden bg-[var(--bg-color)]/95 backdrop-blur-md border-b border-[var(--border-color)] shadow-xl animate-menu-in max-h-[calc(100vh-80px)] overflow-y-auto">
                 <nav class="container mx-auto px-3 sm:px-4 py-3 sm:py-6 flex flex-col gap-1">
+                    @if($navOffer)
+                        <a href="{{ route('course.register', $navOffer['slug']) }}" class="flex items-center justify-between gap-3 px-4 py-3.5 mb-2 rounded-xl bg-primary text-white font-black shadow-sm">
+                            <span class="min-w-0">
+                                <span class="block truncate">{{ app()->getLocale() == 'ar' ? 'احجز: ' : 'Book: ' }}{{ $navOffer['title'][app()->getLocale() == 'ar' ? 'ar' : 'en'] }}</span>
+                                @if(\App\Models\CourseRegistration::giftAmount() > 0)
+                                    <span class="block text-xs font-bold text-white/80">🎁 {{ app()->getLocale() == 'ar' ? '+ كود هدية ' . \App\Models\CourseRegistration::giftAmountText() . ' د.ك' : '+ ' . \App\Models\CourseRegistration::giftAmountText() . ' KWD gift code' }}</span>
+                                @endif
+                            </span>
+                            <span class="shrink-0 text-sm">{{ $navOffer['price'] }} {{ app()->getLocale() == 'ar' ? 'د.ك' : 'KWD' }}</span>
+                        </a>
+                    @endif
                     <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-primary/5 hover:text-primary transition-all font-bold text-[var(--text-color)] group {{ request()->is('/') ? 'bg-primary/5 text-primary' : '' }}">
                         <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-dark-border flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
@@ -307,21 +315,7 @@
             // Re-run reveal after Livewire updates DOM (filtering/search)
             document.addEventListener('livewire:updated', () => setTimeout(reveal, 40));
 
-            // ═══════ PRELOADER ═══════
-            // Hide as soon as the page is usable; waiting for 'load' (maps iframe, images)
-            // kept mobile visitors on a blank screen for seconds.
-            function hidePreloader() {
-                const preloader = document.getElementById('preloader');
-                if (!preloader) return;
-                preloader.style.opacity = '0';
-                preloader.style.pointerEvents = 'none';
-                setTimeout(() => preloader.remove(), 700);
-            }
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 250));
-            } else {
-                setTimeout(hidePreloader, 250);
-            }
+            // No preloader: visitors from ads should see the page the moment it arrives
             document.addEventListener('DOMContentLoaded', reveal);
 
             // ═══════ BACK TO TOP ═══════

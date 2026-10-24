@@ -42,10 +42,14 @@
                             <span class="text-3xl font-black tracking-widest text-[color:var(--c1)]" dir="ltr">{{ $gift->code }}</span>
                             <span class="text-xs font-black text-[#b45309]">{{ $isAr ? 'خصم ثابت ' . $amount . ' د.ك' : 'Fixed ' . $amount . ' KWD off' }}</span>
                         </div>
-                        <p class="text-xs font-bold text-white/80 mb-4">{{ $isAr ? 'إلك أو اهديه لحدا بتحبه — بينستخدم مرة وحدة.' : 'Use it yourself or gift it to someone — valid for one use.' }}</p>
+                        <p class="text-xs font-bold text-white/80 mb-4">{{ $isAr ? 'لك أو اهديه لأحد تحبه — يُستخدم مرة وحدة.' : 'Use it yourself or gift it to someone — valid for one use.' }}</p>
                         <div class="flex flex-wrap justify-center gap-2">
                             <button type="button" onclick="navigator.clipboard.writeText('{{ $gift->code }}');this.textContent='{{ $isAr ? 'تم النسخ ✓' : 'Copied ✓' }}'" class="rounded-xl px-5 py-2.5 font-black bg-white/20 border border-white/30">{{ $isAr ? 'نسخ الكود' : 'Copy code' }}</button>
                             <a href="https://wa.me/?text={{ rawurlencode($shareText) }}" target="_blank" class="rounded-xl px-5 py-2.5 font-black bg-[#25d366] text-white">{{ $isAr ? 'اهديه عبر واتساب' : 'Gift it on WhatsApp' }}</a>
+                        </div>
+                        <div class="mt-5 rounded-2xl bg-black/15 px-4 py-3 text-xs font-bold text-white/90 leading-relaxed {{ $isAr ? 'text-right' : 'text-left' }}">
+                            <p>💡 {{ $isAr ? 'طريقة الاستخدام: بصفحة التسجيل اضغط «عندك كود خصم أو كود هدية؟» واكتب الكود.' : 'How to use: on the registration page tap "Have a discount or gift code?" and enter it.' }}</p>
+                            <p class="mt-1">📸 {{ $isAr ? 'صوّر الشاشة أو انسخ الكود عشان ما يضيع — وإذا ضاع كلّمنا عالواتساب ونرسله لك.' : 'Take a screenshot or copy the code — if you lose it, WhatsApp us and we will resend it.' }}</p>
                         </div>
                     </div>
                 @endif
