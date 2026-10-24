@@ -89,6 +89,9 @@
             @if($gift = $r->rewardCode())
               <span class="tag code">{{ $gift->code }}</span>
               <div>{{ rtrim(rtrim(number_format((float) $gift->value, 3), '0'), '.') }} د.ك · {{ $gift->used_count ? '✓ مستخدم' : 'لسا ما انستخدم' }}</div>
+              @foreach($gift->paidUses as $use)
+                <div>استخدمه: <strong>{{ $use->name }}</strong> · <span class="ltr">{{ $use->phone }}</span></div>
+              @endforeach
             @else
               —
             @endif

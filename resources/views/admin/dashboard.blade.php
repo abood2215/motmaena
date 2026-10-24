@@ -76,6 +76,16 @@
     <div class="bar-row"><span class="bar-label">أكواد انعطت</span><span></span><span class="bar-num"><strong>{{ $gifts['issued'] }}</strong></span></div>
     <div class="bar-row"><span class="bar-label">انستخدمت بتسجيل مدفوع</span><span></span><span class="bar-num"><strong>{{ $gifts['used'] }}</strong>{{ $gifts['issued'] ? ' (' . round($gifts['used'] / $gifts['issued'] * 100) . '%)' : '' }}</span></div>
     <div class="bar-row"><span class="bar-label">إيراد جابته الأكواد</span><span></span><span class="bar-num"><strong>{{ $kwd($gifts['revenue']) }}</strong> د.ك (خصم {{ $kwd($gifts['discount']) }} د.ك)</span></div>
+    @if($gifts['recent']->isNotEmpty())
+      <p class="small" style="margin:14px 0 6px;font-weight:800">مين استخدم الأكواد:</p>
+      @foreach($gifts['recent'] as $r)
+        <div class="bar-row">
+          <span class="bar-label"><strong>{{ $r->name }}</strong> · <span class="ltr">{{ $r->phone }}</span></span>
+          <span></span>
+          <span class="bar-num"><span class="tag code">{{ $r->discount_code }}</span> خصم {{ $kwd($r->discount_amount) }} د.ك</span>
+        </div>
+      @endforeach
+    @endif
   </div>
 
   <div class="card">

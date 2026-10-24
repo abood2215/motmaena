@@ -358,7 +358,7 @@
             const res = await fetch(@json(route('course.register.check-code', $offerKey)), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': @json(csrf_token()) },
-                body: JSON.stringify({ code }),
+                body: JSON.stringify({ code, phone: document.querySelector('#reg-form [name="phone"]').value.trim() }),
             });
             const data = await res.json();
             if (data.ok) {

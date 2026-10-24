@@ -98,13 +98,33 @@ class GrowthFeaturesTest extends TestCase
         $this->postJson('/register/anger-management/check-code', ['code' => $gift->code])->assertJson(['discount' => 10, 'final' => 20]);
         $this->post('/register/anger-management', ['name' => 'Friend', 'phone' => '52222222', 'code' => $gift->code])->assertRedirect('https://pay.test');
         $this->followingRedirects()->get('/payment/callback?paymentId=P2')->assertSee('تم تسجيلك بنجاح')->assertDontSee('مفاجأة إلك');
+        Http::assertSent(fn ($r) => str_contains($r->url(), 'SendPayment') && $r['InvoiceValue'] == 20); // the discount is real
 
         $this->assertSame(1, $gift->fresh()->used_count);
         $this->postJson('/register/anger-management/check-code', ['code' => $gift->code])->assertStatus(422);
 
         $this->withSession(['admin_auth' => true])->get('/admin')->assertSee('أكواد الهدايا');
-        $this->get('/admin/registrations')->assertSee($gift->code)->assertSee('✓ مستخدم');
+        $this->get('/admin')->assertSee('مين استخدم الأكواد')->assertSee('Friend')->assertSee('52222222');
+        $this->get('/admin/registrations')->assertSee($gift->code)->assertSee('✓ مستخدم')->assertSee('استخدمه: <strong>Friend</strong>', false);
         $this->get('/admin/discount-codes')->assertDontSee($gift->code);
+    }
+
+    public function test_a_single_use_code_is_held_while_someone_is_paying_with_it(): void
+    {
+        $this->fakePaid(20);
+        $gift = $this->paid('51111111')->rewardCode();
+
+        // Friend A starts paying with the code but hasn't finished
+        $this->post('/register/anger-management', ['name' => 'A', 'phone' => '52222222', 'code' => $gift->code])->assertRedirect('https://pay.test');
+
+        // Friend B can't grab the same last use meanwhile; A can retry
+        $this->postJson('/register/anger-management/check-code', ['code' => $gift->code, 'phone' => '53333333'])->assertStatus(422)->assertJsonFragment(['ok' => false]);
+        $this->from('/register/anger-management')->post('/register/anger-management', ['name' => 'B', 'phone' => '53333333', 'code' => $gift->code])->assertSessionHasErrors('code');
+        $this->postJson('/register/anger-management/check-code', ['code' => $gift->code, 'phone' => '+965 5222 2222'])->assertOk();
+
+        // An abandoned checkout stops holding the code after a while
+        $this->travel(DiscountCode::HOLD_MINUTES + 1)->minutes();
+        $this->postJson('/register/anger-management/check-code', ['code' => $gift->code, 'phone' => '53333333'])->assertOk();
     }
 
     public function test_gift_codes_can_be_switched_off(): void

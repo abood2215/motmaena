@@ -18,6 +18,7 @@ class CourseRegistrationController extends Controller
         'wrong_course' => ['ar' => 'كود الخصم غير صالح لهذه الدورة', 'en' => 'This code is not valid for this course'],
         'expired'      => ['ar' => 'انتهت صلاحية كود الخصم', 'en' => 'This discount code has expired'],
         'used_up'      => ['ar' => 'تم استنفاد كود الخصم', 'en' => 'This discount code has been fully used'],
+        'in_use'       => ['ar' => 'هذا الكود قيد الاستخدام في عملية دفع ثانية الآن — جرّب بعد ساعتين أو كلّمنا عالواتساب', 'en' => 'This code is being used in another checkout right now — try again in two hours or contact us on WhatsApp'],
         'own_code'     => ['ar' => 'هذا كود الإحالة الخاص بك — شاركه مع أصدقائك ليحصلوا على الخصم', 'en' => 'This is your own referral code — share it with friends'],
         'not_yours'    => ['ar' => 'هذا الكود شخصي لصاحبه — سجّل بنفس رقم الهاتف اللي أخذت عليه الكود', 'en' => 'This personal code only works with the phone number it was issued to'],
     ];
@@ -35,9 +36,9 @@ class CourseRegistrationController extends Controller
     public function checkCode(Request $request, string $offerKey)
     {
         $offer = $this->offerOrFail($offerKey);
-        $request->validate(['code' => 'required|string|max:40']);
+        $request->validate(['code' => 'required|string|max:40', 'phone' => 'nullable|string|max:20']);
 
-        $quote = $this->quote($offerKey, $offer, $request->code);
+        $quote = $this->quote($offerKey, $offer, $request->code, $request->filled('phone') ? $this->localMobile($request->phone) : null);
 
         if ($quote['error']) {
             return response()->json(['ok' => false, 'message' => $quote['error']], 422);
@@ -71,7 +72,7 @@ class CourseRegistrationController extends Controller
             )]);
         }
 
-        $quote = $this->quote($offerKey, $offer, $data['code'] ?? null);
+        $quote = $this->quote($offerKey, $offer, $data['code'] ?? null, $data['phone']);
         $owner = $quote['code']?->owner;
         $reason = match (true) {
             $quote['error'] !== null || !$owner                                     => null,
@@ -288,7 +289,7 @@ class CourseRegistrationController extends Controller
     }
 
     /** @return array{original: float, discount: float, final: float, code: ?DiscountCode, error: ?string} */
-    private function quote(string $offerKey, array $offer, ?string $code): array
+    private function quote(string $offerKey, array $offer, ?string $code, ?string $phone = null): array
     {
         $original = round((float) $offer['price'], 3);
         $quote = ['original' => $original, 'discount' => 0.0, 'final' => $original, 'code' => null, 'error' => null];
@@ -298,7 +299,7 @@ class CourseRegistrationController extends Controller
         }
 
         $discountCode = DiscountCode::findByCode($code);
-        $reason = $discountCode ? $discountCode->unusableReason($offerKey) : 'not_found';
+        $reason = $discountCode ? $discountCode->unusableReason($offerKey, $phone) : 'not_found';
 
         if ($reason) {
             $quote['error'] = self::CODE_ERRORS[$reason][app()->getLocale()] ?? self::CODE_ERRORS[$reason]['ar'];

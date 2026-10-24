@@ -59,6 +59,7 @@ class DashboardController extends Controller
             'used'     => $giftUses->count(),
             'revenue'  => $giftUses->sum('final_amount'),
             'discount' => $giftUses->sum('discount_amount'),
+            'recent'   => $giftUses->sortByDesc('paid_at')->take(8),
         ];
 
         return view('admin.dashboard', compact('stats', 'chart', 'sources', 'codes', 'courses', 'latest', 'gifts'));

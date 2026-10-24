@@ -84,8 +84,13 @@ class CourseRegistration extends Model
                 'paid_at'        => now(),
             ]);
 
-            if ($fresh->discount_code_id) {
-                DiscountCode::whereKey($fresh->discount_code_id)->increment('used_count');
+            if ($fresh->discount_code_id && $code = DiscountCode::whereKey($fresh->discount_code_id)->lockForUpdate()->first()) {
+                // Should not happen (unpaid checkouts hold the code), but if it does the admin must see it
+                if ($code->max_uses !== null && $code->used_count >= $code->max_uses) {
+                    $fresh->update(['admin_notes' => trim($fresh->admin_notes . "\n⚠️ الكود {$code->code} كان مستخدم بالكامل قبل هالدفعة — انخصم أكثر من مرة")]);
+                    Log::warning('Discount code used past its limit', ['code' => $code->code, 'registration' => $fresh->id]);
+                }
+                $code->increment('used_count');
             }
 
             return true;
