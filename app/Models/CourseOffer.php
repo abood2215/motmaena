@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseOffer extends Model
 {
-    public const DEFAULT_IMAGE = 'courses-img/dr-tariq.png';
+    public const DEFAULT_IMAGE = 'photos/dr-tariq-hero.webp';
     public const DEFAULT_THEME = '#6d1b2b';
     /** Registration, payment and thank-you pages always use the center's wine colour. */
     public const CHECKOUT_THEME = '#6d1b2b';

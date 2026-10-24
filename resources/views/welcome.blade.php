@@ -38,7 +38,9 @@
     .dark .mh-btn-ghost { background: transparent; color: var(--gold-l); border-color: rgba(255,255,255,.2); }
     .mh-arch { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; background: radial-gradient(120% 80% at 50% 100%, var(--wine-l), var(--wine) 45%, var(--wine-d)); overflow: hidden; box-shadow: 0 40px 80px -40px var(--wine-d); }
     .mh-arch::before { content: ''; position: absolute; inset: 14px; border-radius: inherit; border: 1.5px solid color-mix(in srgb, var(--gold) 70%, transparent); pointer-events: none; z-index: 2; }
-    .mh-arch img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 104%; max-width: none; }
+    .mh-arch img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 104%; max-width: none; filter: drop-shadow(0 18px 30px rgba(0,0,0,.35)); }
+    .mh-arch::after { content: ''; position: absolute; inset: auto 0 0 0; height: 20%; background: linear-gradient(to top, color-mix(in srgb, var(--wine-d) 90%, transparent), transparent 95%); pointer-events: none; z-index: 1; }
+    .mh-arch-glow { position: absolute; inset: 0; background: radial-gradient(60% 45% at 55% 30%, color-mix(in srgb, var(--gold-l) 45%, transparent), transparent 70%); pointer-events: none; }
     .mh-chip { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #eee2dc; border-radius: 14px; padding: 10px 14px; font-size: 14px; font-weight: 800; color: #3f3a37; }
     .dark .mh-chip { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: #e7e5e4; }
     .mh-chip svg { color: var(--wine); }
@@ -129,11 +131,20 @@
             <div class="lg:col-span-5">
                 <div class="relative max-w-[260px] sm:max-w-[340px] lg:max-w-[380px] mx-auto">
                     <div class="mh-arch">
+                        <div class="mh-arch-glow"></div>
                         <img src="{{ asset($featured['image'] ?? \App\Models\CourseOffer::DEFAULT_IMAGE) }}" alt="{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}">
                     </div>
-                    <div class="absolute -bottom-5 {{ $isAr ? '-right-3 sm:-right-8' : '-left-3 sm:-left-8' }} bg-white dark:bg-[#1a1415] rounded-2xl shadow-xl px-4 py-3 border border-[#efe5e0] dark:border-white/10">
-                        <p class="font-black text-sm mh-title">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</p>
-                        <p class="text-xs font-bold text-stone-500 dark:text-stone-400">{{ config('doctor.title.' . $lang) }}</p>
+                    {{-- Experience badge sits on the empty side of the arch, clear of the face --}}
+                    <div class="absolute top-[18%] {{ $isAr ? '-left-4 sm:-left-10' : '-right-4 sm:-right-10' }} z-10 bg-white dark:bg-[#1a1415] rounded-2xl shadow-xl px-3.5 py-2.5 border border-[#efe5e0] dark:border-white/10 text-center">
+                        <div class="mh-num text-xl sm:text-2xl leading-none">+30</div>
+                        <div class="text-[11px] sm:text-xs font-bold text-stone-500 dark:text-stone-400 mt-0.5">{{ $t('سنة خبرة', 'years') }}</div>
+                    </div>
+                    {{-- Name sits under the arch so it never covers the photo --}}
+                    <div class="mt-5 text-center">
+                        <p class="font-black text-base sm:text-lg mh-title">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</p>
+                        <p class="flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-stone-500 dark:text-stone-400 mt-1">
+                            <span class="h-px w-6" style="background: var(--gold)"></span>{{ config('doctor.title.' . $lang) }}<span class="h-px w-6" style="background: var(--gold)"></span>
+                        </p>
                     </div>
                 </div>
             </div>
