@@ -1,6 +1,7 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', __('Courses') . ' - ' . __('Motmaena Center'))
+@section('meta_description', app()->getLocale() == 'ar' ? 'أكثر من 50 دورة مسجلة في التربية وتطوير الذات والعلاقات بإشراف أ.د. طارق الحبيب، تقدر تتابعها بأي وقت.' : '50+ recorded courses on parenting, self-development and relationships, supervised by Prof. Dr. Tariq Al-Habib — watch anytime.')
 
 @section('content')
 

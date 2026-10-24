@@ -10,14 +10,14 @@
             'items' => $isAr ? [
                 ['عن المركز', ['مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، الكويت – برج أحمد – بجوار المستشفى الأميري. باستخدامك لهذا الموقع أو تسجيلك في أي من خدماتنا فإنك توافق على هذه الشروط.']],
                 ['طبيعة الخدمات', ['يقدم المركز دورات تدريبية وجلسات واستشارات اجتماعية وتربوية وتنمية مهارات حياتية. هذه الخدمات تعليمية وإرشادية، ولا تُعد بديلاً عن التشخيص أو العلاج الطبي.']],
-                ['الأسعار والدفع', ['جميع الأسعار المعروضة بالدينار الكويتي (د.ك). يتم الدفع الإلكتروني عبر بوابة ماي فاتورة (كي نت، فيزا، ماستركارد، Apple Pay)، ولا يحتفظ المركز ببيانات بطاقتك. يُعد التسجيل مؤكداً بعد اكتمال الدفع بنجاح.', 'أكواد الخصم تُطبّق حسب شروط كل كود (المدة وعدد مرات الاستخدام)، ولا يمكن استبدالها بمبالغ نقدية.']],
+                ['الأسعار والدفع', ['جميع الأسعار المعروضة بالدينار الكويتي (د.ك). يتم الدفع الإلكتروني عبر بوابة ماي فاتورة (كي نت، فيزا، ماستركارد، Apple Pay)، ولا يحتفظ المركز ببيانات بطاقتك. يُعد التسجيل مؤكداً بعد اكتمال الدفع بنجاح.', 'أكواد الخصم تُطبّق حسب شروط كل كود (المدة وعدد مرات الاستخدام)، ولا يمكن استبدالها بمبالغ نقدية.', 'كود الهدية: يحصل عليه كل من يسجّل ويدفع بدون كود خصم. قيمته ثابتة، يُستخدم مرة واحدة على أي دورة، ويمكن إهداؤه لشخص آخر، ولا يُستبدل بمبلغ نقدي.', 'يتوفر التقسيط على 4 دفعات عبر deema للدورات التي يظهر فيها هذا الخيار، ويخضع لشروط deema وموافقتها.']],
                 ['الحضور والشهادات', ['يلتزم المتدرب بالحضور في الموعد المحدد. تُمنح الشهادة وفق الشروط المعلنة لكل دورة.']],
                 ['حقوق الملكية', ['جميع المواد والمحتوى المقدم في الدورات ملك للمركز، ولا يجوز تصويرها أو نسخها أو إعادة نشرها دون إذن كتابي.']],
                 ['تعديل الشروط', ['يحق للمركز تعديل هذه الشروط أو مواعيد الدورات عند الحاجة، مع إبلاغ المسجّلين بأي تغيير يخص تسجيلهم. تخضع هذه الشروط لقوانين دولة الكويت.']],
             ] : [
                 ['About us', ['Motmaena Center for social & educational guidance and life skills, Kuwait – Burj Ahmed – near Al-Amiri Hospital. By using this website or registering for any of our services you agree to these terms.']],
                 ['Our services', ['We offer training courses, sessions and social & educational consultations. These services are educational and advisory, and are not a substitute for medical diagnosis or treatment.']],
-                ['Prices & payment', ['All prices are in Kuwaiti Dinar (KWD). Online payment is processed by MyFatoorah (KNET, Visa, Mastercard, Apple Pay); we do not store your card details. A registration is confirmed once payment succeeds.', 'Discount codes apply according to each code\'s conditions (validity and number of uses) and cannot be exchanged for cash.']],
+                ['Prices & payment', ['All prices are in Kuwaiti Dinar (KWD). Online payment is processed by MyFatoorah (KNET, Visa, Mastercard, Apple Pay); we do not store your card details. A registration is confirmed once payment succeeds.', 'Discount codes apply according to each code\'s conditions (validity and number of uses) and cannot be exchanged for cash.', 'Gift code: everyone who registers and pays without a discount code receives one. It has a fixed value, works once on any course, can be given to someone else, and cannot be exchanged for cash.', 'Splitting the fee into 4 payments with deema is available on courses that show this option, subject to the terms and approval of deema.']],
                 ['Attendance & certificates', ['Trainees are expected to attend on the scheduled date. Certificates are issued according to the conditions announced for each course.']],
                 ['Intellectual property', ['All course materials belong to the Center and may not be recorded, copied or republished without written permission.']],
                 ['Changes', ['The Center may update these terms or course schedules when needed and will inform registrants of any change affecting them. These terms are governed by the laws of the State of Kuwait.']],
@@ -61,6 +61,7 @@
 @endphp
 
 @section('title', ($isAr ? 'الشروط والسياسات' : 'Terms & Policies') . ' - ' . __('Motmaena Center'))
+@section('meta_description', app()->getLocale() == 'ar' ? 'الشروط والأحكام وسياسة الإلغاء وسياسة الخصوصية لمركز مطمئنة.' : 'Terms & conditions, cancellation policy and privacy policy of Motmaena Center.')
 
 @section('content')
 <section class="py-12 sm:py-16 bg-secondary dark:bg-dark-surface border-b border-[var(--border-color)]">

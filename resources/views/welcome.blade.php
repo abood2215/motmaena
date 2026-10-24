@@ -22,6 +22,9 @@
 @endphp
 
 @section('title', __('Welcome') . ' - ' . __('Motmaena Center'))
+@if($canBook)
+    @section('meta_description', $t($featured['title']['ar'] . ' مع أ.د. طارق الحبيب · ' . $featured['day']['ar'] . ' ' . \Carbon\Carbon::parse($featured['date'])->locale('ar')->translatedFormat('j F') . ' · ' . $featured['price'] . ' د.ك' . ($gift > 0 ? ' + كود هدية ' . $giftTxt . ' د.ك مع الحجز' : '') . '. مركز مطمئنة، الكويت.', $featured['title']['en'] . ' with Prof. Dr. Tariq Al-Habib · ' . \Carbon\Carbon::parse($featured['date'])->locale('en')->translatedFormat('j F') . ' · ' . $featured['price'] . ' KWD' . ($gift > 0 ? ' + a ' . $giftTxt . ' KWD gift code' : '') . '. Motmaena Center, Kuwait.'))
+@endif
 @if($featured && $featured['share_image'])
     @section('og_image', asset($featured['share_image']))
 @endif

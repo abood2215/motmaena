@@ -55,7 +55,7 @@ Route::get('/sitemap.xml', function () {
     return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml');
 })->name('sitemap');
 
-Route::post('/consultations/book', [ConsultationController::class, 'store'])->name('consultations.book');
+Route::post('/consultations/book', [ConsultationController::class, 'store'])->middleware('throttle:6,1')->name('consultations.book');
 Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->name('admin.consultations');
 Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->middleware('throttle:5,1')->name('admin.login');
 Route::get('/admin/logout', [ConsultationController::class, 'adminLogout'])->name('admin.logout');

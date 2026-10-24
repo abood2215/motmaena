@@ -1,24 +1,40 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
+        @php
+            $isArHead = app()->getLocale() == 'ar';
+            $defaultDescription = $isArHead
+                ? 'مركز مطمئنة في الكويت للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بإشراف أ.د. طارق الحبيب: دورات حضورية ومسجلة، استشارات، وجلسات للأطفال.'
+                : 'Motmaena Center in Kuwait for social & educational guidance and life skills, supervised by Prof. Dr. Tariq Al-Habib: in-person and recorded courses, consultations and child sessions.';
+        @endphp
+        <meta name="description" content="@yield('meta_description', $defaultDescription)">
         <meta name="keywords" content="مطمئنة, طارق الحبيب, بروفيسور الطب النفسي, دورات تنموية, استشارات أسرية وتربوية, تطوير الذات, الكويت">
         <meta name="author" content="Motmaena Center">
+        <link rel="canonical" href="{{ url()->current() }}">
+        <meta name="theme-color" content="#6d1b2b">
 
-        <!-- Open Graph / Facebook -->
+        <!-- Icons -->
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+
+        <!-- Open Graph / Facebook / WhatsApp -->
         <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ $isArHead ? 'مركز مطمئنة' : 'Motmaena Center' }}">
+        <meta property="og:locale" content="{{ $isArHead ? 'ar_KW' : 'en_US' }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
-        <meta property="og:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta property="og:image" content="@yield('og_image', asset('image.png'))">
+        <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
+        <meta property="og:image" content="@yield('og_image', asset('og-default.jpg'))">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">
-        <meta name="twitter:description" content="@yield('meta_description', __('Motmaena Center for Social, Educational & Life Skills - Exclusive and recorded courses with Dr. Tariq Al-Habib'))">
-        <meta name="twitter:image" content="@yield('og_image', asset('image.png'))">
+        <meta name="twitter:description" content="@yield('meta_description', $defaultDescription)">
+        <meta name="twitter:image" content="@yield('og_image', asset('og-default.jpg'))">
 
         <title>@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))</title>
 

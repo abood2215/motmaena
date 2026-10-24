@@ -1,6 +1,7 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', __('Consultations') . ' — ' . __('Motmaena Center'))
+@section('meta_description', app()->getLocale() == 'ar' ? 'استشارات اجتماعية وتربوية وأسرية خاصة وسرية مع متخصصين معتمدين، وجلسات هاتفية مع أ.د. طارق الحبيب. احجز موعدك اليوم.' : 'Private, confidential social, family and parenting consultations with certified specialists, plus phone sessions with Prof. Dr. Tariq Al-Habib.')
 
 @section('content')
 
@@ -1052,16 +1053,16 @@
         </p>
         <div class="dr-stats">
           <div class="dr-stat">
-            <span class="num" data-target="100000">0</span>
-            <span class="lbl">{{ app()->getLocale() === 'ar' ? '+ مستفيد' : '+ Beneficiaries' }}</span>
+            <span class="num" dir="ltr" data-target="100000" data-prefix="+">0</span>
+            <span class="lbl">{{ app()->getLocale() === 'ar' ? 'مستفيد' : 'Beneficiaries' }}</span>
           </div>
           <div class="dr-stat">
-            <span class="num" data-target="30">0</span>
+            <span class="num" dir="ltr" data-target="30" data-prefix="+">0</span>
             <span class="lbl">{{ app()->getLocale() === 'ar' ? 'سنة خبرة' : 'Years Experience' }}</span>
           </div>
           <div class="dr-stat">
-            <span class="num" data-target="97">0</span>
-            <span class="lbl">{{ app()->getLocale() === 'ar' ? '% رضا المراجعين' : '% Client Satisfaction' }}</span>
+            <span class="num" dir="ltr" data-target="97" data-suffix="%">0</span>
+            <span class="lbl">{{ app()->getLocale() === 'ar' ? 'رضا المراجعين' : 'Client Satisfaction' }}</span>
           </div>
         </div>
       </div>
@@ -1078,16 +1079,16 @@
   <section class="stats-bar">
     <div class="stats-inner">
       <div class="stat-item reveal">
-        <span class="num" data-target="4800">0</span>
+        <span class="num" dir="ltr" data-target="4800" data-prefix="+">0</span>
         <span class="lbl">{{ app()->getLocale() === 'ar' ? 'استشارة منجزة' : 'Consultations Completed' }}</span>
       </div>
       <div class="stat-item reveal reveal-delay-1">
-        <span class="num" data-target="97">0</span>
-        <span class="lbl">{{ app()->getLocale() === 'ar' ? '% معدل الرضا' : '% Satisfaction Rate' }}</span>
+        <span class="num" dir="ltr" data-target="97" data-suffix="%">0</span>
+        <span class="lbl">{{ app()->getLocale() === 'ar' ? 'معدل الرضا' : 'Satisfaction Rate' }}</span>
       </div>
       <div class="stat-item reveal reveal-delay-2">
-        <span class="num" data-target="25">0</span>
-        <span class="lbl">{{ app()->getLocale() === 'ar' ? 'سنة خبرة مجمّعة' : 'Years Combined Experience' }}</span>
+        <span class="num" dir="ltr" data-target="12" data-prefix="+">0</span>
+        <span class="lbl">{{ app()->getLocale() === 'ar' ? 'سنة لمركز مطمئنة' : 'Years of Motmaena' }}</span>
       </div>
       <div class="stat-item reveal reveal-delay-3">
         <span class="num" data-target="4">0</span>
@@ -1251,21 +1252,21 @@
       </div>
       <div class="steps-list">
         <div class="step-item reveal">
-          <div class="step-num">١</div>
+          <div class="step-num">{{ app()->getLocale() === 'ar' ? '١' : '1' }}</div>
           <div class="step-content">
             <h4>{{ app()->getLocale() === 'ar' ? 'تواصل معنا عبر واتساب' : 'Contact Us via WhatsApp' }}</h4>
             <p>{{ app()->getLocale() === 'ar' ? 'أرسل "أريد حجز استشارة" على الرقم ' . \App\Models\SiteSetting::pretty($site['whatsapp']) . ' وسيردّ عليك فريقنا خلال دقائق' : 'Send "I want to book a consultation" to ' . \App\Models\SiteSetting::pretty($site['whatsapp']) . ' and our team will respond within minutes' }}</p>
           </div>
         </div>
         <div class="step-item reveal reveal-delay-1">
-          <div class="step-num">٢</div>
+          <div class="step-num">{{ app()->getLocale() === 'ar' ? '٢' : '2' }}</div>
           <div class="step-content">
             <h4>{{ app()->getLocale() === 'ar' ? 'اختر المتخصص والموعد المناسب' : 'Choose Your Specialist & Time' }}</h4>
             <p>{{ app()->getLocale() === 'ar' ? 'سيساعدك الفريق في اختيار المتخصص الأنسب لاحتياجك ومواعيد تناسب جدولك' : 'The team will help you select the right specialist and times that suit your schedule' }}</p>
           </div>
         </div>
         <div class="step-item reveal reveal-delay-2">
-          <div class="step-num">٣</div>
+          <div class="step-num">{{ app()->getLocale() === 'ar' ? '٣' : '3' }}</div>
           <div class="step-content">
             <h4>{{ app()->getLocale() === 'ar' ? 'احضر جلستك واحصل على توصياتك' : 'Attend Your Session & Get Your Recommendations' }}</h4>
             <p>{{ app()->getLocale() === 'ar' ? 'جلسة تفاعلية تخرج منها بخطة توجيهية شخصية ومخصصة لوضعك' : 'An interactive session that gives you a personalized guidance plan tailored to your situation' }}</p>
@@ -1405,16 +1406,16 @@
                 <label>📱 {{ app()->getLocale() === 'ar' ? 'رقم هاتفك (واتساب)' : 'Your WhatsApp number' }}</label>
                 <div class="phone-row">
                   <select id="country-code" onchange="updatePhoneField()">
-                    <option value="965" selected>🇰🇼 +965 الكويت</option>
-                    <option value="966">🇸🇦 +966 السعودية</option>
-                    <option value="971">🇦🇪 +971 الإمارات</option>
-                    <option value="974">🇶🇦 +974 قطر</option>
-                    <option value="973">🇧🇭 +973 البحرين</option>
-                    <option value="968">🇴🇲 +968 عُمان</option>
-                    <option value="962">🇯🇴 +962 الأردن</option>
-                    <option value="20">🇪🇬 +20 مصر</option>
-                    <option value="963">🇸🇾 +963 سوريا</option>
-                    <option value="961">🇱🇧 +961 لبنان</option>
+                    <option value="965" selected>🇰🇼 +965 {{ app()->getLocale() === 'ar' ? 'الكويت' : 'Kuwait' }}</option>
+                    <option value="966">🇸🇦 +966 {{ app()->getLocale() === 'ar' ? 'السعودية' : 'Saudi Arabia' }}</option>
+                    <option value="971">🇦🇪 +971 {{ app()->getLocale() === 'ar' ? 'الإمارات' : 'UAE' }}</option>
+                    <option value="974">🇶🇦 +974 {{ app()->getLocale() === 'ar' ? 'قطر' : 'Qatar' }}</option>
+                    <option value="973">🇧🇭 +973 {{ app()->getLocale() === 'ar' ? 'البحرين' : 'Bahrain' }}</option>
+                    <option value="968">🇴🇲 +968 {{ app()->getLocale() === 'ar' ? 'عُمان' : 'Oman' }}</option>
+                    <option value="962">🇯🇴 +962 {{ app()->getLocale() === 'ar' ? 'الأردن' : 'Jordan' }}</option>
+                    <option value="20">🇪🇬 +20 {{ app()->getLocale() === 'ar' ? 'مصر' : 'Egypt' }}</option>
+                    <option value="963">🇸🇾 +963 {{ app()->getLocale() === 'ar' ? 'سوريا' : 'Syria' }}</option>
+                    <option value="961">🇱🇧 +961 {{ app()->getLocale() === 'ar' ? 'لبنان' : 'Lebanon' }}</option>
                     <option value="other">🌍 {{ app()->getLocale() === 'ar' ? 'أخرى' : 'Other' }}</option>
                   </select>
                   <input type="tel" id="phone-number"
@@ -1588,11 +1589,14 @@ function updatePhoneField() {
     var notes = fd.get('notes') || '';
 
     // Save to DB silently in the background
+    // keepalive lets the save finish even though the page leaves for WhatsApp right after
     fetch(form.action, {
       method: 'POST',
+      keepalive: true,
       headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       body: fd
     }).catch(function(){});
+    window.trackEvent && trackEvent('Lead', { content_name: 'consultation', content_category: type });
 
     // Open WhatsApp immediately without waiting
     var star = String.fromCodePoint(0x1F31F);
@@ -1628,11 +1632,9 @@ function updatePhoneField() {
       const progress = Math.min((ts - start) / duration, 1);
       const ease = 1 - Math.pow(1 - progress, 3);
       const current = Math.round(ease * target);
-      if(target >= 1000){
-        el.textContent = (current >= 1000 ? Math.round(current/1000) + 'K' : current);
-      } else {
-        el.textContent = current;
-      }
+      // 100000 -> 100K, 4800 -> 4,800 (never round a figure up)
+      const shown = target >= 10000 ? Math.floor(current / 1000) + 'K' : current.toLocaleString('en-US');
+      el.textContent = (el.dataset.prefix || '') + shown + (el.dataset.suffix || '');
       if(progress < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);

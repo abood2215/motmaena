@@ -104,7 +104,7 @@ class CourseOffer extends Model
             'theme'       => $this->theme_color ?: self::DEFAULT_THEME,
             'badge'       => [
                 'ar' => $this->badge_ar ?: 'دورة جديدة · التسجيل مفتوح',
-                'en' => $this->badge_en ?: ($this->badge_ar ?: 'New course · Registration open'),
+                'en' => $this->badge_en ?: 'Registration open',
             ],
             'show_installments' => (bool) ($this->show_installments ?? true),
             'share_image' => $this->share_image,

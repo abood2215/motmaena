@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', __('Session Packages') . ' — ' . __('Motmaena Center'))
+@section('meta_description', app()->getLocale() == 'ar' ? 'جلسات وباقات لتنمية مهارات طفلك وتعديل سلوكه، وتقييمات متخصصة، مع إمكانية التقسيط — مركز مطمئنة، الكويت.' : 'Sessions and packages to build your child\'s skills and behaviour, with specialist assessments and instalments — Motmaena Center, Kuwait.')
 
 @section('content')
 <style>
@@ -134,6 +135,7 @@
 }
 .sess-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(109,27,43,.4); }
 .sess-btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center;
   background: transparent; color: var(--text);
   padding: 16px 36px; border-radius: 16px;
   font-weight: 700; font-size: 1rem; text-decoration: none;

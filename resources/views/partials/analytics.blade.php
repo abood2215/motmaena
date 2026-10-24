@@ -40,4 +40,10 @@
         try { if (window.fbq) fbq('track', name, params); } catch (e) {}
         try { if (window.ttq) ttq.track(name === 'Purchase' ? 'CompletePayment' : name, params); } catch (e) {}
     };
+
+    // Every WhatsApp tap counts as a contact for the ad platforms
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href*="wa.me"]');
+        if (a) window.trackEvent('Contact', { content_name: 'whatsapp' });
+    }, true);
 </script>

@@ -1,6 +1,7 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', __('Packages') . ' - ' . __('Motmaena Center'))
+@section('meta_description', app()->getLocale() == 'ar' ? 'باقات متكاملة لدعم طفلك: التواصل الاجتماعي، صعوبات التعلم، الثقة بالنفس، تعديل السلوك والمزيد — في مركز مطمئنة بالكويت.' : 'Complete packages to support your child: social communication, learning difficulties, confidence, behaviour and more — at Motmaena Center, Kuwait.')
 
 @section('content')
 
@@ -398,7 +399,7 @@
                     ],
                 ],
                 [
-                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي الغير مرغوب' : 'Unwanted Behavior Modification',
+                    'title' => app()->getLocale() == 'ar' ? 'تعديل السلوك التربوي غير المرغوب' : 'Unwanted Behavior Modification',
                     'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
                     'tags'  => app()->getLocale() == 'ar'
                         ? ['تعديل السلوك غير المرغوب', 'تدريب مهارات التحكم الذاتي', 'متابعة تخصصية ودعم أسري']
