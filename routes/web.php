@@ -113,6 +113,7 @@ Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(func
     Route::post('/registrations/{registration}/followed', [CourseAdminController::class, 'markFollowedUp'])->name('registrations.followed');
     Route::get('/registrations/export', [CourseAdminController::class, 'exportRegistrations'])->name('registrations.export');
     Route::post('/registrations/{registration}/verify', [CourseAdminController::class, 'verify'])->name('registrations.verify');
+    Route::post('/registrations/{registration}/center', [CourseAdminController::class, 'sendToCenter'])->name('registrations.center');
 
     Route::get('/discount-codes', [CourseAdminController::class, 'codes'])->name('codes');
     Route::post('/discount-codes', [CourseAdminController::class, 'storeCode'])->name('codes.store');

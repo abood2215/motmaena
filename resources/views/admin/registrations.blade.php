@@ -85,6 +85,11 @@
             @if($r->payment_method)<div class="small">{{ $r->payment_method }}</div>@endif
             @if($r->followed_up_at)<div class="small">✓ تم التواصل</div>@endif
             @if($r->admin_notes)<div class="small" style="color:#b45309;font-weight:700;white-space:pre-line">{{ $r->admin_notes }}</div>@endif
+            @if($r->center_rec_id)
+              <div class="small" style="color:#047857;font-weight:700">✓ بنظام المركز: ملف #{{ $r->center_patient_id }}</div>
+            @elseif($r->status === 'paid' && $r->center_error)
+              <div class="small" style="color:#b91c1c;font-weight:700">⚠️ ما انبعت لنظام المركز: {{ $r->center_error }}</div>
+            @endif
           </td>
           <td class="small">
             @if($gift = $r->rewardCode())
@@ -115,6 +120,11 @@
               @if($r->status !== 'paid' && $r->invoice_id)
               <form method="POST" action="{{ route('admin.registrations.verify', $r) }}" class="inline">@csrf
                 <button class="btn btn-outline btn-sm" title="التحقق من حالة الدفع في ماي فاتورة">&#8635; تحقق</button>
+              </form>
+              @endif
+              @if($r->status === 'paid' && !$r->center_rec_id && $r->center_error)
+              <form method="POST" action="{{ route('admin.registrations.center', $r) }}" class="inline">@csrf
+                <button class="btn btn-outline btn-sm" title="إعادة إرسال التسجيل لنظام المركز">&#8635; أرسل للنظام</button>
               </form>
               @endif
             </div>

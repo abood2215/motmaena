@@ -43,6 +43,12 @@ return [
         'webhook_secret' => env('DEEMA_WEBHOOK_SECRET'),
     ],
 
+    // The center's internal system: paid registrations become a client file + check + invoice there
+    'center' => [
+        'url' => env('CENTER_SYSTEM_URL'),      // https://motmaina-center.com
+        'token' => env('CENTER_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the internal system
+    ],
+
     // Tracking IDs — each script is only added to the site when its ID is set
     'analytics' => [
         'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX

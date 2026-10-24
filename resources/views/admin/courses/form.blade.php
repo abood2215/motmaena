@@ -87,6 +87,17 @@
   </div>
 
   <div class="card">
+    <h3>🔗 الربط مع نظام المركز</h3>
+    <div class="field-grid">
+      <div>
+        <label>كود الدورة بالنظام</label>
+        <input name="center_course_code" value="{{ $v('center_course_code') }}" maxlength="30" dir="ltr" placeholder="ANGER" style="text-transform:uppercase">
+      </div>
+    </div>
+    <p class="hint">نفس كود الدورة بنظام المركز (صفحة إدارة الدورات). كل واحد بيدفع: بيندوّر على ملفه برقم الجوال (أو بينفتح له ملف جديد) وبينزل له كشف وفاتورة بالدورة تلقائياً. إذا تركته فاضي ما بينبعت شي.</p>
+  </div>
+
+  <div class="card">
     <h3>🎨 تصميم الإعلان</h3>
     <div class="field-grid">
       <div class="full">

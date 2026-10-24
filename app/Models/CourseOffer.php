@@ -29,7 +29,7 @@ class CourseOffer extends Model
         'slug', 'title_ar', 'title_en', 'trainer_ar', 'trainer_en', 'price', 'seats', 'date',
         'time_ar', 'time_en', 'location_ar', 'location_en', 'certificate_ar', 'certificate_en',
         'topics_ar', 'topics_en', 'image', 'theme_color', 'badge_ar', 'badge_en', 'show_installments', 'share_image',
-        'is_active', 'is_featured',
+        'is_active', 'is_featured', 'center_course_code',
     ];
 
     protected $casts = [

@@ -17,6 +17,7 @@ class CourseRegistration extends Model
         'status', 'invoice_id', 'payment_id', 'payment_method', 'paid_at', 'admin_notes',
         'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'followed_up_at',
         'review_token', 'review_requested_at',
+        'center_patient_id', 'center_rec_id', 'center_synced_at', 'center_error',
     ];
 
     protected $casts = [
@@ -26,6 +27,7 @@ class CourseRegistration extends Model
         'paid_at'         => 'datetime',
         'followed_up_at'  => 'datetime',
         'review_requested_at' => 'datetime',
+        'center_synced_at' => 'datetime',
     ];
 
     public function discountCode()
@@ -101,6 +103,7 @@ class CourseRegistration extends Model
         if ($newlyPaid) {
             $this->update(['review_token' => $this->review_token ?: Str::random(32)]);
             $this->issueGiftCode();
+            app(\App\Services\CenterSystem::class)->push($this);
             $this->notifyAdmin();
         }
     }

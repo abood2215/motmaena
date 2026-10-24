@@ -126,6 +126,7 @@ class CourseOfferController extends Controller
             'share_file'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'copy_image'     => 'nullable|string|max:255',
             'copy_share'     => 'nullable|string|max:255',
+            'center_course_code' => 'nullable|string|max:30',
         ], [
             'slug.unique' => 'هذا الرابط مستخدم لدورة أخرى',
             'image_file.image' => 'الملف يجب أن يكون صورة',
@@ -135,6 +136,7 @@ class CourseOfferController extends Controller
         $data['is_active'] = $request->boolean('is_active');
         $data['is_featured'] = $request->boolean('is_featured');
         $data['show_installments'] = $request->boolean('show_installments');
+        $data['center_course_code'] = filled($data['center_course_code'] ?? null) ? strtoupper(trim($data['center_course_code'])) : null;
         $data['theme_color'] = strtolower($data['theme_color'] ?? CourseOffer::DEFAULT_THEME);
 
         $upload = function (string $input, string $suffix) use ($request, $data) {

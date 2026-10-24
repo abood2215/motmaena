@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseRegistrationController;
 use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
+use App\Services\CenterSystem;
 use App\Services\Deema;
 use App\Services\MyFatoorah;
 use Illuminate\Http\Request;
@@ -78,6 +79,18 @@ class CourseAdminController extends Controller
         CourseRegistrationController::applyStatus($registration, $status);
 
         return back()->with('ok', 'حالة الدفع الآن: ' . $this->statusLabel($registration->fresh()->status));
+    }
+
+    /** Re-sends a paid registration to the center's internal system (after fixing the course code, say). */
+    public function sendToCenter(CourseRegistration $registration, CenterSystem $center)
+    {
+        if (!$center->enabled()) {
+            return back()->with('error', 'الربط مع نظام المركز مش مفعّل (CENTER_SYSTEM_URL / CENTER_SYSTEM_TOKEN)');
+        }
+
+        return $center->push($registration)
+            ? back()->with('ok', "انبعت {$registration->name} لنظام المركز — ملف #{$registration->center_patient_id}")
+            : back()->with('error', 'ما انبعت: ' . $registration->center_error);
     }
 
     public function exportRegistrations()
