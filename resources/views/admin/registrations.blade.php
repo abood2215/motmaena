@@ -84,6 +84,7 @@
             <span class="tag {{ $r->status }}">{{ $labels[$r->status] ?? $r->status }}</span>
             @if($r->payment_method)<div class="small">{{ $r->payment_method }}</div>@endif
             @if($r->followed_up_at)<div class="small">✓ تم التواصل</div>@endif
+            @if($r->admin_notes)<div class="small" style="color:#b45309;font-weight:700;white-space:pre-line">{{ $r->admin_notes }}</div>@endif
           </td>
           <td class="small">
             @if($gift = $r->rewardCode())
