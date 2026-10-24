@@ -23,6 +23,7 @@ class SiteSetting extends Model
         'address_en'      => 'Kuwait - Burj Ahmed - near Al-Amiri Hospital',
         'announcement_ar' => '',
         'announcement_en' => '',
+        'psych_soon'      => '1', // homepage "psychological center — coming soon" ad; 0 hides it
         'gift_code_kwd'   => '10', // gift code (fixed KWD) for paying without a code; 0 turns it off
     ];
 

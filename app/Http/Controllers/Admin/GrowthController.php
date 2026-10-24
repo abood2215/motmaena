@@ -23,7 +23,7 @@ class GrowthController extends Controller
             'leads'    => $leads,
             'newCount' => Lead::whereNull('contacted_at')->count(),
             'courses'  => CourseOffer::upcoming(),
-            'titles'   => CourseOffer::pluck('title_ar', 'slug'),
+            'titles'   => CourseOffer::pluck('title_ar', 'slug')->merge(Lead::EXTRA_TITLES),
         ]);
     }
 
@@ -44,7 +44,7 @@ class GrowthController extends Controller
     public function exportLeads()
     {
         $leads = Lead::latest()->get();
-        $titles = CourseOffer::pluck('title_ar', 'slug');
+        $titles = CourseOffer::pluck('title_ar', 'slug')->merge(Lead::EXTRA_TITLES);
 
         $response = new StreamedResponse(function () use ($leads, $titles) {
             $out = fopen('php://output', 'w');

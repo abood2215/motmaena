@@ -40,6 +40,11 @@
         <input name="gift_code_kwd" type="number" step="0.5" min="0" max="1000" value="{{ old('gift_code_kwd', $settings['gift_code_kwd']) }}" required>
         <p class="hint">كل اللي بيدفع بدون كود خصم بياخد كود هدية بهالقيمة، مرة وحدة على أي دورة (إله أو لحدا بيهديه).</p>
       </div>
+      <div class="full">
+        <input type="hidden" name="psych_soon" value="0">
+        <label class="check"><input type="checkbox" name="psych_soon" value="1" @checked(old('psych_soon', $settings['psych_soon']) === '1')> 🧠 إظهار إعلان "المركز النفسي — قريباً" بالصفحة الرئيسية</label>
+        <p class="hint">اللي بيسجّلوا أرقامهم فيه بيطلعوا بصفحة "بلّغني" تحت "المركز النفسي (قريباً)". شيل الصح لما يفتح المركز.</p>
+      </div>
     </div>
     <div style="margin-top:12px"><button class="btn btn-primary">حفظ</button></div>
   </form>

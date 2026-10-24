@@ -22,7 +22,9 @@ class LeadController extends Controller
 
         $digits = preg_replace('/\D/', '', $data['phone']);
         $phone = (str_starts_with($digits, '965') && strlen($digits) === 11) ? substr($digits, 3) : $digits;
-        $courseKey = CourseOffer::where('slug', $data['course_key'] ?? '')->value('slug');
+        $courseKey = ($data['course_key'] ?? null) === Lead::PSYCH_CENTER
+            ? Lead::PSYCH_CENTER
+            : CourseOffer::where('slug', $data['course_key'] ?? '')->value('slug');
         $source = session('visit_source', []);
 
         // One row per number; a repeat sign-up just refreshes it back to "not contacted"
@@ -34,9 +36,9 @@ class LeadController extends Controller
             'contacted_at' => null,
         ]);
 
-        $message = app()->getLocale() === 'ar'
-            ? 'تم! سنرسل لك على واتساب أول ما تنزل الدورة القادمة 🌷'
-            : 'Done! We will message you on WhatsApp when the next course opens.';
+        $message = $courseKey === Lead::PSYCH_CENTER
+            ? (app()->getLocale() === 'ar' ? 'تم! بنبلّغك على واتساب أول ما يفتح المركز 🌷' : 'Done! We will message you on WhatsApp as soon as the center opens.')
+            : (app()->getLocale() === 'ar' ? 'تم! سنرسل لك على واتساب أول ما تنزل الدورة القادمة 🌷' : 'Done! We will message you on WhatsApp when the next course opens.');
 
         return $request->expectsJson()
             ? response()->json(['ok' => true, 'message' => $message])
