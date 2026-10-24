@@ -83,21 +83,31 @@
     .mh-soon { background: radial-gradient(120% 120% at 100% 0%, var(--wine-l), var(--wine) 45%, var(--wine-d)); box-shadow: 0 40px 80px -40px var(--wine-d); }
     .mh-soon::before { content: ''; position: absolute; inset: 12px; border: 1.5px solid color-mix(in srgb, var(--gold) 40%, transparent); border-radius: 1.6rem; pointer-events: none; }
     .mh-soon-glow { position: absolute; width: 560px; height: 560px; border-radius: 999px; background: radial-gradient(closest-side, rgba(201,163,92,.26), transparent); pointer-events: none; }
-    .mh-soon-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 900; font-size: 15px; color: #3b1d00; padding: 8px 18px; border-radius: 999px; background: linear-gradient(110deg, #c9a35c 0%, #f3e2b8 45%, #c9a35c 60%, #b38a3e 100%); background-size: 220% 100%; animation: mh-shine 3.2s linear infinite; box-shadow: 0 10px 24px -10px #c9a35c; }
-    @keyframes mh-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+    .mh-soon-live { display: inline-flex; align-items: center; gap: 9px; padding: 7px 15px; border-radius: 999px; font-size: 14px; font-weight: 900; color: var(--gold-l); background: rgba(255,255,255,.08); border: 1px solid rgba(234,216,177,.35); }
+    .mh-soon-live i { width: 9px; height: 9px; border-radius: 99px; background: #f3d58f; animation: mh-pulse 1.8s ease-out infinite; }
+    @keyframes mh-pulse { 0% { box-shadow: 0 0 0 0 rgba(243,213,143,.7); } 70%, 100% { box-shadow: 0 0 0 10px rgba(243,213,143,0); } }
     .mh-soon-gold { background: linear-gradient(90deg, #f6e7c1, #c9a35c 55%, #ead8b1); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .mh-soon-feat { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); }
     .mh-soon-feat i { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold-l); background: linear-gradient(135deg, rgba(234,216,177,.22), rgba(201,163,92,.08)); border: 1px solid rgba(234,216,177,.3); }
     .mh-soon-box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 22px; }
-    .mh-soon-arch { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--gold) 75%, transparent); box-shadow: 0 40px 70px -30px rgba(0,0,0,.75); background: #3a0e17; }
-    .mh-soon-arch img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 6%; }
-    .mh-soon-arch::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(58,10,20,.6) 68%, rgba(42,7,15,.96) 100%); }
-    .mh-soon-arch-in { position: absolute; inset: 10px; border-radius: 999px 999px 24px 24px; border: 1px solid rgba(234,216,177,.5); z-index: 2; pointer-events: none; }
-    .mh-soon-ring { position: absolute; left: 50%; top: 40%; width: 128%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 999px; border: 1px dashed rgba(234,216,177,.35); animation: mh-spin 40s linear infinite; pointer-events: none; }
-    @keyframes mh-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-    .mh-soon-chip { position: absolute; z-index: 3; bottom: -26px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: 0 18px 40px -14px rgba(0,0,0,.6); }
-    [dir="rtl"] .mh-soon-chip { padding: 10px 12px 10px 16px; }
-    @media (prefers-reduced-motion: reduce) { .mh-soon-badge, .mh-soon-ring { animation: none; } }
+    /* Visual: the app icon floating inside a gold orbit, a big shimmering "soon" under it */
+    .mh-soon-stage { position: relative; width: min(74vw, 340px); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+    .mh-soon-orbit { position: absolute; inset: 0; border-radius: 999px; border: 1px dashed rgba(234,216,177,.45); animation: mh-rot 30s linear infinite; }
+    .mh-soon-orbit::after { content: ''; position: absolute; top: -6px; left: calc(50% - 6px); width: 12px; height: 12px; border-radius: 99px; background: #f3d58f; box-shadow: 0 0 14px 3px rgba(243,213,143,.75); }
+    .mh-soon-orbit.o2 { inset: 13%; border: 1px solid rgba(234,216,177,.2); animation-duration: 18s; animation-direction: reverse; }
+    .mh-soon-orbit.o2::after { width: 8px; height: 8px; top: -4px; left: calc(50% - 4px); }
+    .mh-soon-halo { position: absolute; inset: 18%; border-radius: 999px; background: radial-gradient(closest-side, rgba(243,213,143,.35), rgba(201,163,92,.08) 60%, transparent); }
+    .mh-soon-icon { position: relative; width: 50%; border-radius: 23%; box-shadow: 0 30px 50px -18px rgba(0,0,0,.75), 0 0 0 1.5px rgba(234,216,177,.65), 0 0 0 9px rgba(255,255,255,.06); animation: mh-float 5s ease-in-out infinite; }
+    @keyframes mh-float { 50% { transform: translateY(-10px); } }
+    @keyframes mh-rot { to { transform: rotate(360deg); } }
+    .mh-soon-spark { position: absolute; color: #f3d58f; line-height: 1; animation: mh-twinkle 2.6s ease-in-out infinite; pointer-events: none; }
+    @keyframes mh-twinkle { 0%, 100% { opacity: .25; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
+    .mh-soon-big { font-weight: 900; line-height: 1.15; font-size: clamp(3.2rem, 7vw, 4.6rem); background: linear-gradient(100deg, #c9a35c 0%, #fff4d6 38%, #c9a35c 55%, #b38a3e 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mh-shine 4s linear infinite; filter: drop-shadow(0 8px 18px rgba(0,0,0,.35)); }
+    @keyframes mh-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+    .mh-soon-sub { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 11px; font-weight: 900; letter-spacing: .4em; color: rgba(255,255,255,.75); }
+    .mh-soon-sub::before, .mh-soon-sub::after { content: ''; width: 34px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .mh-soon-sub::after { transform: scaleX(-1); }
+    @media (prefers-reduced-motion: reduce) { .mh-soon-live i, .mh-soon-orbit, .mh-soon-icon, .mh-soon-spark, .mh-soon-big { animation: none; } }
 
     /* Sticky booking bar (phones) */
     .mh-bar { transform: translateY(110%); transition: transform .3s ease; }
@@ -359,21 +369,22 @@
             <div class="mh-soon-glow" style="top: -180px; inset-inline-end: -160px;"></div>
             <div class="mh-soon-glow" style="bottom: -260px; inset-inline-start: -200px; opacity: .6"></div>
 
-            <div class="relative grid lg:grid-cols-12 gap-10 lg:gap-12 items-center p-6 sm:p-10 lg:p-14">
+            <div class="relative grid lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 lg:p-14">
 
                 {{-- Text --}}
                 <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
                     <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-5">
-                        <span class="mh-soon-badge">✨ {{ $t('قريباً', 'Coming soon') }}</span>
+                        <span class="mh-soon-live"><i></i>{{ $t('نجهّز للافتتاح', 'Getting ready to open') }}</span>
                         <span class="text-sm font-black" style="color: var(--gold-l)">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</span>
                     </div>
 
-                    <h2 class="font-black leading-[1.2] mb-4" style="font-size: clamp(1.65rem, 4.4vw, 3.3rem);">
+                    <h2 class="font-black leading-[1.2] mb-3" style="font-size: clamp(1.65rem, 4.4vw, 3.3rem);">
                         {{ $t('مجمع مطمئنة', 'Motmaena') }}
                         <span class="block mh-soon-gold pb-1">{{ $t('للاستشارات النفسية', 'Psychological Counselling Center') }}</span>
                     </h2>
+                    <p class="font-bold text-white/85 mb-4">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--gold-l)">{{ config('doctor.name.' . $lang) }}</span></p>
 
-                    <p class="text-white/85 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
+                    <p class="text-white/80 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
                         {{ $t('مساحة هادئة وآمنة لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب جداً.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening very soon.') }}
                     </p>
 
@@ -403,28 +414,20 @@
                     </div>
                 </div>
 
-                {{-- Doctor in the gold arch --}}
-                <div class="lg:col-span-5 order-first lg:order-none flex justify-center pt-2 pb-8 lg:pb-0">
-                    <div class="relative w-[min(78%,270px)] sm:w-[300px] lg:w-[340px]">
-                        <div class="mh-soon-ring"></div>
-                        <div class="mh-soon-arch">
-                            <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ config('doctor.name.' . $lang) }}" loading="lazy">
-                            <span class="mh-soon-arch-in"></span>
-                            <div class="absolute inset-x-0 bottom-0 z-[3] text-center pb-12 sm:pb-14 px-4">
-                                <div class="font-black leading-none mb-2" style="font-size: clamp(2.4rem, 5vw, 3.4rem); color: var(--gold-l)">{{ $t('قريباً', 'Soon') }}</div>
-                                <div class="text-[11px] font-black tracking-[.35em] text-white/75">{{ $isAr ? 'COMING SOON' : 'قريباً' }}</div>
-                            </div>
-                        </div>
-                        <div class="mh-soon-chip">
-                            <span class="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-white" style="background: linear-gradient(135deg, #c9a35c, #b38a3e)">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                            </span>
-                            <span class="leading-tight">
-                                <span class="block text-[11px] font-bold text-gray-500">{{ $t('بإشراف', 'Supervised by') }}</span>
-                                <span class="block text-sm font-black whitespace-nowrap">{{ config('doctor.name.' . $lang) }}</span>
-                            </span>
-                        </div>
+                {{-- The Motmaena app icon in a gold orbit + "soon" --}}
+                <div class="lg:col-span-5 order-first lg:order-none flex flex-col items-center text-center">
+                    <div class="mh-soon-stage">
+                        <div class="mh-soon-halo"></div>
+                        <div class="mh-soon-orbit"></div>
+                        <div class="mh-soon-orbit o2"></div>
+                        <span class="mh-soon-spark text-xl" style="top: 8%; inset-inline-start: 12%;">✦</span>
+                        <span class="mh-soon-spark text-sm" style="top: 20%; inset-inline-end: 6%; animation-delay: .8s">✦</span>
+                        <span class="mh-soon-spark text-base" style="bottom: 12%; inset-inline-end: 14%; animation-delay: 1.5s">✦</span>
+                        <span class="mh-soon-spark text-xs" style="bottom: 22%; inset-inline-start: 4%; animation-delay: 2s">✦</span>
+                        <img src="{{ asset('photos/motmaena-app-icon.webp') }}" alt="{{ $t('مطمئنة', 'Motmaena') }}" class="mh-soon-icon" width="432" height="432" loading="lazy">
                     </div>
+                    <div class="mh-soon-big mt-2">{{ $t('قريباً', 'Soon') }}</div>
+                    <div class="mh-soon-sub mt-2">COMING SOON</div>
                 </div>
             </div>
         </div>

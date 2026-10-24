@@ -21,7 +21,7 @@ class PsychCenterSoonTest extends TestCase
 
     public function test_homepage_announces_the_center_and_collects_numbers(): void
     {
-        $this->get('/')->assertOk()->assertSee('id="psych-center"', false)->assertSee('مجمع مطمئنة')->assertSee('للاستشارات النفسية')->assertSee('photos/dr-tariq-formal.webp', false);
+        $this->get('/')->assertOk()->assertSee('id="psych-center"', false)->assertSee('مجمع مطمئنة')->assertSee('للاستشارات النفسية')->assertSee('photos/motmaena-app-icon.webp', false);
 
         $this->postJson('/notify', ['phone' => '+965 5111 2222', 'course_key' => Lead::PSYCH_CENTER])
             ->assertOk()->assertJsonFragment(['message' => 'تم! بنبلّغك على واتساب أول ما يفتح المركز 🌷']);
