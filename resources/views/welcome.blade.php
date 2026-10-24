@@ -80,16 +80,23 @@
     .mh-step-n { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; background: var(--wine); flex-shrink: 0; }
 
     /* Psychological center — coming soon */
-    .mh-soon { background: radial-gradient(120% 120% at 0% 0%, var(--wine-l), var(--wine) 45%, var(--wine-d)); box-shadow: 0 40px 80px -40px var(--wine-d); }
-    .mh-soon::before { content: ''; position: absolute; inset: 12px; border: 1.5px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius: 1.6rem; pointer-events: none; }
-    .mh-soon-word { position: absolute; bottom: -.18em; inset-inline-start: -.04em; font-size: clamp(6rem, 18vw, 15rem); font-weight: 900; line-height: 1; letter-spacing: .05em; color: rgba(255,255,255,.05); pointer-events: none; user-select: none; }
+    .mh-soon { background: radial-gradient(120% 120% at 100% 0%, var(--wine-l), var(--wine) 45%, var(--wine-d)); box-shadow: 0 40px 80px -40px var(--wine-d); }
+    .mh-soon::before { content: ''; position: absolute; inset: 12px; border: 1.5px solid color-mix(in srgb, var(--gold) 40%, transparent); border-radius: 1.6rem; pointer-events: none; }
+    .mh-soon-glow { position: absolute; width: 560px; height: 560px; border-radius: 999px; background: radial-gradient(closest-side, rgba(201,163,92,.26), transparent); pointer-events: none; }
     .mh-soon-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 900; font-size: 15px; color: #3b1d00; padding: 8px 18px; border-radius: 999px; background: linear-gradient(110deg, #c9a35c 0%, #f3e2b8 45%, #c9a35c 60%, #b38a3e 100%); background-size: 220% 100%; animation: mh-shine 3.2s linear infinite; box-shadow: 0 10px 24px -10px #c9a35c; }
     @keyframes mh-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
-    .mh-soon-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; padding: 9px 14px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); }
-    .mh-soon-arch { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; background: radial-gradient(90% 70% at 50% 30%, rgba(234,216,177,.22), rgba(0,0,0,.18) 75%); border: 1.5px solid color-mix(in srgb, var(--gold) 70%, transparent); box-shadow: inset 0 0 60px rgba(0,0,0,.25), 0 30px 60px -30px rgba(0,0,0,.6); overflow: hidden; }
-    .mh-soon-ring { position: absolute; left: 50%; top: 32%; width: 150%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 999px; border: 1px dashed rgba(234,216,177,.35); animation: mh-spin 40s linear infinite; }
+    .mh-soon-gold { background: linear-gradient(90deg, #f6e7c1, #c9a35c 55%, #ead8b1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .mh-soon-feat { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); }
+    .mh-soon-feat i { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold-l); background: linear-gradient(135deg, rgba(234,216,177,.22), rgba(201,163,92,.08)); border: 1px solid rgba(234,216,177,.3); }
+    .mh-soon-box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 22px; }
+    .mh-soon-arch { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--gold) 75%, transparent); box-shadow: 0 40px 70px -30px rgba(0,0,0,.75); background: #3a0e17; }
+    .mh-soon-arch img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 6%; }
+    .mh-soon-arch::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(58,10,20,.6) 68%, rgba(42,7,15,.96) 100%); }
+    .mh-soon-arch-in { position: absolute; inset: 10px; border-radius: 999px 999px 24px 24px; border: 1px solid rgba(234,216,177,.5); z-index: 2; pointer-events: none; }
+    .mh-soon-ring { position: absolute; left: 50%; top: 40%; width: 128%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 999px; border: 1px dashed rgba(234,216,177,.35); animation: mh-spin 40s linear infinite; pointer-events: none; }
     @keyframes mh-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-    .mh-soon-line { width: 56px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .mh-soon-chip { position: absolute; z-index: 3; bottom: -26px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: 0 18px 40px -14px rgba(0,0,0,.6); }
+    [dir="rtl"] .mh-soon-chip { padding: 10px 12px 10px 16px; }
     @media (prefers-reduced-motion: reduce) { .mh-soon-badge, .mh-soon-ring { animation: none; } }
 
     /* Sticky booking bar (phones) */
@@ -348,43 +355,74 @@
 <section id="psych-center" class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mh-soon relative overflow-hidden rounded-[2rem] text-white">
-            <div class="absolute inset-0 opacity-[.07] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px;"></div>
-            <div class="mh-soon-word" aria-hidden="true">SOON</div>
+            <div class="absolute inset-0 opacity-[.06] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px;"></div>
+            <div class="mh-soon-glow" style="top: -180px; inset-inline-end: -160px;"></div>
+            <div class="mh-soon-glow" style="bottom: -260px; inset-inline-start: -200px; opacity: .6"></div>
 
-            <div class="relative grid lg:grid-cols-12 gap-10 items-center p-7 sm:p-10 lg:p-14">
+            <div class="relative grid lg:grid-cols-12 gap-10 lg:gap-12 items-center p-6 sm:p-10 lg:p-14">
+
+                {{-- Text --}}
                 <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
-                    <span class="mh-soon-badge">✨ {{ $t('قريباً', 'Coming soon') }}</span>
-                    <p class="font-black text-sm mt-5 mb-2" style="color: var(--gold-l)">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</p>
-                    <h2 class="font-black leading-tight mb-3" style="font-size: clamp(1.8rem, 4vw, 3rem);">{{ $t('مجمع مطمئنة للاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
-                    <p class="font-bold text-white/85 mb-5">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--gold)">{{ config('doctor.name.' . $lang) }}</span> — {{ config('doctor.title.' . $lang) }}</p>
-                    <p class="text-white/80 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-5">
+                        <span class="mh-soon-badge">✨ {{ $t('قريباً', 'Coming soon') }}</span>
+                        <span class="text-sm font-black" style="color: var(--gold-l)">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</span>
+                    </div>
+
+                    <h2 class="font-black leading-[1.2] mb-4" style="font-size: clamp(1.65rem, 4.4vw, 3.3rem);">
+                        {{ $t('مجمع مطمئنة', 'Motmaena') }}
+                        <span class="block mh-soon-gold pb-1">{{ $t('للاستشارات النفسية', 'Psychological Counselling Center') }}</span>
+                    </h2>
+
+                    <p class="text-white/85 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
                         {{ $t('مساحة هادئة وآمنة لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب جداً.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening very soon.') }}
                     </p>
-                    <div class="flex flex-wrap justify-center lg:justify-start gap-2.5 mb-8">
-                        @foreach([['💬', $t('استشارات نفسية متخصصة', 'Specialised counselling')], ['🔒', $t('سرية تامة', 'Fully confidential')], ['👨‍👩‍👧', $t('للأفراد والأسر', 'For individuals & families')]] as [$icon, $label])
-                            <span class="mh-soon-pill">{{ $icon }} {{ $label }}</span>
+
+                    @php
+                        $soonFeatures = [
+                            ['M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z', $t('استشارات نفسية', 'Counselling'), $t('متخصصة وموثوقة', 'Specialised & trusted')],
+                            ['M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z', $t('سرية تامة', 'Fully confidential'), $t('خصوصيتك أولاً', 'Your privacy first')],
+                            ['M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', $t('للأفراد والأسر', 'Individuals & families'), $t('لكل أفراد العائلة', 'For the whole family')],
+                        ];
+                    @endphp
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 {{ $isAr ? 'text-right' : 'text-left' }}">
+                        @foreach($soonFeatures as [$icon, $title, $sub])
+                            <div class="mh-soon-feat">
+                                <i><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></i>
+                                <span class="min-w-0">
+                                    <span class="block font-black text-sm leading-snug whitespace-nowrap">{{ $title }}</span>
+                                    <span class="block text-xs font-semibold text-white/65">{{ $sub }}</span>
+                                </span>
+                            </div>
                         @endforeach
                     </div>
-                    <div class="max-w-lg mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
-                        <p class="font-black mb-3">🔔 {{ $t('سجّل رقمك ونبلّغك أول ما نفتح', 'Leave your number and be the first to know') }}</p>
+
+                    <div class="mh-soon-box p-5 sm:p-6 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0 text-right' : 'lg:mr-auto lg:ml-0 text-left' }}">
+                        <p class="font-black text-lg mb-1">🔔 {{ $t('كن أول من يعرف بالافتتاح', 'Be the first to know when we open') }}</p>
+                        <p class="text-sm font-semibold text-white/70 mb-4">{{ $t('سجّل رقم الواتساب ونبعتلك رسالة يوم الافتتاح.', 'Leave your WhatsApp number and we will message you on opening day.') }}</p>
                         @include('partials.notify-form', ['courseKey' => \App\Models\Lead::PSYCH_CENTER, 'dark' => true])
                     </div>
                 </div>
 
-                <div class="lg:col-span-5 flex justify-center">
-                    <div class="mh-soon-arch">
+                {{-- Doctor in the gold arch --}}
+                <div class="lg:col-span-5 order-first lg:order-none flex justify-center pt-2 pb-8 lg:pb-0">
+                    <div class="relative w-[min(78%,270px)] sm:w-[300px] lg:w-[340px]">
                         <div class="mh-soon-ring"></div>
-                        <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-                            <svg class="w-16 h-16 sm:w-20 sm:h-20 mb-4" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" style="color: var(--gold)" aria-hidden="true">
-                                <path d="M32 50c-9-6-14-13-14-21 6 0 11 3 14 8 3-5 8-8 14-8 0 8-5 15-14 21z"/>
-                                <path d="M32 50c-3-8-3-17 0-28 3 11 3 20 0 28z"/>
-                                <path d="M18 29c-6-1-10 1-12 4 4 5 11 9 22 13"/>
-                                <path d="M46 29c6-1 10 1 12 4-4 5-11 9-22 13"/>
-                            </svg>
-                            <div class="font-black leading-none mb-2" style="font-size: clamp(2.6rem, 6vw, 3.6rem); color: var(--gold-l)">{{ $t('قريباً', 'Soon') }}</div>
-                            <div class="text-xs font-black tracking-[.3em] text-white/70">{{ $isAr ? 'COMING SOON' : 'قريباً' }}</div>
-                            <div class="mh-soon-line my-5"></div>
-                            <div class="text-sm font-bold text-white/80">{{ $t('مطمئنة · الكويت', 'Motmaena · Kuwait') }}</div>
+                        <div class="mh-soon-arch">
+                            <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ config('doctor.name.' . $lang) }}" loading="lazy">
+                            <span class="mh-soon-arch-in"></span>
+                            <div class="absolute inset-x-0 bottom-0 z-[3] text-center pb-12 sm:pb-14 px-4">
+                                <div class="font-black leading-none mb-2" style="font-size: clamp(2.4rem, 5vw, 3.4rem); color: var(--gold-l)">{{ $t('قريباً', 'Soon') }}</div>
+                                <div class="text-[11px] font-black tracking-[.35em] text-white/75">{{ $isAr ? 'COMING SOON' : 'قريباً' }}</div>
+                            </div>
+                        </div>
+                        <div class="mh-soon-chip">
+                            <span class="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-white" style="background: linear-gradient(135deg, #c9a35c, #b38a3e)">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </span>
+                            <span class="leading-tight">
+                                <span class="block text-[11px] font-bold text-gray-500">{{ $t('بإشراف', 'Supervised by') }}</span>
+                                <span class="block text-sm font-black whitespace-nowrap">{{ config('doctor.name.' . $lang) }}</span>
+                            </span>
                         </div>
                     </div>
                 </div>
