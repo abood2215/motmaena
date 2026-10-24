@@ -117,7 +117,7 @@
                 @else
                     <span class="mh-eyebrow mb-5">{{ $t('مركز مطمئنة · الكويت', 'Motmaena Center · Kuwait') }}</span>
                     <h1 class="mh-title font-black leading-[1.15] mb-5" style="font-size: clamp(2.3rem, 5.6vw, 4.2rem);">{{ $t('حياة أهدأ، وعلاقات أقوى', 'A calmer life, stronger relationships') }}</h1>
-                    <p class="text-lg sm:text-xl font-bold text-stone-600 dark:text-stone-300 mb-8">{{ $t('دورات وجلسات واستشارات اجتماعية وتربوية بإشراف أ.د. طارق الحبيب.', 'Courses, sessions and social & educational consultations supervised by Prof. Dr. Tariq Al-Habib.') }}</p>
+                    <p class="text-lg sm:text-xl font-bold text-stone-600 dark:text-stone-300 mb-8">{{ $t('دورات وجلسات واستشارات اجتماعية وتربوية بإشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي.', 'Courses, sessions and social & educational consultations supervised by Prof. Dr. Tariq Al-Habib, professor & consultant psychiatrist.') }}</p>
                     <div class="flex flex-col sm:flex-row items-center justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-3">
                         <a href="{{ route('consultations') }}" class="mh-btn mh-btn-primary w-full sm:w-auto">{{ $t('احجز استشارة', 'Book a consultation') }}</a>
                         <a href="{{ route('courses') }}" class="mh-btn mh-btn-ghost w-full sm:w-auto">{{ $t('تصفّح الدورات', 'Browse courses') }}</a>

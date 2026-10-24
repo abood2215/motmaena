@@ -21,8 +21,8 @@
         
         <p class="text-sm sm:text-base lg:text-lg text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed reveal">
             {{ app()->getLocale() == 'ar' 
-                ? 'استكشف مجموعة واسعة من الدورات التنموية والتربوية تحت إشراف البروفيسور طارق الحبيب لتطوير مهاراتك ومهاراتك الشخصية.' 
-                : 'Explore a wide range of developmental and educational courses under the supervision of Professor Tariq Al-Habib to develop your skills and personal skills.' }}
+                ? 'استكشف مجموعة واسعة من الدورات التنموية والتربوية تحت إشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي، لتطوير مهاراتك ومهاراتك الشخصية.' 
+                : 'Explore a wide range of developmental and educational courses under the supervision of Prof. Dr. Tariq Al-Habib, professor & consultant psychiatrist, to develop your skills and personal skills.' }}
         </p>
     </div>
 </section>

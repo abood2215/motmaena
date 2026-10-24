@@ -157,7 +157,7 @@
                         <div>
                             <img src="{{ asset('logo.png') }}" alt="{{ __('Motmaena Center') }}" class="h-12 sm:h-14 mb-4 dark:brightness-110">
                             <p class="text-sm text-[var(--muted-color)] leading-relaxed mb-5">
-                                {{ $isArF ? 'مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بإشراف أ.د. طارق الحبيب.' : 'Motmaena Center for social & educational guidance and life skills, supervised by Prof. Dr. Tariq Al-Habib.' }}
+                                {{ $isArF ? 'مركز مطمئنة للإرشاد الاجتماعي والتربوي وتنمية المهارات الحياتية، بإشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي.' : 'Motmaena Center for social & educational guidance and life skills, supervised by Prof. Dr. Tariq Al-Habib, professor & consultant psychiatrist.' }}
                             </p>
                             <div class="flex flex-wrap items-center gap-2.5">
                                 <a href="https://www.instagram.com/motmaena_kw/?hl=ar" target="_blank" class="p-2.5 rounded-full bg-gray-50 dark:bg-dark-border text-gray-400 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all hover:-translate-y-1 shadow-sm" title="Instagram">
