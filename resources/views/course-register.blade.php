@@ -37,6 +37,12 @@
     .co-step.on { color: var(--c1); }
     .co-step.on b { background: var(--c1); color: #fff; }
     .dark .co-step.on { color: var(--ca); }
+    .pm-opt { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1.5px solid #e5e7eb; border-radius: 16px; background: #fff; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
+    .pm-opt:hover { border-color: color-mix(in srgb, var(--c1) 45%, #e5e7eb); }
+    .pm-opt:has(.pm-radio:checked) { border-color: var(--c1); background: color-mix(in srgb, var(--c1) 5%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c1) 10%, transparent); }
+    .dark .pm-opt { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.12); }
+    .dark .pm-opt:has(.pm-radio:checked) { border-color: var(--ca); background: rgba(255,255,255,.06); }
+    .pm-radio { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--c1); }
 </style>
 
 <section class="co-page py-8 sm:py-12" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
@@ -216,30 +222,62 @@
                     </div>
                     @endif
 
+                    @php $cardBadges = ['KNET', 'VISA', 'Mastercard', 'Apple Pay']; @endphp
+
+                    @if($deemaEnabled)
+                    {{-- Payment method: full payment (MyFatoorah) or 4 installments (deema) --}}
+                    @php $viaDeema = old('method') === 'deema'; @endphp
+                    <fieldset class="space-y-3">
+                        <legend class="co-label">{{ $isAr ? 'طريقة الدفع' : 'Payment method' }}</legend>
+
+                        <label class="pm-opt">
+                            <input type="radio" name="method" value="card" class="pm-radio" @checked(!$viaDeema)>
+                            <span class="flex-1 min-w-0">
+                                <span class="flex items-center justify-between gap-3">
+                                    <span class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'ادفع المبلغ كامل' : 'Pay in full' }}</span>
+                                    <span class="font-black text-gray-900 dark:text-white whitespace-nowrap"><span class="js-total">{{ $price }}</span> {{ $kwd }}</span>
+                                </span>
+                                <span class="flex flex-wrap gap-1.5 mt-2">
+                                    @foreach($cardBadges as $badge)
+                                        <span class="text-[10px] font-black px-2 py-1 rounded-md border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $badge }}</span>
+                                    @endforeach
+                                </span>
+                            </span>
+                        </label>
+
+                        <label class="pm-opt">
+                            <input type="radio" name="method" value="deema" class="pm-radio" @checked($viaDeema)>
+                            <span class="flex-1 min-w-0">
+                                <span class="flex items-center justify-between gap-3">
+                                    <span class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'قسّطها على 4 دفعات' : 'Split into 4 payments' }}</span>
+                                    <span class="font-black text-gray-900 dark:text-white whitespace-nowrap">4 × <span class="js-quarter">{{ number_format((float) $offer['price'] / 4, 3) }}</span> {{ $kwd }}</span>
+                                </span>
+                                <span class="flex items-center justify-between gap-3 mt-2">
+                                    <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات' : 'Pay the first part today, the rest in 3 payments' }}</span>
+                                    <span class="shrink-0 rounded-lg bg-white border border-gray-200 dark:border-white/10 px-1.5 py-0.5"><img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-8 w-auto object-contain"></span>
+                                </span>
+                            </span>
+                        </label>
+                    </fieldset>
+                    @endif
+
                     <button type="submit" id="pay-btn"
                             class="co-pay w-full rounded-2xl py-4 text-base sm:text-lg font-black text-white disabled:opacity-60 inline-flex items-center justify-center gap-2.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span id="pay-label">{{ $isAr ? 'ادفع' : 'Pay' }} <span id="pay-amount">{{ $price }}</span> {{ $kwd }}</span>
+                        <span id="pay-label"><span id="pay-card">{{ $isAr ? 'ادفع' : 'Pay' }} <span class="js-total">{{ $price }}</span> {{ $kwd }}</span><span id="pay-deema" class="hidden">{{ $isAr ? 'تابع للتقسيط مع deema' : 'Continue with deema' }}</span></span>
                     </button>
 
-                    @if($deemaEnabled)
-                    <input type="hidden" name="method" id="pay-method" value="card">
-                    <button type="submit" id="deema-btn"
-                            class="w-full rounded-2xl py-3.5 px-4 border-[1.5px] border-gray-200 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[color:var(--c1)] transition disabled:opacity-60 flex items-center justify-center gap-3 text-sm sm:text-base font-black text-gray-900 dark:text-white">
-                        <span id="deema-label">{{ $isAr ? 'أو قسّطها على 4 دفعات' : 'Or split into 4 payments' }} <span class="text-gray-500 dark:text-gray-400 font-bold">(<span id="deema-amount">{{ number_format((float) $offer['price'] / 4, 3) }}</span> {{ $kwd }} {{ $isAr ? 'للدفعة' : 'each' }})</span></span>
-                        <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-5 w-auto object-contain dark:invert">
-                    </button>
-                    @endif
-
+                    @unless($deemaEnabled)
                     <div class="flex flex-wrap items-center justify-center gap-2">
-                        @foreach(['KNET', 'VISA', 'Mastercard', 'Apple Pay'] as $method)
-                            <span class="text-[11px] font-black px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $method }}</span>
+                        @foreach($cardBadges as $badge)
+                            <span class="text-[11px] font-black px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $badge }}</span>
                         @endforeach
                     </div>
+                    @endunless
 
                     <div class="flex items-center justify-center gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
-                        <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        {{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <span id="secure-note" data-card="{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}" data-deema="{{ $isAr ? 'رح ننقلك لصفحة deema الآمنة لإكمال التقسيط' : 'You will continue on deema\'s secure page to set up the installments' }}">{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}</span>
                     </div>
 
                     <p class="text-center text-[11px] font-semibold text-gray-400 leading-relaxed">
@@ -279,10 +317,22 @@
 
     function setTotal(value) {
         document.getElementById('p-final').textContent = value;
-        document.getElementById('pay-amount').textContent = value;
-        const deemaAmount = document.getElementById('deema-amount');
-        if (deemaAmount) deemaAmount.textContent = fmt(parseFloat(value) / 4);
+        document.querySelectorAll('.js-total').forEach(el => el.textContent = value);
+        document.querySelectorAll('.js-quarter').forEach(el => el.textContent = fmt(parseFloat(value) / 4));
     }
+
+    // Payment method choice: the button and the note follow the selected option
+    const methodRadios = document.querySelectorAll('input[name="method"]');
+    const viaDeema = () => document.querySelector('input[name="method"]:checked')?.value === 'deema';
+    function showMethod() {
+        const deema = viaDeema();
+        document.getElementById('pay-card').classList.toggle('hidden', deema);
+        document.getElementById('pay-deema').classList.toggle('hidden', !deema);
+        const note = document.getElementById('secure-note');
+        note.textContent = deema ? note.dataset.deema : note.dataset.card;
+    }
+    methodRadios.forEach(r => r.addEventListener('change', showMethod));
+    if (methodRadios.length) showMethod();
 
     function giftState(codeApplied) {
         var row = document.getElementById('gift-row');
@@ -331,16 +381,12 @@
     // Code changed after applying: the server recalculates anyway, just stop showing a stale price
     codeInput.addEventListener('input', () => { resetPrice(); msg.classList.add('hidden'); });
 
-    document.getElementById('reg-form').addEventListener('submit', (e) => {
+    document.getElementById('reg-form').addEventListener('submit', () => {
         window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD' });
-        const deemaBtn = document.getElementById('deema-btn');
-        const viaDeema = deemaBtn && e.submitter === deemaBtn;
-        if (deemaBtn) {
-            document.getElementById('pay-method').value = viaDeema ? 'deema' : 'card';
-            deemaBtn.disabled = true;
-        }
         document.getElementById('pay-btn').disabled = true;
-        document.getElementById(viaDeema ? 'deema-label' : 'pay-label').textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
+        document.getElementById('pay-label').textContent = viaDeema()
+            ? @json($isAr ? 'جاري التحويل لصفحة deema...' : 'Redirecting to deema...')
+            : @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
     });
 
     @if(old('code') && !$errors->has('code'))

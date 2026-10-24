@@ -51,12 +51,12 @@ class DeemaPaymentTest extends TestCase
         return Http::recorded()->first()[0]['merchant_urls']['success'];
     }
 
-    public function test_button_shows_only_when_deema_is_set_up(): void
+    public function test_deema_option_shows_only_when_deema_is_set_up(): void
     {
-        $this->get('/register/anger-management')->assertSee('id="deema-btn"', false);
+        $this->get('/register/anger-management')->assertSee('name="method" value="deema"', false);
 
         config(['services.deema.api_key' => null]);
-        $this->get('/register/anger-management')->assertDontSee('id="deema-btn"', false);
+        $this->get('/register/anger-management')->assertDontSee('name="method" value="deema"', false);
     }
 
     public function test_customer_returning_after_paying_is_registered(): void
