@@ -355,7 +355,7 @@
                 <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
                     <span class="mh-soon-badge">✨ {{ $t('قريباً', 'Coming soon') }}</span>
                     <p class="font-black text-sm mt-5 mb-2" style="color: var(--gold-l)">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</p>
-                    <h2 class="font-black leading-tight mb-3" style="font-size: clamp(1.8rem, 4vw, 3rem);">{{ $t('مجمع مطمئنة للعلاج والاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
+                    <h2 class="font-black leading-tight mb-3" style="font-size: clamp(1.8rem, 4vw, 3rem);">{{ $t('مجمع مطمئنة للاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
                     <p class="font-bold text-white/85 mb-5">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--gold)">{{ config('doctor.name.' . $lang) }}</span> — {{ config('doctor.title.' . $lang) }}</p>
                     <p class="text-white/80 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
                         {{ $t('مساحة هادئة وآمنة لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب جداً.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening very soon.') }}
