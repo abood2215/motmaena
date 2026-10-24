@@ -79,35 +79,33 @@
     .mh-step { display: flex; gap: 14px; align-items: flex-start; }
     .mh-step-n { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; background: var(--wine); flex-shrink: 0; }
 
-    /* Psychological center — coming soon */
-    .mh-soon { background: radial-gradient(120% 120% at 100% 0%, var(--wine-l), var(--wine) 45%, var(--wine-d)); box-shadow: 0 40px 80px -40px var(--wine-d); }
-    .mh-soon::before { content: ''; position: absolute; inset: 12px; border: 1.5px solid color-mix(in srgb, var(--gold) 40%, transparent); border-radius: 1.6rem; pointer-events: none; }
-    .mh-soon-glow { position: absolute; width: 560px; height: 560px; border-radius: 999px; background: radial-gradient(closest-side, rgba(201,163,92,.26), transparent); pointer-events: none; }
-    .mh-soon-live { display: inline-flex; align-items: center; gap: 9px; padding: 7px 15px; border-radius: 999px; font-size: 14px; font-weight: 900; color: var(--gold-l); background: rgba(255,255,255,.08); border: 1px solid rgba(234,216,177,.35); }
-    .mh-soon-live i { width: 9px; height: 9px; border-radius: 99px; background: #f3d58f; animation: mh-pulse 1.8s ease-out infinite; }
-    @keyframes mh-pulse { 0% { box-shadow: 0 0 0 0 rgba(243,213,143,.7); } 70%, 100% { box-shadow: 0 0 0 10px rgba(243,213,143,0); } }
-    .mh-soon-gold { background: linear-gradient(90deg, #f6e7c1, #c9a35c 55%, #ead8b1); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .mh-soon-feat { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); }
-    .mh-soon-feat i { width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold-l); background: linear-gradient(135deg, rgba(234,216,177,.22), rgba(201,163,92,.08)); border: 1px solid rgba(234,216,177,.3); }
-    .mh-soon-box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 22px; }
-    /* Visual: the app icon floating inside a gold orbit, a big shimmering "soon" under it */
-    .mh-soon-stage { position: relative; width: min(74vw, 340px); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
-    .mh-soon-orbit { position: absolute; inset: 0; border-radius: 999px; border: 1px dashed rgba(234,216,177,.45); animation: mh-rot 30s linear infinite; }
-    .mh-soon-orbit::after { content: ''; position: absolute; top: -6px; left: calc(50% - 6px); width: 12px; height: 12px; border-radius: 99px; background: #f3d58f; box-shadow: 0 0 14px 3px rgba(243,213,143,.75); }
-    .mh-soon-orbit.o2 { inset: 13%; border: 1px solid rgba(234,216,177,.2); animation-duration: 18s; animation-direction: reverse; }
-    .mh-soon-orbit.o2::after { width: 8px; height: 8px; top: -4px; left: calc(50% - 4px); }
-    .mh-soon-halo { position: absolute; inset: 18%; border-radius: 999px; background: radial-gradient(closest-side, rgba(243,213,143,.35), rgba(201,163,92,.08) 60%, transparent); }
-    .mh-soon-icon { position: relative; width: 50%; border-radius: 23%; box-shadow: 0 30px 50px -18px rgba(0,0,0,.75), 0 0 0 1.5px rgba(234,216,177,.65), 0 0 0 9px rgba(255,255,255,.06); animation: mh-float 5s ease-in-out infinite; }
-    @keyframes mh-float { 50% { transform: translateY(-10px); } }
-    @keyframes mh-rot { to { transform: rotate(360deg); } }
-    .mh-soon-spark { position: absolute; color: #f3d58f; line-height: 1; animation: mh-twinkle 2.6s ease-in-out infinite; pointer-events: none; }
-    @keyframes mh-twinkle { 0%, 100% { opacity: .25; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
-    .mh-soon-big { font-weight: 900; line-height: 1.15; font-size: clamp(3.2rem, 7vw, 4.6rem); background: linear-gradient(100deg, #c9a35c 0%, #fff4d6 38%, #c9a35c 55%, #b38a3e 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mh-shine 4s linear infinite; filter: drop-shadow(0 8px 18px rgba(0,0,0,.35)); }
-    @keyframes mh-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
-    .mh-soon-sub { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 11px; font-weight: 900; letter-spacing: .4em; color: rgba(255,255,255,.75); }
-    .mh-soon-sub::before, .mh-soon-sub::after { content: ''; width: 34px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
-    .mh-soon-sub::after { transform: scaleX(-1); }
-    @media (prefers-reduced-motion: reduce) { .mh-soon-live i, .mh-soon-orbit, .mh-soon-icon, .mh-soon-spark, .mh-soon-big { animation: none; } }
+    /* Psychological center — coming soon: a printed "announcement card" with a postage stamp + postmark */
+    .ps-card { --ink: #6d1b2b; --paper: #f4ebdd; position: relative; background: var(--paper); color: #2a1a17; border-radius: 2rem; overflow: hidden;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .ps-card::before { content: ''; position: absolute; inset: 14px; border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent); border-radius: 1.4rem; pointer-events: none; }
+    .ps-card::after { content: ''; position: absolute; inset: 19px; border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); border-radius: 1.2rem; pointer-events: none; }
+    .ps-ruqaa { font-family: 'Aref Ruqaa', 'Tajawal', serif; font-weight: 700; }
+    .ps-soon { font-size: clamp(4.6rem, 11vw, 8rem); line-height: 1.4; color: var(--ink); padding-top: .1em; }
+    .ps-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 900; letter-spacing: .02em; color: #9a7434; }
+    .ps-eyebrow::before { content: ''; width: 36px; height: 1.5px; background: currentColor; }
+    .ps-list { border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
+    .ps-list > div + div { border-inline-start: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+    @media (max-width: 639px) { .ps-list > div + div { border-inline-start: 0; border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); } }
+    .ps-num { font-size: 13px; font-weight: 900; color: #b08a45; letter-spacing: .08em; }
+    /* Stamp: perforated edge cut with a mask; the shadow sits on the wrapper because masks clip it */
+    .ps-stamp-wrap { filter: drop-shadow(0 18px 22px rgba(60,20,20,.22)) drop-shadow(0 2px 3px rgba(60,20,20,.15)); transform: rotate(-5deg); }
+    .ps-stamp { --r: 7px; background: #fffdf8; padding: calc(2.4 * var(--r));
+        -webkit-mask: radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)), linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+                mask: radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)), linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r)); }
+    .ps-stamp img { display: block; width: 100%; border-radius: 10px; }
+    .ps-postmark { position: absolute; color: var(--ink); opacity: .88; mix-blend-mode: multiply; transform: rotate(14deg); pointer-events: none; }
+    .ps-waves { position: absolute; color: var(--ink); opacity: .55; mix-blend-mode: multiply; pointer-events: none; }
+    .ps-input { flex: 1; min-width: 0; background: transparent; border: 0; border-bottom: 1.5px solid color-mix(in srgb, var(--ink) 45%, transparent); padding: 12px 2px; font-size: 16px; font-weight: 700; color: #2a1a17; outline: none; transition: border-color .2s; }
+    .ps-input::placeholder { color: #9b8b7c; }
+    .ps-input:focus { border-color: var(--ink); }
+    .ps-btn { flex-shrink: 0; background: var(--ink); color: #fff; font-weight: 900; font-size: 15px; padding: 12px 22px; border-radius: 999px; transition: background .2s, transform .2s; }
+    .ps-btn:hover { background: #4a0f1b; transform: translateY(-1px); }
+    .ps-btn:disabled { opacity: .6; }
 
     /* Sticky booking bar (phones) */
     .mh-bar { transform: translateY(110%); transition: transform .3s ease; }
@@ -362,72 +360,75 @@
 
 {{-- ═══════════════ PSYCHOLOGICAL CENTER — COMING SOON (Admin → Content → switch) ═══════════════ --}}
 @if(($site['psych_soon'] ?? '1') === '1')
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=swap">
 <section id="psych-center" class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mh-soon relative overflow-hidden rounded-[2rem] text-white">
-            <div class="absolute inset-0 opacity-[.06] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px;"></div>
-            <div class="mh-soon-glow" style="top: -180px; inset-inline-end: -160px;"></div>
-            <div class="mh-soon-glow" style="bottom: -260px; inset-inline-start: -200px; opacity: .6"></div>
+        <div class="ps-card shadow-[0_30px_70px_-40px_rgba(74,15,27,.45)]">
+            <div class="relative grid lg:grid-cols-12 gap-6 lg:gap-10 items-center px-6 py-12 sm:p-12 lg:p-16">
 
-            <div class="relative grid lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 lg:p-14">
+                {{-- Stamp + postmark --}}
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-[min(58vw,230px)] sm:w-[270px] lg:w-[300px] mb-12 lg:mb-0">
+                        <div class="ps-stamp-wrap">
+                            <div class="ps-stamp">
+                                <img src="{{ asset('photos/motmaena-app-icon.webp') }}" alt="{{ $t('مطمئنة', 'Motmaena') }}" width="432" height="432" loading="lazy">
+                            </div>
+                        </div>
 
-                {{-- Text --}}
-                <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
-                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-5">
-                        <span class="mh-soon-live"><i></i>{{ $t('نجهّز للافتتاح', 'Getting ready to open') }}</span>
-                        <span class="text-sm font-black" style="color: var(--gold-l)">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</span>
+                        {{-- Ink postmark --}}
+                        <svg class="ps-postmark w-[56%] -bottom-[22%] -left-[22%]" viewBox="0 0 200 200" aria-hidden="true">
+                            <defs>
+                                <path id="ps-ring" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/>
+                                <filter id="ps-ink"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+                            </defs>
+                            <g filter="url(#ps-ink)" fill="none" stroke="currentColor">
+                                <circle cx="100" cy="100" r="94" stroke-width="3.5"/>
+                                <circle cx="100" cy="100" r="88" stroke-width="1.2"/>
+                                <circle cx="100" cy="100" r="54" stroke-width="1.5"/>
+                                <text fill="currentColor" stroke="none" font-size="14" font-weight="800" font-family="Tajawal, sans-serif" direction="ltr" style="direction: ltr; unicode-bidi: isolate"><textPath href="#ps-ring" textLength="440" lengthAdjust="spacing">COMING SOON ✦ MOTMAENA ✦ KUWAIT ✦</textPath></text>
+                                <text x="100" y="113" text-anchor="middle" fill="currentColor" stroke="none" font-size="38" class="ps-ruqaa" direction="rtl">قريباً</text>
+                            </g>
+                        </svg>
+                        {{-- Cancellation waves --}}
+                        <svg class="ps-waves w-[66%] -bottom-[12%] left-[36%]" viewBox="0 0 220 60" aria-hidden="true">
+                            <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" filter="url(#ps-ink)">
+                                @foreach([8, 22, 36, 50] as $y)
+                                    <path d="M0 {{ $y }} q13.75 -7 27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0"/>
+                                @endforeach
+                            </g>
+                        </svg>
                     </div>
+                </div>
 
-                    <h2 class="font-black leading-[1.2] mb-3" style="font-size: clamp(1.65rem, 4.4vw, 3.3rem);">
-                        {{ $t('مجمع مطمئنة', 'Motmaena') }}
-                        <span class="block mh-soon-gold pb-1">{{ $t('للاستشارات النفسية', 'Psychological Counselling Center') }}</span>
-                    </h2>
-                    <p class="font-bold text-white/85 mb-4">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--gold-l)">{{ config('doctor.name.' . $lang) }}</span></p>
+                {{-- Announcement --}}
+                <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
+                    <span class="ps-eyebrow">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</span>
 
-                    <p class="text-white/80 font-semibold leading-loose mb-7 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
+                    <div class="ps-ruqaa ps-soon mb-4">{{ $t('قريباً', 'Soon') }}</div>
+
+                    <h2 class="font-black leading-snug mb-2 text-[#2a1a17]" style="font-size: clamp(1.4rem, 2.8vw, 2.2rem); text-wrap: balance;">{{ $t('مجمع مطمئنة للاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
+                    <p class="font-bold text-[#6b5446] mb-5">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--ink)">{{ config('doctor.name.' . $lang) }}</span></p>
+
+                    <p class="text-[#5a463b] font-semibold leading-loose mb-8 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
                         {{ $t('مساحة هادئة وآمنة لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب جداً.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening very soon.') }}
                     </p>
 
-                    @php
-                        $soonFeatures = [
-                            ['M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z', $t('استشارات نفسية', 'Counselling'), $t('متخصصة وموثوقة', 'Specialised & trusted')],
-                            ['M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z', $t('سرية تامة', 'Fully confidential'), $t('خصوصيتك أولاً', 'Your privacy first')],
-                            ['M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', $t('للأفراد والأسر', 'Individuals & families'), $t('لكل أفراد العائلة', 'For the whole family')],
-                        ];
-                    @endphp
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 {{ $isAr ? 'text-right' : 'text-left' }}">
-                        @foreach($soonFeatures as [$icon, $title, $sub])
-                            <div class="mh-soon-feat">
-                                <i><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></i>
-                                <span class="min-w-0">
-                                    <span class="block font-black text-sm leading-snug whitespace-nowrap">{{ $title }}</span>
-                                    <span class="block text-xs font-semibold text-white/65">{{ $sub }}</span>
-                                </span>
+                    <div class="ps-list grid grid-cols-1 sm:grid-cols-3 mb-9 {{ $isAr ? 'text-right' : 'text-left' }}">
+                        @foreach([[$t('استشارات نفسية', 'Counselling'), $t('متخصصة وموثوقة', 'Specialised & trusted')], [$t('سرية تامة', 'Fully confidential'), $t('خصوصيتك أولاً', 'Your privacy first')], [$t('للأفراد والأسر', 'Individuals & families'), $t('لكل أفراد العائلة', 'For the whole family')]] as $i => [$title, $sub])
+                            <div class="py-4 sm:px-4 {{ $isAr ? 'sm:first:pr-0' : 'sm:first:pl-0' }}">
+                                <span class="ps-num" dir="ltr">0{{ $i + 1 }}</span>
+                                <p class="font-black text-[#2a1a17] mt-1">{{ $title }}</p>
+                                <p class="text-xs font-bold text-[#8a7462]">{{ $sub }}</p>
                             </div>
                         @endforeach
                     </div>
 
-                    <div class="mh-soon-box p-5 sm:p-6 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0 text-right' : 'lg:mr-auto lg:ml-0 text-left' }}">
-                        <p class="font-black text-lg mb-1">🔔 {{ $t('كن أول من يعرف بالافتتاح', 'Be the first to know when we open') }}</p>
-                        <p class="text-sm font-semibold text-white/70 mb-4">{{ $t('سجّل رقم الواتساب ونبعتلك رسالة يوم الافتتاح.', 'Leave your WhatsApp number and we will message you on opening day.') }}</p>
-                        @include('partials.notify-form', ['courseKey' => \App\Models\Lead::PSYCH_CENTER, 'dark' => true])
+                    <div class="max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0 text-right' : 'lg:mr-auto lg:ml-0 text-left' }}">
+                        <p class="font-black text-[#2a1a17] mb-1">{{ $t('كن أول من يعرف بالافتتاح', 'Be the first to know when we open') }}</p>
+                        <p class="text-sm font-semibold text-[#8a7462] mb-2">{{ $t('سجّل رقم الواتساب ونبعتلك رسالة يوم الافتتاح.', 'Leave your WhatsApp number and we will message you on opening day.') }}</p>
+                        @include('partials.notify-form', ['courseKey' => \App\Models\Lead::PSYCH_CENTER, 'paper' => true])
                     </div>
-                </div>
-
-                {{-- The Motmaena app icon in a gold orbit + "soon" --}}
-                <div class="lg:col-span-5 order-first lg:order-none flex flex-col items-center text-center">
-                    <div class="mh-soon-stage">
-                        <div class="mh-soon-halo"></div>
-                        <div class="mh-soon-orbit"></div>
-                        <div class="mh-soon-orbit o2"></div>
-                        <span class="mh-soon-spark text-xl" style="top: 8%; inset-inline-start: 12%;">✦</span>
-                        <span class="mh-soon-spark text-sm" style="top: 20%; inset-inline-end: 6%; animation-delay: .8s">✦</span>
-                        <span class="mh-soon-spark text-base" style="bottom: 12%; inset-inline-end: 14%; animation-delay: 1.5s">✦</span>
-                        <span class="mh-soon-spark text-xs" style="bottom: 22%; inset-inline-start: 4%; animation-delay: 2s">✦</span>
-                        <img src="{{ asset('photos/motmaena-app-icon.webp') }}" alt="{{ $t('مطمئنة', 'Motmaena') }}" class="mh-soon-icon" width="432" height="432" loading="lazy">
-                    </div>
-                    <div class="mh-soon-big mt-2">{{ $t('قريباً', 'Soon') }}</div>
-                    <div class="mh-soon-sub mt-2">COMING SOON</div>
                 </div>
             </div>
         </div>
