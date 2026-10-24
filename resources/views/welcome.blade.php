@@ -86,8 +86,10 @@
     .ps-card::after { content: ''; position: absolute; inset: 19px; border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); border-radius: 1.2rem; pointer-events: none; }
     .ps-ruqaa { font-family: 'Aref Ruqaa', 'Tajawal', serif; font-weight: 700; }
     .ps-soon { font-size: clamp(4.6rem, 11vw, 8rem); line-height: 1.4; color: var(--ink); padding-top: .1em; }
-    .ps-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: clamp(16px, 1.6vw, 19px); font-weight: 900; letter-spacing: .02em; color: #9a7434; }
-    .ps-eyebrow::after { content: ''; width: 48px; height: 2px; background: currentColor; }
+    /* Eyebrow: centred on mobile/tablet → a line on both sides keeps it balanced; right-aligned on desktop → one line trailing the text */
+    .ps-eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: .35rem; font-size: clamp(16px, 1.6vw, 19px); font-weight: 900; letter-spacing: .02em; color: #9a7434; }
+    .ps-eyebrow::before, .ps-eyebrow::after { content: ''; width: 40px; height: 2px; border-radius: 2px; background: currentColor; opacity: .85; }
+    @media (min-width: 1024px) { .ps-eyebrow::before { display: none; } .ps-eyebrow::after { width: 56px; } }
     .ps-list { border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
     .ps-list > div + div { border-inline-start: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
     @media (max-width: 639px) { .ps-list > div + div { border-inline-start: 0; border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); } }
