@@ -191,22 +191,15 @@
 
                         <div class="space-y-4 mt-5">
                             <div>
-                                <label class="co-label">{{ $isAr ? 'الاسم الكامل' : 'Full name' }} <span class="text-[color:var(--c1)]">*</span></label>
+                                <label class="co-label">{{ $isAr ? 'الاسم الكامل' : 'Full name' }} <span class="text-[color:var(--c1)]">*</span> <span class="text-gray-400 font-bold">({{ $isAr ? 'بيطلع بالشهادة' : 'printed on the certificate' }})</span></label>
                                 <input type="text" name="name" value="{{ old('name') }}" required maxlength="120" autocomplete="name" class="co-input" placeholder="{{ $isAr ? 'كما تحب يظهر بالشهادة' : 'As it should appear on the certificate' }}">
                                 @error('name')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="co-label">{{ $isAr ? 'رقم الهاتف (واتساب)' : 'Phone (WhatsApp)' }} <span class="text-[color:var(--c1)]">*</span></label>
-                                    <input type="tel" name="phone" value="{{ old('phone') }}" required dir="ltr" autocomplete="tel" placeholder="5xxxxxxx" class="co-input {{ $isAr ? 'text-right' : '' }}">
-                                    @error('phone')<p class="text-red-600 text-xs font-bold mt-1">{{ $isAr ? 'رقم الهاتف غير صحيح' : $message }}</p>@enderror
-                                </div>
-                                <div>
-                                    <label class="co-label">{{ $isAr ? 'البريد الإلكتروني' : 'Email' }} <span class="text-gray-400 font-bold">({{ $isAr ? 'اختياري' : 'optional' }})</span></label>
-                                    <input type="email" name="email" value="{{ old('email') }}" maxlength="150" dir="ltr" autocomplete="email" class="co-input {{ $isAr ? 'text-right' : '' }}">
-                                    @error('email')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
-                                </div>
+                            <div>
+                                <label class="co-label">{{ $isAr ? 'رقم الهاتف (واتساب)' : 'Phone (WhatsApp)' }} <span class="text-[color:var(--c1)]">*</span></label>
+                                <input type="tel" name="phone" value="{{ old('phone') }}" required dir="ltr" autocomplete="tel" placeholder="5xxxxxxx" class="co-input {{ $isAr ? 'text-right' : '' }}">
+                                @error('phone')<p class="text-red-600 text-xs font-bold mt-1">{{ $isAr ? 'رقم الهاتف غير صحيح' : $message }}</p>@enderror
                             </div>
 
                             {{-- Discount code: a quiet link until needed --}}

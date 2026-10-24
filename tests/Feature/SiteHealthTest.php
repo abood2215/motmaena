@@ -54,6 +54,13 @@ class SiteHealthTest extends TestCase
         $this->get('/no-such-page')->assertNotFound()->assertSee('الصفحة غير موجودة')->assertSee('/courses', false);
     }
 
+    public function test_checkout_asks_only_for_name_and_phone(): void
+    {
+        $this->get('/register/anger-management')
+            ->assertSee('name="name"', false)->assertSee('name="phone"', false)
+            ->assertDontSee('name="email"', false)->assertSee('بيطلع بالشهادة');
+    }
+
     public function test_terms_explain_the_gift_code(): void
     {
         $this->get('/policies')->assertSee('كود الهدية')->assertSee('deema');
