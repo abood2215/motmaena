@@ -242,8 +242,9 @@
     <div class="absolute inset-0 opacity-[.07] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px;"></div>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative grid lg:grid-cols-12 gap-10 items-center">
         <div class="lg:col-span-4 flex justify-center">
-            <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4" style="border-color: var(--gold); background: rgba(255,255,255,.08)">
-                <img src="{{ asset(\App\Models\CourseOffer::DEFAULT_IMAGE) }}" alt="" class="w-full h-full object-cover object-top">
+            <div class="relative w-60 sm:w-72">
+                <div class="absolute inset-0 rounded-[2rem] border-2 {{ $isAr ? '-translate-x-3' : 'translate-x-3' }} translate-y-3" style="border-color: var(--gold)"></div>
+                <img src="{{ asset('photos/dr-tariq-smile.webp') }}" alt="{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}" loading="lazy" width="900" height="1486" class="relative w-full aspect-[4/5] rounded-[2rem] object-cover object-top shadow-2xl">
             </div>
         </div>
         <div class="lg:col-span-8 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
@@ -254,6 +255,31 @@
                 @foreach([['+30', $t('سنة خبرة', 'years')], ['+50', $t('دورة', 'courses')], ['+12', $t('سنة لمطمئنة', 'years of Motmaena')]] as [$n, $l])
                     <div><div class="text-3xl font-black" style="color: var(--gold)">{{ $n }}</div><div class="text-sm font-bold text-white/75">{{ $l }}</div></div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════ THE CENTER ═══════════════ --}}
+<section class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c]">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 relative">
+            <img src="{{ asset('photos/center-reception.webp') }}" alt="{{ $t('استقبال مركز مطمئنة', 'Motmaena Center reception') }}" loading="lazy" width="1800" height="1200" class="w-full aspect-[3/2] object-cover rounded-[2rem] shadow-2xl">
+            <div class="absolute -bottom-5 {{ $isAr ? 'left-4 sm:left-8' : 'right-4 sm:right-8' }} bg-white dark:bg-[#1a1415] rounded-2xl shadow-xl px-4 py-3 border border-[#efe5e0] dark:border-white/10 text-center">
+                <div class="mh-num text-2xl leading-none">+12</div>
+                <div class="text-xs font-bold text-stone-500 dark:text-stone-400">{{ $t('سنة في خدمتكم', 'years serving you') }}</div>
+            </div>
+        </div>
+        <div class="lg:col-span-5 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }} pt-4 lg:pt-0">
+            <p class="mh-gold font-black text-sm mb-2">{{ $t('زورونا', 'Visit us') }}</p>
+            <h2 class="mh-section-title mh-title mb-4">{{ $t('مكان هادئ يطمّنك من أول خطوة', 'A calm place from the very first step') }}</h2>
+            <p class="font-semibold text-stone-600 dark:text-stone-300 leading-loose mb-6">{{ $t('استقبال دافئ وأجواء مريحة بإطلالة على البحر، عشان تحس بالراحة والخصوصية من لحظة وصولك.', 'A warm welcome and a relaxed setting overlooking the sea, so you feel at ease and private from the moment you arrive.') }}</p>
+            <div class="flex flex-wrap justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-2.5 mb-7">
+                <span class="mh-chip"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>{{ $t('الكويت · برج أحمد · بجوار المستشفى الأميري', 'Kuwait · Ahmad Tower · next to Amiri Hospital') }}</span>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center {{ $isAr ? 'lg:justify-start' : 'lg:justify-start' }} gap-3">
+                <a href="{{ route('consultations') }}" class="mh-btn mh-btn-primary w-full sm:w-auto">{{ $t('احجز استشارة', 'Book a consultation') }}</a>
+                <a href="{{ $waLink($t('مرحباً مركز مطمئنة، ممكن موقع المركز؟', 'Hello Motmaena Center, could you send me your location?')) }}" target="_blank" class="mh-btn mh-btn-ghost w-full sm:w-auto">{{ $t('اطلب الموقع عالواتساب', 'Get directions on WhatsApp') }}</a>
             </div>
         </div>
     </div>
