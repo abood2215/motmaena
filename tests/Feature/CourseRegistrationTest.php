@@ -41,6 +41,15 @@ class CourseRegistrationTest extends TestCase
         $this->get('/preview')->assertRedirect('/');
     }
 
+    public function test_courses_page_advertises_the_open_course(): void
+    {
+        $this->get('/courses')->assertOk()->assertSee('التسجيل مفتوح الآن')->assertSee('إدارة الغضب')
+            ->assertSee(route('course.register', 'anger-management'), false);
+
+        \App\Models\CourseOffer::query()->update(['is_active' => false]);
+        $this->get('/courses')->assertOk()->assertDontSee('التسجيل مفتوح الآن');
+    }
+
     public function test_full_payment_flow_with_discount_code(): void
     {
         $this->fakeMyFatoorah('Paid', 24);

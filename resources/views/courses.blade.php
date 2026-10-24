@@ -28,6 +28,28 @@
     </div>
 </section>
 
+{{-- ════════════════ OPEN (LIVE) COURSES — same course the homepage advertises ════════════════ --}}
+@php
+    $liveOffers = rescue(function () {
+        $featured = \App\Models\CourseOffer::featured();
+        return \App\Models\CourseOffer::upcoming()
+            ->sortBy(fn ($o) => $featured && $o->id === $featured->id ? 0 : 1)
+            ->map->toOfferArray()->values();
+    }, collect(), false);
+@endphp
+@if($liveOffers->isNotEmpty())
+<section id="live" class="pt-12 sm:pt-16 bg-white dark:bg-dark-bg">
+    <div class="container mx-auto px-4 space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white reveal">
+            {{ app()->getLocale() == 'ar' ? 'التسجيل مفتوح الآن' : 'Registration open now' }}
+        </h2>
+        @foreach($liveOffers as $offer)
+            @include('partials.live-course-banner', ['offer' => $offer])
+        @endforeach
+    </div>
+</section>
+@endif
+
 {{-- ════════════════ COURSES GRID SECTION ════════════════ --}}
 <section id="courses" class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
     <div class="container mx-auto px-4">
