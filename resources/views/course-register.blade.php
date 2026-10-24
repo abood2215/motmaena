@@ -37,12 +37,22 @@
     .co-step.on { color: var(--c1); }
     .co-step.on b { background: var(--c1); color: #fff; }
     .dark .co-step.on { color: var(--ca); }
-    .pm-opt { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1.5px solid #e5e7eb; border-radius: 16px; background: #fff; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
+    /* Numbered form sections: 1 your details, 2 payment */
+    .co-sec { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 900; color: #111827; }
+    .co-sec b { width: 28px; height: 28px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; background: var(--c1); color: #fff; flex-shrink: 0; }
+    .dark .co-sec { color: #fff; }
+    .co-sec-sub { font-size: 13px; font-weight: 600; color: #6b7280; margin: 4px 38px 0 0; }
+    [dir="ltr"] .co-sec-sub { margin: 4px 0 0 38px; }
+    .dark .co-sec-sub { color: #9ca3af; }
+    .pm-opt { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1.5px solid #e5e7eb; border-radius: 16px; background: #fff; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
     .pm-opt:hover { border-color: color-mix(in srgb, var(--c1) 45%, #e5e7eb); }
-    .pm-opt:has(.pm-radio:checked) { border-color: var(--c1); background: color-mix(in srgb, var(--c1) 5%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c1) 10%, transparent); }
+    .pm-opt:has(.pm-radio:checked) { border-color: var(--c1); background: color-mix(in srgb, var(--c1) 4%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c1) 10%, transparent); }
     .dark .pm-opt { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.12); }
     .dark .pm-opt:has(.pm-radio:checked) { border-color: var(--ca); background: rgba(255,255,255,.06); }
-    .pm-radio { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--c1); }
+    .pm-radio { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--c1); }
+    .co-code summary::-webkit-details-marker { display: none; }
+    .co-gift { background: linear-gradient(135deg, #fffaf0 0%, #fbf0dc 100%); border: 1.5px dashed #d9b877; transition: opacity .2s; }
+    .dark .co-gift { background: rgba(251,191,36,.06); border-color: rgba(252,211,77,.3); }
 </style>
 
 <section class="co-page py-8 sm:py-12" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
@@ -72,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="p-5 sm:p-6 space-y-5">
+                <div class="p-5 sm:p-6 space-y-4">
                     {{-- When / where --}}
                     @php
                         $details = [
@@ -82,27 +92,23 @@
                             ['M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', $offer['certificate'][$lang]],
                         ];
                     @endphp
-                    <ul class="space-y-3">
+                    <ul class="space-y-2.5">
                         @foreach($details as [$icon, $text])
                             @continue(trim((string) $text) === '')
-                            <li class="flex items-start gap-3 text-sm font-bold text-gray-700 dark:text-gray-200">
-                                <span class="w-8 h-8 rounded-lg bg-[color:var(--ct)] dark:bg-white/5 text-[color:var(--c1)] dark:text-[color:var(--ca)] flex items-center justify-center shrink-0">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
-                                </span>
-                                <span class="pt-1.5 leading-snug">{{ $text }}</span>
+                            <li class="flex items-start gap-2.5 text-sm font-bold text-gray-700 dark:text-gray-200 leading-snug">
+                                <svg class="w-[18px] h-[18px] mt-px shrink-0 text-[color:var(--c1)] dark:text-[color:var(--ca)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                                <span>{{ $text }}</span>
                             </li>
                         @endforeach
                     </ul>
 
                     {{-- Countdown + seats --}}
-                    <div class="flex flex-wrap items-center gap-2">
-                        @include('partials.countdown', ['startsAt' => $offer['starts_at']])
-                        @if($offer['seats_left'] !== null)
-                            <span class="text-xs font-black px-3 py-1.5 rounded-full {{ $offer['is_full'] ? 'bg-red-100 text-red-700' : ($offer['seats_left'] <= 10 ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-gray-700 dark:bg-white/10 dark:text-gray-200') }}">
-                                {{ $offer['is_full'] ? ($isAr ? 'اكتمل العدد' : 'Fully booked') : ($isAr ? 'متبقي ' . $offer['seats_left'] . ' مقعد' : $offer['seats_left'] . ' seats left') }}
-                            </span>
-                        @endif
-                    </div>
+                    @include('partials.countdown', ['startsAt' => $offer['starts_at'], 'compact' => true])
+                    @if($offer['seats_left'] !== null)
+                        <p class="text-xs font-black {{ $offer['is_full'] ? 'text-red-700' : ($offer['seats_left'] <= 10 ? 'text-amber-700' : 'text-gray-500 dark:text-gray-400') }}">
+                            {{ $offer['is_full'] ? ($isAr ? 'اكتمل العدد' : 'Fully booked') : ($isAr ? 'متبقي ' . $offer['seats_left'] . ' مقعد' : $offer['seats_left'] . ' seats left') }}
+                        </p>
+                    @endif
 
                     {{-- Topics (collapsed) --}}
                     @if($offer['topics'][$lang])
@@ -132,20 +138,23 @@
                             <span>{{ $isAr ? 'الخصم' : 'Discount' }}</span>
                             <span>- <span id="p-discount">0</span> {{ $kwd }}</span>
                         </div>
-                        <div class="flex justify-between items-baseline pt-2">
+                        <div class="flex justify-between items-baseline pt-1">
                             <span class="text-base font-black text-gray-900 dark:text-white">{{ $isAr ? 'الإجمالي' : 'Total' }}</span>
                             <span class="text-3xl font-black text-[color:var(--c1)] dark:text-[color:var(--ca)]"><span id="p-final">{{ $price }}</span> <small class="text-sm">{{ $kwd }}</small></span>
                         </div>
-                        @if($offer['show_installments'])
-                        <p class="text-xs font-bold text-gray-500 dark:text-gray-400 text-end">{{ $isAr ? 'أو قسّطها على 4 دفعات مع deema' : 'or split into 4 payments with deema' }}</p>
-                        @endif
-                        @if($giftAmount > 0 && !$offer['is_full'])
-                        <div id="gift-row" class="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 mt-2 bg-[#fbf3e4] dark:bg-amber-400/10 border border-dashed border-[#d9b877] text-[#8a5a12] dark:text-amber-200 transition">
-                            <span class="font-black">🎁 {{ $isAr ? 'هديتك بعد الدفع' : 'Your gift after paying' }}</span>
-                            <span class="font-black">{{ $isAr ? 'كود ' . $giftTxt . ' د.ك' : $giftTxt . ' KWD code' }}</span>
-                        </div>
-                        @endif
                     </div>
+
+                    {{-- The one place the gift is explained (only for paying without a discount code) --}}
+                    @if($giftAmount > 0 && !$offer['is_full'])
+                    <div id="gift-card" class="co-gift rounded-2xl p-4 flex items-start gap-3">
+                        <span class="w-10 h-10 rounded-xl text-white flex items-center justify-center text-lg shrink-0" style="background: linear-gradient(135deg, #c9a35c, #b38a3e)">🎁</span>
+                        <div class="text-sm min-w-0">
+                            <p class="font-black text-gray-900 dark:text-white leading-snug">{{ $isAr ? 'هديتك بعد الدفع: كود خصم بقيمة ' . $giftTxt . ' د.ك' : 'Your gift after paying: a ' . $giftTxt . ' KWD discount code' }}</p>
+                            <p class="font-semibold text-[#8a5a12] dark:text-amber-200/80 mt-1 leading-relaxed">{{ $isAr ? 'استخدمه على دورتك الجاية أو اهديه لصديقك.' : 'Use it on your next course or gift it to a friend.' }}</p>
+                            <p id="gift-off" class="hidden font-bold text-[color:var(--c1)] dark:text-[color:var(--ca)] text-xs mt-1.5">{{ $isAr ? '* الهدية للتسجيل بدون كود خصم.' : '* The gift applies to bookings without a discount code.' }}</p>
+                        </div>
+                    </div>
+                    @endif
 
                     @unless($offer['is_full'])
                     <a href="#reg-card" class="lg:hidden flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-black text-white co-pay">
@@ -158,11 +167,9 @@
 
             {{-- ═══ Details + pay ═══ --}}
             <div id="reg-card" class="co-card lg:col-span-7 p-5 sm:p-8 scroll-mt-24">
-                <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-1">{{ $isAr ? 'بيانات المشترك' : 'Attendee details' }}</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 font-semibold mb-6">{{ $isAr ? 'بنستخدمها لتأكيد حجزك والتواصل معك قبل الدورة.' : 'Used to confirm your seat and contact you before the course.' }}</p>
 
                 @if($errors->has('payment'))
-                <div class="mb-5 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-300 text-sm font-bold p-3">
+                <div class="mb-6 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-300 text-sm font-bold p-3">
                     {{ $errors->first('payment') }}
                 </div>
                 @endif
@@ -174,118 +181,112 @@
                     @include('partials.notify-form', ['courseKey' => $offerKey])
                 </div>
                 @else
-                <form method="POST" action="{{ route('course.register.store', $offerKey) }}" id="reg-form" class="space-y-5">
+                <form method="POST" action="{{ route('course.register.store', $offerKey) }}" id="reg-form" class="space-y-8">
                     @csrf
 
+                    {{-- 1. Attendee details --}}
                     <div>
-                        <label class="co-label">{{ $isAr ? 'الاسم الكامل' : 'Full name' }} <span class="text-[color:var(--c1)]">*</span></label>
-                        <input type="text" name="name" value="{{ old('name') }}" required maxlength="120" autocomplete="name" class="co-input" placeholder="{{ $isAr ? 'كما تحب يظهر بالشهادة' : 'As it should appear on the certificate' }}">
-                        @error('name')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
-                    </div>
+                        <h2 class="co-sec"><b>1</b>{{ $isAr ? 'بياناتك' : 'Your details' }}</h2>
+                        <p class="co-sec-sub">{{ $isAr ? 'بنستخدمها لتأكيد حجزك والتواصل معك قبل الدورة.' : 'Used to confirm your seat and contact you before the course.' }}</p>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <label class="co-label">{{ $isAr ? 'رقم الهاتف (واتساب)' : 'Phone (WhatsApp)' }} <span class="text-[color:var(--c1)]">*</span></label>
-                            <input type="tel" name="phone" value="{{ old('phone') }}" required dir="ltr" autocomplete="tel" placeholder="5xxxxxxx" class="co-input {{ $isAr ? 'text-right' : '' }}">
-                            @error('phone')<p class="text-red-600 text-xs font-bold mt-1">{{ $isAr ? 'رقم الهاتف غير صحيح' : $message }}</p>@enderror
-                        </div>
-                        <div>
-                            <label class="co-label">{{ $isAr ? 'البريد الإلكتروني' : 'Email' }} <span class="text-gray-400 font-bold">({{ $isAr ? 'اختياري' : 'optional' }})</span></label>
-                            <input type="email" name="email" value="{{ old('email') }}" maxlength="150" dir="ltr" autocomplete="email" class="co-input {{ $isAr ? 'text-right' : '' }}">
-                            @error('email')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
-                        </div>
-                    </div>
+                        <div class="space-y-4 mt-5">
+                            <div>
+                                <label class="co-label">{{ $isAr ? 'الاسم الكامل' : 'Full name' }} <span class="text-[color:var(--c1)]">*</span></label>
+                                <input type="text" name="name" value="{{ old('name') }}" required maxlength="120" autocomplete="name" class="co-input" placeholder="{{ $isAr ? 'كما تحب يظهر بالشهادة' : 'As it should appear on the certificate' }}">
+                                @error('name')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
+                            </div>
 
-                    {{-- Discount code (tucked away until needed) --}}
-                    <details class="rounded-xl border border-gray-200 dark:border-white/10 px-4 py-3" @if(old('code') || $errors->has('code')) open @endif>
-                        <summary class="cursor-pointer list-none text-sm font-black text-[color:var(--c1)] dark:text-[color:var(--ca)]">
-                            {{ $isAr ? 'عندك كود خصم أو كود هدية؟' : 'Have a discount or gift code?' }}
-                        </summary>
-                        <div class="flex gap-2 mt-3">
-                            <input type="text" name="code" id="code" value="{{ old('code') }}" maxlength="40" dir="ltr" autocomplete="off" class="co-input uppercase" placeholder="CODE">
-                            <button type="button" id="apply-code" class="shrink-0 rounded-xl px-5 text-sm font-black text-white bg-gray-900 hover:bg-gray-700 dark:bg-white dark:text-gray-900 transition">
-                                {{ $isAr ? 'تطبيق' : 'Apply' }}
-                            </button>
-                        </div>
-                        <p id="code-msg" class="text-xs font-bold mt-2 {{ $errors->has('code') ? 'text-red-600' : 'hidden' }}">{{ $errors->first('code') }}</p>
-                    </details>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="co-label">{{ $isAr ? 'رقم الهاتف (واتساب)' : 'Phone (WhatsApp)' }} <span class="text-[color:var(--c1)]">*</span></label>
+                                    <input type="tel" name="phone" value="{{ old('phone') }}" required dir="ltr" autocomplete="tel" placeholder="5xxxxxxx" class="co-input {{ $isAr ? 'text-right' : '' }}">
+                                    @error('phone')<p class="text-red-600 text-xs font-bold mt-1">{{ $isAr ? 'رقم الهاتف غير صحيح' : $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label class="co-label">{{ $isAr ? 'البريد الإلكتروني' : 'Email' }} <span class="text-gray-400 font-bold">({{ $isAr ? 'اختياري' : 'optional' }})</span></label>
+                                    <input type="email" name="email" value="{{ old('email') }}" maxlength="150" dir="ltr" autocomplete="email" class="co-input {{ $isAr ? 'text-right' : '' }}">
+                                    @error('email')<p class="text-red-600 text-xs font-bold mt-1">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
 
-                    {{-- Gift code promise (only for paying without a discount code) --}}
-                    @if($giftAmount > 0)
-                    <div id="gift-note" class="flex items-start gap-3 rounded-2xl border-[1.5px] border-dashed border-[#d9b877] bg-[#fffaf0] dark:bg-amber-400/5 dark:border-amber-300/30 p-4 transition">
-                        <span class="w-11 h-11 rounded-xl text-white flex items-center justify-center text-xl shrink-0" style="background: linear-gradient(135deg, #c9a35c, #b38a3e)">🎁</span>
-                        <div class="text-sm">
-                            <p class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'هديتك بعد الدفع: كود خصم بقيمة ' . $giftTxt . ' د.ك' : 'Your gift after paying: a ' . $giftTxt . ' KWD discount code' }}</p>
-                            <p class="font-semibold text-gray-600 dark:text-gray-300 mt-0.5">{{ $isAr ? 'يظهر لك فور الدفع — استخدمه على دورتك الجاية أو اهديه لصديقك.' : 'Shown right after you pay — use it on your next course or gift it to a friend.' }}</p>
-                            <p id="gift-off" class="hidden font-bold text-[color:var(--c1)] dark:text-[color:var(--ca)] text-xs mt-1">{{ $isAr ? '* الهدية للتسجيل بدون كود خصم.' : '* The gift applies to bookings without a discount code.' }}</p>
+                            {{-- Discount code: a quiet link until needed --}}
+                            <details class="co-code group" @if(old('code') || $errors->has('code')) open @endif>
+                                <summary class="cursor-pointer list-none inline-flex items-center gap-1.5 text-sm font-black text-[color:var(--c1)] dark:text-[color:var(--ca)] hover:underline">
+                                    <svg class="w-4 h-4 transition group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                                    {{ $isAr ? 'عندك كود خصم أو كود هدية؟' : 'Have a discount or gift code?' }}
+                                </summary>
+                                <div class="flex gap-2 mt-3">
+                                    <input type="text" name="code" id="code" value="{{ old('code') }}" maxlength="40" dir="ltr" autocomplete="off" class="co-input uppercase" placeholder="CODE">
+                                    <button type="button" id="apply-code" class="shrink-0 rounded-xl px-5 text-sm font-black text-white bg-gray-900 hover:bg-gray-700 dark:bg-white dark:text-gray-900 transition">
+                                        {{ $isAr ? 'تطبيق' : 'Apply' }}
+                                    </button>
+                                </div>
+                                <p id="code-msg" class="text-xs font-bold mt-2 {{ $errors->has('code') ? 'text-red-600' : 'hidden' }}">{{ $errors->first('code') }}</p>
+                            </details>
                         </div>
                     </div>
-                    @endif
 
-                    @php $cardBadges = ['KNET', 'VISA', 'Mastercard', 'Apple Pay']; @endphp
+                    @php $cardMethods = 'KNET · VISA · Mastercard · Apple Pay'; @endphp
 
+                    {{-- 2. Payment: full (MyFatoorah) or 4 installments (deema) --}}
                     @if($deemaEnabled)
-                    {{-- Payment method: full payment (MyFatoorah) or 4 installments (deema) --}}
                     @php $viaDeema = old('method') === 'deema'; @endphp
-                    <fieldset class="space-y-3">
-                        <legend class="co-label">{{ $isAr ? 'طريقة الدفع' : 'Payment method' }}</legend>
+                    <fieldset>
+                        <legend class="co-sec"><b>2</b>{{ $isAr ? 'طريقة الدفع' : 'Payment method' }}</legend>
 
-                        <label class="pm-opt">
-                            <input type="radio" name="method" value="card" class="pm-radio" @checked(!$viaDeema)>
-                            <span class="flex-1 min-w-0">
-                                <span class="flex items-center justify-between gap-3">
-                                    <span class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'ادفع المبلغ كامل' : 'Pay in full' }}</span>
-                                    <span class="font-black text-gray-900 dark:text-white whitespace-nowrap"><span class="js-total">{{ $price }}</span> {{ $kwd }}</span>
+                        <div class="space-y-3 mt-4">
+                            <label class="pm-opt">
+                                <input type="radio" name="method" value="card" class="pm-radio" @checked(!$viaDeema)>
+                                <span class="flex-1 min-w-0">
+                                    <span class="flex items-center justify-between gap-2">
+                                        <span class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'ادفع المبلغ كامل' : 'Pay in full' }}</span>
+                                        <span class="text-sm sm:text-base font-black text-gray-900 dark:text-white whitespace-nowrap"><span class="js-total">{{ $price }}</span> {{ $kwd }}</span>
+                                    </span>
+                                    <span class="block text-xs font-bold text-gray-500 dark:text-gray-400 mt-1" dir="ltr" style="text-align: {{ $isAr ? 'right' : 'left' }}">{{ $cardMethods }}</span>
                                 </span>
-                                <span class="flex flex-wrap gap-1.5 mt-2">
-                                    @foreach($cardBadges as $badge)
-                                        <span class="text-[10px] font-black px-2 py-1 rounded-md border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $badge }}</span>
-                                    @endforeach
-                                </span>
-                            </span>
-                        </label>
+                            </label>
 
-                        <label class="pm-opt">
-                            <input type="radio" name="method" value="deema" class="pm-radio" @checked($viaDeema)>
-                            <span class="flex-1 min-w-0">
-                                <span class="flex items-center justify-between gap-3">
-                                    <span class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'قسّطها على 4 دفعات' : 'Split into 4 payments' }}</span>
-                                    <span class="font-black text-gray-900 dark:text-white whitespace-nowrap">4 × <span class="js-quarter">{{ number_format((float) $offer['price'] / 4, 3) }}</span> {{ $kwd }}</span>
+                            <label class="pm-opt">
+                                <input type="radio" name="method" value="deema" class="pm-radio" @checked($viaDeema)>
+                                <span class="flex-1 min-w-0">
+                                    <span class="flex items-center justify-between gap-2">
+                                        <span class="font-black text-gray-900 dark:text-white whitespace-nowrap">{{ $isAr ? 'قسّطها على 4 دفعات' : 'Split into 4 payments' }}</span>
+                                        <span class="text-sm sm:text-base font-black text-gray-900 dark:text-white whitespace-nowrap">4 × <span class="js-quarter">{{ number_format((float) $offer['price'] / 4, 3) }}</span> {{ $kwd }}</span>
+                                    </span>
+                                    <span class="flex items-center justify-between gap-3 mt-1">
+                                        <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات' : 'Pay the first part today, the rest in 3 payments' }}</span>
+                                        <span class="shrink-0 rounded-md bg-white border border-gray-200 dark:border-white/10 px-1"><img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 w-auto object-contain"></span>
+                                    </span>
                                 </span>
-                                <span class="flex items-center justify-between gap-3 mt-2">
-                                    <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات' : 'Pay the first part today, the rest in 3 payments' }}</span>
-                                    <span class="shrink-0 rounded-lg bg-white border border-gray-200 dark:border-white/10 px-1.5 py-0.5"><img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-8 w-auto object-contain"></span>
-                                </span>
-                            </span>
-                        </label>
+                            </label>
+                        </div>
                     </fieldset>
                     @endif
 
-                    <button type="submit" id="pay-btn"
-                            class="co-pay w-full rounded-2xl py-4 text-base sm:text-lg font-black text-white disabled:opacity-60 inline-flex items-center justify-center gap-2.5">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span id="pay-label"><span id="pay-card">{{ $isAr ? 'ادفع' : 'Pay' }} <span class="js-total">{{ $price }}</span> {{ $kwd }}</span><span id="pay-deema" class="hidden">{{ $isAr ? 'تابع للتقسيط مع deema' : 'Continue with deema' }}</span></span>
-                    </button>
+                    {{-- Pay --}}
+                    <div class="space-y-3">
+                        <button type="submit" id="pay-btn"
+                                class="co-pay w-full rounded-2xl py-4 text-base sm:text-lg font-black text-white disabled:opacity-60 inline-flex items-center justify-center gap-2.5">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <span id="pay-label"><span id="pay-card">{{ $isAr ? 'ادفع' : 'Pay' }} <span class="js-total">{{ $price }}</span> {{ $kwd }}</span><span id="pay-deema" class="hidden">{{ $isAr ? 'تابع للتقسيط مع deema' : 'Continue with deema' }}</span></span>
+                        </button>
 
-                    @unless($deemaEnabled)
-                    <div class="flex flex-wrap items-center justify-center gap-2">
-                        @foreach($cardBadges as $badge)
-                            <span class="text-[11px] font-black px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $badge }}</span>
-                        @endforeach
+                        @unless($deemaEnabled)
+                        <p class="text-center text-xs font-black text-gray-500 dark:text-gray-400" dir="ltr">{{ $cardMethods }}</p>
+                        @endunless
+
+                        <div class="flex items-center justify-center gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <span id="secure-note" data-card="{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}" data-deema="{{ $isAr ? 'رح ننقلك لصفحة deema الآمنة لإكمال التقسيط' : 'You will continue on deema\'s secure page to set up the installments' }}">{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}</span>
+                        </div>
+
+                        <p class="text-center text-[11px] font-semibold text-gray-400 leading-relaxed">
+                            {{ $isAr ? 'بإتمام الدفع فإنك توافق على' : 'By paying you agree to the' }}
+                            <a href="{{ route('policies') }}#terms" target="_blank" class="underline hover:text-[color:var(--c1)]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
+                            {{ $isAr ? 'و' : 'and' }}
+                            <a href="{{ route('policies') }}#refund" target="_blank" class="underline hover:text-[color:var(--c1)]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
+                        </p>
                     </div>
-                    @endunless
-
-                    <div class="flex items-center justify-center gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
-                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        <span id="secure-note" data-card="{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}" data-deema="{{ $isAr ? 'رح ننقلك لصفحة deema الآمنة لإكمال التقسيط' : 'You will continue on deema\'s secure page to set up the installments' }}">{{ $isAr ? 'الدفع آمن ومشفّر عبر ماي فاتورة — ما بنحتفظ ببيانات بطاقتك' : 'Secure, encrypted payment via MyFatoorah — we never store your card' }}</span>
-                    </div>
-
-                    <p class="text-center text-[11px] font-semibold text-gray-400 leading-relaxed">
-                        {{ $isAr ? 'بإتمام الدفع فإنك توافق على' : 'By paying you agree to the' }}
-                        <a href="{{ route('policies') }}#terms" target="_blank" class="underline hover:text-[color:var(--c1)]">{{ $isAr ? 'الشروط والأحكام' : 'Terms' }}</a>
-                        {{ $isAr ? 'و' : 'and' }}
-                        <a href="{{ route('policies') }}#refund" target="_blank" class="underline hover:text-[color:var(--c1)]">{{ $isAr ? 'سياسة الإلغاء' : 'Cancellation Policy' }}</a>
-                    </p>
                 </form>
                 @endif
 
@@ -334,12 +335,11 @@
     methodRadios.forEach(r => r.addEventListener('change', showMethod));
     if (methodRadios.length) showMethod();
 
+    // A discount code cancels the gift: dim the gift card and say why
     function giftState(codeApplied) {
-        var row = document.getElementById('gift-row');
-        if (row) row.style.display = codeApplied ? 'none' : '';
-        var note = document.getElementById('gift-note');
-        if (!note) return;
-        note.style.opacity = codeApplied ? '.5' : '1';
+        var card = document.getElementById('gift-card');
+        if (!card) return;
+        card.style.opacity = codeApplied ? '.55' : '1';
         document.getElementById('gift-off').classList.toggle('hidden', !codeApplied);
     }
 
