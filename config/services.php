@@ -34,6 +34,15 @@ return [
         'api_key' => env('MYFATOORAH_API_KEY'),
     ],
 
+    'deema' => [
+        // Sandbox: https://sandbox-api.deema.me — live: https://api.deema.me
+        'base_url' => env('DEEMA_BASE_URL', 'https://sandbox-api.deema.me'),
+        'api_key' => env('DEEMA_API_KEY'),
+        // The secret header pair entered in the deema merchant portal (Webhook page); webhooks without it are rejected
+        'webhook_header' => env('DEEMA_WEBHOOK_HEADER', 'X-Deema-Secret'),
+        'webhook_secret' => env('DEEMA_WEBHOOK_SECRET'),
+    ],
+
     // Tracking IDs — each script is only added to the site when its ID is set
     'analytics' => [
         'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX

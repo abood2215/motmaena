@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\TrackVisitSource::class,
         ]);
+        $middleware->validateCsrfTokens(except: ['webhooks/deema']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

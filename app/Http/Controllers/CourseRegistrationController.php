@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
+use App\Services\Deema;
 use App\Services\MyFatoorah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,13 +22,14 @@ class CourseRegistrationController extends Controller
         'not_yours'    => ['ar' => 'هذا الكود شخصي لصاحبه — سجّل بنفس رقم الهاتف اللي أخذت عليه الكود', 'en' => 'This personal code only works with the phone number it was issued to'],
     ];
 
-    public function __construct(private MyFatoorah $myFatoorah) {}
+    public function __construct(private MyFatoorah $myFatoorah, private Deema $deema) {}
 
     public function show(string $offerKey)
     {
         $offer = $this->offerOrFail($offerKey);
+        $deemaEnabled = $this->deema->enabled() && $offer['show_installments'];
 
-        return view('course-register', compact('offer', 'offerKey'));
+        return view('course-register', compact('offer', 'offerKey', 'deemaEnabled'));
     }
 
     public function checkCode(Request $request, string $offerKey)
@@ -58,6 +60,7 @@ class CourseRegistrationController extends Controller
             'phone' => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,16}$/'],
             'email' => 'nullable|email|max:150',
             'code'  => 'nullable|string|max:40',
+            'method' => 'nullable|in:card,deema',
         ]);
         $data['phone'] = $this->localMobile($data['phone']);
 
@@ -99,6 +102,10 @@ class CourseRegistrationController extends Controller
         if ($quote['final'] <= 0) {
             $registration->markPaid(null, 'discount');
             return redirect()->route('registration.done', $registration->review_token);
+        }
+
+        if (($data['method'] ?? null) === 'deema' && $offer['show_installments'] && $this->deema->enabled()) {
+            return $this->payWithDeema($registration);
         }
 
         try {
@@ -152,6 +159,99 @@ class CourseRegistrationController extends Controller
         return $registration->status === 'paid'
             ? redirect()->route('registration.done', $registration->review_token)
             : $this->result($registration);
+    }
+
+    private function payWithDeema(CourseRegistration $registration)
+    {
+        $registration->update(['payment_method' => 'deema']);
+        $returnUrl = route('payment.deema.return', ['registration' => $registration->id, 'sig' => self::deemaSignature($registration)]);
+
+        try {
+            $order = $this->deema->createPurchase((float) $registration->final_amount, 'REG-' . $registration->id, $returnUrl, $returnUrl);
+        } catch (\Throwable $e) {
+            Log::error('deema purchase error', ['registration' => $registration->id, 'error' => $e->getMessage()]);
+            $registration->update(['status' => 'failed']);
+
+            return back()->withInput()->withErrors(['payment' => $this->t(
+                'تعذّر التقسيط عبر deema حالياً. جرّب الدفع بالبطاقة أو تواصل معنا عبر واتساب.',
+                'Could not start deema installments right now. Try paying by card or contact us on WhatsApp.'
+            )]);
+        }
+
+        $registration->update(['invoice_id' => (string) $order['order_reference']]);
+
+        return redirect()->away($order['redirect_link']);
+    }
+
+    /** deema sends the customer back here (success and failure). */
+    public function deemaReturn(Request $request, CourseRegistration $registration)
+    {
+        abort_unless(
+            $registration->payment_method === 'deema' && $registration->invoice_id
+                && hash_equals(self::deemaSignature($registration), (string) $request->query('sig')),
+            404
+        );
+
+        if ($registration->status !== 'paid') {
+            try {
+                self::applyDeemaStatus($registration, $this->deema->order($registration->invoice_id));
+            } catch (\Throwable $e) {
+                Log::error('deema order lookup error', ['registration' => $registration->id, 'error' => $e->getMessage()]);
+            }
+        }
+
+        return $registration->status === 'paid'
+            ? redirect()->route('registration.done', $registration->review_token)
+            : $this->result($registration);
+    }
+
+    /** deema calls this whenever an order's status changes. */
+    public function deemaWebhook(Request $request)
+    {
+        $secret = (string) config('services.deema.webhook_secret');
+        $given  = (string) $request->header(config('services.deema.webhook_header'));
+        abort_unless($secret !== '' && hash_equals($secret, $given), 401);
+
+        $reference    = (string) $request->input('order_ref');
+        $registration = $reference === '' ? null
+            : CourseRegistration::where('invoice_id', $reference)->where('payment_method', 'deema')->first();
+
+        if (!$registration) {
+            Log::warning('deema webhook for unknown order', $request->only('order_ref', 'merchant_order_ref', 'status'));
+            return response()->json(['received' => true]);
+        }
+
+        // Don't trust the body: ask deema for the order's real status
+        try {
+            self::applyDeemaStatus($registration, $this->deema->order($reference));
+        } catch (\Throwable $e) {
+            Log::error('deema webhook lookup error', ['registration' => $registration->id, 'error' => $e->getMessage()]);
+            return response()->json(['received' => false], 503); // deema retries
+        }
+
+        return response()->json(['received' => true]);
+    }
+
+    /** Updates a registration from a deema order. Shared with the webhook and the admin "verify" button. */
+    public static function applyDeemaStatus(CourseRegistration $registration, array $order): void
+    {
+        $status = $order['status'] ?? null;
+        $isPaid = in_array($status, Deema::PAID, true)
+            && (float) ($order['amount'] ?? 0) + 0.001 >= (float) $registration->final_amount;
+
+        if ($isPaid) {
+            $registration->markPaid((string) ($order['deema_order_id'] ?? $registration->invoice_id), 'deema');
+        } elseif (in_array($status, Deema::FAILED, true) && $registration->status !== 'paid') {
+            $registration->update(['status' => 'failed']);
+        } elseif ($registration->status === 'paid' && str_ends_with((string) $status, 'refunded')) {
+            Log::info('deema order refunded', ['registration' => $registration->id, 'status' => $status]);
+        }
+    }
+
+    /** Unguessable key for the deema return link, so registration ids can't be browsed. */
+    private static function deemaSignature(CourseRegistration $registration): string
+    {
+        return hash_hmac('sha256', 'deema-return:' . $registration->id, config('app.key'));
     }
 
     public function done(string $token)

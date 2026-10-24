@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseRegistrationController;
 use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
+use App\Services\Deema;
 use App\Services\MyFatoorah;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -52,10 +53,20 @@ class CourseAdminController extends Controller
         return back()->with('ok', "تم تسجيل متابعة {$registration->name}");
     }
 
-    public function verify(CourseRegistration $registration, MyFatoorah $myFatoorah)
+    public function verify(CourseRegistration $registration, MyFatoorah $myFatoorah, Deema $deema)
     {
         if (!$registration->invoice_id) {
             return back()->with('error', 'لا يوجد رقم فاتورة لهذا التسجيل');
+        }
+
+        if ($registration->payment_method === 'deema') {
+            try {
+                CourseRegistrationController::applyDeemaStatus($registration, $deema->order($registration->invoice_id));
+            } catch (\Throwable $e) {
+                return back()->with('error', 'تعذّر الاتصال بـ deema: ' . $e->getMessage());
+            }
+
+            return back()->with('ok', 'حالة الدفع الآن: ' . $this->statusLabel($registration->fresh()->status));
         }
 
         try {

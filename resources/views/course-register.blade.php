@@ -222,6 +222,15 @@
                         <span id="pay-label">{{ $isAr ? 'ادفع' : 'Pay' }} <span id="pay-amount">{{ $price }}</span> {{ $kwd }}</span>
                     </button>
 
+                    @if($deemaEnabled)
+                    <input type="hidden" name="method" id="pay-method" value="card">
+                    <button type="submit" id="deema-btn"
+                            class="w-full rounded-2xl py-3.5 px-4 border-[1.5px] border-gray-200 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[color:var(--c1)] transition disabled:opacity-60 flex items-center justify-center gap-3 text-sm sm:text-base font-black text-gray-900 dark:text-white">
+                        <span id="deema-label">{{ $isAr ? 'أو قسّطها على 4 دفعات' : 'Or split into 4 payments' }} <span class="text-gray-500 dark:text-gray-400 font-bold">(<span id="deema-amount">{{ number_format((float) $offer['price'] / 4, 3) }}</span> {{ $kwd }} {{ $isAr ? 'للدفعة' : 'each' }})</span></span>
+                        <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-5 w-auto object-contain dark:invert">
+                    </button>
+                    @endif
+
                     <div class="flex flex-wrap items-center justify-center gap-2">
                         @foreach(['KNET', 'VISA', 'Mastercard', 'Apple Pay'] as $method)
                             <span class="text-[11px] font-black px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 bg-white dark:bg-white/5" dir="ltr">{{ $method }}</span>
@@ -271,6 +280,8 @@
     function setTotal(value) {
         document.getElementById('p-final').textContent = value;
         document.getElementById('pay-amount').textContent = value;
+        const deemaAmount = document.getElementById('deema-amount');
+        if (deemaAmount) deemaAmount.textContent = fmt(parseFloat(value) / 4);
     }
 
     function giftState(codeApplied) {
@@ -320,10 +331,16 @@
     // Code changed after applying: the server recalculates anyway, just stop showing a stale price
     codeInput.addEventListener('input', () => { resetPrice(); msg.classList.add('hidden'); });
 
-    document.getElementById('reg-form').addEventListener('submit', () => {
+    document.getElementById('reg-form').addEventListener('submit', (e) => {
         window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD' });
+        const deemaBtn = document.getElementById('deema-btn');
+        const viaDeema = deemaBtn && e.submitter === deemaBtn;
+        if (deemaBtn) {
+            document.getElementById('pay-method').value = viaDeema ? 'deema' : 'card';
+            deemaBtn.disabled = true;
+        }
         document.getElementById('pay-btn').disabled = true;
-        document.getElementById('pay-label').textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
+        document.getElementById(viaDeema ? 'deema-label' : 'pay-label').textContent = @json($isAr ? 'جاري التحويل لصفحة الدفع...' : 'Redirecting to payment...');
     });
 
     @if(old('code') && !$errors->has('code'))

@@ -77,6 +77,9 @@ Route::post('/review/{token}', [ReviewController::class, 'store'])->middleware('
 Route::get('/done/{token}', [CourseRegistrationController::class, 'done'])->name('registration.done');
 
 Route::get('/payment/callback', [CourseRegistrationController::class, 'callback'])->name('payment.callback');
+Route::get('/payment/deema/{registration}', [CourseRegistrationController::class, 'deemaReturn'])->name('payment.deema.return');
+Route::post('/webhooks/deema', [CourseRegistrationController::class, 'deemaWebhook'])
+    ->middleware('throttle:60,1')->name('webhooks.deema'); // CSRF-exempt in bootstrap/app.php
 
 Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
