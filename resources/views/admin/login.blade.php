@@ -29,7 +29,7 @@ body {
 .logo {
   font-size: 32px;
   font-weight: 900;
-  color: #b04141;
+  color: #6d1b2b;
   margin-bottom: 4px;
   letter-spacing: -.5px;
 }
@@ -51,10 +51,10 @@ body {
   outline: none;
   transition: border-color .2s;
 }
-.field input:focus { border-color: #b04141; }
+.field input:focus { border-color: #6d1b2b; }
 .error-msg {
   background: #2a1515;
-  border: 1px solid rgba(176,65,65,.3);
+  border: 1px solid rgba(109,27,43,.3);
   color: #f87171;
   border-radius: 10px;
   padding: 10px 14px;
@@ -63,7 +63,7 @@ body {
 }
 button[type=submit] {
   width: 100%;
-  background: #b04141;
+  background: #6d1b2b;
   color: #fff;
   border: none;
   border-radius: 14px;
@@ -73,9 +73,9 @@ button[type=submit] {
   font-family: inherit;
   cursor: pointer;
   transition: background .2s, transform .1s;
-  box-shadow: 0 4px 18px rgba(176,65,65,.4);
+  box-shadow: 0 4px 18px rgba(109,27,43,.4);
 }
-button[type=submit]:hover { background: #8a3232; transform: translateY(-1px); }
+button[type=submit]:hover { background: #4a0f1b; transform: translateY(-1px); }
 .hint {
   margin-top: 20px;
   font-size: 12px;

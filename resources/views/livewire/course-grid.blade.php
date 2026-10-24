@@ -45,7 +45,7 @@
                         transition-all duration-500
                         hover:-translate-y-2
                         hover:border-primary/20
-                        hover:shadow-[0_28px_65px_-12px_rgba(176,65,65,0.22),_0_8px_22px_-4px_rgba(176,65,65,0.10)]"
+                        hover:shadow-[0_28px_65px_-12px_rgba(109,27,43,0.22),_0_8px_22px_-4px_rgba(109,27,43,0.10)]"
                  style="box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
 
                 {{-- Shine sweep on hover --}}
@@ -66,7 +66,7 @@
 
                     {{-- Dot pattern --}}
                     <div class="absolute inset-0 opacity-[0.07] pointer-events-none z-10"
-                         style="background-image: radial-gradient(#b04141 1.5px, transparent 1.5px); background-size: 16px 16px;"></div>
+                         style="background-image: radial-gradient(#6d1b2b 1.5px, transparent 1.5px); background-size: 16px 16px;"></div>
 
                     {{-- Fade to card bg at bottom --}}
                     <div class="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-white dark:from-dark-surface to-transparent z-20 pointer-events-none"></div>
@@ -85,7 +85,7 @@
                                     border-[3px] border-white dark:border-dark-surface shadow-lg
                                     transition-all duration-500
                                     group-hover:scale-105
-                                    group-hover:shadow-[0_8px_28px_rgba(176,65,65,0.22)]">
+                                    group-hover:shadow-[0_8px_28px_rgba(109,27,43,0.22)]">
                             <img src="{{ asset('courses-img/dr-tariq.png') }}"
                                  alt="{{ $course->title }}"
                                  class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-112">

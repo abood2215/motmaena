@@ -7,7 +7,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 :root {
-  --red:    #b04141;
+  --red:    #6d1b2b;
   --red-2:  #c55555;
   --red-lt: #fde8e8;
   --gold:   #D4A853;
@@ -15,14 +15,14 @@
   --warm:   #F7F0E6;
   --text:   #1A0A0A;
   --muted:  #7A5C5C;
-  --s-border: rgba(176,65,65,.12);
+  --s-border: rgba(109,27,43,.12);
   --surface:#FFF8F0;
 }
 
 .dark .sessions-page {
   --red:    #d34c4c;
   --red-2:  #e65c5c;
-  --red-lt: rgba(176,65,65,.15);
+  --red-lt: rgba(109,27,43,.15);
   --gold:   #E5B96F;
   --cream:  #0f0f0f;
   --warm:   #1a1a1a;
@@ -36,7 +36,7 @@
 .dark .sessions-page .eval-card:hover,
 .dark .sessions-page .reinforce-card:hover { 
   box-shadow: 0 32px 70px rgba(0,0,0,.5); 
-  border-color: rgba(176,65,65,.4);
+  border-color: rgba(109,27,43,.4);
 }
 .dark .sessions-page .sess-btn-secondary { border-color: rgba(255,255,255,.2); }
 
@@ -60,7 +60,7 @@
   position: absolute;
   width: 900px; height: 900px;
   border-radius: 50%;
-  border: 1px solid rgba(176,65,65,.08);
+  border: 1px solid rgba(109,27,43,.08);
   top: 50%; left: -200px;
   transform: translateY(-50%);
 }
@@ -69,7 +69,7 @@
   position: absolute;
   width: 600px; height: 600px;
   border-radius: 50%;
-  border: 1px solid rgba(176,65,65,.06);
+  border: 1px solid rgba(109,27,43,.06);
   top: 50%; left: -50px;
   transform: translateY(-50%);
 }
@@ -84,7 +84,7 @@
 }
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--red-lt); border: 1px solid rgba(176,65,65,.2);
+  background: var(--red-lt); border: 1px solid rgba(109,27,43,.2);
   padding: 8px 18px; border-radius: 100px;
   font-size: .75rem; font-weight: 700; color: var(--red);
   letter-spacing: .1em; text-transform: uppercase;
@@ -130,9 +130,9 @@
   font-weight: 700; font-size: 1rem; text-decoration: none;
   display: flex; align-items: center; gap: 10px;
   transition: transform .25s, box-shadow .25s;
-  box-shadow: 0 16px 40px rgba(176,65,65,.3);
+  box-shadow: 0 16px 40px rgba(109,27,43,.3);
 }
-.sess-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(176,65,65,.4); }
+.sess-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(109,27,43,.4); }
 .sess-btn-secondary {
   background: transparent; color: var(--text);
   padding: 16px 36px; border-radius: 16px;
@@ -147,7 +147,7 @@
   background: var(--surface);
   border-radius: 28px;
   padding: 36px 32px;
-  box-shadow: 0 32px 80px rgba(176,65,65,.1), 0 0 0 1px var(--s-border);
+  box-shadow: 0 32px 80px rgba(109,27,43,.1), 0 0 0 1px var(--s-border);
   position: relative;
 }
 .hero-stats::before {
@@ -229,7 +229,7 @@
   transition: transform .3s, box-shadow .3s;
   cursor: default;
 }
-.eval-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(176,65,65,.1); }
+.eval-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(109,27,43,.1); }
 .eval-icon {
   width: 56px; height: 56px; border-radius: 18px;
   background: var(--warm); display: flex; align-items: center; justify-content: center;
@@ -250,7 +250,7 @@
   padding: 6px 14px; border-radius: 100px;
   font-size: .72rem; font-weight: 700; letter-spacing: .08em;
   background: var(--warm); color: var(--red);
-  border: 1px solid rgba(176,65,65,.15);
+  border: 1px solid rgba(109,27,43,.15);
   transition: background .2s, color .2s;
 }
 .s-tag:hover { background: var(--red); color: #fff; cursor: default; }
@@ -271,17 +271,17 @@
   transition: transform .3s, box-shadow .3s;
   position: relative; overflow: hidden;
 }
-.plan-card:hover { transform: translateY(-8px); box-shadow: 0 32px 70px rgba(176,65,65,.1); }
+.plan-card:hover { transform: translateY(-8px); box-shadow: 0 32px 70px rgba(109,27,43,.1); }
 .plan-card.featured {
   background: var(--red);
   border-color: var(--red);
   transform: scale(1.03);
-  box-shadow: 0 40px 80px rgba(176,65,65,.3);
+  box-shadow: 0 40px 80px rgba(109,27,43,.3);
 }
 .dark .plan-card.featured {
-  box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 32px rgba(176,65,65,.2);
+  box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 32px rgba(109,27,43,.2);
 }
-.plan-card.featured:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 40px 80px rgba(176,65,65,.4); }
+.plan-card.featured:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 40px 80px rgba(109,27,43,.4); }
 .plan-card.daily { background: #1A0A0A; border-color: transparent; }
 .dark .plan-card.daily { background: #000; }
 .plan-card.daily .plan-price { color: var(--red-2); }
@@ -334,7 +334,7 @@
   display: flex; align-items: center; justify-content: center;
 }
 .plan-card.featured .plan-check { background: rgba(255,255,255,.2); }
-.plan-card.daily .plan-check { background: rgba(176,65,65,.25); }
+.plan-card.daily .plan-check { background: rgba(109,27,43,.25); }
 .check-icon { color: var(--red); font-size: .75rem; font-weight: 900; }
 .plan-card.featured .check-icon { color: #fff; }
 .plan-card.daily .check-icon { color: var(--red-2); }
@@ -428,7 +428,7 @@
   border: 1px solid var(--s-border);
   transition: transform .3s, box-shadow .3s;
 }
-.reinforce-card:hover { transform: translateY(-6px); box-shadow: 0 32px 70px rgba(176,65,65,.08); }
+.reinforce-card:hover { transform: translateY(-6px); box-shadow: 0 32px 70px rgba(109,27,43,.08); }
 .reinforce-header {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
   margin-bottom: 32px;
@@ -477,10 +477,10 @@
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
   transition: background .3s, border-color .3s;
 }
-.spec-eval-card:hover { background: rgba(255,255,255,.08); border-color: rgba(176,65,65,.4); }
+.spec-eval-card:hover { background: rgba(255,255,255,.08); border-color: rgba(109,27,43,.4); }
 .spec-eval-icon {
   width: 52px; height: 52px; border-radius: 16px;
-  background: rgba(176,65,65,.2); display: flex; align-items: center; justify-content: center;
+  background: rgba(109,27,43,.2); display: flex; align-items: center; justify-content: center;
   color: var(--red-2); flex-shrink: 0;
 }
 .spec-eval-name { font-size: 1rem; font-weight: 700; color: #fff; }
@@ -495,7 +495,7 @@
   display: flex; flex-direction: column; gap: 0;
   transition: border-color .3s, background .3s;
 }
-.spec-pkg:hover { background: rgba(255,255,255,.07); border-color: rgba(176,65,65,.4); }
+.spec-pkg:hover { background: rgba(255,255,255,.07); border-color: rgba(109,27,43,.4); }
 .spec-pkg.sp-feat { background: var(--red); border-color: transparent; }
 .sp-label {
   font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -524,18 +524,18 @@
   border: 1px solid rgba(255,255,255,.1);
   transition: all .25s;
 }
-.sp-btn:hover { background: rgba(176,65,65,.5); color: #fff; border-color: transparent; }
+.sp-btn:hover { background: rgba(109,27,43,.5); color: #fff; border-color: transparent; }
 .spec-pkg.sp-feat .sp-btn { background: #fff; color: var(--red); border-color: transparent; }
 .spec-pkg.sp-feat .sp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
 .spec-bottom { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .spec-daily {
-  background: rgba(176,65,65,.15);
-  border: 1px solid rgba(176,65,65,.3);
+  background: rgba(109,27,43,.15);
+  border: 1px solid rgba(109,27,43,.3);
   border-radius: 24px; padding: 40px 36px;
 }
 .spec-daily-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(176,65,65,.2); border: 1px solid rgba(176,65,65,.3);
+  background: rgba(109,27,43,.2); border: 1px solid rgba(109,27,43,.3);
   font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
   color: var(--red-2); padding: 7px 14px; border-radius: 100px; margin-bottom: 20px;
 }
@@ -556,9 +556,9 @@
   transition: border-color .3s;
   max-width: 680px; margin-inline: auto; width: 100%;
 }
-.spec-club:hover { border-color: rgba(176,65,65,.4); }
+.spec-club:hover { border-color: rgba(109,27,43,.4); }
 .spec-club-icon {
-  width: 56px; height: 56px; background: rgba(176,65,65,.2);
+  width: 56px; height: 56px; background: rgba(109,27,43,.2);
   border-radius: 18px; display: flex; align-items: center; justify-content: center;
   color: var(--red-2); margin-bottom: 20px;
 }
@@ -576,7 +576,7 @@
   font-weight: 700; font-size: .9rem; text-decoration: none;
   transition: transform .2s, box-shadow .2s;
 }
-.spec-club-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(176,65,65,.5); }
+.spec-club-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,27,43,.5); }
 
 /* ─── CTA ─── */
 .cta-section {
@@ -588,7 +588,7 @@
 .cta-section::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(176,65,65,.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(109,27,43,.06) 0%, transparent 70%);
 }
 .cta-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
 .cta-badge {
@@ -614,10 +614,10 @@
   padding: 18px 44px; border-radius: 18px;
   font-weight: 700; font-size: 1.05rem; text-decoration: none;
   display: flex; align-items: center; gap: 12px;
-  box-shadow: 0 20px 50px rgba(176,65,65,.3);
+  box-shadow: 0 20px 50px rgba(109,27,43,.3);
   transition: transform .25s, box-shadow .25s;
 }
-.cta-primary:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(176,65,65,.4); }
+.cta-primary:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(109,27,43,.4); }
 .cta-secondary {
   background: transparent; color: var(--text);
   padding: 18px 44px; border-radius: 18px;
@@ -869,7 +869,7 @@
     {{-- ─── Deema Installment Banner ─── --}}
     <div class="s-container mt-12 sm:mt-20">
         <div class="reveal px-4 sm:px-0">
-            <div class="rounded-3xl overflow-hidden ring-1 ring-white/20 shadow-xl" style="background:linear-gradient(135deg,#8b3333 0%,#b04141 50%,#7a2a2a 100%);position:relative;">
+            <div class="rounded-3xl overflow-hidden ring-1 ring-white/20 shadow-xl" style="background:linear-gradient(135deg,#4a0f1b 0%,#6d1b2b 50%,#7a2a2a 100%);position:relative;">
 
                 {{-- Animated background blobs --}}
                 <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,220,0.15),transparent 70%);animation:orbFloat 6s ease-in-out infinite;pointer-events:none;"></div>
@@ -940,7 +940,7 @@
                         </div>
                         <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank"
                            class="shimmer-btn inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-1"
-                           style="background:#fff;color:#8b3333;box-shadow:0 10px 30px -8px rgba(0,0,0,0.35);">
+                           style="background:#fff;color:#4a0f1b;box-shadow:0 10px 30px -8px rgba(0,0,0,0.35);">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.623 1.43h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>

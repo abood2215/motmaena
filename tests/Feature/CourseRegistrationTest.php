@@ -37,7 +37,8 @@ class CourseRegistrationTest extends TestCase
         $this->get('/')->assertOk()->assertSee('إدارة الغضب');
         $this->get('/register/anger-management')->assertOk();
         $this->get('/register/unknown')->assertNotFound();
-        $this->get('/preview')->assertOk()->assertSee('دورة إدارة الغضب')->assertSee('كيف نقدر نساعدك');
+        $this->get('/')->assertSee('كيف نقدر نساعدك');
+        $this->get('/preview')->assertRedirect('/');
     }
 
     public function test_full_payment_flow_with_discount_code(): void

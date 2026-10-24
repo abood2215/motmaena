@@ -43,7 +43,7 @@ Route::get('/consultations', function () {
 })->name('consultations');
 
 Route::view('/policies', 'policies')->name('policies');
-Route::view('/preview', 'preview-home')->name('preview'); // new homepage design under review
+Route::redirect('/preview', '/'); // the preview became the homepage
 Route::redirect('/terms', '/policies#terms');
 Route::redirect('/privacy', '/policies#privacy');
 Route::redirect('/refund-policy', '/policies#refund');

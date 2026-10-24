@@ -75,7 +75,7 @@ class AdminPanelTest extends TestCase
         ])->assertSessionHasNoErrors();
 
         $page = $this->get('/')->assertOk();
-        $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة')->assertSee('--c1:#0f5e4a', false);
+        $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة')->assertSee('--wine: #0f5e4a', false);
         $this->assertStringNotContainsString('قسّط على 4 دفعات', $page->getContent());
         $this->get('/register/emotional-intelligence')->assertOk()->assertSee('--c1:#6d1b2b', false); // checkout keeps the wine palette
 
@@ -96,14 +96,14 @@ class AdminPanelTest extends TestCase
 
     public function test_faq_and_testimonials_are_managed_from_admin(): void
     {
-        $this->get('/')->assertDontSee('ماذا يقول متدربونا');
+        $this->get('/')->assertDontSee('تجارب حقيقية');
 
         $this->post('/admin/content/testimonials', ['name' => 'أم محمد', 'quote' => 'دورة رائعة', 'rating' => 5, 'is_active' => '1']);
         $this->post('/admin/content/faqs', ['question_ar' => 'سؤال جديد؟', 'answer_ar' => 'جواب', 'is_active' => '1']);
         $first = Faq::orderBy('sort')->first();
         $this->put("/admin/content/faqs/{$first->id}", ['question_ar' => $first->question_ar, 'answer_ar' => $first->answer_ar, 'is_active' => '0']);
 
-        $this->get('/')->assertSee('ماذا يقول متدربونا')->assertSee('دورة رائعة')->assertSee('سؤال جديد؟')->assertDontSee($first->question_ar);
+        $this->get('/')->assertSee('تجارب حقيقية')->assertSee('دورة رائعة')->assertSee('سؤال جديد؟')->assertDontSee($first->question_ar);
         $this->assertSame(1, Testimonial::count());
     }
 

@@ -15,8 +15,8 @@
 
 /* ── Variables ── */
 .consult-page {
-  --red:    #b04141;
-  --red-d:  #8a3232;
+  --red:    #6d1b2b;
+  --red-d:  #4a0f1b;
   --red-lt: #fdf2f2;
   --gold:   #c8922a;
   --gold-lt:#fdf6e3;
@@ -79,7 +79,7 @@
 .hero-consult::before {
   content:'';
   position:absolute; inset:0;
-  background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(176,65,65,.35), transparent);
+  background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(109,27,43,.35), transparent);
   pointer-events:none;
 }
 .hero-consult .badge-urgent {
@@ -132,9 +132,9 @@
   align-items: center;
   gap: 8px;
   transition: background .2s, transform .15s, box-shadow .2s;
-  box-shadow: 0 4px 20px rgba(176,65,65,.5);
+  box-shadow: 0 4px 20px rgba(109,27,43,.5);
 }
-.btn-hero-primary:hover { background: var(--red-d); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(176,65,65,.6); }
+.btn-hero-primary:hover { background: var(--red-d); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(109,27,43,.6); }
 .btn-hero-secondary {
   background: rgba(255,255,255,.1);
   color: #fff;
@@ -203,7 +203,7 @@
 .dr-section::before {
   content:'';
   position:absolute; inset:0;
-  background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(176,65,65,.25), transparent);
+  background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(109,27,43,.25), transparent);
   pointer-events:none;
 }
 .dr-inner {
@@ -218,8 +218,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(176,65,65,.25);
-  border: 1px solid rgba(176,65,65,.5);
+  background: rgba(109,27,43,.25);
+  border: 1px solid rgba(109,27,43,.5);
   color: #f87171;
   border-radius: 999px;
   padding: 5px 14px;
@@ -247,7 +247,7 @@
 .dr-img-wrap .ring {
   width: 260px; height: 260px;
   border-radius: 50%;
-  border: 3px solid rgba(176,65,65,.4);
+  border: 3px solid rgba(109,27,43,.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,7 +258,7 @@
   position:absolute;
   inset: -10px;
   border-radius: 50%;
-  border: 2px dashed rgba(176,65,65,.2);
+  border: 2px dashed rgba(109,27,43,.2);
   animation: spinSlow 20s linear infinite;
 }
 @keyframes spinSlow { to { transform: rotate(360deg); } }
@@ -474,7 +474,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(176,65,65,.4);
+  box-shadow: 0 4px 12px rgba(109,27,43,.4);
 }
 .step-content h4 { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
 .step-content p { font-size: 14px; color: var(--muted); line-height: 1.65; }
@@ -583,7 +583,7 @@
   align-items: flex-start;
   padding: 16px;
   background: var(--red-lt);
-  border: 1.5px solid rgba(176,65,65,.2);
+  border: 1.5px solid rgba(109,27,43,.2);
   border-radius: 12px;
 }
 .consent-row input[type=checkbox] {
@@ -609,7 +609,7 @@
 .booking-form {
   margin-top: 20px;
   background: var(--cream);
-  border: 2px solid rgba(176,65,65,.25);
+  border: 2px solid rgba(109,27,43,.25);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -668,7 +668,7 @@
   padding: 10px 14px;
   background: var(--red-lt);
   border-radius: 10px;
-  border: 1px solid rgba(176,65,65,.2);
+  border: 1px solid rgba(109,27,43,.2);
 }
 .form-submit-btn {
   background: #25d366;
@@ -733,9 +733,9 @@
 .btn-final:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,.55); }
 .btn-final-red {
   background: var(--red);
-  box-shadow: 0 4px 22px rgba(176,65,65,.45);
+  box-shadow: 0 4px 22px rgba(109,27,43,.45);
 }
-.btn-final-red:hover { background: var(--red-d); box-shadow: 0 8px 32px rgba(176,65,65,.6); }
+.btn-final-red:hover { background: var(--red-d); box-shadow: 0 8px 32px rgba(109,27,43,.6); }
 
 /* ── Sticky Bar ── */
 .sticky-bar {
@@ -1207,7 +1207,7 @@
       </div>
       <div class="advisors-grid">
         <div class="advisor-card reveal">
-          <div class="avatar" style="background:linear-gradient(135deg,#b04141,#7c2d12);">
+          <div class="avatar" style="background:linear-gradient(135deg,#6d1b2b,#7c2d12);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span class="online-dot"></span>
           </div>

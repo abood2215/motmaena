@@ -44,7 +44,7 @@
                         <input name="name" value="{{ old('name', $registration->name) }}" required maxlength="120" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-primary">
                     </div>
                     <label class="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
-                        <input type="checkbox" name="show_name" value="1" checked class="accent-[#b04141]">
+                        <input type="checkbox" name="show_name" value="1" checked class="accent-[#6d1b2b]">
                         {{ $isAr ? 'أوافق على نشر رأيي باسمي في الموقع' : 'I agree to publish my review with my name' }}
                     </label>
                     <p class="text-xs text-gray-400 -mt-3">{{ $isAr ? 'إذا ألغيت الموافقة، يُنشر بالحرف الأول فقط.' : 'If unchecked, only your initial is shown.' }}</p>

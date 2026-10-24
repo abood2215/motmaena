@@ -1,5 +1,4 @@
 User-agent: *
 Disallow: /admin
-Disallow: /preview
 
 Sitemap: https://motmaena.motmaina-center.com/sitemap.xml
