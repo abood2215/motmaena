@@ -39,7 +39,7 @@
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="drt-photo-wrap">
                         <div class="drt-photo">
-                            <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ config('doctor.name.' . $drtLang) }}" loading="lazy">
+                            <img src="{{ asset('photos/dr-tariq-smile.webp') }}" alt="{{ config('doctor.name.' . $drtLang) }}" loading="lazy">
                         </div>
                         <div class="drt-seal" aria-hidden="true">
                             <span class="drt-seal-top">{{ $drtT('كل', 'Every') }}</span>
@@ -143,7 +143,7 @@
     @media (max-width: 479px) { .drt-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .drt-stats > div:nth-child(3) { border-inline-start: 0; } .drt-stats > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.12); } }
     .drt-hurry { margin-top: 12px; text-align: center; font-size: 13px; font-weight: 900; color: #fde68a; }
 
-    .drt-photo-wrap { position: relative; width: min(100%, 320px); }
+    .drt-photo-wrap { position: relative; width: min(100%, 380px); }
     .drt-photo { aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--dg) 75%, transparent); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); background: var(--dwd); }
     .drt-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
     .drt-seal { position: absolute; top: 18px; inset-inline-end: -14px; width: 92px; height: 92px; border-radius: 999px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #3b1d00; background: radial-gradient(circle at 35% 30%, #f6e7c4, var(--dg) 60%, #a67c35); box-shadow: 0 14px 30px -12px rgba(0,0,0,.6), inset 0 0 0 4px rgba(255,255,255,.35); transform: rotate(-8deg); }
