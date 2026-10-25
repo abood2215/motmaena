@@ -486,7 +486,7 @@
     </div>
 </section>
 
-{{-- ═══════════════ THURSDAY WITH DR. TARIQ (request → call-center CRM) ═══════════════ --}}
+{{-- ═══════════════ THURSDAY WITH DR. TARIQ (request → center system) ═══════════════ --}}
 @include('partials.dr-tariq-thursday')
 
 {{-- ═══════════════ THE CENTER ═══════════════ --}}

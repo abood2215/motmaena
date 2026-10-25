@@ -43,16 +43,11 @@ return [
         'webhook_secret' => env('DEEMA_WEBHOOK_SECRET'),
     ],
 
-    // The center's internal system: paid registrations become a client file + check + invoice there
+    // The center's internal system: paid registrations become a client file + check + invoice there,
+    // and Dr. Tariq Thursday requests show up on its Dr. Tariq appointments page
     'center' => [
         'url' => env('CENTER_SYSTEM_URL'),      // https://motmaina-center.com
         'token' => env('CENTER_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the internal system
-    ],
-
-    // Call-center CRM: Dr. Tariq Thursday requests become a call task + staff notification there
-    'crm' => [
-        'url' => env('CRM_SYSTEM_URL'),      // https://crm.motmaina-center.com
-        'token' => env('CRM_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the CRM
     ],
 
     // Tracking IDs — each script is only added to the site when its ID is set

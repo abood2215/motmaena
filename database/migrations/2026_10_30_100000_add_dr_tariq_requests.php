@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     // Thursday appointment requests with Dr. Tariq live with the other consultation requests,
-    // and are passed on to the call-center CRM (task + staff notification).
+    // and are passed on to the center system (crm_* = its request id / last error).
     public function up(): void
     {
         Schema::table('consultation_bookings', function (Blueprint $table) {

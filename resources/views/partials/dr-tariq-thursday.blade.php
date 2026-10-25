@@ -1,4 +1,4 @@
-{{-- "Thursday with Dr. Tariq" — limited appointments; the customer leaves a request and the secretaries call back.
+{{-- "Thursday with Dr. Tariq" — limited appointments; the customer leaves a request (sent to the center system) and the secretaries call back.
      Shown on the homepage and the consultations page; Admin → Content has the on/off switch. --}}
 @php
     $drtAr = app()->getLocale() == 'ar';

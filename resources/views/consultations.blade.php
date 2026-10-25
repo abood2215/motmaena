@@ -1075,7 +1075,7 @@
     </div>
   </section>
 
-  {{-- ── Thursday with Dr. Tariq (request → call-center CRM) ── --}}
+  {{-- ── Thursday with Dr. Tariq (request → center system) ── --}}
   @include('partials.dr-tariq-thursday')
 
   {{-- ── Stats Bar ── --}}

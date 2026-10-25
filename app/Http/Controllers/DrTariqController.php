@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConsultationBooking;
-use App\Services\CrmSystem;
+use App\Services\CenterSystem;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 /**
  * "Book with Dr. Tariq on Thursday" — the customer only leaves a request (topic, in person or
- * by phone, name and number). The secretaries call back to fix the time and the fee.
+ * by phone, name and number). It goes to the center system (motmaina-center.com), where the
+ * secretaries see it on the Dr. Tariq appointments page and call back to fix the time and the fee.
  */
 class DrTariqController extends Controller
 {
@@ -24,7 +25,7 @@ class DrTariqController extends Controller
         'phone'     => ['ar' => 'هاتفية', 'en' => 'By phone'],
     ];
 
-    public function store(Request $request, CrmSystem $crm)
+    public function store(Request $request, CenterSystem $center)
     {
         $data = $request->validate([
             'name'    => 'nullable|string|max:120',
@@ -52,7 +53,7 @@ class DrTariqController extends Controller
             'notes'        => $data['notes'] ?? null,
         ]);
 
-        $crm->pushDoctorRequest($booking);
+        $center->pushDoctorRequest($booking);
 
         $message = $this->t(
             'وصل طلبك ✓ قسم المواعيد رح يتواصل معك على رقمك لتأكيد موعدك يوم الخميس.',

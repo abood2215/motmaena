@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ConsultationBooking;
 use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use Illuminate\Support\Facades\Http;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 /**
  * Sends paid course registrations to the center's internal system (motmaina-center.com),
  * which finds the client's file by phone (or opens one) and adds a check + invoice for the course.
+ * Also sends "Thursday with Dr. Tariq" requests, which show up there on the Dr. Tariq appointments page
+ * with a 📅 notification for the secretaries.
  */
 class CenterSystem
 {
@@ -71,6 +74,48 @@ class CenterSystem
         ]);
 
         return true;
+    }
+
+    /** Sends one Dr. Tariq appointment request. Never throws: the outcome is saved on the booking. */
+    public function pushDoctorRequest(ConsultationBooking $booking): bool
+    {
+        if (!$this->enabled() || $booking->crm_task_id) {
+            return (bool) $booking->crm_task_id;
+        }
+
+        $source = session('visit_source', []);
+
+        try {
+            $response = Http::withHeaders(['X-Website-Token' => config('services.center.token')])
+                ->acceptJson()->timeout(15)
+                ->post(rtrim(config('services.center.url'), '/') . '/api/website/doctor-requests', [
+                    'request_id' => $booking->id,
+                    'name'       => $booking->name,
+                    'phone'      => $booking->phone,
+                    'topic'      => $booking->problem_type,
+                    'mode'       => $booking->mode,
+                    'notes'      => $booking->notes,
+                    'source'     => mb_substr((string) ($source['utm_source'] ?? $source['referrer'] ?? ''), 0, 80) ?: null,
+                ]);
+        } catch (\Throwable $e) {
+            return $this->requestFailed($booking, 'تعذّر الاتصال بالنظام: ' . $e->getMessage());
+        }
+
+        if (!$response->successful() || !$response->json('ok')) {
+            return $this->requestFailed($booking, $response->json('message') ?: 'ردّ النظام برقم ' . $response->status());
+        }
+
+        $booking->update(['crm_task_id' => $response->json('id'), 'crm_error' => null]);
+
+        return true;
+    }
+
+    private function requestFailed(ConsultationBooking $booking, string $error): bool
+    {
+        Log::warning('Center system doctor request failed', ['booking' => $booking->id, 'error' => $error]);
+        $booking->update(['crm_error' => mb_substr($error, 0, 255)]);
+
+        return false;
     }
 
     private function failed(CourseRegistration $registration, string $error): bool

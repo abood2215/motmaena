@@ -17,7 +17,7 @@ class DrTariqThursdayTest extends TestCase
     {
         parent::setUp();
         Cache::flush();
-        config(['services.crm.url' => 'https://crm.test', 'services.crm.token' => 'crm-token']);
+        config(['services.center.url' => 'https://center.test', 'services.center.token' => 'center-token']);
         $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
     }
 
@@ -31,9 +31,9 @@ class DrTariqThursdayTest extends TestCase
         $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('اطلب موعدك مع د. طارق يوم الخميس');
     }
 
-    public function test_a_request_is_saved_and_sent_to_the_call_center(): void
+    public function test_a_request_is_saved_and_sent_to_the_center_system(): void
     {
-        Http::fake(['crm.test/*' => Http::response(['ok' => true, 'contact_id' => 5, 'task_id' => 77])]);
+        Http::fake(['center.test/*' => Http::response(['ok' => true, 'id' => 77])]);
 
         $this->postJson('/dr-tariq/request', ['name' => 'سارة', 'phone' => '+965 5111 2222', 'topic' => 'parenting', 'mode' => 'phone', 'notes' => 'بخصوص ابني'])
             ->assertOk()->assertJson(['ok' => true]);
@@ -45,8 +45,8 @@ class DrTariqThursdayTest extends TestCase
         $this->assertSame('هاتفية', $b->mode);
         $this->assertSame(77, (int) $b->crm_task_id);
 
-        Http::assertSent(fn ($r) => $r->url() === 'https://crm.test/api/website/doctor-requests'
-            && $r->hasHeader('X-Website-Token', 'crm-token')
+        Http::assertSent(fn ($r) => $r->url() === 'https://center.test/api/website/doctor-requests'
+            && $r->hasHeader('X-Website-Token', 'center-token')
             && $r['request_id'] === $b->id && $r['name'] === 'سارة' && $r['phone'] === '51112222'
             && $r['topic'] === 'استشارة تربوية' && $r['mode'] === 'هاتفية' && $r['notes'] === 'بخصوص ابني');
 
@@ -54,9 +54,9 @@ class DrTariqThursdayTest extends TestCase
             ->assertSee('موعد مع د. طارق (الخميس)')->assertSee('سارة')->assertSee('✓ وصل للكول سنتر');
     }
 
-    public function test_only_the_phone_is_required_and_crm_trouble_never_loses_the_request(): void
+    public function test_only_the_phone_is_required_and_a_connection_problem_never_loses_the_request(): void
     {
-        Http::fake(['crm.test/*' => Http::response('down', 500)]);
+        Http::fake(['center.test/*' => Http::response('down', 500)]);
 
         $this->postJson('/dr-tariq/request', ['topic' => 'life', 'mode' => 'in_person'])->assertStatus(422)->assertJsonValidationErrors('phone');
         $this->postJson('/dr-tariq/request', ['phone' => '55566161', 'topic' => 'x', 'mode' => 'in_person'])->assertJsonValidationErrors('topic');
