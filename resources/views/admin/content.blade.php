@@ -41,6 +41,11 @@
         <p class="hint">كل اللي بيدفع بدون كود خصم بياخد كود هدية بهالقيمة، مرة وحدة على أي دورة (إله أو لحدا بيهديه).</p>
       </div>
       <div class="full">
+        <input type="hidden" name="dr_tariq_thursday" value="0">
+        <label class="check"><input type="checkbox" name="dr_tariq_thursday" value="1" @checked(old('dr_tariq_thursday', $settings['dr_tariq_thursday']) === '1')> 📅 إظهار "اطلب موعدك مع د. طارق يوم الخميس" (الرئيسية وصفحة الاستشارات)</label>
+        <p class="hint">الطلبات بتوصل للكول سنتر كمهمة اتصال + إشعار، وبتطلع كمان بصفحة الاستشارات هون. شيل الصح إذا اكتملت مواعيد الخميس.</p>
+      </div>
+      <div class="full">
         <input type="hidden" name="psych_soon" value="0">
         <label class="check"><input type="checkbox" name="psych_soon" value="1" @checked(old('psych_soon', $settings['psych_soon']) === '1')> 🧠 إظهار إعلان "المركز النفسي — قريباً" بالصفحة الرئيسية</label>
         <p class="hint">اللي بيسجّلوا أرقامهم فيه بيطلعوا بصفحة "بلّغني" تحت "المركز النفسي (قريباً)". شيل الصح لما يفتح المركز.</p>

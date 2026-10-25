@@ -56,6 +56,7 @@ Route::get('/sitemap.xml', function () {
 })->name('sitemap');
 
 Route::post('/consultations/book', [ConsultationController::class, 'store'])->middleware('throttle:6,1')->name('consultations.book');
+Route::post('/dr-tariq/request', [\App\Http\Controllers\DrTariqController::class, 'store'])->middleware('throttle:6,1')->name('dr-tariq.request');
 Route::get('/admin/consultations', [ConsultationController::class, 'admin'])->name('admin.consultations');
 Route::post('/admin/login', [ConsultationController::class, 'adminLogin'])->middleware('throttle:5,1')->name('admin.login');
 Route::get('/admin/logout', [ConsultationController::class, 'adminLogout'])->name('admin.logout');

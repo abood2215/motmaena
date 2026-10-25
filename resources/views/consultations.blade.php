@@ -1075,6 +1075,9 @@
     </div>
   </section>
 
+  {{-- ── Thursday with Dr. Tariq (request → call-center CRM) ── --}}
+  @include('partials.dr-tariq-thursday')
+
   {{-- ── Stats Bar ── --}}
   <section class="stats-bar">
     <div class="stats-inner">

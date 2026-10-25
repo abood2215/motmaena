@@ -49,6 +49,12 @@ return [
         'token' => env('CENTER_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the internal system
     ],
 
+    // Call-center CRM: Dr. Tariq Thursday requests become a call task + staff notification there
+    'crm' => [
+        'url' => env('CRM_SYSTEM_URL'),      // https://crm.motmaina-center.com
+        'token' => env('CRM_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the CRM
+    ],
+
     // Tracking IDs — each script is only added to the site when its ID is set
     'analytics' => [
         'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX

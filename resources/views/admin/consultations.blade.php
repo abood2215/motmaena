@@ -496,8 +496,19 @@ tr.row-new:hover td{background:#fef9e0}
                   @if($isNew)<span class="new-dot"></span>@endif
                   #{{ $b->id }}
                 </td>
-                <td><div class="phone-badge">{{ $b->phone }}</div></td>
-                <td><span class="type-tag">{{ $b->problem_type }}</span></td>
+                <td>
+                  <div class="phone-badge">{{ $b->phone }}</div>
+                  @if($b->name)<div style="font-size:12px;font-weight:700;margin-top:4px">{{ $b->name }}</div>@endif
+                </td>
+                <td>
+                  @if($b->kind === 'dr_tariq')<div style="font-size:11px;font-weight:800;color:#6d1b2b;margin-bottom:3px">📅 موعد مع د. طارق (الخميس)</div>@endif
+                  <span class="type-tag">{{ $b->problem_type }}</span>
+                  @if($b->mode)<div style="font-size:11px;color:#6b7280;margin-top:3px">{{ $b->mode }}</div>@endif
+                  @if($b->kind === 'dr_tariq')
+                    @if($b->crm_task_id)<div style="font-size:11px;color:#047857;font-weight:700;margin-top:3px">✓ وصل للكول سنتر</div>
+                    @elseif($b->crm_error)<div style="font-size:11px;color:#b91c1c;font-weight:700;margin-top:3px" title="{{ $b->crm_error }}">⚠️ ما وصل للكول سنتر</div>@endif
+                  @endif
+                </td>
                 <td>
                   @if($b->notes)
                     <div class="notes-text" title="{{ $b->notes }}">{{ $b->notes }}</div>

@@ -37,6 +37,7 @@ class ContentController extends Controller
             'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96599880140',
         ]);
 
+        if ($request->has('dr_tariq_thursday')) $data['dr_tariq_thursday'] = $request->boolean('dr_tariq_thursday') ? '1' : '0';
         if ($request->has('psych_soon')) $data['psych_soon'] = $request->boolean('psych_soon') ? '1' : '0';
 
         // Local 8-digit Kuwaiti numbers get the country code

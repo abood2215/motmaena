@@ -486,6 +486,9 @@
     </div>
 </section>
 
+{{-- ═══════════════ THURSDAY WITH DR. TARIQ (request → call-center CRM) ═══════════════ --}}
+@include('partials.dr-tariq-thursday')
+
 {{-- ═══════════════ THE CENTER ═══════════════ --}}
 <section class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c]">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
