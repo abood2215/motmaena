@@ -32,6 +32,7 @@ class ContentController extends Controller
             'announcement_ar' => 'nullable|string|max:160',
             'announcement_en' => 'nullable|string|max:160',
             'gift_code_kwd'   => 'nullable|numeric|min:0|max:1000',
+            'dr_tariq_date'   => 'nullable|date_format:Y-m-d',
         ], [
             'whatsapp.digits_between' => 'رقم الواتساب غير صحيح — اكتبه مع مفتاح الدولة مثل 96555665161',
             'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96599880140',

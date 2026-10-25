@@ -42,8 +42,11 @@
       </div>
       <div class="full">
         <input type="hidden" name="dr_tariq_thursday" value="0">
-        <label class="check"><input type="checkbox" name="dr_tariq_thursday" value="1" @checked(old('dr_tariq_thursday', $settings['dr_tariq_thursday']) === '1')> 📅 إظهار "اطلب موعدك مع د. طارق يوم الخميس" (الرئيسية وصفحة الاستشارات)</label>
-        <p class="hint">الطلبات بتوصل لنظام المركز (صفحة "مواعيد د. طارق الحبيب" + إشعار 📅 للسكرتارية)، وبتطلع كمان بصفحة الاستشارات هون. شيل الصح إذا اكتملت مواعيد الخميس.</p>
+        <label class="check"><input type="checkbox" name="dr_tariq_thursday" value="1" @checked(old('dr_tariq_thursday', $settings['dr_tariq_thursday']) === '1')> 📅 إظهار "اطلب موعدك مع د. طارق" (الرئيسية وصفحة الاستشارات)</label>
+        <label style="display:block;margin-top:8px">يوم استقبال د. طارق
+          <input type="date" name="dr_tariq_date" value="{{ old('dr_tariq_date', $settings['dr_tariq_date']) }}" style="max-width:220px">
+        </label>
+        <p class="hint">الطلبات بتوصل لنظام المركز (صفحة "مواعيد د. طارق الحبيب" + إشعار 📅 للسكرتارية)، وبتطلع كمان بصفحة الاستشارات هون. القسم بيختفي لحاله بعد ما يمرّ هاليوم — غيّر التاريخ لما يكون في يوم جديد، أو شيل الصح إذا اكتملت المواعيد.</p>
       </div>
       <div class="full">
         <input type="hidden" name="psych_soon" value="0">

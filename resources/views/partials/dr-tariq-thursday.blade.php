@@ -1,30 +1,33 @@
-{{-- "Thursday with Dr. Tariq" — limited appointments; the customer leaves a request (sent to the center system) and the secretaries call back.
-     Shown on the homepage and the consultations page; Admin → Content has the on/off switch. --}}
+{{-- "A day with Dr. Tariq" — limited appointments on one day the admin sets (Admin → Content); the customer leaves a request
+     (sent to the center system) and the secretaries call back. Shown on the homepage and the consultations page,
+     and hidden automatically once that day has passed. --}}
 @php
     $drtAr = app()->getLocale() == 'ar';
     $drtLang = $drtAr ? 'ar' : 'en';
     $drtT = fn ($ar, $en) => $drtAr ? $ar : $en;
-    $drtNext = \App\Http\Controllers\DrTariqController::nextThursday()->locale($drtLang);
+    $drtNext = \App\Http\Controllers\DrTariqController::day()?->locale($drtLang);
+    $drtDay = $drtNext?->translatedFormat('l');           // e.g. الخميس
+    $drtDate = $drtNext?->translatedFormat('j F');        // e.g. 29 أكتوبر
 @endphp
-@if((\App\Models\SiteSetting::current()['dr_tariq_thursday'] ?? '1') === '1')
+@if($drtNext && (\App\Models\SiteSetting::current()['dr_tariq_thursday'] ?? '1') === '1')
 <section id="dr-tariq" class="drt py-12 sm:py-16 scroll-mt-20" dir="{{ $drtAr ? 'rtl' : 'ltr' }}">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="drt-card relative overflow-hidden">
             <div class="drt-dots" aria-hidden="true"></div>
             <div class="drt-glow" aria-hidden="true"></div>
 
-            {{-- This week's chance: date + countdown to Thursday --}}
+            {{-- The chance: the day + countdown to it --}}
             <div class="drt-urgent relative">
                 <div class="flex items-center gap-2.5 font-black">
                     <span class="drt-live"><i></i></span>
                     @if($drtNext->isToday())
-                        <span>🔥 {{ $drtT('اليوم الخميس! الدكتور طارق يستقبل — اطلب موعدك الآن', 'It\'s Thursday! Dr. Tariq is seeing people — request now') }}</span>
+                        <span>🔥 {{ $drtT('اليوم! الدكتور طارق يستقبل الاستشارات — اطلب موعدك الآن', 'Today! Dr. Tariq is seeing people — request now') }}</span>
                     @else
-                        <span>🔥 {{ $drtT('فرصة هذا الأسبوع: الخميس', 'This week\'s chance: Thursday') }} <b class="drt-urgent-date">{{ $drtNext->translatedFormat('j F') }}</b></span>
+                        <span>🔥 {{ $drtT('فرصة هذا الأسبوع:', 'This week\'s chance:') }} <b class="drt-urgent-date">{{ $drtDay }} {{ $drtDate }}</b></span>
                     @endif
                 </div>
                 @unless($drtNext->isToday())
-                    @include('partials.countdown', ['startsAt' => $drtNext->toDateString() . 'T00:00:00+03:00', 'dark' => true, 'countdownLabel' => $drtT('باقي على الخميس', 'Until Thursday')])
+                    @include('partials.countdown', ['startsAt' => $drtNext->toDateString() . 'T00:00:00+03:00', 'dark' => true, 'countdownLabel' => $drtT('باقي على الموعد', 'Starts in')])
                 @endunless
             </div>
 
@@ -37,8 +40,9 @@
                             <img src="{{ asset('photos/dr-tariq-smile.webp') }}" alt="{{ config('doctor.name.' . $drtLang) }}" loading="lazy">
                         </div>
                         <div class="drt-seal" aria-hidden="true">
-                            <span class="drt-seal-top">{{ $drtT('كل', 'Every') }}</span>
-                            <span class="drt-seal-day">{{ $drtT('خميس', 'Thu') }}</span>
+                            <span class="drt-seal-top">{{ $drtDay }}</span>
+                            <span class="drt-seal-day">{{ $drtNext->format('j') }}</span>
+                            <span class="drt-seal-top">{{ $drtNext->translatedFormat('F') }}</span>
                         </div>
                         <div class="drt-limited">⏳ {{ $drtT('مواعيد محدودة', 'Limited slots') }}</div>
                     </div>
@@ -50,7 +54,7 @@
                     <h2 class="drt-title">{{ $drtT('قابل', 'Meet') }} <span>{{ config('doctor.name.' . $drtLang) }}</span> {{ $drtT('شخصياً', 'in person') }}</h2>
                     <p class="drt-sub">{{ config('doctor.title.' . $drtLang) }}</p>
                     <p class="drt-text">
-                        {{ $drtT('كل خميس يخصّص الدكتور طارق عدداً محدوداً جداً من المواعيد للاستشارات الحياتية والاجتماعية والتربوية. اطلب موعدك الآن — الأولوية لأول المسجّلين.', 'Every Thursday Dr. Tariq keeps a very limited number of appointments for life, social and parenting counselling. Request yours now — first come, first served.') }}
+                        {{ $drtT('يوم ' . $drtDay . ' ' . $drtDate . ' يخصّص الدكتور طارق عدداً محدوداً جداً من المواعيد للاستشارات الحياتية والاجتماعية والتربوية. اطلب موعدك الآن — الأولوية لأول المسجّلين.', 'On ' . $drtDay . ' ' . $drtDate . ' Dr. Tariq keeps a very limited number of appointments for life, social and parenting counselling. Request yours now — first come, first served.') }}
                     </p>
 
                     <div class="drt-stats mb-6">
@@ -67,7 +71,7 @@
                         <div class="drt-form-head">
                             <span class="drt-form-ico">📅</span>
                             <div>
-                                <p class="drt-form-title">{{ $drtT('احجز مكانك هذا الخميس', 'Save your place this Thursday') }}</p>
+                                <p class="drt-form-title">{{ $drtT('احجز مكانك يوم ' . $drtDay, 'Save your place on ' . $drtDay) }}</p>
                                 <p class="drt-form-sub">{{ $drtT('خطوتين بس — وبنتصل فيك نأكد الموعد', 'Two quick steps — we call you to confirm') }}</p>
                             </div>
                         </div>
@@ -93,14 +97,14 @@
                             <span aria-hidden="true">{{ $drtAr ? '←' : '→' }}</span>
                         </button>
                         <p class="drt-msg hidden" role="status"></p>
-                        <p class="drt-hurry">⚡ {{ $drtT('مواعيد الخميس بتخلص بسرعة — الأولوية لأول المسجّلين', 'Thursday slots go fast — first come, first served') }}</p>
+                        <p class="drt-hurry">⚡ {{ $drtT('المواعيد بتخلص بسرعة — الأولوية لأول المسجّلين', 'Slots go fast — first come, first served') }}</p>
                         <p class="drt-note">🔒 {{ $drtT('بدون دفع الآن · بياناتك سرية · بنتواصل معك لتأكيد الموعد', 'Nothing to pay now · confidential · we call you to confirm') }}</p>
                     </form>
 
                     <div class="drt-done hidden">
                         <div class="drt-done-ico">✓</div>
                         <p class="drt-done-title">{{ $drtT('وصل طلبك!', 'Request received!') }}</p>
-                        <p class="drt-done-text">{{ $drtT('قسم المواعيد رح يتواصل معك على رقمك قريباً لتأكيد موعدك مع د. طارق يوم الخميس.', 'Our appointments team will call you soon to confirm your Thursday appointment with Dr. Tariq.') }}</p>
+                        <p class="drt-done-text">{{ $drtT('قسم المواعيد رح يتواصل معك على رقمك قريباً لتأكيد موعدك مع د. طارق يوم ' . $drtDay . ' ' . $drtDate . '.', 'Our appointments team will call you soon to confirm your appointment with Dr. Tariq on ' . $drtDay . ' ' . $drtDate . '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -137,8 +141,8 @@
     .drt-photo { aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--dg) 75%, transparent); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); background: var(--dwd); }
     .drt-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
     .drt-seal { position: absolute; top: 18px; inset-inline-end: -14px; width: 92px; height: 92px; border-radius: 999px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #3b1d00; background: radial-gradient(circle at 35% 30%, #f6e7c4, var(--dg) 60%, #a67c35); box-shadow: 0 14px 30px -12px rgba(0,0,0,.6), inset 0 0 0 4px rgba(255,255,255,.35); transform: rotate(-8deg); }
-    .drt-seal-top { font-size: 12px; font-weight: 900; line-height: 1; }
-    .drt-seal-day { font-size: 24px; font-weight: 900; line-height: 1.1; }
+    .drt-seal-top { font-size: 11px; font-weight: 900; line-height: 1.1; }
+    .drt-seal-day { font-size: 30px; font-weight: 900; line-height: 1; }
     .drt-limited { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 13px; font-weight: 900; padding: 8px 16px; border-radius: 999px; color: #3b1d00; background: linear-gradient(110deg, var(--dg) 0%, #f3e2b8 45%, var(--dg) 60%, #b38a3e 100%); background-size: 220% 100%; animation: drt-shine 3.2s linear infinite; box-shadow: 0 10px 24px -10px var(--dg); }
     @keyframes drt-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
 

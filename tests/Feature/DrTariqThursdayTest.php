@@ -16,6 +16,7 @@ class DrTariqThursdayTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->travelTo('2026-10-25 12:00:00');
         Cache::flush();
         config(['services.center.url' => 'https://center.test', 'services.center.token' => 'center-token']);
         $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
@@ -23,12 +24,18 @@ class DrTariqThursdayTest extends TestCase
 
     public function test_the_offer_shows_on_the_homepage_and_consultations_page(): void
     {
-        $this->get('/')->assertOk()->assertSee('id="dr-tariq"', false)->assertSee('مواعيد محدودة')->assertSee('احجز مكانك هذا الخميس')->assertDontSee('name="topic"', false);
+        $this->get('/')->assertOk()->assertSee('id="dr-tariq"', false)->assertSee('مواعيد محدودة')->assertSee('احجز مكانك يوم الخميس')->assertSee('29 أكتوبر')->assertDontSee('name="topic"', false);
         $this->get('/consultations')->assertOk()->assertSee('id="dr-tariq"', false);
 
         SiteSetting::setMany(['dr_tariq_thursday' => '0']);
         $this->get('/')->assertDontSee('id="dr-tariq"', false);
-        $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('اطلب موعدك مع د. طارق يوم الخميس');
+
+        // Switched on again, but the day has passed: hidden by itself
+        SiteSetting::setMany(['dr_tariq_thursday' => '1']);
+        $this->travelTo('2026-10-30 10:00:00');
+        $this->get('/')->assertDontSee('id="dr-tariq"', false);
+        $this->travelBack();
+        $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('يوم استقبال د. طارق');
     }
 
     public function test_a_request_is_saved_and_sent_to_the_center_system(): void

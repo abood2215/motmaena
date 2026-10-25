@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 /**
- * "Book with Dr. Tariq on Thursday" — the customer only leaves a request (in person or by phone,
+ * "Book with Dr. Tariq" on the day set in Admin → Content — the customer only leaves a request (in person or by phone,
  * name and number). It goes to the center system (motmaina-center.com), where the
  * secretaries see it on the Dr. Tariq appointments page and call back to fix the time and the fee.
  */
@@ -51,8 +51,8 @@ class DrTariqController extends Controller
         $center->pushDoctorRequest($booking);
 
         $message = $this->t(
-            'وصل طلبك ✓ قسم المواعيد رح يتواصل معك على رقمك لتأكيد موعدك يوم الخميس.',
-            'Request received ✓ Our appointments team will call you to confirm your Thursday slot.'
+            'وصل طلبك ✓ قسم المواعيد رح يتواصل معك على رقمك لتأكيد موعدك.',
+            'Request received ✓ Our appointments team will call you to confirm your appointment.'
         );
 
         return $request->expectsJson()
@@ -60,11 +60,19 @@ class DrTariqController extends Controller
             : back()->with('drt_ok', $message);
     }
 
-    /** The coming Thursday (today if it is Thursday), Kuwait time. */
-    public static function nextThursday(): \Carbon\Carbon
+    /** The day Dr. Tariq sees people (Admin → Content), or null when unset or already past (Kuwait time). */
+    public static function day(): ?\Carbon\Carbon
     {
-        $now = now('Asia/Kuwait');
-        return $now->isThursday() ? $now->startOfDay() : $now->next(\Carbon\Carbon::THURSDAY);
+        $value = \App\Models\SiteSetting::current()['dr_tariq_date'] ?? \App\Models\SiteSetting::DEFAULTS['dr_tariq_date'];
+        if (blank($value)) return null;
+
+        try {
+            $day = \Carbon\Carbon::parse($value, 'Asia/Kuwait')->startOfDay();
+        } catch (\Throwable) {
+            return null;
+        }
+
+        return $day->lt(now('Asia/Kuwait')->startOfDay()) ? null : $day;
     }
 
     private function t(string $ar, string $en): string
