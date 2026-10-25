@@ -5,11 +5,6 @@
     $drtLang = $drtAr ? 'ar' : 'en';
     $drtT = fn ($ar, $en) => $drtAr ? $ar : $en;
     $drtNext = \App\Http\Controllers\DrTariqController::nextThursday()->locale($drtLang);
-    $drtTopics = [
-        'life'      => ['🌱', $drtT('ضغوط الحياة، القرارات، وتوازنك النفسي', 'Life pressures, decisions and balance')],
-        'social'    => ['🤝', $drtT('العلاقات الزوجية والأسرية والاجتماعية', 'Marriage, family and social relationships')],
-        'parenting' => ['👨‍👩‍👧', $drtT('تربية الأبناء والتعامل مع سلوكهم', 'Raising children and handling behaviour')],
-    ];
 @endphp
 @if((\App\Models\SiteSetting::current()['dr_tariq_thursday'] ?? '1') === '1')
 <section id="dr-tariq" class="drt py-12 sm:py-16 scroll-mt-20" dir="{{ $drtAr ? 'rtl' : 'ltr' }}">
@@ -69,20 +64,16 @@
                         @csrf
                         <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
 
-                        <p class="drt-step"><b>1</b> {{ $drtT('نوع الاستشارة', 'Type of counselling') }}</p>
-                        <div class="grid sm:grid-cols-3 gap-2.5 mb-5">
-                            @foreach(\App\Http\Controllers\DrTariqController::TOPICS as $key => $label)
-                                <label class="drt-opt">
-                                    <input type="radio" name="topic" value="{{ $key }}" @checked($loop->first)>
-                                    <span class="drt-opt-ico">{{ $drtTopics[$key][0] }}</span>
-                                    <span class="drt-opt-name">{{ $label[$drtLang] }}</span>
-                                    <span class="drt-opt-desc">{{ $drtTopics[$key][1] }}</span>
-                                </label>
-                            @endforeach
+                        <div class="drt-form-head">
+                            <span class="drt-form-ico">📅</span>
+                            <div>
+                                <p class="drt-form-title">{{ $drtT('احجز مكانك هذا الخميس', 'Save your place this Thursday') }}</p>
+                                <p class="drt-form-sub">{{ $drtT('خطوتين بس — وبنتصل فيك نأكد الموعد', 'Two quick steps — we call you to confirm') }}</p>
+                            </div>
                         </div>
 
-                        <p class="drt-step"><b>2</b> {{ $drtT('كيف بتفضّلها؟', 'How would you like it?') }}</p>
-                        <div class="flex flex-wrap gap-2.5 mb-5">
+                        <p class="drt-step"><b>1</b> {{ $drtT('كيف بتفضّل الاستشارة؟', 'How would you like it?') }}</p>
+                        <div class="grid grid-cols-2 gap-2.5 mb-5">
                             @foreach(\App\Http\Controllers\DrTariqController::MODES as $key => $label)
                                 <label class="drt-pill">
                                     <input type="radio" name="mode" value="{{ $key }}" @checked($loop->first)>
@@ -91,7 +82,7 @@
                             @endforeach
                         </div>
 
-                        <p class="drt-step"><b>3</b> {{ $drtT('بياناتك', 'Your details') }}</p>
+                        <p class="drt-step"><b>2</b> {{ $drtT('بياناتك', 'Your details') }}</p>
                         <div class="grid sm:grid-cols-2 gap-2.5 mb-4">
                             <input type="text" name="name" maxlength="120" autocomplete="name" class="drt-input" placeholder="{{ $drtT('الاسم', 'Name') }}">
                             <input type="tel" name="phone" required maxlength="20" dir="ltr" autocomplete="tel" class="drt-input {{ $drtAr ? 'text-right' : '' }}" placeholder="{{ $drtT('رقم الجوال (واتساب) *', 'Phone (WhatsApp) *') }}">
@@ -103,7 +94,7 @@
                         </button>
                         <p class="drt-msg hidden" role="status"></p>
                         <p class="drt-hurry">⚡ {{ $drtT('مواعيد الخميس بتخلص بسرعة — الأولوية لأول المسجّلين', 'Thursday slots go fast — first come, first served') }}</p>
-                        <p class="drt-note">{{ $drtT('بدون دفع الآن — بنتواصل معك لتأكيد الموعد والتفاصيل.', 'Nothing to pay now — we will call you to confirm the time and details.') }}</p>
+                        <p class="drt-note">🔒 {{ $drtT('بدون دفع الآن · بياناتك سرية · بنتواصل معك لتأكيد الموعد', 'Nothing to pay now · confidential · we call you to confirm') }}</p>
                     </form>
 
                     <div class="drt-done hidden">
@@ -141,7 +132,6 @@
     .drt-stats b { display: block; font-size: 18px; font-weight: 900; color: var(--dg); line-height: 1.2; }
     .drt-stats span { display: block; font-size: 11.5px; font-weight: 700; color: rgba(255,255,255,.75); }
     @media (max-width: 479px) { .drt-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .drt-stats > div:nth-child(3) { border-inline-start: 0; } .drt-stats > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.12); } }
-    .drt-hurry { margin-top: 12px; text-align: center; font-size: 13px; font-weight: 900; color: #fde68a; }
 
     .drt-photo-wrap { position: relative; width: min(100%, 380px); }
     .drt-photo { aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--dg) 75%, transparent); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); background: var(--dwd); }
@@ -160,33 +150,35 @@
     .drt-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); }
     .drt-chip b { color: var(--dgl); }
 
-    .drt-form { background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.12); border-radius: 22px; padding: 18px; }
-    .drt-step { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 900; margin-bottom: 10px; }
-    .drt-step b { width: 24px; height: 24px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: #3b1d00; background: var(--dg); }
-    .drt-opt { position: relative; display: block; cursor: pointer; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.15); transition: border-color .15s, background .15s, transform .15s; }
-    .drt-opt:hover { transform: translateY(-2px); border-color: rgba(234,216,177,.6); }
-    .drt-opt input, .drt-pill input { position: absolute; opacity: 0; pointer-events: none; }
-    .drt-opt:has(input:checked) { background: rgba(234,216,177,.16); border-color: var(--dg); box-shadow: 0 0 0 3px rgba(201,163,92,.25); }
-    .drt-opt-ico { font-size: 22px; display: block; margin-bottom: 4px; }
-    .drt-opt-name { display: block; font-weight: 900; font-size: 15px; }
-    .drt-opt-desc { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.72); margin-top: 2px; line-height: 1.6; }
-    .drt-pill { position: relative; cursor: pointer; }
-    .drt-pill span { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.15); transition: border-color .15s, background .15s; }
-    .drt-pill input:checked + span { background: rgba(234,216,177,.16); border-color: var(--dg); }
-    .drt-opt:has(input:focus-visible), .drt-pill input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
-    .drt-input { width: 100%; border-radius: 14px; padding: 13px 14px; font-size: 15px; font-weight: 700; color: #fff; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2); outline: none; }
-    .drt-input::placeholder { color: rgba(255,255,255,.6); }
-    .drt-input:focus { border-color: var(--dg); background: rgba(255,255,255,.14); }
-    .drt-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 900; font-size: 17px; padding: 15px 22px; border-radius: 16px; color: var(--dwd); background: linear-gradient(135deg, #f6e7c4, var(--dg)); box-shadow: 0 14px 30px -14px var(--dg); transition: transform .15s, filter .15s; animation: drt-pulse 2.4s ease-in-out infinite; }
-    @keyframes drt-pulse { 0%, 100% { box-shadow: 0 14px 30px -14px var(--dg), 0 0 0 0 rgba(234,216,177,.45); } 50% { box-shadow: 0 14px 30px -14px var(--dg), 0 0 0 10px rgba(234,216,177,0); } }
-    .drt-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .drt-form { position: relative; color: #3b2418; background: linear-gradient(160deg, #fbf5ea 0%, #f3e6d0 100%); border: 1px solid #e6d3b3; border-radius: 24px; padding: 20px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.7); }
+    .drt-form::before { content: ''; position: absolute; inset: 7px; border: 1px dashed rgba(166,124,53,.45); border-radius: 18px; pointer-events: none; }
+    .drt-form > * { position: relative; }
+    .drt-form-head { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid #e6d3b3; }
+    .drt-form-ico { width: 46px; height: 46px; flex-shrink: 0; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, var(--dw), var(--dwd)); box-shadow: 0 10px 20px -10px var(--dwd); }
+    .drt-form-title { font-size: 18px; font-weight: 900; color: var(--dwd); line-height: 1.3; }
+    .drt-form-sub { font-size: 13px; font-weight: 700; color: #8a6a4a; }
+    .drt-step { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 900; color: #4a2c1d; margin-bottom: 10px; }
+    .drt-step b { width: 24px; height: 24px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; background: var(--dw); }
+    .drt-pill { position: relative; cursor: pointer; display: block; }
+    .drt-pill input { position: absolute; opacity: 0; pointer-events: none; }
+    .drt-pill span { display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 900; font-size: 15px; padding: 13px 12px; border-radius: 14px; color: #4a2c1d; background: #fff; border: 1.5px solid #e6d3b3; transition: border-color .15s, background .15s, box-shadow .15s, color .15s; }
+    .drt-pill span:hover { border-color: var(--dg); }
+    .drt-pill input:checked + span { color: var(--dwd); background: #fff7e8; border-color: var(--dw); box-shadow: 0 0 0 3px rgba(109,27,43,.12); }
+    .drt-pill input:focus-visible + span { outline: 2px solid var(--dw); outline-offset: 2px; }
+    .drt-input { width: 100%; border-radius: 14px; padding: 13px 14px; font-size: 15px; font-weight: 700; color: #2a1a12; background: #fff; border: 1.5px solid #e6d3b3; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .drt-input::placeholder { color: #a8927a; }
+    .drt-input:focus { border-color: var(--dw); box-shadow: 0 0 0 4px rgba(109,27,43,.1); }
+    .drt-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 900; font-size: 17px; padding: 16px 22px; border-radius: 16px; color: #fff; background: linear-gradient(135deg, #8a2a3b, var(--dw) 55%, var(--dwd)); box-shadow: 0 16px 30px -14px var(--dwd); transition: transform .15s, filter .15s; animation: drt-pulse 2.4s ease-in-out infinite; }
+    @keyframes drt-pulse { 0%, 100% { box-shadow: 0 16px 30px -14px var(--dwd), 0 0 0 0 rgba(109,27,43,.35); } 50% { box-shadow: 0 16px 30px -14px var(--dwd), 0 0 0 10px rgba(109,27,43,0); } }
+    .drt-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
     .drt-btn:disabled { opacity: .6; transform: none; }
-    .drt-msg { margin-top: 10px; font-size: 14px; font-weight: 800; color: #fecaca; }
-    .drt-note { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: rgba(255,255,255,.7); text-align: center; }
-    .drt-done { text-align: center; padding: 28px 18px; border-radius: 22px; background: rgba(0,0,0,.18); border: 1px solid rgba(234,216,177,.35); }
-    .drt-done-ico { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--dwd); background: linear-gradient(135deg, #f6e7c4, var(--dg)); }
-    .drt-done-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
-    .drt-done-text { color: rgba(255,255,255,.85); font-weight: 600; line-height: 1.9; }
+    .drt-msg { margin-top: 10px; font-size: 14px; font-weight: 800; color: #b91c1c; }
+    .drt-hurry { margin-top: 12px; text-align: center; font-size: 13px; font-weight: 900; color: #a5541a; }
+    .drt-note { margin-top: 6px; font-size: 12.5px; font-weight: 700; color: #8a6a4a; text-align: center; }
+    .drt-done { text-align: center; padding: 30px 18px; border-radius: 24px; color: #3b2418; background: linear-gradient(160deg, #fbf5ea 0%, #f3e6d0 100%); border: 1px solid #e6d3b3; }
+    .drt-done-ico { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: #fff; background: linear-gradient(135deg, var(--dw), var(--dwd)); }
+    .drt-done-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; color: var(--dwd); }
+    .drt-done-text { color: #5b4030; font-weight: 600; line-height: 1.9; }
     @media (prefers-reduced-motion: reduce) { .drt-limited, .drt-btn, .drt-live::after { animation: none; } }
 </style>
 <script>

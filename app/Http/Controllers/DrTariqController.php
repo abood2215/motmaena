@@ -8,17 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 /**
- * "Book with Dr. Tariq on Thursday" — the customer only leaves a request (topic, in person or
- * by phone, name and number). It goes to the center system (motmaina-center.com), where the
+ * "Book with Dr. Tariq on Thursday" — the customer only leaves a request (in person or by phone,
+ * name and number). It goes to the center system (motmaina-center.com), where the
  * secretaries see it on the Dr. Tariq appointments page and call back to fix the time and the fee.
  */
 class DrTariqController extends Controller
 {
-    public const TOPICS = [
-        'life'      => ['ar' => 'استشارة حياتية', 'en' => 'Life counselling'],
-        'social'    => ['ar' => 'استشارة اجتماعية', 'en' => 'Social counselling'],
-        'parenting' => ['ar' => 'استشارة تربوية', 'en' => 'Parenting counselling'],
-    ];
+    /** The customer doesn't pick a type — the secretaries ask on the call. */
+    public const TOPIC = 'استشارة مع د. طارق (حياتية / اجتماعية / تربوية)';
 
     public const MODES = [
         'in_person' => ['ar' => 'حضوري بالمركز', 'en' => 'In person'],
@@ -30,14 +27,12 @@ class DrTariqController extends Controller
         $data = $request->validate([
             'name'    => 'nullable|string|max:120',
             'phone'   => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,16}$/'],
-            'topic'   => ['required', Rule::in(array_keys(self::TOPICS))],
             'mode'    => ['required', Rule::in(array_keys(self::MODES))],
             'notes'   => 'nullable|string|max:300',
             'website' => 'nullable|max:0', // honeypot
         ], [
             'phone.required' => $this->t('اكتب رقم جوالك عشان نتواصل معك', 'Please enter your phone number'),
             'phone.regex'    => $this->t('رقم الجوال غير صحيح', 'Invalid phone number'),
-            'topic.required' => $this->t('اختار نوع الاستشارة', 'Choose the type of counselling'),
             'mode.required'  => $this->t('اختار حضوري أو هاتفي', 'Choose in person or by phone'),
         ]);
 
@@ -48,7 +43,7 @@ class DrTariqController extends Controller
             'kind'         => 'dr_tariq',
             'name'         => filled($data['name'] ?? null) ? trim($data['name']) : null,
             'phone'        => $digits,
-            'problem_type' => self::TOPICS[$data['topic']]['ar'],
+            'problem_type' => self::TOPIC,
             'mode'         => self::MODES[$data['mode']]['ar'],
             'notes'        => $data['notes'] ?? null,
         ]);
