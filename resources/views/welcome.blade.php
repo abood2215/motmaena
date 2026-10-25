@@ -245,6 +245,9 @@
     </div>
 </section>
 
+{{-- ═══════════════ THURSDAY WITH DR. TARIQ — right under the course (request → center system) ═══════════════ --}}
+@include('partials.dr-tariq-thursday')
+
 {{-- ═══════════════ GIFT OFFER ═══════════════ --}}
 @if($canBook && $gift > 0)
 <section id="gift" class="py-14 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20" style="--mh-bg: #fff">
@@ -485,9 +488,6 @@
         </div>
     </div>
 </section>
-
-{{-- ═══════════════ THURSDAY WITH DR. TARIQ (request → center system) ═══════════════ --}}
-@include('partials.dr-tariq-thursday')
 
 {{-- ═══════════════ THE CENTER ═══════════════ --}}
 <section class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c]">

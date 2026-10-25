@@ -12,7 +12,7 @@
 </div>
 @else
 <div class="countdown flex items-center gap-2 {{ $class ?? '' }}" data-target="{{ $startsAt }}">
-    <span class="hidden sm:inline text-xs font-black opacity-90 {{ !empty($dark) ? 'text-white' : 'text-gray-700 dark:text-gray-200' }}">⏳ {{ $isArC ? 'باقي على الدورة' : 'Starts in' }}</span>
+    <span class="hidden sm:inline text-xs font-black opacity-90 {{ !empty($dark) ? 'text-white' : 'text-gray-700 dark:text-gray-200' }}">⏳ {{ $countdownLabel ?? ($isArC ? 'باقي على الدورة' : 'Starts in') }}</span>
     @foreach([['d', $isArC ? 'يوم' : 'days'], ['h', $isArC ? 'ساعة' : 'hrs'], ['m', $isArC ? 'دقيقة' : 'min'], ['s', $isArC ? 'ثانية' : 'sec']] as [$unit, $label])
     <div class="countdown-box text-center min-w-[54px] rounded-xl px-2 py-1.5 text-[#3b1d00]">
         <div class="font-black text-xl leading-none tabular-nums" data-unit="{{ $unit }}">--</div>

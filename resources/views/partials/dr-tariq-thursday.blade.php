@@ -12,12 +12,28 @@
     ];
 @endphp
 @if((\App\Models\SiteSetting::current()['dr_tariq_thursday'] ?? '1') === '1')
-<section id="dr-tariq" class="drt py-16 sm:py-20 scroll-mt-20" dir="{{ $drtAr ? 'rtl' : 'ltr' }}">
+<section id="dr-tariq" class="drt py-12 sm:py-16 scroll-mt-20" dir="{{ $drtAr ? 'rtl' : 'ltr' }}">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="drt-card relative overflow-hidden">
             <div class="drt-dots" aria-hidden="true"></div>
+            <div class="drt-glow" aria-hidden="true"></div>
 
-            <div class="relative grid lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 lg:p-12">
+            {{-- This week's chance: date + countdown to Thursday --}}
+            <div class="drt-urgent relative">
+                <div class="flex items-center gap-2.5 font-black">
+                    <span class="drt-live"><i></i></span>
+                    @if($drtNext->isToday())
+                        <span>🔥 {{ $drtT('اليوم الخميس! الدكتور طارق يستقبل — اطلب موعدك الآن', 'It\'s Thursday! Dr. Tariq is seeing people — request now') }}</span>
+                    @else
+                        <span>🔥 {{ $drtT('فرصة هذا الأسبوع: الخميس', 'This week\'s chance: Thursday') }} <b class="drt-urgent-date">{{ $drtNext->translatedFormat('j F') }}</b></span>
+                    @endif
+                </div>
+                @unless($drtNext->isToday())
+                    @include('partials.countdown', ['startsAt' => $drtNext->toDateString() . 'T00:00:00+03:00', 'dark' => true, 'countdownLabel' => $drtT('باقي على الخميس', 'Until Thursday')])
+                @endunless
+            </div>
+
+            <div class="relative grid lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 lg:p-12 pt-8 sm:pt-10">
 
                 {{-- The doctor --}}
                 <div class="lg:col-span-5 flex justify-center">
@@ -35,17 +51,18 @@
 
                 {{-- Offer + request form --}}
                 <div class="lg:col-span-7">
-                    <p class="drt-eyebrow">{{ $drtT('مواعيد خاصة مع الدكتور', 'Private appointments with the doctor') }}</p>
-                    <h2 class="drt-title">{{ $drtT('استشارتك مع', 'Your consultation with') }} <span>{{ config('doctor.name.' . $drtLang) }}</span></h2>
+                    <p class="drt-eyebrow">{{ $drtT('استشارة شخصية مع الدكتور', 'A personal consultation with the doctor') }}</p>
+                    <h2 class="drt-title">{{ $drtT('قابل', 'Meet') }} <span>{{ config('doctor.name.' . $drtLang) }}</span> {{ $drtT('شخصياً', 'in person') }}</h2>
                     <p class="drt-sub">{{ config('doctor.title.' . $drtLang) }}</p>
                     <p class="drt-text">
-                        {{ $drtT('يستقبل الدكتور طارق عدداً محدوداً من الاستشارات كل يوم خميس. اطلب موعدك الآن، وقسم المواعيد بيتواصل معك لتأكيد الوقت.', 'Dr. Tariq sees a limited number of people every Thursday. Request your appointment now and our team will call you to confirm the time.') }}
+                        {{ $drtT('كل خميس يخصّص الدكتور طارق عدداً محدوداً جداً من المواعيد للاستشارات الحياتية والاجتماعية والتربوية. اطلب موعدك الآن — الأولوية لأول المسجّلين.', 'Every Thursday Dr. Tariq keeps a very limited number of appointments for life, social and parenting counselling. Request yours now — first come, first served.') }}
                     </p>
 
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="drt-chip">📅 {{ $drtT('الخميس القادم:', 'Next Thursday:') }} <b>{{ $drtNext->translatedFormat('j F') }}</b></span>
-                        <span class="drt-chip">🏢 {{ $drtT('حضوري', 'In person') }} · 📞 {{ $drtT('هاتفي', 'By phone') }}</span>
-                        <span class="drt-chip">🔒 {{ $drtT('سرية تامة', 'Confidential') }}</span>
+                    <div class="drt-stats mb-6">
+                        <div><b>+30</b><span>{{ $drtT('سنة خبرة', 'years') }}</span></div>
+                        <div><b>+100K</b><span>{{ $drtT('مستفيد', 'helped') }}</span></div>
+                        <div><b>🔒</b><span>{{ $drtT('سرية تامة', 'confidential') }}</span></div>
+                        <div><b>🏢 · 📞</b><span>{{ $drtT('حضوري أو هاتفي', 'in person / phone') }}</span></div>
                     </div>
 
                     <form class="drt-form" method="POST" action="{{ route('dr-tariq.request') }}" novalidate>
@@ -85,6 +102,7 @@
                             <span aria-hidden="true">{{ $drtAr ? '←' : '→' }}</span>
                         </button>
                         <p class="drt-msg hidden" role="status"></p>
+                        <p class="drt-hurry">⚡ {{ $drtT('مواعيد الخميس بتخلص بسرعة — الأولوية لأول المسجّلين', 'Thursday slots go fast — first come, first served') }}</p>
                         <p class="drt-note">{{ $drtT('بدون دفع الآن — بنتواصل معك لتأكيد الموعد والتفاصيل.', 'Nothing to pay now — we will call you to confirm the time and details.') }}</p>
                     </form>
 
@@ -106,6 +124,24 @@
     .drt-card { border-radius: 2rem; color: #fff; background: radial-gradient(120% 120% at 100% 0%, #8a2a3b, var(--dw) 45%, var(--dwd)); box-shadow: 0 40px 80px -40px var(--dwd); }
     .drt-card::before { content: ''; position: absolute; inset: 12px; border: 1.5px solid color-mix(in srgb, var(--dg) 45%, transparent); border-radius: 1.6rem; pointer-events: none; }
     .drt-dots { position: absolute; inset: 0; opacity: .07; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px; pointer-events: none; }
+    .drt-glow { position: absolute; width: 520px; height: 520px; inset-inline-start: -160px; top: 40px; border-radius: 999px; background: radial-gradient(circle, rgba(234,216,177,.22), transparent 65%); pointer-events: none; }
+
+    /* This week's chance strip */
+    .drt-urgent { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 14px 24px; margin: 12px 12px 0; border-radius: 1.4rem 1.4rem 14px 14px; background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,.12)); border-bottom: 1px solid rgba(234,216,177,.25); font-size: 15px; }
+    .drt-urgent-date { color: var(--dgl); }
+    .drt-live { position: relative; width: 12px; height: 12px; flex-shrink: 0; }
+    .drt-live i, .drt-live::after { position: absolute; inset: 0; border-radius: 999px; background: #f87171; }
+    .drt-live::after { content: ''; animation: drt-ping 1.6s ease-out infinite; }
+    @keyframes drt-ping { from { transform: scale(1); opacity: .8; } to { transform: scale(2.6); opacity: 0; } }
+
+    /* Trust numbers */
+    .drt-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid rgba(255,255,255,.16); border-radius: 16px; background: rgba(255,255,255,.06); overflow: hidden; }
+    .drt-stats > div { padding: 10px 8px; text-align: center; }
+    .drt-stats > div + div { border-inline-start: 1px solid rgba(255,255,255,.12); }
+    .drt-stats b { display: block; font-size: 18px; font-weight: 900; color: var(--dg); line-height: 1.2; }
+    .drt-stats span { display: block; font-size: 11.5px; font-weight: 700; color: rgba(255,255,255,.75); }
+    @media (max-width: 479px) { .drt-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .drt-stats > div:nth-child(3) { border-inline-start: 0; } .drt-stats > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.12); } }
+    .drt-hurry { margin-top: 12px; text-align: center; font-size: 13px; font-weight: 900; color: #fde68a; }
 
     .drt-photo-wrap { position: relative; width: min(100%, 320px); }
     .drt-photo { aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; border: 2px solid color-mix(in srgb, var(--dg) 75%, transparent); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); background: var(--dwd); }
@@ -141,7 +177,8 @@
     .drt-input { width: 100%; border-radius: 14px; padding: 13px 14px; font-size: 15px; font-weight: 700; color: #fff; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2); outline: none; }
     .drt-input::placeholder { color: rgba(255,255,255,.6); }
     .drt-input:focus { border-color: var(--dg); background: rgba(255,255,255,.14); }
-    .drt-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 900; font-size: 17px; padding: 15px 22px; border-radius: 16px; color: var(--dwd); background: linear-gradient(135deg, #f6e7c4, var(--dg)); box-shadow: 0 14px 30px -14px var(--dg); transition: transform .15s, filter .15s; }
+    .drt-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 900; font-size: 17px; padding: 15px 22px; border-radius: 16px; color: var(--dwd); background: linear-gradient(135deg, #f6e7c4, var(--dg)); box-shadow: 0 14px 30px -14px var(--dg); transition: transform .15s, filter .15s; animation: drt-pulse 2.4s ease-in-out infinite; }
+    @keyframes drt-pulse { 0%, 100% { box-shadow: 0 14px 30px -14px var(--dg), 0 0 0 0 rgba(234,216,177,.45); } 50% { box-shadow: 0 14px 30px -14px var(--dg), 0 0 0 10px rgba(234,216,177,0); } }
     .drt-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
     .drt-btn:disabled { opacity: .6; transform: none; }
     .drt-msg { margin-top: 10px; font-size: 14px; font-weight: 800; color: #fecaca; }
@@ -150,7 +187,7 @@
     .drt-done-ico { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--dwd); background: linear-gradient(135deg, #f6e7c4, var(--dg)); }
     .drt-done-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
     .drt-done-text { color: rgba(255,255,255,.85); font-weight: 600; line-height: 1.9; }
-    @media (prefers-reduced-motion: reduce) { .drt-limited { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .drt-limited, .drt-btn, .drt-live::after { animation: none; } }
 </style>
 <script>
 document.addEventListener('submit', function (e) {
