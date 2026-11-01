@@ -74,12 +74,12 @@ class SiteSetting extends Model
         Cache::forget(self::CACHE_KEY);
     }
 
-    /** "96556551112" -> "+965 5655 1112" */
+    /** "96556551112" -> "+965 56551112" */
     public static function pretty(string $digits): string
     {
         $digits = preg_replace('/\D/', '', $digits);
         if (str_starts_with($digits, '965') && strlen($digits) === 11) {
-            return '+965 ' . substr($digits, 3, 4) . ' ' . substr($digits, 7);
+            return '+965 ' . substr($digits, 3);
         }
         return '+' . $digits;
     }
