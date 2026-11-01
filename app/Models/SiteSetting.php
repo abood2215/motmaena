@@ -24,7 +24,7 @@ class SiteSetting extends Model
         'announcement_ar' => '',
         'announcement_en' => '',
         'dr_tariq_thursday' => '1', // "Appointments with Dr. Tariq" request box on the homepage and consultations page
-        'dr_tariq_date'   => '2026-10-29', // the day he sees people; the box hides itself once it has passed
+        'dr_tariq_date'   => '', // optional: one day he sees people (the box shows it and hides after it); empty = open booking
         'psych_soon'      => '1', // homepage "psychological center — coming soon" ad; 0 hides it
         'gift_code_kwd'   => '10', // gift code (fixed KWD) for paying without a code; 0 turns it off
     ];

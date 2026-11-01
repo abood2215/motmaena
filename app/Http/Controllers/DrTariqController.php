@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 /**
- * "Book with Dr. Tariq" on the day set in Admin → Content — the customer only leaves a request (in person or by phone,
+ * "Book with Dr. Tariq" (open booking, or one day set in Admin → Content) — the customer only leaves a request (in person or by phone,
  * name and number). It goes to the center system (motmaina-center.com), where the
  * secretaries see it on the Dr. Tariq appointments page and call back to fix the time and the fee.
  */
 class DrTariqController extends Controller
 {
     /** The customer doesn't pick a type — the secretaries ask on the call. */
-    public const TOPIC = 'استشارة مع د. طارق (حياتية / اجتماعية / تربوية)';
+    public const TOPIC = 'استشارة مع د. طارق (زوجية / تربوية / اجتماعية / حياتية)';
 
     public const MODES = [
         'in_person' => ['ar' => 'حضوري بالمركز', 'en' => 'In person'],
@@ -60,7 +60,7 @@ class DrTariqController extends Controller
             : back()->with('drt_ok', $message);
     }
 
-    /** The day Dr. Tariq sees people (Admin → Content), or null when unset or already past (Kuwait time). */
+    /** The day set in Admin → Content, or null when none is set (open booking) or it has already passed (Kuwait time). */
     public static function day(): ?\Carbon\Carbon
     {
         $value = \App\Models\SiteSetting::current()['dr_tariq_date'] ?? \App\Models\SiteSetting::DEFAULTS['dr_tariq_date'];

@@ -44,7 +44,8 @@ class GrowthFeaturesTest extends TestCase
 
     public function test_seats_run_out_and_registration_closes(): void
     {
-        CourseOffer::where('slug', 'anger-management')->update(['seats' => 2]);
+        CourseOffer::query()->update(['is_featured' => false]);
+        CourseOffer::where('slug', 'anger-management')->update(['seats' => 2, 'is_featured' => true]);
         $this->paid('51111111');
 
         $this->get('/')->assertSee('متبقي 1 مقعد');

@@ -47,7 +47,7 @@ class ContentController extends Controller
         }
 
         // Text fields may be cleared; referral numbers left out of the form keep their current value
-        $clearable = ['address_en', 'announcement_ar', 'announcement_en'];
+        $clearable = ['address_en', 'announcement_ar', 'announcement_en', 'dr_tariq_date'];
         SiteSetting::setMany(array_filter($data, fn ($v, $k) => $v !== null || in_array($k, $clearable, true), ARRAY_FILTER_USE_BOTH));
 
         return back()->with('ok', 'تم حفظ معلومات الموقع');

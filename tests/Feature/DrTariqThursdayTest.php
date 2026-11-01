@@ -22,20 +22,35 @@ class DrTariqThursdayTest extends TestCase
         $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
     }
 
-    public function test_the_offer_shows_on_the_homepage_and_consultations_page(): void
+    public function test_open_booking_shows_on_the_homepage_and_consultations_page(): void
     {
-        $this->get('/')->assertOk()->assertSee('id="dr-tariq"', false)->assertSee('مواعيد محدودة')->assertSee('احجز مكانك يوم الخميس')->assertSee('29 أكتوبر')->assertDontSee('name="topic"', false);
+        // Default: open booking, in person or by phone, in the four areas — no day, no countdown
+        $this->get('/')->assertOk()->assertSee('id="dr-tariq"', false)
+            ->assertSee('احجز استشارتك مع')->assertSee('اطلب موعد استشارتك')
+            ->assertSee('الزوجية')->assertSee('التربوية')->assertSee('الاجتماعية')->assertSee('الحياتية')
+            ->assertSee('المواعيد مع الدكتور طارق محدودة')
+            ->assertDontSee('باقي على الموعد')->assertDontSee('name="topic"', false)->assertDontSee('بدون دفع');
         $this->get('/consultations')->assertOk()->assertSee('id="dr-tariq"', false);
 
         SiteSetting::setMany(['dr_tariq_thursday' => '0']);
         $this->get('/')->assertDontSee('id="dr-tariq"', false);
+        $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('يوم استقبال د. طارق');
+    }
 
-        // Switched on again, but the day has passed: hidden by itself
-        SiteSetting::setMany(['dr_tariq_thursday' => '1']);
+    public function test_a_set_day_is_shown_with_a_countdown_and_hides_after_it(): void
+    {
+        SiteSetting::setMany(['dr_tariq_date' => '2026-10-29']);
+        $this->get('/')->assertSee('احجز مكانك يوم الخميس')->assertSee('29 أكتوبر')->assertSee('باقي على الموعد');
+
         $this->travelTo('2026-10-30 10:00:00');
         $this->get('/')->assertDontSee('id="dr-tariq"', false);
-        $this->travelBack();
-        $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('يوم استقبال د. طارق');
+
+        // Clearing the day in the admin goes back to open booking
+        $this->withSession(['admin_auth' => true])->post('/admin/content/settings', [
+            'whatsapp' => '96555665161', 'phone' => '96599880140', 'address_ar' => 'الكويت', 'gift_code_kwd' => '10',
+            'dr_tariq_thursday' => '1', 'dr_tariq_date' => '', 'psych_soon' => '1',
+        ])->assertSessionHas('ok');
+        $this->get('/')->assertSee('id="dr-tariq"', false)->assertSee('اطلب موعد استشارتك');
     }
 
     public function test_a_request_is_saved_and_sent_to_the_center_system(): void
