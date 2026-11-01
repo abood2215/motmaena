@@ -106,7 +106,7 @@ class GrowthFeaturesTest extends TestCase
         $this->withSession(['admin_auth' => true])->get('/admin')->assertSee('أكواد الهدايا');
         $this->get('/admin')->assertSee('مين استخدم الأكواد')->assertSee('Friend')->assertSee('52222222');
         $this->get('/admin/registrations')->assertSee($gift->code)->assertSee('✓ مستخدم')->assertSee('استخدمه: <strong>Friend</strong>', false);
-        $this->get('/admin/discount-codes')->assertDontSee($gift->code);
+        $this->get('/admin/discount-codes')->assertSee($gift->code)->assertSee('✓ انستخدم')->assertSee('Friend');
     }
 
     public function test_a_single_use_code_is_held_while_someone_is_paying_with_it(): void

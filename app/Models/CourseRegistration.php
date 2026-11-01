@@ -108,6 +108,9 @@ class CourseRegistration extends Model
         }
     }
 
+    /** Gift code characters: no 0/O, 1/I/L look-alikes. */
+    private const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
     public static function giftAmount(): float
     {
         return (float) (SiteSetting::current()['gift_code_kwd'] ?? 0);
@@ -141,7 +144,7 @@ class CourseRegistration extends Model
         if (!$this->rewardEligible()) return null;
 
         do {
-            $code = 'GIFT' . strtoupper(Str::random(4));
+            $code = 'GIFT' . collect(range(1, 4))->map(fn () => self::CODE_CHARS[random_int(0, strlen(self::CODE_CHARS) - 1)])->implode('');
         } while (DiscountCode::where('code', $code)->exists());
 
         return DiscountCode::create([

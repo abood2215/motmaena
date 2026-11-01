@@ -135,9 +135,28 @@ class CourseAdminController extends Controller
 
     public function codes()
     {
+        $gifts = DiscountCode::whereNotNull('owner_registration_id')->with(['owner', 'paidUses'])->latest()->get();
+
+        // Unpaid checkouts that currently hold a gift code (see DiscountCode::HOLD_MINUTES)
+        $holds = CourseRegistration::whereIn('discount_code_id', $gifts->pluck('id'))
+            ->where('status', 'pending')
+            ->where('created_at', '>=', now()->subMinutes(DiscountCode::HOLD_MINUTES))
+            ->latest()->get()->unique('discount_code_id')->keyBy('discount_code_id');
+
+        $used = $gifts->filter(fn ($g) => $g->paidUses->isNotEmpty());
+
         return view('admin.discount-codes', [
-            'codes'  => DiscountCode::whereNull('owner_registration_id')->latest()->get(), // referral codes live on the dashboard
-            'offers' => CourseOffer::orderByDesc('date')->get()->mapWithKeys(fn ($o) => [$o->slug => $o->toOfferArray()])->all(),
+            'codes'     => DiscountCode::whereNull('owner_registration_id')->latest()->get(),
+            'offers'    => CourseOffer::orderByDesc('date')->get()->mapWithKeys(fn ($o) => [$o->slug => $o->toOfferArray()])->all(),
+            'titles'    => CourseOffer::pluck('title_ar', 'slug'),
+            'gifts'     => $gifts,
+            'holds'     => $holds,
+            'giftStats' => [
+                'issued'    => $gifts->count(),
+                'used'      => $used->count(),
+                'held'      => $gifts->filter(fn ($g) => $g->paidUses->isEmpty() && $g->is_active && $holds->has($g->id))->count(),
+                'available' => $gifts->filter(fn ($g) => $g->paidUses->isEmpty() && $g->is_active && !$holds->has($g->id))->count(),
+            ],
         ]);
     }
 
