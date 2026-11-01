@@ -17,8 +17,8 @@ class SiteSetting extends Model
 
     /** Defaults used before the settings table exists or when a value is empty. */
     public const DEFAULTS = [
-        'whatsapp'        => '96555665161',
-        'phone'           => '96599880140',
+        'whatsapp'        => '96556551112',
+        'phone'           => '96556551112',
         'address_ar'      => 'الكويت - برج أحمد - بجوار المستشفى الأميري',
         'address_en'      => 'Kuwait - Burj Ahmed - near Al-Amiri Hospital',
         'announcement_ar' => '',
@@ -74,7 +74,7 @@ class SiteSetting extends Model
         Cache::forget(self::CACHE_KEY);
     }
 
-    /** "96555665161" -> "+965 5566 5161" */
+    /** "96556551112" -> "+965 5655 1112" */
     public static function pretty(string $digits): string
     {
         $digits = preg_replace('/\D/', '', $digits);

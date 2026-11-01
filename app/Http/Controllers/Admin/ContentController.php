@@ -34,8 +34,8 @@ class ContentController extends Controller
             'gift_code_kwd'   => 'nullable|numeric|min:0|max:1000',
             'dr_tariq_date'   => 'nullable|date_format:Y-m-d',
         ], [
-            'whatsapp.digits_between' => 'رقم الواتساب غير صحيح — اكتبه مع مفتاح الدولة مثل 96555665161',
-            'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96599880140',
+            'whatsapp.digits_between' => 'رقم الواتساب غير صحيح — اكتبه مع مفتاح الدولة مثل 96556551112',
+            'phone.digits_between'    => 'رقم الهاتف غير صحيح — اكتبه مع مفتاح الدولة مثل 96556551112',
         ]);
 
         if ($request->has('dr_tariq_thursday')) $data['dr_tariq_thursday'] = $request->boolean('dr_tariq_thursday') ? '1' : '0';
