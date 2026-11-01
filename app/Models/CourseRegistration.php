@@ -18,6 +18,7 @@ class CourseRegistration extends Model
         'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'followed_up_at',
         'review_token', 'review_requested_at',
         'center_patient_id', 'center_rec_id', 'center_synced_at', 'center_error',
+        'bundle_key', 'bundle_group',
     ];
 
     protected $casts = [
@@ -63,6 +64,25 @@ class CourseRegistration extends Model
             return $this->utm_source . ($this->utm_medium ? ' / ' . $this->utm_medium : '');
         }
         return $this->referrer ?: 'مباشر';
+    }
+
+    /** The registrations paid together with this one (a bundle), or just this one. */
+    public function group(): \Illuminate\Support\Collection
+    {
+        return $this->bundle_group
+            ? static::where('bundle_group', $this->bundle_group)->orderBy('id')->get()
+            : collect([$this]);
+    }
+
+    /** What the customer pays in one go: the bundle total, or this registration's price. */
+    public function amountDue(): float
+    {
+        return round((float) $this->group()->sum('final_amount'), 3);
+    }
+
+    public function bundle(): ?CourseBundle
+    {
+        return $this->bundle_key ? CourseBundle::where('slug', $this->bundle_key)->first() : null;
     }
 
     public function offer(): ?array
@@ -125,7 +145,7 @@ class CourseRegistration extends Model
     /** Paid without any discount code while gift codes are switched on. */
     public function rewardEligible(): bool
     {
-        return $this->status === 'paid' && !$this->discount_code_id && self::giftAmount() > 0;
+        return $this->status === 'paid' && !$this->discount_code_id && !$this->bundle_key && self::giftAmount() > 0;
     }
 
     /** The gift code this registration earned. */
@@ -166,7 +186,8 @@ class CourseRegistration extends Model
             'الاسم: ' . $this->name,
             'الهاتف: ' . $this->phone,
             'الإيميل: ' . ($this->email ?: '—'),
-            'المبلغ: ' . number_format((float) $this->final_amount, 3) . ' د.ك' . ($this->discount_code ? ' (كود: ' . $this->discount_code . ')' : ''),
+            'المبلغ: ' . number_format((float) $this->final_amount, 3) . ' د.ك' . ($this->discount_code ? ' (كود: ' . $this->discount_code . ')' : '')
+                . ($this->bundle_key ? ' — ضمن ' . ($this->bundle()?->title_ar ?? 'عرض') . ' (المجموع ' . number_format($this->amountDue(), 3) . ' د.ك)' : ''),
             'طريقة الدفع: ' . ($this->payment_method ?: '—'),
             '',
             route('admin.registrations'),

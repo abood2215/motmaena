@@ -59,4 +59,29 @@
     @endif
   </div>
 </div>
+
+{{-- ═══ Offers (several courses at one price) ═══ --}}
+@if($bundles->isNotEmpty())
+<div class="card" style="margin-top:20px">
+  <h3>🎁 العروض <span class="small">(دفعة وحدة لأكثر من دورة · بينعمل تسجيل لكل دورة بحصّتها من السعر · ما بيتجمّع مع أكواد الخصم وما بيعطي كود هدية)</span></h3>
+  @foreach($bundles as $b)
+    @php $open = $b->isOpen(); @endphp
+    <form method="POST" action="{{ route('admin.bundles.update', $b) }}" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+      @csrf @method('PUT')
+      <div style="flex:1;min-width:220px">
+        <strong>{{ $b->title_ar }}</strong>
+        <div class="small">{{ $b->courses()->pluck('title_ar')->implode(' + ') }} · منفصلة {{ \App\Models\CourseBundle::fmt($b->fullPrice()) }} د.ك</div>
+        <div class="small ltr">{{ route('bundle.register', $b->slug) }}</div>
+        <div class="small">{{ $bundleSales[$b->slug] ?? 0 }} عملية شراء مدفوعة</div>
+      </div>
+      <label class="small">السعر (د.ك)
+        <input name="price" type="number" step="0.5" min="1" value="{{ \App\Models\CourseBundle::fmt((float) $b->price) }}" style="width:90px">
+      </label>
+      <label class="check"><input type="hidden" name="is_active" value="0"><input type="checkbox" name="is_active" value="1" @checked($b->is_active)> مفعّل</label>
+      <span class="tag {{ $open ? 'on' : 'off' }}">{{ $open ? 'ظاهر بالموقع' : ($b->is_active ? 'مقفل (دورة انتهت أو اكتملت)' : 'موقوف') }}</span>
+      <button class="btn btn-primary btn-sm">حفظ</button>
+    </form>
+  @endforeach
+</div>
+@endif
 @endsection

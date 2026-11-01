@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseBundle;
 use App\Models\CourseOffer;
 use App\Models\CourseRegistration;
 use App\Models\DiscountCode;
@@ -109,26 +110,92 @@ class CourseRegistrationController extends Controller
             return $this->payWithDeema($registration);
         }
 
+        return $this->payWithCard($registration, [[
+            'ItemName'  => $offer['title'][app()->getLocale()] ?? $offer['title']['ar'],
+            'Quantity'  => 1,
+            'UnitPrice' => $quote['final'],
+        ]]);
+    }
+
+    /** Both November courses (or any bundle) in one payment: one registration per course. */
+    public function showBundle(string $bundleKey)
+    {
+        $bundle = CourseBundle::findOpen($bundleKey);
+        abort_unless($bundle, 404);
+
+        $courses = $bundle->courses()->map->toOfferArray();
+        $deemaEnabled = $this->deema->enabled() && $courses->every(fn ($c) => $c['show_installments']);
+
+        return view('course-bundle-register', compact('bundle', 'courses', 'deemaEnabled'));
+    }
+
+    public function storeBundle(Request $request, string $bundleKey)
+    {
+        $bundle = CourseBundle::findOpen($bundleKey);
+        if (!$bundle) {
+            return redirect()->route('courses')->withErrors(['payment' => $this->t('العرض انتهى أو اكتمل العدد.', 'This offer has ended or is full.')]);
+        }
+
+        $data = $request->validate([
+            'name'   => 'required|string|max:120',
+            'phone'  => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,16}$/'],
+            'email'  => 'nullable|email|max:150',
+            'method' => 'nullable|in:card,deema',
+        ]);
+        $data['phone'] = $this->localMobile($data['phone']);
+
+        $courses = $bundle->courses();
+        $shares  = $bundle->shares();
+        $group   = (string) \Illuminate\Support\Str::uuid();
+        $source  = array_filter(session('visit_source', []), fn ($v) => $v !== null);
+
+        $rows = \Illuminate\Support\Facades\DB::transaction(fn () => $courses->map(fn (CourseOffer $c) => CourseRegistration::create([
+            'course_key'      => $c->slug,
+            'name'            => $data['name'],
+            'phone'           => $data['phone'],
+            'email'           => $data['email'] ?? null,
+            'original_amount' => round((float) $c->price, 3),
+            'discount_amount' => round((float) $c->price - $shares[$c->slug], 3),
+            'final_amount'    => $shares[$c->slug],
+            'bundle_key'      => $bundle->slug,
+            'bundle_group'    => $group,
+        ] + $source)));
+
+        $first = $rows->first();
+        $deemaOk = $courses->every(fn ($c) => $c->show_installments) && $this->deema->enabled();
+
+        if (($data['method'] ?? null) === 'deema' && $deemaOk) {
+            return $this->payWithDeema($first);
+        }
+
+        return $this->payWithCard($first, $courses->map(fn (CourseOffer $c) => [
+            'ItemName'  => $c->toOfferArray()['title'][app()->getLocale()] ?? $c->title_ar,
+            'Quantity'  => 1,
+            'UnitPrice' => $shares[$c->slug],
+        ])->values()->all());
+    }
+
+    /** One MyFatoorah invoice for the registration (or its whole bundle). */
+    private function payWithCard(CourseRegistration $registration, array $items)
+    {
+        $group = $registration->group();
+
         try {
             $invoice = $this->myFatoorah->sendPayment([
-                'InvoiceValue'       => $quote['final'],
-                'CustomerName'       => $data['name'],
-                'CustomerEmail'      => $data['email'] ?? null,
+                'InvoiceValue'       => $registration->amountDue(),
+                'CustomerName'       => $registration->name,
+                'CustomerEmail'      => $registration->email,
                 'MobileCountryCode'  => '+965',
-                'CustomerMobile'     => $data['phone'],
+                'CustomerMobile'     => $registration->phone,
                 'CustomerReference'  => (string) $registration->id,
                 'Language'           => app()->getLocale() === 'ar' ? 'AR' : 'EN',
                 'CallBackUrl'        => route('payment.callback'),
                 'ErrorUrl'           => route('payment.callback'),
-                'InvoiceItems'       => [[
-                    'ItemName'  => $offer['title'][app()->getLocale()] ?? $offer['title']['ar'],
-                    'Quantity'  => 1,
-                    'UnitPrice' => $quote['final'],
-                ]],
+                'InvoiceItems'       => $items,
             ]);
         } catch (\Throwable $e) {
             Log::error('MyFatoorah SendPayment error', ['registration' => $registration->id, 'error' => $e->getMessage()]);
-            $registration->update(['status' => 'failed']);
+            $group->each->update(['status' => 'failed']);
 
             return back()->withInput()->withErrors(['payment' => $this->t(
                 'تعذّر إنشاء رابط الدفع حالياً، حاول مرة أخرى أو تواصل معنا عبر واتساب.',
@@ -136,7 +203,7 @@ class CourseRegistrationController extends Controller
             )]);
         }
 
-        $registration->update(['invoice_id' => (string) $invoice['InvoiceId']]);
+        $group->each->update(['invoice_id' => (string) $invoice['InvoiceId']]);
 
         return redirect()->away($invoice['InvoiceURL']);
     }
@@ -164,14 +231,15 @@ class CourseRegistrationController extends Controller
 
     private function payWithDeema(CourseRegistration $registration)
     {
-        $registration->update(['payment_method' => 'deema']);
+        $group = $registration->group();
+        $group->each->update(['payment_method' => 'deema']);
         $returnUrl = route('payment.deema.return', ['registration' => $registration->id, 'sig' => self::deemaSignature($registration)]);
 
         try {
-            $order = $this->deema->createPurchase((float) $registration->final_amount, 'REG-' . $registration->id, $returnUrl, $returnUrl);
+            $order = $this->deema->createPurchase($registration->amountDue(), ($registration->bundle_group ? 'BND-' : 'REG-') . $registration->id, $returnUrl, $returnUrl);
         } catch (\Throwable $e) {
             Log::error('deema purchase error', ['registration' => $registration->id, 'error' => $e->getMessage()]);
-            $registration->update(['status' => 'failed']);
+            $group->each->update(['status' => 'failed']);
 
             return back()->withInput()->withErrors(['payment' => $this->t(
                 'تعذّر التقسيط عبر deema حالياً. جرّب الدفع بالبطاقة أو تواصل معنا عبر واتساب.',
@@ -179,7 +247,7 @@ class CourseRegistrationController extends Controller
             )]);
         }
 
-        $registration->update(['invoice_id' => (string) $order['order_reference']]);
+        $group->each->update(['invoice_id' => (string) $order['order_reference']]);
 
         return redirect()->away($order['redirect_link']);
     }
@@ -238,15 +306,18 @@ class CourseRegistrationController extends Controller
     {
         $status = $order['status'] ?? null;
         $isPaid = in_array($status, Deema::PAID, true)
-            && (float) ($order['amount'] ?? 0) + 0.001 >= (float) $registration->final_amount;
+            && (float) ($order['amount'] ?? 0) + 0.001 >= $registration->amountDue();
 
-        if ($isPaid) {
-            $registration->markPaid((string) ($order['deema_order_id'] ?? $registration->invoice_id), 'deema');
-        } elseif (in_array($status, Deema::FAILED, true) && $registration->status !== 'paid') {
-            $registration->update(['status' => 'failed']);
-        } elseif ($registration->status === 'paid' && str_ends_with((string) $status, 'refunded')) {
-            Log::info('deema order refunded', ['registration' => $registration->id, 'status' => $status]);
+        foreach ($registration->group() as $row) {
+            if ($isPaid) {
+                $row->markPaid((string) ($order['deema_order_id'] ?? $row->invoice_id), 'deema');
+            } elseif (in_array($status, Deema::FAILED, true) && $row->status !== 'paid') {
+                $row->update(['status' => 'failed']);
+            } elseif ($row->status === 'paid' && str_ends_with((string) $status, 'refunded')) {
+                Log::info('deema order refunded', ['registration' => $row->id, 'status' => $status]);
+            }
         }
+        $registration->refresh();
     }
 
     /** Unguessable key for the deema return link, so registration ids can't be browsed. */
@@ -271,13 +342,16 @@ class CourseRegistrationController extends Controller
         $transaction  = ($paymentId ? $transactions->firstWhere('PaymentId', $paymentId) : null) ?? $transactions->last();
 
         $isPaid = ($status['InvoiceStatus'] ?? null) === 'Paid'
-            && (float) ($status['InvoiceValue'] ?? 0) + 0.001 >= (float) $registration->final_amount;
+            && (float) ($status['InvoiceValue'] ?? 0) + 0.001 >= $registration->amountDue();
 
-        if ($isPaid) {
-            $registration->markPaid($transaction['PaymentId'] ?? $paymentId, $transaction['PaymentGateway'] ?? null);
-        } elseif ($registration->status !== 'paid') {
-            $registration->update(['status' => 'failed', 'payment_id' => $paymentId]);
+        foreach ($registration->group() as $row) {
+            if ($isPaid) {
+                $row->markPaid($transaction['PaymentId'] ?? $paymentId, $transaction['PaymentGateway'] ?? null);
+            } elseif ($row->status !== 'paid') {
+                $row->update(['status' => 'failed', 'payment_id' => $paymentId]);
+            }
         }
+        $registration->refresh();
     }
 
     private function result(CourseRegistration $registration)
@@ -285,6 +359,7 @@ class CourseRegistrationController extends Controller
         return view('course-register-result', [
             'registration' => $registration,
             'offer'        => $registration->offer(),
+            'group'        => $registration->group(),
         ]);
     }
 

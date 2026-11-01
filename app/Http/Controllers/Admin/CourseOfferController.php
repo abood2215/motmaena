@@ -18,7 +18,23 @@ class CourseOfferController extends Controller
         $counts = CourseRegistration::where('status', 'paid')->selectRaw('course_key, count(*) as c, sum(final_amount) as total')
             ->groupBy('course_key')->get()->keyBy('course_key');
 
-        return view('admin.courses.index', compact('offers', 'counts'));
+        $bundles = \App\Models\CourseBundle::orderBy('id')->get();
+        $bundleSales = CourseRegistration::where('status', 'paid')->whereNotNull('bundle_key')
+            ->selectRaw('bundle_key, count(distinct bundle_group) as c')->groupBy('bundle_key')->pluck('c', 'bundle_key');
+
+        return view('admin.courses.index', compact('offers', 'counts', 'bundles', 'bundleSales'));
+    }
+
+    /** Offer price and on/off (the courses in it are fixed). */
+    public function updateBundle(Request $request, \App\Models\CourseBundle $bundle)
+    {
+        $data = $request->validate([
+            'price'     => 'required|numeric|min:1|max:100000',
+            'is_active' => 'nullable|boolean',
+        ]);
+        $bundle->update(['price' => $data['price'], 'is_active' => $request->boolean('is_active')]);
+
+        return back()->with('ok', 'تم حفظ ' . $bundle->title_ar);
     }
 
     public function create(Request $request)

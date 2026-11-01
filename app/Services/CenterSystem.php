@@ -52,6 +52,7 @@ class CenterSystem
                     'discount_amount' => (float) $registration->discount_amount,
                     'paid_amount'     => (float) $registration->final_amount,
                     'discount_code'   => $registration->discount_code,
+                    'offer'           => $registration->bundle_key ? ($registration->bundle()?->title_ar ?? $registration->bundle_key) : null,
                     'payment'         => $payment,
                     'gateway'         => $registration->payment_method,
                     'payment_ref'     => $registration->payment_id,

@@ -66,6 +66,9 @@ Route::get('/admin/consultations/export', [ConsultationController::class, 'expor
 Route::get('/admin/consultations/new-count', [ConsultationController::class, 'newCount'])->name('admin.consultations.new-count');
 
 // Course registration + MyFatoorah payment
+Route::get('/register/bundle/{bundle}', [CourseRegistrationController::class, 'showBundle'])->name('bundle.register');
+Route::post('/register/bundle/{bundle}', [CourseRegistrationController::class, 'storeBundle'])
+    ->middleware('throttle:10,1')->name('bundle.register.store');
 Route::get('/register/{offer}', [CourseRegistrationController::class, 'show'])->name('course.register');
 Route::post('/register/{offer}/check-code', [CourseRegistrationController::class, 'checkCode'])
     ->middleware('throttle:15,1')->name('course.register.check-code');
@@ -92,6 +95,7 @@ Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(func
     Route::put('/courses/{offer}', [CourseOfferController::class, 'update'])->name('courses.update');
     Route::post('/courses/{offer}/toggle/{field}', [CourseOfferController::class, 'toggle'])->name('courses.toggle');
     Route::delete('/courses/{offer}', [CourseOfferController::class, 'destroy'])->name('courses.destroy');
+    Route::put('/bundles/{bundle}', [CourseOfferController::class, 'updateBundle'])->name('bundles.update');
 
     Route::get('/content', [ContentController::class, 'index'])->name('content');
     Route::post('/content/settings', [ContentController::class, 'updateSettings'])->name('content.settings');

@@ -4,6 +4,9 @@
     $lang = app()->getLocale() == 'ar' ? 'ar' : 'en';
     $isAr = $lang === 'ar';
     $paid = $registration->status === 'paid';
+    $group = $group ?? collect([$registration]);
+    $isBundle = $group->count() > 1;
+    $bundle = $isBundle ? $registration->bundle() : null;
     $waText = rawurlencode(($isAr ? 'مرحباً، بخصوص تسجيلي رقم #' : 'Hello, about my registration #') . $registration->id . ' - ' . ($offer['title'][$lang] ?? ''));
 @endphp
 
@@ -62,17 +65,25 @@
             @endif
 
             <div class="rounded-2xl bg-[color:var(--ct)] dark:bg-white/5 p-4 text-sm font-bold space-y-2 {{ $isAr ? 'text-right' : 'text-left' }} mb-7">
+                @if($isBundle)
+                    <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'العرض' : 'Offer' }}</span><span class="text-gray-900 dark:text-white">{{ $bundle?->title($lang) }}</span></div>
+                    @foreach($group as $row)
+                        @php $o = $row->offer(); @endphp
+                        <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $o['title'][$lang] ?? $row->course_key }}</span><span class="text-gray-900 dark:text-white">{{ $o ? $o['day'][$lang] . ' ' . \Carbon\Carbon::parse($o['date'])->format('Y/m/d') : '' }}</span></div>
+                    @endforeach
+                @else
                 <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'الدورة' : 'Course' }}</span><span class="text-gray-900 dark:text-white">{{ $offer['title'][$lang] ?? '' }}</span></div>
                 @if($offer)
                 <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'الموعد' : 'When' }}</span><span class="text-gray-900 dark:text-white">{{ $offer['day'][$lang] }} {{ \Carbon\Carbon::parse($offer['date'])->format('Y/m/d') }} — {{ $offer['time'][$lang] }}</span></div>
                 @endif
-                <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'رقم التسجيل' : 'Registration #' }}</span><span class="text-gray-900 dark:text-white">#{{ $registration->id }}</span></div>
-                <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'المبلغ' : 'Amount' }}</span><span class="text-gray-900 dark:text-white">{{ number_format($registration->final_amount, 3) }} {{ $isAr ? 'د.ك' : 'KWD' }}</span></div>
+                @endif
+                <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'رقم التسجيل' : 'Registration #' }}</span><span class="text-gray-900 dark:text-white">#{{ $group->pluck('id')->implode(' · #') }}</span></div>
+                <div class="flex justify-between gap-4"><span class="text-gray-500">{{ $isAr ? 'المبلغ' : 'Amount' }}</span><span class="text-gray-900 dark:text-white">{{ number_format($registration->amountDue(), 3) }} {{ $isAr ? 'د.ك' : 'KWD' }}</span></div>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
                 @unless($paid)
-                <a href="{{ route('course.register', $registration->course_key) }}" class="rounded-xl px-6 py-3 font-black text-white" style="background: linear-gradient(135deg, var(--cb), var(--c1));">
+                <a href="{{ $isBundle ? route('bundle.register', $registration->bundle_key) : route('course.register', $registration->course_key) }}" class="rounded-xl px-6 py-3 font-black text-white" style="background: linear-gradient(135deg, var(--cb), var(--c1));">
                     {{ $isAr ? 'حاول مرة أخرى' : 'Try again' }}
                 </a>
                 @endunless
@@ -92,7 +103,7 @@
     (function () {
         var key = 'purchase-tracked-{{ $registration->id }}';
         try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) {}
-        window.trackEvent && trackEvent('Purchase', { value: {{ (float) $registration->final_amount }}, currency: 'KWD', transaction_id: 'REG-{{ $registration->id }}', content_name: @json($offer['title']['ar'] ?? $registration->course_key) });
+        window.trackEvent && trackEvent('Purchase', { value: {{ $registration->amountDue() }}, currency: 'KWD', transaction_id: 'REG-{{ $registration->id }}', content_name: @json($offer['title']['ar'] ?? $registration->course_key) });
     })();
 </script>
 @endif

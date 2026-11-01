@@ -70,7 +70,7 @@
             @if($r->email)<div class="small ltr">{{ $r->email }}</div>@endif
           </td>
           <td><a class="ltr" href="https://wa.me/{{ $wa }}" target="_blank" style="color:inherit;font-weight:700">{{ $r->phone }}</a></td>
-          <td class="small">{{ $offer['title']['ar'] ?? $r->course_key }}</td>
+          <td class="small">{{ $offer['title']['ar'] ?? $r->course_key }}@if($r->bundle_key)<div><span class="tag code" style="font-size:10px">ضمن عرض الدورتين</span></div>@endif</td>
           <td>
             @if($r->discount_code)
               <span class="tag code">{{ $r->discount_code }}</span>
