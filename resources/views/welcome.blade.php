@@ -44,12 +44,34 @@
 @section('content')
 @include('partials.lx-styles')
 <style>
-    /* Notify form "paper" variant (used in the coming-soon band) */
-    .ps-input { flex: 1; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 12px 2px; font-size: 16px; font-weight: 600; color: var(--ink); outline: none; transition: border-color .2s; }
-    .ps-input::placeholder { color: var(--muted); }
-    .ps-input:focus { border-color: var(--wine); }
-    .ps-btn { flex-shrink: 0; background: var(--wine); color: #fff; font-weight: 800; font-size: 15px; padding: 12px 24px; border-radius: 10px; transition: background .2s; }
-    .ps-btn:hover { background: var(--wine-d); }
+    /* Psychological center — coming soon: a printed "announcement card" with a postage stamp + postmark */
+    .ps-card { --ink: #6d1b2b; --paper: #f4ebdd; position: relative; background: var(--paper); color: #2a1a17; border-radius: 2rem; overflow: hidden;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .ps-card::before { content: ''; position: absolute; inset: 14px; border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent); border-radius: 1.4rem; pointer-events: none; }
+    .ps-card::after { content: ''; position: absolute; inset: 19px; border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); border-radius: 1.2rem; pointer-events: none; }
+    .ps-ruqaa { font-family: 'Aref Ruqaa', 'Tajawal', serif; font-weight: 700; }
+    .ps-soon { font-size: clamp(4.6rem, 11vw, 8rem); line-height: 1.4; color: var(--ink); padding-top: .1em; }
+    /* Eyebrow: centred on mobile/tablet → a line on both sides keeps it balanced; right-aligned on desktop → one line trailing the text */
+    .ps-eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: .35rem; font-size: clamp(16px, 1.6vw, 19px); font-weight: 900; letter-spacing: .02em; color: #9a7434; }
+    .ps-eyebrow::before, .ps-eyebrow::after { content: ''; width: 40px; height: 2px; border-radius: 2px; background: currentColor; opacity: .85; }
+    @media (min-width: 1024px) { .ps-eyebrow::before, .ps-eyebrow::after { width: 52px; } }
+    .ps-list { border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
+    .ps-list > div + div { border-inline-start: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+    @media (max-width: 639px) { .ps-list > div + div { border-inline-start: 0; border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); } }
+    .ps-num { font-size: 13px; font-weight: 900; color: #b08a45; letter-spacing: .08em; }
+    /* Stamp: perforated edge cut with a mask; the shadow sits on the wrapper because masks clip it */
+    .ps-stamp-wrap { filter: drop-shadow(0 18px 22px rgba(60,20,20,.22)) drop-shadow(0 2px 3px rgba(60,20,20,.15)); transform: rotate(-5deg); }
+    .ps-stamp { --r: 7px; background: #fffdf8; padding: calc(2.4 * var(--r));
+        -webkit-mask: radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)), linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+                mask: radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)), linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r)); }
+    .ps-stamp img { display: block; width: 100%; border-radius: 10px; }
+    .ps-postmark { position: absolute; color: var(--ink); opacity: .88; mix-blend-mode: multiply; transform: rotate(14deg); pointer-events: none; }
+    .ps-waves { position: absolute; color: var(--ink); opacity: .55; mix-blend-mode: multiply; pointer-events: none; }
+    .ps-input { flex: 1; min-width: 0; background: transparent; border: 0; border-bottom: 1.5px solid color-mix(in srgb, var(--ink) 45%, transparent); padding: 12px 2px; font-size: 16px; font-weight: 700; color: #2a1a17; outline: none; transition: border-color .2s; }
+    .ps-input::placeholder { color: #9b8b7c; }
+    .ps-input:focus { border-color: var(--ink); }
+    .ps-btn { flex-shrink: 0; background: var(--ink); color: #fff; font-weight: 900; font-size: 15px; padding: 12px 22px; border-radius: 999px; transition: background .2s, transform .2s; }
+    .ps-btn:hover { background: #4a0f1b; transform: translateY(-1px); }
     .ps-btn:disabled { opacity: .6; }
     .lx-course-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; }
     .lx-course-row + .lx-course-row { border-top: 1px solid var(--line); }
@@ -308,24 +330,76 @@
 
 {{-- ═══════════════ PSYCHOLOGICAL CENTER — COMING SOON (Admin → Content → switch) ═══════════════ --}}
 @if(($site['psych_soon'] ?? '1') === '1')
-<section id="psych-center" class="lx-paper py-16 sm:py-24 scroll-mt-20">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=swap">
+<section id="psych-center" class="py-16 sm:py-20 bg-white dark:bg-[#0f0b0c] scroll-mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="lx-card p-8 sm:p-12 grid lg:grid-cols-12 gap-10 items-center" style="border-color: var(--gold-l)">
-            <div class="lg:col-span-7">
-                <p class="lx-label mb-4">{{ $t('قريباً', 'Coming soon') }}</p>
-                <h2 class="lx-h2 mb-2">{{ $t('مجمع مطمئنة للاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
-                <p class="lx-muted font-semibold mb-5">{{ $t('بإشراف', 'Supervised by') }} {{ config('doctor.name.' . $lang) }}</p>
-                <p class="lx-text mb-7">{{ $t('مكان هادئ وآمن لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening soon.') }}</p>
-                <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm font-bold" style="color: var(--ink)">
-                    <span class="flex items-center gap-2">@include('partials.lx-icon', ['i' => 'chat', 'class' => '!w-5 !h-5']){{ $t('استشارات نفسية متخصصة', 'Specialised counselling') }}</span>
-                    <span class="flex items-center gap-2">@include('partials.lx-icon', ['i' => 'lock', 'class' => '!w-5 !h-5']){{ $t('سرية تامة', 'Fully confidential') }}</span>
-                    <span class="flex items-center gap-2">@include('partials.lx-icon', ['i' => 'family', 'class' => '!w-5 !h-5']){{ $t('للأفراد والأسر', 'Individuals & families') }}</span>
+        <div class="ps-card shadow-[0_30px_70px_-40px_rgba(74,15,27,.45)]">
+            <div class="relative grid lg:grid-cols-12 gap-6 lg:gap-10 items-center px-6 py-12 sm:p-12 lg:p-16">
+
+                {{-- Stamp + postmark --}}
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-[min(58vw,230px)] sm:w-[270px] lg:w-[300px] mb-12 lg:mb-0">
+                        <div class="ps-stamp-wrap">
+                            <div class="ps-stamp">
+                                <img src="{{ asset('photos/motmaena-app-icon.webp') }}" alt="{{ $t('مطمئنة', 'Motmaena') }}" width="432" height="432" loading="lazy">
+                            </div>
+                        </div>
+
+                        {{-- Ink postmark --}}
+                        <svg class="ps-postmark w-[56%] -bottom-[22%] -left-[22%]" viewBox="0 0 200 200" aria-hidden="true">
+                            <defs>
+                                <path id="ps-ring" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/>
+                                <filter id="ps-ink"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+                            </defs>
+                            <g filter="url(#ps-ink)" fill="none" stroke="currentColor">
+                                <circle cx="100" cy="100" r="94" stroke-width="3.5"/>
+                                <circle cx="100" cy="100" r="88" stroke-width="1.2"/>
+                                <circle cx="100" cy="100" r="54" stroke-width="1.5"/>
+                                <text fill="currentColor" stroke="none" font-size="14" font-weight="800" font-family="Tajawal, sans-serif" direction="ltr" style="direction: ltr; unicode-bidi: isolate"><textPath href="#ps-ring" textLength="440" lengthAdjust="spacing">COMING SOON ✦ MOTMAENA ✦ KUWAIT ✦</textPath></text>
+                                <text x="100" y="113" text-anchor="middle" fill="currentColor" stroke="none" font-size="38" class="ps-ruqaa" direction="rtl">قريباً</text>
+                            </g>
+                        </svg>
+                        {{-- Cancellation waves --}}
+                        <svg class="ps-waves w-[66%] -bottom-[12%] left-[36%]" viewBox="0 0 220 60" aria-hidden="true">
+                            <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" filter="url(#ps-ink)">
+                                @foreach([8, 22, 36, 50] as $y)
+                                    <path d="M0 {{ $y }} q13.75 -7 27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0 t27.5 0"/>
+                                @endforeach
+                            </g>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div class="lg:col-span-5">
-                <p class="font-extrabold mb-1" style="color: var(--ink)">{{ $t('كن أول من يعرف بالافتتاح', 'Be the first to know') }}</p>
-                <p class="text-sm lx-muted font-semibold mb-3">{{ $t('اترك رقم الواتساب ونرسل لك يوم الافتتاح.', 'Leave your WhatsApp number and we will message you on opening day.') }}</p>
-                @include('partials.notify-form', ['courseKey' => \App\Models\Lead::PSYCH_CENTER, 'paper' => true])
+
+                {{-- Announcement --}}
+                <div class="lg:col-span-7 text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
+                    <span class="ps-eyebrow">{{ $t('خطوة جديدة من مطمئنة', 'Something new from Motmaena') }}</span>
+
+                    <div class="ps-ruqaa ps-soon mb-4">{{ $t('قريباً', 'Soon') }}</div>
+
+                    <h2 class="font-black leading-snug mb-2 text-[#2a1a17]" style="font-size: clamp(1.4rem, 2.8vw, 2.2rem); text-wrap: balance;">{{ $t('مجمع مطمئنة للاستشارات النفسية', 'Motmaena Psychological Counselling Center') }}</h2>
+                    <p class="font-bold text-[#6b5446] mb-5">{{ $t('بإشراف', 'Supervised by') }} <span style="color: var(--ink)">{{ config('doctor.name.' . $lang) }}</span></p>
+
+                    <p class="text-[#5a463b] font-semibold leading-loose mb-8 max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0' }}">
+                        {{ $t('مساحة هادئة وآمنة لصحتك النفسية: استشارات نفسية متخصصة للأفراد والأسر، بسرية تامة. الافتتاح قريب جداً.', 'A calm, safe place for your mental health: specialised psychological counselling for individuals and families, in full confidence. Opening very soon.') }}
+                    </p>
+
+                    <div class="ps-list grid grid-cols-1 sm:grid-cols-3 mb-9 {{ $isAr ? 'text-right' : 'text-left' }}">
+                        @foreach([[$t('استشارات نفسية', 'Counselling'), $t('متخصصة وموثوقة', 'Specialised & trusted')], [$t('سرية تامة', 'Fully confidential'), $t('خصوصيتك أولاً', 'Your privacy first')], [$t('للأفراد والأسر', 'Individuals & families'), $t('لكل أفراد العائلة', 'For the whole family')]] as $i => [$title, $sub])
+                            <div class="py-4 sm:px-4 {{ $isAr ? 'sm:first:pr-0' : 'sm:first:pl-0' }}">
+                                <span class="ps-num" dir="ltr">0{{ $i + 1 }}</span>
+                                <p class="font-black text-[#2a1a17] mt-1">{{ $title }}</p>
+                                <p class="text-xs font-bold text-[#8a7462]">{{ $sub }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="max-w-xl mx-auto {{ $isAr ? 'lg:ml-auto lg:mr-0 text-right' : 'lg:mr-auto lg:ml-0 text-left' }}">
+                        <p class="font-black text-[#2a1a17] mb-1">{{ $t('كن أول من يعرف بالافتتاح', 'Be the first to know when we open') }}</p>
+                        <p class="text-sm font-semibold text-[#8a7462] mb-2">{{ $t('سجّل رقم الواتساب ونبعتلك رسالة يوم الافتتاح.', 'Leave your WhatsApp number and we will message you on opening day.') }}</p>
+                        @include('partials.notify-form', ['courseKey' => \App\Models\Lead::PSYCH_CENTER, 'paper' => true])
+                    </div>
+                </div>
             </div>
         </div>
     </div>
