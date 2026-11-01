@@ -167,6 +167,16 @@
                     </div>
                     @endif
 
+                    {{-- This course is part of an open offer (e.g. both November courses for 45) --}}
+                    @php $regBundle = \App\Models\CourseBundle::current(); @endphp
+                    @if($regBundle && in_array($offerKey, $regBundle->course_keys ?? [], true))
+                    <a href="{{ route('bundle.register', $regBundle->slug) }}" class="block rounded-2xl border border-[color:var(--cbd)] dark:border-white/10 p-4 text-sm hover:border-[color:var(--c1)] transition">
+                        <p class="font-black text-gray-900 dark:text-white">{{ $isAr ? 'أو الدورتان معاً بـ ' . \App\Models\CourseBundle::fmt((float) $regBundle->price) . ' د.ك' : 'Or both courses for ' . \App\Models\CourseBundle::fmt((float) $regBundle->price) . ' KWD' }} <span class="line-through text-gray-400 font-bold">{{ \App\Models\CourseBundle::fmt($regBundle->fullPrice()) }}</span></p>
+                        <p class="font-semibold text-gray-500 dark:text-gray-400 mt-1">{{ $regBundle->courses()->pluck($isAr ? 'title_ar' : 'title_en')->implode(' + ') }}</p>
+                        <p class="font-black text-[color:var(--c1)] dark:text-[color:var(--ca)] mt-2">{{ $isAr ? 'احجز العرض ←' : 'Book the offer →' }}</p>
+                    </a>
+                    @endif
+
                     @unless($offer['is_full'])
                     <a href="#reg-card" class="lg:hidden flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-black text-white co-pay">
                         {{ $isAr ? 'أكمل الحجز' : 'Continue booking' }}

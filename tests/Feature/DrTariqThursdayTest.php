@@ -28,7 +28,7 @@ class DrTariqThursdayTest extends TestCase
         $this->get('/')->assertOk()->assertSee('id="dr-tariq"', false)
             ->assertSee('احجز استشارتك مع')->assertSee('اطلب موعد استشارتك')
             ->assertSee('الزوجية')->assertSee('التربوية')->assertSee('الاجتماعية')->assertSee('الحياتية')
-            ->assertSee('المواعيد مع الدكتور طارق محدودة')
+            ->assertSee('المواعيد محدودة')
             ->assertDontSee('باقي على الموعد')->assertDontSee('name="topic"', false)->assertDontSee('بدون دفع');
         $this->get('/consultations')->assertOk()->assertSee('id="dr-tariq"', false);
 
@@ -37,10 +37,10 @@ class DrTariqThursdayTest extends TestCase
         $this->withSession(['admin_auth' => true])->get('/admin/content')->assertSee('يوم استقبال د. طارق');
     }
 
-    public function test_a_set_day_is_shown_with_a_countdown_and_hides_after_it(): void
+    public function test_a_set_day_is_shown_and_hides_after_it(): void
     {
         SiteSetting::setMany(['dr_tariq_date' => '2026-10-29']);
-        $this->get('/')->assertSee('احجز مكانك يوم الخميس')->assertSee('29 أكتوبر')->assertSee('باقي على الموعد');
+        $this->get('/')->assertSee('احجز مكانك يوم الخميس')->assertSee('يوم الخميس 29 أكتوبر');
 
         $this->travelTo('2026-10-30 10:00:00');
         $this->get('/')->assertDontSee('id="dr-tariq"', false);

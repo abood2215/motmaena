@@ -46,6 +46,21 @@
         @foreach($liveOffers as $offer)
             @include('partials.live-course-banner', ['offer' => $offer])
         @endforeach
+        @php $liveBundle = \App\Models\CourseBundle::current(); @endphp
+        @if($liveBundle)
+            @php $lbAr = app()->getLocale() == 'ar'; $lbFmt = fn ($v) => \App\Models\CourseBundle::fmt((float) $v); @endphp
+            <div class="lx lx-ink rounded-[14px] p-7 sm:p-9 flex flex-col lg:flex-row lg:items-center gap-6" dir="{{ $lbAr ? 'rtl' : 'ltr' }}">
+                <div class="flex-1">
+                    <p class="lx-label mb-3" style="color: #d9c4a0">{{ $liveBundle->title($lbAr ? 'ar' : 'en') }}</p>
+                    <p class="text-2xl font-extrabold text-white">
+                        {{ $lbAr ? 'الدورتان معاً بـ ' . $lbFmt($liveBundle->price) . ' د.ك' : 'Both courses for ' . $lbFmt($liveBundle->price) . ' KWD' }}
+                        <span class="text-lg font-semibold text-white/50 line-through mx-2">{{ $lbFmt($liveBundle->fullPrice()) }}</span>
+                    </p>
+                    <p class="text-white/70 font-semibold mt-1">{{ $liveBundle->courses()->pluck($lbAr ? 'title_ar' : 'title_en')->implode(' + ') }}</p>
+                </div>
+                <a href="{{ route('bundle.register', $liveBundle->slug) }}" class="lx-btn lx-btn-light shrink-0">{{ $lbAr ? 'احجز العرض' : 'Book the offer' }}</a>
+            </div>
+        @endif
     </div>
 </section>
 @endif

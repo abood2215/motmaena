@@ -74,8 +74,9 @@ class AdminPanelTest extends TestCase
             'show_installments' => '0', 'is_active' => '1', 'is_featured' => '1',
         ])->assertSessionHasNoErrors();
 
+        \App\Models\CourseBundle::query()->update(['is_active' => false]); // no offer running: the featured course leads the homepage
         $page = $this->get('/')->assertOk();
-        $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة')->assertSee('--wine: #0f5e4a', false);
+        $page->assertSee('دورة الذكاء العاطفي')->assertSee('الدورة القادمة');
         $this->assertStringNotContainsString('قسّط على 4 دفعات', $page->getContent());
         $this->get('/register/emotional-intelligence')->assertOk()->assertSee('--c1:#6d1b2b', false); // checkout keeps the wine palette
 

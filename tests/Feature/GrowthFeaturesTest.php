@@ -62,7 +62,7 @@ class GrowthFeaturesTest extends TestCase
         CourseOffer::create(['slug' => 'parenting', 'title_ar' => 'دورة التربية', 'price' => 20, 'date' => '2026-11-15', 'is_active' => true]);
         CourseOffer::create(['slug' => 'old', 'title_ar' => 'دورة قديمة', 'price' => 20, 'date' => '2026-10-01', 'is_active' => true]);
 
-        $this->get('/')->assertSee('دورات قادمة')->assertSee('دورة التربية')->assertDontSee('دورة قديمة');
+        $this->get('/')->assertSee('الدورات القادمة')->assertSee('دورة التربية')->assertDontSee('دورة قديمة');
         $this->get('/register/old')->assertNotFound();
         $this->get('/register/parenting')->assertOk();
     }
@@ -84,7 +84,7 @@ class GrowthFeaturesTest extends TestCase
     {
         // Promised before paying
         $this->get('/register/anger-management')->assertSee('هديتك بعد الدفع: كود خصم بقيمة 10 د.ك');
-        $this->get('/')->assertSee('احجز اليوم… وخذ هدية بقيمة 10 د.ك')->assertSee('احجز الآن وخذ كود هدية بقيمة 10 د.ك');
+        $this->get('/')->assertSee('id="gift"', false)->assertSee('هدية التسجيل:')->assertSee('كود خصم بقيمة 10 د.ك');
 
         $owner = $this->paid('51111111');
         $gift = $owner->rewardCode();
