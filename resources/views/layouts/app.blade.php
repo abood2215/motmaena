@@ -30,6 +30,10 @@
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
 
+        @php $verify = \App\Models\SiteSetting::tracking(); @endphp
+        @if($verify['google_verification'])<meta name="google-site-verification" content="{{ $verify['google_verification'] }}">@endif
+        @if($verify['meta_verification'])<meta name="facebook-domain-verification" content="{{ $verify['meta_verification'] }}">@endif
+
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('title', __('Welcome') . ' - ' . __('Motmaena Center'))">

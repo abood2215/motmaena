@@ -53,6 +53,40 @@ class ContentController extends Controller
         return back()->with('ok', 'تم حفظ معلومات الموقع');
     }
 
+    // ─── Ad / analytics tracking ───
+
+    public function updateTracking(Request $request)
+    {
+        // People often paste the whole <meta …> tag or a script line: keep just the ID / token
+        $clean = function (?string $v): string {
+            $v = trim((string) $v);
+            if (preg_match('/content\s*=\s*["\']([^"\']+)["\']/i', $v, $m)) $v = $m[1];
+            return trim($v, " \t\n\r\0\x0B\"'");
+        };
+        $request->merge(collect(array_keys(SiteSetting::TRACKING))->mapWithKeys(fn ($k) => [$k => $clean($request->input($k))])->all());
+        $request->merge(['tr_ga4' => strtoupper($request->input('tr_ga4')), 'tr_tiktok_pixel' => strtoupper($request->input('tr_tiktok_pixel'))]);
+
+        $data = $request->validate([
+            'tr_ga4'                 => ['nullable', 'regex:/^G-[A-Z0-9]{4,20}$/'],
+            'tr_meta_pixel'          => ['nullable', 'regex:/^\d{8,20}$/'],
+            'tr_tiktok_pixel'        => ['nullable', 'regex:/^[A-Z0-9]{10,30}$/'],
+            'tr_snap_pixel'          => ['nullable', 'regex:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i'],
+            'tr_google_verification' => ['nullable', 'regex:/^[A-Za-z0-9_\-]{20,100}$/'],
+            'tr_meta_verification'   => ['nullable', 'regex:/^[a-z0-9]{20,60}$/i'],
+        ], [
+            'tr_ga4.regex'                 => 'رقم Google Analytics لازم يبلّش بـ G- (مثل G-AB12CD34EF)',
+            'tr_meta_pixel.regex'          => 'Meta Pixel ID أرقام بس (مثل 123456789012345)',
+            'tr_tiktok_pixel.regex'        => 'TikTok Pixel ID حروف إنجليزية وأرقام (مثل C1ABCDEF2GHIJ3KLMN4O)',
+            'tr_snap_pixel.regex'          => 'Snap Pixel ID بالشكل 1a2b3c4d-1234-5678-9abc-1234567890ab',
+            'tr_google_verification.regex' => 'كود تحقق Google غير صحيح — الصق الكود من Search Console (طريقة HTML tag)',
+            'tr_meta_verification.regex'   => 'كود تحقق Meta غير صحيح — الصق الكود من Business Settings → Domains',
+        ]);
+
+        SiteSetting::setMany(array_map(fn ($v) => $v ?: null, $data)); // empty = turned off
+
+        return back()->with('ok', 'تم حفظ إعدادات التتبّع — بتشتغل فوراً بالموقع')->withFragment('tracking');
+    }
+
     // ─── FAQ ───
 
     public function storeFaq(Request $request)

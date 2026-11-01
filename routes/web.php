@@ -95,6 +95,7 @@ Route::middleware(AdminAuth::class)->prefix('admin')->name('admin.')->group(func
 
     Route::get('/content', [ContentController::class, 'index'])->name('content');
     Route::post('/content/settings', [ContentController::class, 'updateSettings'])->name('content.settings');
+    Route::post('/content/tracking', [ContentController::class, 'updateTracking'])->name('content.tracking');
     Route::post('/content/faqs', [ContentController::class, 'storeFaq'])->name('content.faqs.store');
     Route::put('/content/faqs/{faq}', [ContentController::class, 'updateFaq'])->name('content.faqs.update');
     Route::delete('/content/faqs/{faq}', [ContentController::class, 'destroyFaq'])->name('content.faqs.destroy');

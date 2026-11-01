@@ -1,4 +1,4 @@
-@php $tracking = config('services.analytics'); @endphp
+@php $tracking = \App\Models\SiteSetting::tracking(); @endphp
 
 @if(!empty($tracking['ga4']))
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ $tracking['ga4'] }}"></script>
@@ -32,13 +32,29 @@
 </script>
 @endif
 
+@if(!empty($tracking['snap_pixel']))
+<script>
+    (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+    a.queue=[];var s='script';var r=t.createElement(s);r.async=!0;r.src=n;var u=t.getElementsByTagName(s)[0];
+    u.parentNode.insertBefore(r,u);})(window,document,'https://sc-static.net/scevent.min.js');
+    snaptr('init', @json($tracking['snap_pixel']), {});
+    snaptr('track', 'PAGE_VIEW');
+</script>
+@endif
+
 <script>
     // One call for conversion events across whichever trackers are installed
+    // name: Purchase | InitiateCheckout | Lead | Contact — each platform gets its own standard event name
     window.trackEvent = function (name, params) {
         params = params || {};
-        try { if (window.gtag) gtag('event', name === 'Purchase' ? 'purchase' : name, params); } catch (e) {}
-        try { if (window.fbq) fbq('track', name, params); } catch (e) {}
-        try { if (window.ttq) ttq.track(name === 'Purchase' ? 'CompletePayment' : name, params); } catch (e) {}
+        var ga = { Purchase: 'purchase', InitiateCheckout: 'begin_checkout', Lead: 'generate_lead', Contact: 'contact' };
+        var tt = { Purchase: 'CompletePayment', InitiateCheckout: 'InitiateCheckout', Lead: 'SubmitForm', Contact: 'Contact' };
+        var sc = { Purchase: 'PURCHASE', InitiateCheckout: 'START_CHECKOUT', Lead: 'SIGN_UP' };
+        var id = params.transaction_id;
+        try { if (window.gtag) gtag('event', ga[name] || name, params); } catch (e) {}
+        try { if (window.fbq) { id ? fbq('track', name, params, { eventID: id }) : fbq('track', name, params); } } catch (e) {}
+        try { if (window.ttq) ttq.track(tt[name] || name, params); } catch (e) {}
+        try { if (window.snaptr && sc[name]) snaptr('track', sc[name], { price: params.value, currency: params.currency, transaction_id: id }); } catch (e) {}
     };
 
     // Every WhatsApp tap counts as a contact for the ad platforms

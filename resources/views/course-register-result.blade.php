@@ -92,7 +92,7 @@
     (function () {
         var key = 'purchase-tracked-{{ $registration->id }}';
         try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) {}
-        window.trackEvent && trackEvent('Purchase', { value: {{ (float) $registration->final_amount }}, currency: 'KWD' });
+        window.trackEvent && trackEvent('Purchase', { value: {{ (float) $registration->final_amount }}, currency: 'KWD', transaction_id: 'REG-{{ $registration->id }}', content_name: @json($offer['title']['ar'] ?? $registration->course_key) });
     })();
 </script>
 @endif

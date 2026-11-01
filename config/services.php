@@ -55,6 +55,9 @@ return [
         'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX
         'meta_pixel' => env('META_PIXEL_ID'),     // digits only
         'tiktok_pixel' => env('TIKTOK_PIXEL_ID'),
+        'snap_pixel' => env('SNAP_PIXEL_ID'),     // uuid
+        'google_verification' => env('GOOGLE_SITE_VERIFICATION'),   // Search Console "HTML tag" content
+        'meta_verification' => env('META_DOMAIN_VERIFICATION'),     // Meta Business "meta tag" content
     ],
 
     'slack' => [

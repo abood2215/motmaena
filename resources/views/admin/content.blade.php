@@ -58,6 +58,34 @@
   </form>
 </div>
 
+{{-- ═══ Ad / analytics tracking ═══ --}}
+@php $tr = \App\Models\SiteSetting::tracking(); @endphp
+<div class="card" id="tracking">
+  <h3>📊 التتبّع والإعلانات <span class="small">(حط الأرقام من حسابات الإعلانات — بتشتغل فوراً، والفاضي = موقوف)</span></h3>
+  <form method="POST" action="{{ route('admin.content.tracking') }}">
+    @csrf
+    <div class="field-grid">
+      @foreach([
+        ['tr_ga4', 'ga4', 'Google Analytics 4 — Measurement ID', 'G-AB12CD34EF', 'Google Analytics ← Admin ← Data streams ← الموقع'],
+        ['tr_meta_pixel', 'meta_pixel', 'Meta Pixel ID (إنستغرام وفيسبوك)', '123456789012345', 'Meta Events Manager ← Data sources ← Pixel'],
+        ['tr_tiktok_pixel', 'tiktok_pixel', 'TikTok Pixel ID', 'C1ABCDEF2GHIJ3KLMN4O', 'TikTok Ads Manager ← Assets ← Events ← Web'],
+        ['tr_snap_pixel', 'snap_pixel', 'Snap Pixel ID (سناب شات)', '1a2b3c4d-1234-5678-9abc-1234567890ab', 'Snapchat Ads Manager ← Events Manager'],
+        ['tr_google_verification', 'google_verification', 'كود تحقق Google Search Console', 'abc123…', 'Search Console ← إضافة موقع ← URL prefix ← HTML tag (الصق الوسم كامل أو الكود)'],
+        ['tr_meta_verification', 'meta_verification', 'كود تحقق الدومين من Meta', 'abcd1234…', 'Business Settings ← Brand safety ← Domains ← Meta-tag'],
+      ] as [$key, $name, $label, $ph, $hint])
+      <div>
+        <label>{{ $label }} @if($tr[$name])<span class="tag on" style="font-size:10px">✓ شغّال</span>@endif</label>
+        <input name="{{ $key }}" value="{{ old($key, $settings[$key] ?? '') }}" dir="ltr" placeholder="{{ $ph }}" maxlength="300">
+        <p class="hint">{{ $hint }}</p>
+        @error($key)<p class="hint" style="color:#b91c1c;font-weight:700">{{ $message }}</p>@enderror
+      </div>
+      @endforeach
+    </div>
+    <p class="hint" style="margin-top:8px">الأحداث اللي بتنبعت: زيارة كل صفحة · ضغط واتساب · بدء الدفع · الدفع (بالمبلغ) · ترك الرقم (بلّغني / طلب موعد د. طارق / الاستشارات).</p>
+    <div style="margin-top:12px"><button class="btn btn-primary">حفظ التتبّع</button></div>
+  </form>
+</div>
+
 {{-- ═══ Testimonials ═══ --}}
 <div class="card">
   <h3>💬 آراء المتدربين <span class="small">(القسم بيظهر بالصفحة الرئيسية بس إذا في رأي واحد ظاهر على الأقل — حط آراء حقيقية فقط وبإذن أصحابها)</span></h3>

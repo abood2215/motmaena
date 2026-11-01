@@ -27,7 +27,36 @@ class SiteSetting extends Model
         'dr_tariq_date'   => '', // optional: one day he sees people (the box shows it and hides after it); empty = open booking
         'psych_soon'      => '1', // homepage "psychological center — coming soon" ad; 0 hides it
         'gift_code_kwd'   => '10', // gift code (fixed KWD) for paying without a code; 0 turns it off
+        // Ad / analytics tracking (Admin → Content → التتبّع والإعلانات); empty = use the .env value, if any
+        'tr_ga4'                 => '',
+        'tr_meta_pixel'          => '',
+        'tr_tiktok_pixel'        => '',
+        'tr_snap_pixel'          => '',
+        'tr_google_verification' => '',
+        'tr_meta_verification'   => '',
     ];
+
+    /** Tracking keys → their .env fallback in config('services.analytics'). */
+    public const TRACKING = [
+        'tr_ga4'                 => 'ga4',
+        'tr_meta_pixel'          => 'meta_pixel',
+        'tr_tiktok_pixel'        => 'tiktok_pixel',
+        'tr_snap_pixel'          => 'snap_pixel',
+        'tr_google_verification' => 'google_verification',
+        'tr_meta_verification'   => 'meta_verification',
+    ];
+
+    /** The tracking IDs in use: ['ga4' => 'G-…', 'meta_pixel' => '…', …], admin first, then .env. */
+    public static function tracking(): array
+    {
+        $settings = rescue(fn () => static::current(), self::DEFAULTS, false);
+        $env = (array) config('services.analytics', []);
+        $out = [];
+        foreach (self::TRACKING as $key => $name) {
+            $out[$name] = filled($settings[$key] ?? null) ? $settings[$key] : ($env[$name] ?? null);
+        }
+        return $out;
+    }
 
     public static function current(): array
     {
