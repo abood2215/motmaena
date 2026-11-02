@@ -1093,7 +1093,6 @@
         <a href="https://wa.me/{{ $site['whatsapp'] }}" class="sp-btn">{{ __('Book Now') }}</a>
       </div>
       <div class="spec-pkg sp-feat">
-        <div class="sp-badge">✦ {{ __('Best Value') }} ✦</div>
         <div class="sp-label">{{ __('Therapeutic Track') }} · {{ __('24 Sessions') }}</div>
         <div class="sp-price">750</div>
         <div style="font-size:.85rem;color:rgba(255,255,255,.55);margin-bottom:20px;">{{ __('KD') }}</div>

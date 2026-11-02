@@ -8,6 +8,9 @@
     $when = fn ($o) => \Carbon\Carbon::parse($o['date'])->locale($lang);
 @endphp
 
+{{-- Kept out of search results while the course is closed; links on the page are still followed.
+     Reopening the course (new date or registration switched back on) brings the normal, indexable page back. --}}
+@section('robots', 'noindex, follow')
 @section('title', $t('انتهت ', 'Ended: ') . $offer['title'][$lang] . ' - ' . __('Motmaena Center'))
 @section('meta_description', $held
     ? $t('انتهت ' . $offer['title']['ar'] . '. سجّل رقمك ونبلغك بالموعد القادم، أو اطّلع على الدورات المفتوحة في مركز مطمئنة.', $offer['title']['en'] . ' has ended. Leave your number for the next date, or see the courses open now at Motmaena Center.')

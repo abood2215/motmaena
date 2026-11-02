@@ -40,20 +40,21 @@ class CourseRegistrationController extends Controller
 
     /**
      * A course that has been held or closed: old links (posters, ads, Google) get a clear
-     * "this course has ended" page with "notify me" instead of a 404. Served as 410 Gone so
-     * search engines drop it; registering and paying for it stay blocked as before.
+     * "this course has ended" page with "notify me" instead of a 404. Served as 200 with
+     * noindex (set in the view) rather than 410, because the same link comes back to life if
+     * the course is reopened with a new date. Registering and paying for it stay blocked.
      */
     private function ended(string $offerKey)
     {
         $course = CourseOffer::where('slug', $offerKey)->first();
         abort_unless($course, 404);
 
-        return response()->view('course-ended', [
+        return view('course-ended', [
             'offer'    => $course->toOfferArray(),
             'offerKey' => $offerKey,
             'held'     => $course->date->lt(today()),
             'upcoming' => CourseOffer::upcoming()->map->toOfferArray(),
-        ], 410);
+        ]);
     }
 
     public function checkCode(Request $request, string $offerKey)

@@ -57,7 +57,7 @@ class AdminPanelTest extends TestCase
 
         // Closing registration hides the form: the old link now says registration is closed
         $this->post("/admin/courses/{$offer->id}/toggle/is_active");
-        $this->get('/register/self-confidence')->assertStatus(410)->assertSee('التسجيل مغلق')->assertDontSee('id="reg-form"', false);
+        $this->get('/register/self-confidence')->assertOk()->assertSee('التسجيل مغلق')->assertSee('content="noindex, follow"', false)->assertDontSee('id="reg-form"', false);
     }
 
     public function test_next_course_is_set_up_from_admin_without_code_changes(): void

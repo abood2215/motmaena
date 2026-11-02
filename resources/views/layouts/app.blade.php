@@ -13,6 +13,7 @@
         <meta name="keywords" content="مطمئنة, طارق الحبيب, بروفيسور الطب النفسي, دورات تنموية, استشارات أسرية وتربوية, تطوير الذات, الكويت">
         <meta name="author" content="Motmaena Center">
         <link rel="canonical" href="{{ url()->current() }}">
+        @hasSection('robots')<meta name="robots" content="@yield('robots')">@endif
         <meta name="theme-color" content="#6d1b2b">
 
         <!-- Icons -->

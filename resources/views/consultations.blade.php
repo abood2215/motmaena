@@ -1218,7 +1218,12 @@
           </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Tariq Al-Habib' }}</h4>
           <div class="spec">{{ config('doctor.title.' . (app()->getLocale() === 'ar' ? 'ar' : 'en')) }}</div>
+          {{-- The years of experience are not confirmed yet (config/claims.php); the availability note stays --}}
+          @if(config('claims.show_unverified'))
           <p>{{ app()->getLocale() === 'ar' ? 'خبرة تزيد على 30 سنة في الطب النفسي والإرشاد الأسري — جلسات هاتفية حسب توافر المواعيد' : '30+ years in psychiatry and family counselling — phone sessions subject to availability' }}</p>
+          @else
+          <p>{{ app()->getLocale() === 'ar' ? 'جلسات هاتفية حسب توافر المواعيد' : 'Phone sessions subject to availability' }}</p>
+          @endif
         </div>
         <div class="advisor-card reveal reveal-delay-1">
           <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#1e40af);">
@@ -1486,11 +1491,14 @@
           Don't miss the opportunity — <span class="accent">Book Now</span>
         @endif
       </h2>
+      {{-- "Thousands" of clients is not confirmed yet (config/claims.php) --}}
+      @if(config('claims.show_unverified'))
       <p class="reveal">
         {{ app()->getLocale() === 'ar'
           ? 'انضم إلى آلاف الأشخاص الذين وجدوا وضوحاً وتغييراً حقيقياً في حياتهم بعد جلسة واحدة مع متخصصينا'
           : 'Join thousands who found real clarity and change in their lives after just one session with our specialists' }}
       </p>
+      @endif
       <div class="countdown reveal">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         {{ app()->getLocale() === 'ar' ? 'المواعيد محدودة — احجز مبكراً' : 'Appointments are limited — book early' }}
