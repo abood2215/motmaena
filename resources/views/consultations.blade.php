@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', __('Consultations') . ' — ' . __('Motmaena Center'))
-@section('meta_description', app()->getLocale() == 'ar' ? 'استشارات اجتماعية وتربوية وأسرية خاصة وسرية مع متخصصين معتمدين، وجلسات هاتفية مع أ.د. طارق الحبيب. احجز موعدك اليوم.' : 'Private, confidential social, family and parenting consultations with certified specialists, plus phone sessions with Prof. Dr. Tariq Al-Habib.')
+@section('title', app()->getLocale() == 'ar' ? 'استشارات أسرية وزوجية وتربوية في الكويت | مركز مطمئنة' : 'Family, Marital & Parenting Consultations in Kuwait | Motmaena Center')
+@section('meta_description', app()->getLocale() == 'ar' ? 'استشارات اجتماعية وتربوية وأسرية خاصة في مركز مطمئنة بالكويت، ومواعيد حضورية أو هاتفية مع أ.د. طارق الحبيب. احجز عبر الموقع أو واتساب.' : 'Private social, parenting and family consultations at Motmaena Center in Kuwait, plus in-person or phone appointments with Prof. Dr. Tariq Al-Habib. Book on the site or WhatsApp.')
+@include('partials.breadcrumb-schema', ['items' => [[app()->getLocale() == 'ar' ? 'الاستشارات' : 'Consultations', route('consultations')]]])
 
 @section('content')
 
@@ -997,6 +998,8 @@
           <p><strong>{{ app()->getLocale() === 'ar' ? 'تساؤلات حول مستقبل طفلك' : 'Anxiety about your child\'s future' }}</strong>
           {{ app()->getLocale() === 'ar' ? 'تصرفات لا تفهمها، تأخر دراسي، أو أسئلة تربوية معلّقة بلا إجابة' : 'Behaviors you don\'t understand, academic delays, or unanswered parenting questions' }}
           </p>
+          {{-- Related service: children's assessment and sessions --}}
+          <a href="{{ route('sessions') }}" style="display:inline-block;margin-top:10px;font-size:13.5px;font-weight:800;color:var(--red);">{{ app()->getLocale() === 'ar' ? 'جلسات وتقييم الأطفال ←' : "Children's sessions & assessment →" }}</a>
         </div>
         <div class="pain-card reveal reveal-delay-2">
           <div class="emoji">😶</div>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('Session Packages') . ' — ' . __('Motmaena Center'))
+@section('title', app()->getLocale() == 'ar' ? 'جلسات وتقييم الأطفال في الكويت | مركز مطمئنة' : "Children's Sessions & Assessments in Kuwait | Motmaena Center")
+@include('partials.breadcrumb-schema', ['items' => [[app()->getLocale() == 'ar' ? 'الجلسات' : 'Sessions', route('sessions')]]])
 @section('meta_description', app()->getLocale() == 'ar' ? 'جلسات وباقات لتنمية مهارات طفلك وتعديل سلوكه، وتقييمات متخصصة، مع إمكانية التقسيط — مركز مطمئنة، الكويت.' : 'Sessions and packages to build your child\'s skills and behaviour, with specialist assessments and instalments — Motmaena Center, Kuwait.')
 
 @section('content')
@@ -1169,6 +1170,11 @@
         {{ __('Call Us Directly') }}
       </a>
     </div>
+    {{-- Related service: the support packages by need (communication, learning, behaviour…) --}}
+    <p style="margin-top:28px;font-size:.95rem;font-weight:700;color:var(--muted);">
+      {{ app()->getLocale() == 'ar' ? 'تبحث عن برنامج حسب احتياج طفلك؟' : 'Looking for a programme for a specific need?' }}
+      <a href="{{ route('packages') }}" style="color:var(--red);font-weight:800;text-decoration:underline;text-underline-offset:4px;">{{ app()->getLocale() == 'ar' ? 'باقات دعم الطفل' : 'Child support packages' }}</a>
+    </p>
   </div>
 </section>
 

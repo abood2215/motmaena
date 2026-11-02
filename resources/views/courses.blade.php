@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', __('Courses') . ' - ' . __('Motmaena Center'))
-@section('meta_description', app()->getLocale() == 'ar' ? 'أكثر من 50 دورة مسجلة في التربية وتطوير الذات والعلاقات بإشراف أ.د. طارق الحبيب، تقدر تتابعها بأي وقت.' : '50+ recorded courses on parenting, self-development and relationships, supervised by Prof. Dr. Tariq Al-Habib — watch anytime.')
+@section('title', app()->getLocale() == 'ar' ? 'دورات حضورية ومسجّلة في الكويت | مركز مطمئنة' : 'In-person and Recorded Courses in Kuwait | Motmaena Center')
+@section('meta_description', app()->getLocale() == 'ar' ? 'دورات حضورية في مقر مركز مطمئنة بالكويت، ودورات مسجّلة في التربية وتطوير الذات والعلاقات تتابعها في أي وقت، بإشراف أ.د. طارق الحبيب.' : 'In-person courses at Motmaena Center in Kuwait, and recorded courses on parenting, self-development and relationships to watch anytime, supervised by Prof. Dr. Tariq Al-Habib.')
+@include('partials.breadcrumb-schema', ['items' => [[app()->getLocale() == 'ar' ? 'الدورات' : 'Courses', route('courses')]]])
 
 @section('content')
 

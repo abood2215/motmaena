@@ -14,6 +14,7 @@
         <meta name="author" content="Motmaena Center">
         <link rel="canonical" href="{{ url()->current() }}">
         @hasSection('robots')<meta name="robots" content="@yield('robots')">@endif
+        @stack('structured-data')
         <meta name="theme-color" content="#6d1b2b">
 
         <!-- Icons -->

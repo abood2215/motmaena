@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('Packages') . ' - ' . __('Motmaena Center'))
+@section('title', app()->getLocale() == 'ar' ? 'باقات دعم الطفل: التواصل وصعوبات التعلم والسلوك | مركز مطمئنة' : 'Child Support Packages: Communication, Learning & Behaviour | Motmaena Center')
+@include('partials.breadcrumb-schema', ['items' => [[app()->getLocale() == 'ar' ? 'الباقات' : 'Packages', route('packages')]]])
 @section('meta_description', app()->getLocale() == 'ar' ? 'باقات متكاملة لدعم طفلك: التواصل الاجتماعي، صعوبات التعلم، الثقة بالنفس، تعديل السلوك والمزيد — في مركز مطمئنة بالكويت.' : 'Complete packages to support your child: social communication, learning difficulties, confidence, behaviour and more — at Motmaena Center, Kuwait.')
 
 @section('content')
@@ -577,6 +578,8 @@
                         {{ $isAr ? 'احجز استشارة' : 'Book a consultation' }}
                     </a>
                 </div>
+                {{-- Related service: the first assessment and the session plans --}}
+                <a href="{{ route('sessions') }}" class="mt-5 self-start text-sm font-bold text-[#e8c98f] underline underline-offset-4 hover:text-white">{{ $isAr ? 'تقييم الطفل وخطط الجلسات' : 'Child assessment and session plans' }}</a>
             </div>
         </div>
 

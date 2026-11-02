@@ -61,6 +61,7 @@
 @endphp
 
 @section('title', ($isAr ? 'الشروط والسياسات' : 'Terms & Policies') . ' - ' . __('Motmaena Center'))
+@include('partials.breadcrumb-schema', ['items' => [[$isAr ? 'الشروط والسياسات' : 'Terms & Policies', route('policies')]]])
 @section('meta_description', app()->getLocale() == 'ar' ? 'الشروط والأحكام وسياسة الإلغاء وسياسة الخصوصية لمركز مطمئنة.' : 'Terms & conditions, cancellation policy and privacy policy of Motmaena Center.')
 
 @section('content')

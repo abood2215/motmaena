@@ -9,12 +9,23 @@
     $giftTxt = \App\Models\CourseRegistration::giftAmountText();
 @endphp
 
-@section('title', ($isAr ? 'التسجيل في ' : 'Register: ') . $offer['title'][$lang] . ' - ' . __('Motmaena Center'))
+@section('title', $offer['title'][$lang] . ($isAr ? ' في الكويت | مركز مطمئنة' : ' in Kuwait | Motmaena Center'))
 
 @if($offer['share_image'])
     @section('og_image', asset($offer['share_image']))
 @endif
-@section('meta_description', $offer['title'][$lang] . ' — ' . $offer['trainer'][$lang] . ' · ' . $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->format('Y/m/d') . ' · ' . $offer['price'] . ($isAr ? ' د.ك' : ' KWD'))
+{{-- Built only from the course's own data: trainer, date, time, place, price (and deema when it is offered) --}}
+@php
+    $metaWhen = $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->locale($lang)->translatedFormat('j F Y') . ($offer['time'][$lang] ? '، ' . $offer['time'][$lang] : '');
+    $metaWhere = trim((string) $offer['location'][$lang]);
+@endphp
+@section('meta_description', $isAr
+    ? $offer['title']['ar'] . ' مع ' . $offer['trainer']['ar'] . ' — ' . $metaWhen . '.' . ($metaWhere ? ' ' . $metaWhere . '.' : '') . ' الرسوم ' . $offer['price'] . ' د.ك' . ($deemaEnabled ? ' أو 4 دفعات مع deema.' : '.')
+    : $offer['title']['en'] . ' with ' . $offer['trainer']['en'] . ' — ' . str_replace('، ', ', ', $metaWhen) . '.' . ($metaWhere ? ' ' . $metaWhere . '.' : '') . ' Fee ' . $offer['price'] . ' KWD' . ($deemaEnabled ? ' or 4 payments with deema.' : '.'))
+@include('partials.breadcrumb-schema', ['items' => [
+    [$isAr ? 'الدورات' : 'Courses', route('courses')],
+    [$offer['title'][$lang], route('course.register', $offerKey)],
+]])
 
 @section('content')
 
@@ -68,6 +79,17 @@
 
 <section class="co-page py-8 sm:py-12" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
     <div class="container mx-auto px-4 max-w-6xl">
+
+        {{-- Where you are, and the way back to all courses (matches the BreadcrumbList data) --}}
+        <nav aria-label="{{ $isAr ? 'مسار التنقل' : 'Breadcrumb' }}" class="mb-6 text-sm font-bold text-gray-500 dark:text-gray-400">
+            <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <li><a href="{{ route('home') }}" class="hover:text-[color:var(--c1)] dark:hover:text-[color:var(--ca)] hover:underline">{{ $isAr ? 'الرئيسية' : 'Home' }}</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="{{ route('courses') }}" class="hover:text-[color:var(--c1)] dark:hover:text-[color:var(--ca)] hover:underline">{{ $isAr ? 'الدورات' : 'Courses' }}</a></li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page" class="text-gray-700 dark:text-gray-200">{{ $offer['title'][$lang] }}</li>
+            </ol>
+        </nav>
 
         {{-- Steps --}}
         <div class="flex items-center justify-center gap-3 sm:gap-5 mb-8">

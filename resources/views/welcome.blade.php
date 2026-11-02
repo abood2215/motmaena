@@ -28,15 +28,12 @@
     $customAnnouncement = $site['announcement_' . $lang] ?? '';
 @endphp
 
-@section('title', __('Welcome') . ' - ' . __('Motmaena Center'))
-@if($bundle)
-    @section('meta_description', $t(
-        $bundleCourses->pluck('title.ar')->implode(' و') . ' مع أ.د. طارق الحبيب · الدورتان معاً بـ ' . $fmt($bundle->price) . ' د.ك بدلاً من ' . $fmt($bundle->fullPrice()) . ' د.ك. مركز مطمئنة، الكويت.',
-        $bundleCourses->pluck('title.en')->implode(' & ') . ' with Prof. Dr. Tariq Al-Habib · both for ' . $fmt($bundle->price) . ' KWD instead of ' . $fmt($bundle->fullPrice()) . ' KWD. Motmaena Center, Kuwait.'
-    ))
-@elseif($featured)
-    @section('meta_description', $t($featured['title']['ar'] . ' مع أ.د. طارق الحبيب · ' . $featured['day']['ar'] . ' ' . $when($featured)->translatedFormat('j F') . ' · ' . $featured['price'] . ' د.ك. مركز مطمئنة، الكويت.', $featured['title']['en'] . ' with Prof. Dr. Tariq Al-Habib · ' . $when($featured)->translatedFormat('j F') . ' · ' . $featured['price'] . ' KWD. Motmaena Center, Kuwait.'))
-@endif
+{{-- Title and description describe the center itself (stable for search), not the offer of the month --}}
+@section('title', $t('استشارات أسرية وتربوية ودورات في الكويت | مركز مطمئنة', 'Family & Parenting Consultations and Courses in Kuwait | Motmaena Center'))
+@section('meta_description', $t(
+    'مركز مطمئنة في الكويت بإشراف أ.د. طارق الحبيب: استشارات أسرية وزوجية وتربوية، وجلسات وباقات للأطفال، ودورات حضورية ومسجّلة.',
+    'Motmaena Center in Kuwait, supervised by Prof. Dr. Tariq Al-Habib: family, marital and parenting consultations, sessions and packages for children, and in-person and recorded courses.'
+))
 @if($featured && $featured['share_image'])
     @section('og_image', asset($featured['share_image']))
 @endif
