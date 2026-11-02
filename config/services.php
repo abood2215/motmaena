@@ -52,7 +52,8 @@ return [
 
     // Tracking IDs — each script is only added to the site when its ID is set
     'analytics' => [
-        'ga4' => env('GA4_MEASUREMENT_ID'),       // G-XXXXXXXXXX
+        // Measurement ID is public (it's in every page's source) — default to the center's GA4 property
+        'ga4' => env('GA4_MEASUREMENT_ID', 'G-D6RWC35SM1'),
         'meta_pixel' => env('META_PIXEL_ID'),     // digits only
         'tiktok_pixel' => env('TIKTOK_PIXEL_ID'),
         'snap_pixel' => env('SNAP_PIXEL_ID'),     // uuid
