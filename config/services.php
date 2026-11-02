@@ -50,6 +50,11 @@ return [
         'token' => env('CENTER_SYSTEM_TOKEN'),  // same value as WEBSITE_API_TOKEN in the internal system
     ],
 
+    // Whether analytics/pixels load at all. null = decide from the environment: on only when
+    // APP_ENV is production and the site is not opened on localhost/127.0.0.1; off everywhere else.
+    // Fixed in code on purpose (no .env switch); tests override it with config().
+    'tracking_enabled' => null,
+
     // Tracking IDs — each script is only added to the site when its ID is set
     'analytics' => [
         // Measurement ID is public (it's in every page's source) — default to the center's GA4 property

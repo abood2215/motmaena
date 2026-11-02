@@ -20,6 +20,9 @@ class TrackingSettingsTest extends TestCase
         Cache::flush();
         $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
         config(['services.analytics' => []]);
+        // These tests check the admin settings reach the page, as on the live site;
+        // every other test runs with tracking off (the testing environment).
+        config(['services.tracking_enabled' => true]);
     }
 
     private function save(array $values)

@@ -46,6 +46,24 @@ class SiteSetting extends Model
         'tr_meta_verification'   => 'meta_verification',
     ];
 
+    /**
+     * Whether analytics and ad pixels may load on this request. Development copies of the site
+     * must never send visits to the center's real Google Analytics / ad accounts.
+     */
+    public static function trackingAllowed(): bool
+    {
+        $forced = config('services.tracking_enabled');
+        if ($forced !== null) {
+            return (bool) $forced;
+        }
+        // Only the live site tracks: staging, local, testing, development… never do
+        if (!app()->environment('production')) {
+            return false;
+        }
+
+        return !in_array(request()->getHost(), ['localhost', '127.0.0.1', '::1', '[::1]'], true);
+    }
+
     /** The tracking IDs in use: ['ga4' => 'G-…', 'meta_pixel' => '…', …], admin first, then .env. */
     public static function tracking(): array
     {

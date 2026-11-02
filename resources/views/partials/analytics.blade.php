@@ -1,4 +1,5 @@
-@php $tracking = \App\Models\SiteSetting::tracking(); @endphp
+{{-- Trackers load only on the live site (production, not localhost); elsewhere trackEvent below does nothing --}}
+@php $tracking = \App\Models\SiteSetting::trackingAllowed() ? \App\Models\SiteSetting::tracking() : []; @endphp
 
 @if(!empty($tracking['ga4']))
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ $tracking['ga4'] }}"></script>
