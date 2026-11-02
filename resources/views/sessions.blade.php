@@ -889,7 +889,7 @@
                     {{-- Header: Partnership badge + Title --}}
                     <div class="flex flex-col items-center text-center mb-10 sm:mb-12">
                         <div class="inline-flex items-center gap-3 mb-5 px-5 py-2.5 rounded-2xl" style="background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.25);">
-                            <img src="{{ asset('deema-logo.png') }}" alt="Deema" class="h-6 sm:h-7 w-auto object-contain" style="filter:brightness(0) invert(1);">
+                            <img src="{{ asset('deema-logo.webp') }}" alt="deema" width="160" height="112" loading="lazy" decoding="async" class="h-6 sm:h-7 w-auto object-contain" style="filter:brightness(0) invert(1);">
                             <div class="w-px h-5" style="background:rgba(255,255,255,0.3);"></div>
                             <span class="text-white/80 text-[10px] sm:text-xs font-bold uppercase tracking-widest">
                                 {{ app()->getLocale() == 'ar' ? 'بالتعاون مع Deema' : 'In partnership with Deema' }}

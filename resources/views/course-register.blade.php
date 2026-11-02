@@ -277,7 +277,7 @@
                                     </span>
                                     <span class="flex items-center justify-between gap-3 mt-1">
                                         <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات' : 'Pay the first part today, the rest in 3 payments' }}</span>
-                                        <span class="shrink-0 rounded-md bg-white border border-gray-200 dark:border-white/10 px-1"><img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 w-auto object-contain"></span>
+                                        <span class="shrink-0 rounded-md bg-white border border-gray-200 dark:border-white/10 px-1"><img src="{{ asset('deema-logo.webp') }}" alt="deema" width="160" height="112" class="h-6 w-auto object-contain"></span>
                                     </span>
                                 </span>
                             </label>

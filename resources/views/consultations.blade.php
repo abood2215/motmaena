@@ -1071,7 +1071,7 @@
       </div>
       <div class="dr-img-wrap reveal">
         <div class="ring">
-          <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="Dr. Tariq" style="object-position:50% 12%;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Dr. Tariq Al-Habib' }}" width="900" height="1441" loading="lazy" decoding="async" style="object-position:50% 12%;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
           <div class="dr-img-placeholder" style="display:none;">ط</div>
         </div>
       </div>
@@ -1213,7 +1213,7 @@
       <div class="advisors-grid">
         <div class="advisor-card reveal">
           <div class="avatar" style="background:linear-gradient(135deg,#6d1b2b,#7c2d12);overflow:hidden;">
-            <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+            <img src="{{ asset('courses-img/dr-tariq-thumb.webp') }}" alt="" width="256" height="256" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;">
             <span class="online-dot"></span>
           </div>
           <h4>{{ app()->getLocale() === 'ar' ? 'أ.د. طارق الحبيب' : 'Prof. Tariq Al-Habib' }}</h4>

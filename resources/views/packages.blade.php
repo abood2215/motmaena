@@ -585,7 +585,7 @@
             <div class="rounded-[28px] bg-[#fbf6ee] dark:bg-white/[.03] border border-[#efe4d6] dark:border-white/10 p-7 sm:p-12 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div class="text-center {{ $isAr ? 'lg:text-right' : 'lg:text-left' }}">
                     <span class="inline-flex items-center gap-2.5 bg-white dark:bg-white/5 border border-[#eadfd3] dark:border-white/10 rounded-full px-4 py-2 mb-5">
-                        <img src="{{ asset('deema-logo.png') }}" alt="deema" class="h-6 w-auto">
+                        <img src="{{ asset('deema-logo.webp') }}" alt="deema" width="160" height="112" loading="lazy" decoding="async" class="h-6 w-auto">
                         <span class="text-xs font-black text-[#7a6253] dark:text-gray-300">{{ $isAr ? 'بالتعاون مع deema' : 'In partnership with deema' }}</span>
                     </span>
                     <h2 class="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white leading-snug mb-3">

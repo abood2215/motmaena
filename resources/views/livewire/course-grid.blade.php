@@ -86,8 +86,10 @@
                                     transition-all duration-500
                                     group-hover:scale-105
                                     group-hover:shadow-[0_8px_28px_rgba(109,27,43,0.22)]">
-                            <img src="{{ asset('courses-img/dr-tariq.png') }}"
-                                 alt="{{ $course->title }}"
+                            {{-- Same doctor photo on every card: a small WebP copy (7 KB instead of 866 KB), loaded when scrolled into view.
+                                 Decorative here (the course title is the text next to it), so empty alt. --}}
+                            <img src="{{ asset('courses-img/dr-tariq-thumb.webp') }}"
+                                 alt="" width="256" height="256" loading="lazy" decoding="async"
                                  class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-112">
                         </div>
                     </div>
@@ -112,7 +114,7 @@
                 <div class="flex-1 p-5 flex flex-col bg-white dark:bg-dark-surface border-t border-[#f8eeee] dark:border-dark-border">
                     <div class="flex items-start gap-3 w-full">
                         {{-- Phones: small avatar instead of the tall graphic --}}
-                        <img src="{{ asset('courses-img/dr-tariq.png') }}" alt="" class="sm:hidden w-12 h-12 rounded-full object-cover object-top border-2 border-primary/15 shrink-0">
+                        <img src="{{ asset('courses-img/dr-tariq-thumb.webp') }}" alt="" width="256" height="256" loading="lazy" decoding="async" class="sm:hidden w-12 h-12 rounded-full object-cover object-top border-2 border-primary/15 shrink-0">
                         <div class="flex flex-col items-start text-start w-full">
                             {{-- "Recorded" badge with live dot --}}
                             <span class="inline-flex items-center gap-1.5 bg-[#fff0f0] dark:bg-primary/10 text-primary
