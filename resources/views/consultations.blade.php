@@ -1615,7 +1615,8 @@ function updatePhoneField() {
       headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       body: fd
     }).catch(function(){});
-    window.trackEvent && trackEvent('Lead', { content_name: 'consultation', content_category: type });
+    // Counted as a lead only: never send the consultation type or notes to analytics
+    window.trackEvent && trackEvent('Lead', { content_name: 'consultation' });
 
     // Open WhatsApp immediately without waiting
     var star = String.fromCodePoint(0x1F31F);
