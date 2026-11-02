@@ -312,8 +312,8 @@
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             @foreach([
-                [route('consultations'), 'chat', $t('الاستشارات', 'Consultations'), $t('جلسة خاصة وسرية مع متخصص، أو جلسة مع الدكتور طارق.', 'A private session with a specialist, or with Dr. Tariq.')],
-                [route('sessions'), 'child', $t('جلسات الأطفال', 'Child sessions'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف متخصصين.', 'Programmes to develop your child\'s skills and behaviour.')],
+                [route('consultations'), 'chat', $t('الاستشارات', 'Consultations'), $t('جلسة خاصة وسرية مع أخصائي، أو جلسة مع الدكتور طارق.', 'A private session with a specialist, or with Dr. Tariq.')],
+                [route('sessions'), 'child', $t('جلسات الأطفال', 'Child sessions'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف أخصائيين.', 'Programmes to develop your child\'s skills and behaviour.')],
                 [route('packages'), 'layers', $t('الباقات', 'Packages'), $t('باقات متكاملة للتواصل وصعوبات التعلم والثقة بالنفس.', 'Complete packages for communication, learning difficulties and confidence.')],
                 [route('courses'), 'play', $t('الدورات المسجّلة', 'Recorded courses'), $t('أكثر من 50 دورة تتابعها في أي وقت.', '50+ courses you can watch anytime.')],
             ] as [$href, $icon, $title, $desc])

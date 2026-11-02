@@ -959,9 +959,9 @@
 
       <p class="sub">
         @if(app()->getLocale() === 'ar')
-          جلسة واحدة مع متخصص معتمد قد تغيّر منظورك كليًا — احجز موعدك اليوم
+          جلسة واحدة مع أخصائي قد تغيّر منظورك كليًا — احجز موعدك اليوم
         @else
-          One session with a certified advisor can completely change your perspective — book today
+          One session with a specialist can completely change your perspective — book today
         @endif
       </p>
 
@@ -1010,7 +1010,7 @@
         <div class="pain-card reveal reveal-delay-1">
           <div class="emoji">⚖️</div>
           <p><strong>{{ app()->getLocale() === 'ar' ? 'قرار مصيري لا تعرف اتجاهه' : 'A life-changing decision with no direction' }}</strong>
-          {{ app()->getLocale() === 'ar' ? 'تقف أمام خيار كبير وتحتاج منظوراً خارجياً من متخصص موثوق' : 'Standing before a major choice and needing an outside perspective from a trusted expert' }}
+          {{ app()->getLocale() === 'ar' ? 'تقف أمام خيار كبير وتحتاج منظوراً خارجياً من أخصائي' : 'Standing before a major choice and needing an outside perspective from a specialist' }}
           </p>
         </div>
         <div class="pain-card reveal reveal-delay-2">
@@ -1210,8 +1210,8 @@
   <section class="advisors-section">
     <div style="max-width:1000px;margin:0 auto;">
       <div class="section-header">
-        <h2 class="reveal">{{ app()->getLocale() === 'ar' ? 'فريق متخصصينا' : 'Our Specialist Team' }}</h2>
-        <p class="reveal">{{ app()->getLocale() === 'ar' ? 'متخصصون معتمدون في مجالاتهم' : 'Certified professionals in their fields' }}</p>
+        <h2 class="reveal">{{ app()->getLocale() === 'ar' ? 'فريق الأخصائيين' : 'Our Specialists' }}</h2>
+        <p class="reveal">{{ app()->getLocale() === 'ar' ? 'أخصائيون في مجالاتهم' : 'Specialists in their fields' }}</p>
       </div>
       <div class="advisors-grid">
         <div class="advisor-card reveal">
@@ -1233,16 +1233,15 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             <span class="online-dot"></span>
           </div>
-          <h4>{{ app()->getLocale() === 'ar' ? 'مرشد تربوي' : 'Educational Advisor' }}</h4>
-          <div class="spec">{{ app()->getLocale() === 'ar' ? 'تربوي معتمد' : 'Certified Educational Counselor' }}</div>
-          <p>{{ app()->getLocale() === 'ar' ? 'متخصص في التوجيه التربوي واكتشاف أساليب التعلم المناسبة للأطفال' : 'Specialist in educational guidance and identifying appropriate learning styles for children' }}</p>
+          <h4>{{ app()->getLocale() === 'ar' ? 'أخصائي تربوي' : 'Educational Specialist' }}</h4>
+          <p>{{ app()->getLocale() === 'ar' ? 'أخصائي في التوجيه التربوي واكتشاف أساليب التعلم المناسبة للأطفال' : 'Specialist in educational guidance and identifying appropriate learning styles for children' }}</p>
         </div>
         <div class="advisor-card reveal reveal-delay-2">
           <div class="avatar" style="background:linear-gradient(135deg,#059669,#065f46);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             <span class="online-dot"></span>
           </div>
-          <h4>{{ app()->getLocale() === 'ar' ? 'مستشار اجتماعي' : 'Social Consultant' }}</h4>
+          <h4>{{ app()->getLocale() === 'ar' ? 'أخصائي اجتماعي' : 'Social Specialist' }}</h4>
           <div class="spec">{{ app()->getLocale() === 'ar' ? 'إرشاد اجتماعي وأسري' : 'Social & Family Guidance' }}</div>
           <p>{{ app()->getLocale() === 'ar' ? 'يساعدك على بناء علاقات صحية وتحسين الأنماط الاجتماعية السلبية' : 'Helps you build healthy relationships and improve negative social patterns' }}</p>
         </div>
@@ -1251,8 +1250,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
             <span class="online-dot"></span>
           </div>
-          <h4>{{ app()->getLocale() === 'ar' ? 'مدرّب تطوير ذات' : 'Self-Development Coach' }}</h4>
-          <div class="spec">{{ app()->getLocale() === 'ar' ? 'مدرّب معتمد' : 'Certified Life Coach' }}</div>
+          <h4>{{ app()->getLocale() === 'ar' ? 'أخصائي تطوير ذات' : 'Self-Development Specialist' }}</h4>
           <p>{{ app()->getLocale() === 'ar' ? 'يرافقك في رحلة اكتشاف الذات وبناء عادات الحياة الصحية' : 'Accompanies you on a journey of self-discovery and building healthy life habits' }}</p>
         </div>
       </div>
@@ -1277,8 +1275,8 @@
         <div class="step-item reveal reveal-delay-1">
           <div class="step-num">{{ app()->getLocale() === 'ar' ? '٢' : '2' }}</div>
           <div class="step-content">
-            <h4>{{ app()->getLocale() === 'ar' ? 'اختر المتخصص والموعد المناسب' : 'Choose Your Specialist & Time' }}</h4>
-            <p>{{ app()->getLocale() === 'ar' ? 'سيساعدك الفريق في اختيار المتخصص الأنسب لاحتياجك ومواعيد تناسب جدولك' : 'The team will help you select the right specialist and times that suit your schedule' }}</p>
+            <h4>{{ app()->getLocale() === 'ar' ? 'اختر الأخصائي والموعد المناسب' : 'Choose Your Specialist & Time' }}</h4>
+            <p>{{ app()->getLocale() === 'ar' ? 'سيساعدك الفريق في اختيار الأخصائي الأنسب لاحتياجك ومواعيد تناسب جدولك' : 'The team will help you select the right specialist and times that suit your schedule' }}</p>
           </div>
         </div>
         <div class="step-item reveal reveal-delay-2">
@@ -1309,9 +1307,9 @@
 
         @php
         $faqs = app()->getLocale() === 'ar' ? [
-          ['q' => 'ما الفرق بين الاستشارة هنا وعند أي مستشار آخر؟', 'a' => 'المستشارون في مركز مطمئنة يجمعون بين الخبرة الأكاديمية والتطبيق الميداني. الجلسة مبنية على فهم وضعك تحديداً — ليست نصائح عامة بل خطة عمل مخصصة لك أنت.'],
+          ['q' => 'ما الفرق بين الاستشارة هنا وعند أي أخصائي آخر؟', 'a' => 'الأخصائيون في مركز مطمئنة يجمعون بين الخبرة الأكاديمية والتطبيق الميداني. الجلسة مبنية على فهم وضعك تحديداً — ليست نصائح عامة بل خطة عمل مخصصة لك أنت.'],
           ['q' => 'هل الجلسة سرية؟', 'a' => 'نعم تماماً. جميع ما يُقال في الجلسة يبقى بيننا وبينك بشكل كامل. لا يُشارك أي معلومة مع أي طرف ثالث تحت أي ظرف.'],
-          ['q' => 'كيف يتم اختيار المستشار المناسب لي؟', 'a' => 'عند التواصل عبر واتساب سيسألك الفريق بعض الأسئلة البسيطة ثم يرشدك إلى المستشار الأنسب لطبيعة استشارتك سواء كانت أسرية أو تربوية أو اجتماعية.'],
+          ['q' => 'كيف يتم اختيار الأخصائي المناسب لي؟', 'a' => 'عند التواصل عبر واتساب سيسألك الفريق بعض الأسئلة البسيطة ثم يرشدك إلى الأخصائي الأنسب لطبيعة استشارتك سواء كانت أسرية أو تربوية أو اجتماعية.'],
           ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك حجز جلسة هاتفية مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الموعد المتاح.'],
           ['q' => 'كم مدة الجلسة؟', 'a' => 'الجلسة الاعتيادية مدتها 50 دقيقة. في بعض الحالات قد تُعقد جلسة أولية للتقييم تكون أقصر.'],
           ['q' => 'هل يمكن الحجز عن بعد (أونلاين)؟', 'a' => 'نعم، نوفر جلسات عن بعد لمن لا يستطيع الحضور الشخصي. تتم الجلسات عبر منصات تواصل مشفّرة وآمنة.'],
@@ -1379,7 +1377,7 @@
             <div class="term-row">
               <span class="t-icon">🤝</span>
               <p><strong>{{ app()->getLocale() === 'ar' ? 'أدب التعامل' : 'Respectful Conduct' }}</strong>
-              {{ app()->getLocale() === 'ar' ? 'يُرجى الالتزام بالاحترام المتبادل طوال الجلسة. يحق للمتخصص إنهاء الجلسة عند الإخلال بذلك.' : 'Mutual respect is required throughout. The specialist reserves the right to end the session if violated.' }}</p>
+              {{ app()->getLocale() === 'ar' ? 'يُرجى الالتزام بالاحترام المتبادل طوال الجلسة. يحق للأخصائي إنهاء الجلسة عند الإخلال بذلك.' : 'Mutual respect is required throughout. The specialist reserves the right to end the session if violated.' }}</p>
             </div>
             <div class="term-row">
               <span class="t-icon">📋</span>
@@ -1498,7 +1496,7 @@
       @if(config('claims.show_unverified'))
       <p class="reveal">
         {{ app()->getLocale() === 'ar'
-          ? 'انضم إلى آلاف الأشخاص الذين وجدوا وضوحاً وتغييراً حقيقياً في حياتهم بعد جلسة واحدة مع متخصصينا'
+          ? 'انضم إلى آلاف الأشخاص الذين وجدوا وضوحاً وتغييراً حقيقياً في حياتهم بعد جلسة واحدة مع أخصائيينا'
           : 'Join thousands who found real clarity and change in their lives after just one session with our specialists' }}
       </p>
       @endif

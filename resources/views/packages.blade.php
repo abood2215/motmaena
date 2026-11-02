@@ -568,7 +568,7 @@
                 <div class="absolute -top-16 {{ $isAr ? '-left-16' : '-right-16' }} w-56 h-56 rounded-full border-[28px] border-white/[.06]"></div>
                 <span class="text-[#e8c98f] text-sm font-black mb-2">{{ $isAr ? 'مش متأكد؟' : 'Not sure?' }}</span>
                 <h3 class="text-2xl sm:text-3xl font-black leading-snug mb-3">{{ $isAr ? 'ما بتعرف أي باقة تناسب طفلك؟' : "Don't know which package fits your child?" }}</h3>
-                <p class="text-white/80 font-semibold leading-loose mb-7 max-w-lg">{{ $isAr ? 'احكِ لنا عن طفلك على الواتساب، ونقترح لك الباقة الأنسب بعد تقييم أولي — أو احجز استشارة مع المختص.' : 'Tell us about your child on WhatsApp and we will suggest the right package after a first assessment — or book a consultation.' }}</p>
+                <p class="text-white/80 font-semibold leading-loose mb-7 max-w-lg">{{ $isAr ? 'احكِ لنا عن طفلك على الواتساب، ونقترح لك الباقة الأنسب بعد تقييم أولي — أو احجز استشارة مع الأخصائي.' : 'Tell us about your child on WhatsApp and we will suggest the right package after a first assessment — or book a consultation.' }}</p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ $waLink($isAr ? 'مرحباً، بدي أستشير عن باقة مناسبة لطفلي' : 'Hello, I would like advice on the right package for my child') }}" target="_blank" rel="noopener"
                        class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-[#6d1b2b] font-black hover:bg-[#f5ebe6] transition">
