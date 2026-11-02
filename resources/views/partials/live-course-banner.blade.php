@@ -8,7 +8,8 @@
 @include('partials.lx-styles')
 <article class="lx lx-card p-6 sm:p-8 grid lg:grid-cols-12 gap-6 lg:gap-10 items-start" dir="{{ $isArB ? 'rtl' : 'ltr' }}">
     <div class="lg:col-span-7 flex items-start gap-5">
-        <div class="lx-date"><b>{{ $dateB->format('j') }}</b><span>{{ $dateB->translatedFormat('F') }}</span></div>
+        {{-- Phones: the date is in the details below, so the text gets the full width --}}
+        <div class="lx-date max-sm:!hidden"><b>{{ $dateB->format('j') }}</b><span>{{ $dateB->translatedFormat('F') }}</span></div>
         <div class="min-w-0">
             <p class="lx-label mb-2">{{ $offer['badge'][$langB] }}</p>
             <h2 class="lx-h2 !text-[1.6rem] mb-1">{{ $offer['title'][$langB] }}</h2>

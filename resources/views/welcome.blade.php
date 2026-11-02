@@ -37,6 +37,7 @@
 @if($featured && $featured['share_image'])
     @section('og_image', asset($featured['share_image']))
 @endif
+@include('partials.org-schema')
 
 @section('content')
 @include('partials.lx-styles')
@@ -72,15 +73,6 @@
     .ps-btn:disabled { opacity: .6; }
     .lx-course-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; }
     .lx-course-row + .lx-course-row { border-top: 1px solid var(--line); }
-    .lx-topic { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; color: var(--body); line-height: 1.7; }
-    .lx-topic .lx-ico { width: 18px; height: 18px; margin-top: 4px; stroke: var(--gold); }
-    /* Sticky booking bar (phones) */
-    .mh-bar { transform: translateY(110%); transition: transform .3s ease; }
-    .mh-bar.on { transform: translateY(0); }
-    @media (max-width: 1023px) {
-        #global-float-wa, #back-to-top { transition: bottom .3s ease, opacity .5s, transform .5s; }
-        body.mh-bar-on #global-float-wa, body.mh-bar-on #back-to-top { bottom: 92px; }
-    }
 </style>
 
 <div class="lx" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
@@ -199,9 +191,34 @@
     </div>
 </section>
 
+{{-- ═══════════════ SERVICES: the way to the right service, right after the hero ═══════════════ --}}
+<section class="lx-paper py-14 sm:py-20 border-b" style="border-color: var(--line)">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-12">
+            <p class="lx-label mb-3">{{ $t('خدماتنا', 'Our services') }}</p>
+            <h2 class="lx-h2">{{ $t('كيف نقدر نساعدك؟', 'How can we help?') }}</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            @foreach([
+                [route('consultations'), 'chat', $t('الاستشارات', 'Consultations'), $t('جلسة خاصة وسرية مع أخصائي، أو جلسة مع الدكتور طارق.', 'A private session with a specialist, or with Dr. Tariq.')],
+                [route('sessions'), 'child', $t('جلسات الأطفال', 'Child sessions'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف أخصائيين.', 'Programmes to develop your child\'s skills and behaviour.')],
+                [route('packages'), 'layers', $t('الباقات', 'Packages'), $t('باقات متكاملة للتواصل وصعوبات التعلم والثقة بالنفس.', 'Complete packages for communication, learning difficulties and confidence.')],
+                [route('courses'), 'play', $t('الدورات المسجّلة', 'Recorded courses'), $t('أكثر من 50 دورة تتابعها في أي وقت.', '50+ courses you can watch anytime.')],
+            ] as [$href, $icon, $title, $desc])
+            <a href="{{ $href }}" class="lx-card p-6 group flex flex-col">
+                <span class="w-11 h-11 rounded-full flex items-center justify-center mb-5" style="border: 1px solid var(--line)">@include('partials.lx-icon', ['i' => $icon])</span>
+                <h3 class="lx-h3 mb-2">{{ $title }}</h3>
+                <p class="text-sm lx-muted font-semibold leading-relaxed mb-5">{{ $desc }}</p>
+                <span class="mt-auto text-sm font-bold lx-wine group-hover:underline underline-offset-4">{{ $t('اعرف أكثر', 'Learn more') }}</span>
+            </a>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 {{-- ═══════════════ COURSES ═══════════════ --}}
 @if($courses->isNotEmpty())
-<section id="courses" class="lx-paper py-16 sm:py-24 scroll-mt-20">
+<section id="courses" class="lx-ivory py-16 sm:py-24 scroll-mt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mb-12">
             <p class="lx-label mb-3">{{ $t('التسجيل مفتوح', 'Registration open') }}</p>
@@ -229,10 +246,14 @@
                 @if($c['topics'][$lang])
                     <div class="lx-rule mb-5"></div>
                     <p class="text-sm font-bold mb-3" style="color: var(--ink)">{{ $t('محاور الدورة', 'Course outline') }}</p>
+                    {{-- The first four topics; the full outline is on the course page --}}
                     <ul class="space-y-1.5 mb-6 text-[15px]">
-                        @foreach($c['topics'][$lang] as $topic)
+                        @foreach(array_slice($c['topics'][$lang], 0, 4) as $topic)
                             <li class="lx-topic">@include('partials.lx-icon', ['i' => 'check']){{ $topic }}</li>
                         @endforeach
+                        @if(count($c['topics'][$lang]) > 4)
+                            <li><a href="{{ route('course.register', $c['slug']) }}" class="text-sm lx-link">{{ $t('+ ' . (count($c['topics'][$lang]) - 4) . ' محاور أخرى', '+ ' . (count($c['topics'][$lang]) - 4) . ' more topics') }}</a></li>
+                        @endif
                     </ul>
                 @endif
 
@@ -279,7 +300,7 @@
 @endif
 
 {{-- ═══════════════ ABOUT THE DOCTOR ═══════════════ --}}
-<section class="lx-ivory py-16 sm:py-24">
+<section class="lx-ivory py-16 sm:py-24 border-t" style="border-color: var(--line)">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
         <div class="lg:col-span-4">
             <p class="lx-label mb-3">{{ $t('عن الدكتور', 'About the doctor') }}</p>
@@ -302,31 +323,6 @@
 
 {{-- ═══════════════ CONSULTATION WITH DR. TARIQ (request → center system) ═══════════════ --}}
 @include('partials.dr-tariq-thursday')
-
-{{-- ═══════════════ SERVICES ═══════════════ --}}
-<section class="lx-ivory py-16 sm:py-24">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mb-12">
-            <p class="lx-label mb-3">{{ $t('خدماتنا', 'Our services') }}</p>
-            <h2 class="lx-h2">{{ $t('كيف نقدر نساعدك؟', 'How can we help?') }}</h2>
-        </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            @foreach([
-                [route('consultations'), 'chat', $t('الاستشارات', 'Consultations'), $t('جلسة خاصة وسرية مع أخصائي، أو جلسة مع الدكتور طارق.', 'A private session with a specialist, or with Dr. Tariq.')],
-                [route('sessions'), 'child', $t('جلسات الأطفال', 'Child sessions'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف أخصائيين.', 'Programmes to develop your child\'s skills and behaviour.')],
-                [route('packages'), 'layers', $t('الباقات', 'Packages'), $t('باقات متكاملة للتواصل وصعوبات التعلم والثقة بالنفس.', 'Complete packages for communication, learning difficulties and confidence.')],
-                [route('courses'), 'play', $t('الدورات المسجّلة', 'Recorded courses'), $t('أكثر من 50 دورة تتابعها في أي وقت.', '50+ courses you can watch anytime.')],
-            ] as [$href, $icon, $title, $desc])
-            <a href="{{ $href }}" class="lx-card p-6 group flex flex-col">
-                <span class="w-11 h-11 rounded-full flex items-center justify-center mb-5" style="border: 1px solid var(--line)">@include('partials.lx-icon', ['i' => $icon])</span>
-                <h3 class="lx-h3 mb-2">{{ $title }}</h3>
-                <p class="text-sm lx-muted font-semibold leading-relaxed mb-5">{{ $desc }}</p>
-                <span class="mt-auto text-sm font-bold lx-wine group-hover:underline underline-offset-4">{{ $t('اعرف أكثر', 'Learn more') }}</span>
-            </a>
-            @endforeach
-        </div>
-    </div>
-</section>
 
 {{-- ═══════════════ PSYCHOLOGICAL CENTER — COMING SOON (Admin → Content → switch) ═══════════════ --}}
 @if(($site['psych_soon'] ?? '1') === '1')

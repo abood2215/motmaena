@@ -18,6 +18,8 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // No automatic button/metadata collection: only the events this site sends on purpose (never form contents)
+    fbq('set', 'autoConfig', false, @json($tracking['meta_pixel']));
     fbq('init', @json($tracking['meta_pixel']));
     fbq('track', 'PageView');
 </script>

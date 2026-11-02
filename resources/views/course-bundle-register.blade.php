@@ -32,10 +32,10 @@
             </p>
         </div>
 
-        <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
             {{-- Summary --}}
-            <aside class="lx-card lg:col-span-5 lg:order-last p-6 sm:p-7">
+            <aside class="lx-card lg:col-span-5 lg:order-last lg:sticky lg:top-28 p-6 sm:p-7 min-w-0">
                 <p class="lx-h3 mb-5">{{ $t('ملخّص العرض', 'Offer summary') }}</p>
 
                 <div class="space-y-4 mb-6">
@@ -71,7 +71,7 @@
             </aside>
 
             {{-- Form --}}
-            <div class="lx-card lg:col-span-7 p-6 sm:p-8">
+            <div class="lx-card lg:col-span-7 p-6 sm:p-8 min-w-0">
                 <p class="lx-h3 mb-1">{{ $t('بيانات المشترك', 'Your details') }}</p>
                 <p class="text-sm lx-muted font-semibold mb-6">{{ $t('نستخدمها لتأكيد حجزك في الدورتين وإرسال التذكير.', 'Used to confirm your seat in both courses and to remind you.') }}</p>
 
@@ -115,7 +115,7 @@
                     </fieldset>
                     @endif
 
-                    <button type="submit" id="bundle-pay" class="lx-btn lx-btn-primary w-full !py-4 text-lg">
+                    <button type="submit" id="bundle-pay" class="lx-btn lx-btn-primary w-full !py-4 text-base sm:text-lg !whitespace-normal text-center">
                         @include('partials.lx-icon', ['i' => 'lock', 'class' => '!stroke-white !w-5 !h-5'])
                         <span id="bundle-pay-label">{{ $t('الدفع والتسجيل في الدورتين', 'Pay & register for both') }} · {{ $fmt($price) }} {{ $kwd }}</span>
                     </button>

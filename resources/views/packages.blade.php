@@ -440,11 +440,11 @@
     .pk-chip b { font-size: 11px; color: #b08a45; font-weight: 900; }
     .pk-chip:hover { border-color: var(--wine); color: var(--wine); }
     .dark .pk-chip { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: #e5e7eb; }
-    .pk-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #eee5dc; border-radius: 24px; padding: 26px; scroll-margin-top: 110px; transition: border-color .2s, box-shadow .2s, transform .2s; }
-    .pk-card:hover { border-color: #dcc7b6; box-shadow: 0 26px 50px -32px rgba(74,15,27,.4); transform: translateY(-3px); }
+    .pk-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #eee5dc; border-radius: 14px; padding: 26px; scroll-margin-top: 110px; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .pk-card:hover { border-color: #dcc7b6; }
     .pk-card:target { border-color: var(--wine); box-shadow: 0 0 0 4px rgba(109,27,43,.12); }
     .dark .pk-card { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.08); }
-    .pk-icon { width: 52px; height: 52px; border-radius: 16px; padding: 13px; background: #f7efe9; color: var(--wine); flex-shrink: 0; transition: background .2s, color .2s; }
+    .pk-icon { width: 48px; height: 48px; border-radius: 999px; padding: 12px; background: #f7efe9; color: var(--wine); flex-shrink: 0; transition: background .2s, color .2s; }
     .pk-card:hover .pk-icon { background: var(--wine); color: #fff; }
     .dark .pk-icon { background: rgba(255,255,255,.06); color: #e7a3ae; }
     .pk-num { font-size: 13px; font-weight: 900; letter-spacing: .1em; color: #b08a45; }
@@ -455,7 +455,7 @@
     .pk-more summary:hover { color: var(--wine); }
     .pk-more[open] summary svg { transform: rotate(180deg); }
     .dark .pk-more summary { border-color: rgba(255,255,255,.1); color: #c7b8ad; }
-    .pk-cta { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--wine); color: var(--wine); font-size: 14px; font-weight: 900; transition: background .2s, color .2s; }
+    .pk-cta { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--wine); color: var(--wine); font-size: 14px; font-weight: 900; transition: background .2s, color .2s; }
     .pk-cta:hover { background: var(--wine); color: #fff; }
     .dark .pk-cta { border-color: #e7a3ae; color: #f3c6cd; }
     .dark .pk-cta:hover { background: #e7a3ae; color: #2a0d13; }
@@ -487,10 +487,10 @@
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-9">
             <a href="{{ $waLink($isAr ? 'مرحباً، بدي أستشير عن باقة مناسبة لطفلي' : 'Hello, I would like advice on the right package for my child') }}" target="_blank" rel="noopener"
-               class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black shadow-[0_14px_30px_-14px_rgba(109,27,43,.8)] transition">
+               class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-[10px] bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black transition">
                 {!! $waIcon !!} {{ $isAr ? 'احكِ لنا عن طفلك' : 'Tell us about your child' }}
             </a>
-            <a href="#packages-section" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-black text-[#6d1b2b] dark:text-[#f3c6cd] hover:bg-white/70 dark:hover:bg-white/5 transition">
+            <a href="#packages-section" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-[10px] font-black text-[#6d1b2b] dark:text-[#f3c6cd] hover:bg-white/70 dark:hover:bg-white/5 transition">
                 {{ $isAr ? 'تصفّح الباقات' : 'Browse packages' }}
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </a>
@@ -565,16 +565,15 @@
 
             {{-- Not sure? Fills the last row next to the final card --}}
             <div class="reveal sm:col-span-1 lg:col-span-2 rounded-[24px] bg-[#6d1b2b] text-white p-8 sm:p-10 flex flex-col justify-center relative overflow-hidden">
-                <div class="absolute -top-16 {{ $isAr ? '-left-16' : '-right-16' }} w-56 h-56 rounded-full border-[28px] border-white/[.06]"></div>
                 <span class="text-[#e8c98f] text-sm font-black mb-2">{{ $isAr ? 'مش متأكد؟' : 'Not sure?' }}</span>
                 <h3 class="text-2xl sm:text-3xl font-black leading-snug mb-3">{{ $isAr ? 'ما بتعرف أي باقة تناسب طفلك؟' : "Don't know which package fits your child?" }}</h3>
                 <p class="text-white/80 font-semibold leading-loose mb-7 max-w-lg">{{ $isAr ? 'احكِ لنا عن طفلك على الواتساب، ونقترح لك الباقة الأنسب بعد تقييم أولي — أو احجز استشارة مع الأخصائي.' : 'Tell us about your child on WhatsApp and we will suggest the right package after a first assessment — or book a consultation.' }}</p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ $waLink($isAr ? 'مرحباً، بدي أستشير عن باقة مناسبة لطفلي' : 'Hello, I would like advice on the right package for my child') }}" target="_blank" rel="noopener"
-                       class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-[#6d1b2b] font-black hover:bg-[#f5ebe6] transition">
+                       class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[10px] bg-white text-[#6d1b2b] font-black hover:bg-[#f5ebe6] transition">
                         {!! $waIcon !!} {{ $isAr ? 'استشرنا على الواتساب' : 'Ask us on WhatsApp' }}
                     </a>
-                    <a href="{{ route('consultations') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/30 font-black hover:bg-white/10 transition">
+                    <a href="{{ route('consultations') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[10px] border border-white/30 font-black hover:bg-white/10 transition">
                         {{ $isAr ? 'احجز استشارة' : 'Book a consultation' }}
                     </a>
                 </div>
@@ -596,7 +595,7 @@
                     </h2>
                     <p class="font-semibold text-[#6b5446] dark:text-gray-300 leading-loose mb-6">{{ $isAr ? 'ادفع أول دفعة اليوم والباقي على 3 دفعات — بدون رسوم إضافية وبموافقة فورية.' : 'Pay the first part today and the rest over 3 payments — no extra fees, instant approval.' }}</p>
                     <a href="{{ $waLink($isAr ? 'مرحباً، بدي أشترك بباقة وأقسّط مع deema' : 'Hello, I would like to subscribe to a package and pay with deema') }}" target="_blank" rel="noopener"
-                       class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black transition">
+                       class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-[10px] bg-[#6d1b2b] hover:bg-[#4a0f1b] text-white font-black transition">
                         {!! $waIcon !!} {{ $isAr ? 'تواصل معنا للاشتراك' : 'Contact us to subscribe' }}
                     </a>
                 </div>

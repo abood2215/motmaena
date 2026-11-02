@@ -3,7 +3,7 @@
 @if(!empty($compact))
 {{-- Slim one-line version for the checkout summary --}}
 <div class="countdown flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 bg-[#fbf6ee] dark:bg-white/5 text-sm {{ $class ?? '' }}" data-target="{{ $startsAt }}">
-    <span class="font-bold text-gray-600 dark:text-gray-300">⏳ {{ $isArC ? 'تبدأ الدورة بعد' : 'Starts in' }}</span>
+    <span class="font-bold text-gray-600 dark:text-gray-300">{{ $isArC ? 'تبدأ الدورة بعد' : 'Starts in' }}</span>
     <span class="flex items-baseline gap-2.5 font-black text-gray-900 dark:text-white tabular-nums" dir="{{ $isArC ? 'rtl' : 'ltr' }}">
         @foreach([['d', $isArC ? 'يوم' : 'd'], ['h', $isArC ? 'ساعة' : 'h'], ['m', $isArC ? 'دقيقة' : 'm']] as [$unit, $label])
             <span><span data-unit="{{ $unit }}">--</span> <small class="text-[11px] font-bold text-gray-500 dark:text-gray-400">{{ $label }}</small></span>

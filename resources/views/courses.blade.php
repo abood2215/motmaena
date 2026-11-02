@@ -6,26 +6,30 @@
 
 @section('content')
 
-{{-- ════════════════ HERO SECTION ════════════════ --}}
-<section class="relative py-12 sm:py-20 bg-secondary dark:bg-dark-surface overflow-hidden border-b border-gray-100 dark:border-dark-border">
-    {{-- Background Orbs --}}
-    <div class="absolute top-0 {{ app()->getLocale() == 'ar' ? 'right-0' : 'left-0' }} w-1/2 h-full bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
-    
-    <div class="container mx-auto px-4 relative z-10 text-center">
-        <div class="inline-flex items-center gap-2 bg-white dark:bg-dark-border px-4 py-2 rounded-full shadow-sm mb-6 border border-primary/10 reveal">
-            <span class="w-2 h-2 bg-primary rounded-full animate-pulse shrink-0"></span>
-            <span class="text-primary font-bold text-xs uppercase tracking-widest">{{ __('Exclusive and recorded courses') }}</span>
-        </div>
-        
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 reveal">
-            {{ app()->getLocale() == 'ar' ? 'جميع الدورات المتخصصة' : 'All Specialized Courses' }}
-        </h1>
-        
-        <p class="text-sm sm:text-base lg:text-lg text-[var(--muted-color)] max-w-2xl mx-auto leading-relaxed reveal">
-            {{ app()->getLocale() == 'ar' 
-                ? 'استكشف مجموعة واسعة من الدورات التنموية والتربوية تحت إشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي، لتطوير مهاراتك ومهاراتك الشخصية.' 
+@include('partials.lx-styles')
+@php $isArP = app()->getLocale() == 'ar'; @endphp
+
+{{-- ════════════════ HERO ════════════════ --}}
+<section class="lx lx-ivory border-b" style="border-color: var(--line)" dir="{{ $isArP ? 'rtl' : 'ltr' }}">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <nav aria-label="{{ $isArP ? 'مسار التنقل' : 'Breadcrumb' }}" class="mb-8 text-sm font-semibold lx-muted">
+            <a href="{{ route('home') }}" class="hover:underline underline-offset-4">{{ $isArP ? 'الرئيسية' : 'Home' }}</a>
+            <span class="mx-2">/</span>
+            <span aria-current="page" style="color: var(--ink)">{{ $isArP ? 'الدورات' : 'Courses' }}</span>
+        </nav>
+        <p class="lx-label mb-4">{{ __('Exclusive and recorded courses') }}</p>
+        <h1 class="lx-h1 mb-5">{{ $isArP ? 'دورات حضورية ومسجّلة مع أ.د. طارق الحبيب' : 'In-person and recorded courses with Prof. Dr. Tariq Al-Habib' }}</h1>
+        <p class="lx-text text-lg max-w-2xl">
+            {{ $isArP
+                ? 'استكشف مجموعة واسعة من الدورات التنموية والتربوية تحت إشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي، لتطوير مهاراتك ومهاراتك الشخصية.'
                 : 'Explore a wide range of developmental and educational courses under the supervision of Prof. Dr. Tariq Al-Habib, professor & consultant psychiatrist, to develop your skills and personal skills.' }}
         </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-8">
+            @if(rescue(fn () => \App\Models\CourseOffer::upcoming()->isNotEmpty(), false, false))
+            <a href="#live" class="lx-btn lx-btn-primary">{{ $isArP ? 'الدورات الحضورية القادمة' : 'Upcoming in-person courses' }}</a>
+            @endif
+            <a href="#courses" class="lx-btn lx-btn-outline">{{ $isArP ? 'الدورات المسجّلة' : 'Recorded courses' }}</a>
+        </div>
     </div>
 </section>
 
@@ -39,11 +43,12 @@
     }, collect(), false);
 @endphp
 @if($liveOffers->isNotEmpty())
-<section id="live" class="pt-12 sm:pt-16 bg-white dark:bg-dark-bg">
-    <div class="container mx-auto px-4 space-y-6">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white reveal">
-            {{ app()->getLocale() == 'ar' ? 'التسجيل مفتوح الآن' : 'Registration open now' }}
-        </h2>
+<section id="live" class="lx lx-paper pt-12 sm:pt-16 scroll-mt-20" dir="{{ $isArP ? 'rtl' : 'ltr' }}">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div>
+            <p class="lx-label mb-3">{{ $isArP ? 'حضوري في المركز' : 'In person at the center' }}</p>
+            <h2 class="lx-h2">{{ $isArP ? 'التسجيل مفتوح الآن' : 'Registration open now' }}</h2>
+        </div>
         @foreach($liveOffers as $offer)
             @include('partials.live-course-banner', ['offer' => $offer])
         @endforeach
@@ -67,8 +72,8 @@
 @endif
 
 {{-- ════════════════ COURSES GRID SECTION ════════════════ --}}
-<section id="courses" class="py-14 sm:py-20 md:py-24 bg-white dark:bg-dark-bg relative overflow-hidden">
-    <div class="container mx-auto px-4">
+<section id="courses" class="lx lx-paper py-14 sm:py-20 scroll-mt-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <livewire:course-grid />
     </div>
 </section>

@@ -10,7 +10,19 @@ class CourseGrid extends Component
     public $search = '';
     public $level = '';
 
+    /** How many recorded courses show before "show more" (12 at a time keeps the page short on phones) */
+    public int $perPage = 12;
+
     protected $queryString = ['search', 'level'];
+
+    public function loadMore(): void
+    {
+        $this->perPage += 12;
+    }
+
+    // A new search or level starts again from the first 12
+    public function updatedSearch(): void { $this->perPage = 12; }
+    public function updatedLevel(): void { $this->perPage = 12; }
 
     public function render()
     {
@@ -26,7 +38,8 @@ class CourseGrid extends Component
             ->get();
 
         return view('livewire.course-grid', [
-            'courses' => $courses,
+            'courses' => $courses->take($this->perPage),
+            'total'   => $courses->count(),
         ]);
     }
 }

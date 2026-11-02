@@ -23,6 +23,7 @@
     .lx-btn-light { background: #fff; color: var(--wine-d); }
     .lx-btn-light:hover { background: #f3ece3; }
     .lx-btn:disabled { opacity: .6; }
+    @media (max-width: 400px) { .lx-btn { white-space: normal; text-align: center; } }
     .lx-card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }
     .lx-rule { height: 1px; background: var(--line); }
     .lx-ico { width: 22px; height: 22px; flex-shrink: 0; fill: none; stroke: var(--wine); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
@@ -48,5 +49,33 @@
     .lx-dot { width: 16px; height: 16px; border-radius: 99px; border: 1.5px solid var(--muted); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
     .lx-choice input:checked + span .lx-dot { border-color: var(--wine); }
     .lx-choice input:checked + span .lx-dot::after { content: ''; width: 8px; height: 8px; border-radius: 99px; background: var(--wine); }
+    .lx-topic { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; color: var(--body); line-height: 1.7; }
+    .lx-topic .lx-ico { width: 18px; height: 18px; margin-top: 4px; stroke: var(--gold); }
+    .lx-icon-ring { width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--paper); }
+    .lx-section { padding-block: 4rem; }
+    @media (min-width: 640px) { .lx-section { padding-block: 6rem; } }
+    .lx-notice { border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); background: color-mix(in srgb, var(--gold) 7%, var(--paper)); border-radius: 12px; }
+    /* Questions: native <details>, no script needed */
+    .lx-faq { border-bottom: 1px solid var(--line); }
+    .lx-faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; font-weight: 800; color: var(--ink); }
+    .lx-faq summary::-webkit-details-marker { display: none; }
+    .lx-faq summary::after { content: '+'; font-size: 22px; font-weight: 500; color: var(--wine); line-height: 1; flex-shrink: 0; }
+    .dark .lx-faq summary::after { color: var(--gold-l); }
+    .lx-faq[open] summary::after { content: '−'; }
+    .lx-faq p { padding-bottom: 20px; margin-top: -4px; }
+    .lx-select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 15px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-inline-end: 36px; }
+    [dir="rtl"] .lx-select { background-position: 20px 55%, 15px 55%; }
+    .lx-check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 14px; font-weight: 600; line-height: 1.8; color: var(--body); }
+    .lx-check input { width: 18px; height: 18px; margin-top: 4px; flex-shrink: 0; accent-color: var(--wine); }
+    .lx-link { color: var(--wine); font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+    .dark .lx-link { color: var(--gold-l); }
+    .lx-price { font-weight: 800; color: var(--ink); line-height: 1; }
+    /* Sticky booking bar (phones): slides in after the first call to action */
+    .mh-bar { transform: translateY(110%); transition: transform .3s ease; }
+    .mh-bar.on { transform: translateY(0); }
+    @media (max-width: 1023px) {
+        #global-float-wa, #back-to-top { transition: bottom .3s ease, opacity .5s, transform .5s; }
+        body.mh-bar-on #global-float-wa, body.mh-bar-on #back-to-top { bottom: 92px; }
+    }
 </style>
 @endonce

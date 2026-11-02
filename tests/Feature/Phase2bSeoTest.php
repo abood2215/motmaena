@@ -29,6 +29,12 @@ class Phase2bSeoTest extends TestCase
         }, $m[1]);
     }
 
+    /** Only the BreadcrumbList blocks (pages may also carry the center or course-event data) */
+    private function breadcrumbs(string $html): array
+    {
+        return array_values(array_filter($this->jsonLd($html), fn ($b) => ($b['@type'] ?? null) === 'BreadcrumbList'));
+    }
+
     public function test_titles_and_descriptions_in_arabic_and_english(): void
     {
         $expect = [
@@ -120,7 +126,7 @@ class Phase2bSeoTest extends TestCase
 
     public function test_breadcrumb_data_is_valid_and_points_at_real_pages(): void
     {
-        $this->assertEmpty($this->jsonLd($this->get('/')->getContent()), 'no breadcrumb on the homepage itself');
+        $this->assertEmpty($this->breadcrumbs($this->get('/')->getContent()), 'no breadcrumb on the homepage itself');
 
         $cases = [
             '/courses'       => ['الرئيسية', 'الدورات'],
@@ -132,8 +138,8 @@ class Phase2bSeoTest extends TestCase
         ];
 
         foreach ($cases as $page => $names) {
-            $blocks = $this->jsonLd($this->get($page)->getContent());
-            $this->assertCount(1, $blocks, "one JSON-LD block on $page");
+            $blocks = $this->breadcrumbs($this->get($page)->getContent());
+            $this->assertCount(1, $blocks, "one breadcrumb block on $page");
             $list = $blocks[0];
             $this->assertSame('https://schema.org', $list['@context']);
             $this->assertSame('BreadcrumbList', $list['@type']);
@@ -147,7 +153,7 @@ class Phase2bSeoTest extends TestCase
             $this->assertSame(url($page), end($list['itemListElement'])['item'], "last crumb is $page itself");
         }
 
-        $en = $this->jsonLd($this->withSession(['locale' => 'en'])->get('/register/anger-management')->getContent());
+        $en = $this->breadcrumbs($this->withSession(['locale' => 'en'])->get('/register/anger-management')->getContent());
         $this->assertSame(['Home', 'Courses', 'Anger Management Course'], array_column($en[0]['itemListElement'], 'name'));
     }
 

@@ -47,7 +47,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -91,9 +91,20 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
-                        @if($navOffer)
-                            <a href="{{ route('course.register', $navOffer['slug']) }}" class="hidden lg:inline-flex items-center gap-2 bg-primary hover:opacity-90 text-white text-sm font-black px-5 py-2.5 rounded-xl shadow-sm transition">
-                                {{ app()->getLocale() == 'ar' ? 'احجز مقعدك' : 'Book your seat' }}
+                        {{-- The header button follows the page: a consultation on the consultations page, a question about the
+                             child on the children's pages, the open course everywhere else --}}
+                        @php
+                            $hdrAr = app()->getLocale() == 'ar';
+                            $hdrCta = match (true) {
+                                request()->routeIs('consultations') => ['#book', $hdrAr ? 'احجز استشارتك' : 'Book a consultation', false],
+                                request()->routeIs('sessions', 'packages') => ['https://wa.me/' . $site['whatsapp'] . '?text=' . rawurlencode($hdrAr ? 'مرحباً، أستفسر عن جلسات وباقات الأطفال' : 'Hello, I would like to ask about sessions and packages for my child'), $hdrAr ? 'استشرنا عن طفلك' : 'Ask about your child', true],
+                                (bool) $navOffer => [route('course.register', $navOffer['slug']), $hdrAr ? 'احجز مقعدك' : 'Book your seat', false],
+                                default => null,
+                            };
+                        @endphp
+                        @if($hdrCta)
+                            <a href="{{ $hdrCta[0] }}" @if($hdrCta[2]) target="_blank" rel="noopener" @endif data-track-location="header" class="hidden lg:inline-flex items-center gap-2 bg-primary hover:opacity-90 text-white text-sm font-black px-5 py-2.5 rounded-xl shadow-sm transition">
+                                {{ $hdrCta[1] }}
                             </a>
                         @endif
                         <!-- Hamburger (mobile only) -->
