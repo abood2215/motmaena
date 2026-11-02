@@ -46,7 +46,7 @@ class NovemberCoursesTest extends TestCase
             ->assertSee('og-psychological-first-aid.jpg', false);
         $this->get('/register/psychological-first-aid')->assertOk()->assertSee('كيف تتعامل مع من يريد الانتحار')->assertSee('الهيئة العامة للتعليم التطبيقي');
         $this->get('/register/communication-skills')->assertOk()->assertSee('خصائص المتحدث المؤثر');
-        $this->get('/register/anger-management')->assertNotFound(); // closed after its date
+        $this->get('/register/anger-management')->assertStatus(410)->assertSee('انتهت هذه الدورة'); // held: the old link explains it ended
         $this->get('/courses')->assertSee('الإسعافات النفسية الأولية');
     }
 

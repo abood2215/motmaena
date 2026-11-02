@@ -130,7 +130,8 @@
                             {{-- Instructor --}}
                             <span class="text-xs font-semibold text-gray-400 mb-3 block">أ.د طارق الحبيب</span>
 
-                            {{-- 5-Star Rating --}}
+                            {{-- 5-Star Rating: the same five stars on every course, not real ratings, so hidden (config/claims.php) --}}
+                            @if(config('claims.show_unverified'))
                             <div class="flex items-center gap-0.5 text-[#f59e0b] mb-4">
                                 @for($i = 0; $i < 5; $i++)
                                 <svg class="w-3.5 h-3.5 fill-current transition-transform duration-300 group-hover:scale-110"
@@ -139,6 +140,7 @@
                                 </svg>
                                 @endfor
                             </div>
+                            @endif
                         </div>
                     </div>
                     <!-- Footer: CTA Button -->

@@ -290,12 +290,15 @@
             <p class="lx-muted font-semibold">{{ config('doctor.title.' . $lang) }}</p>
         </div>
         <div class="lg:col-span-8">
-            <p class="lx-text text-lg mb-10">{{ config('doctor.bio.' . $lang) }}</p>
+            <p class="lx-text text-lg {{ config('claims.show_unverified') ? 'mb-10' : '' }}">{{ config('doctor.bio.' . $lang) }}</p>
+            {{-- Figures awaiting the center's confirmation (config/claims.php) --}}
+            @if(config('claims.show_unverified'))
             <div class="grid grid-cols-3 gap-6 border-t pt-8" style="border-color: var(--line)">
                 @foreach([['+30', $t('سنة في الطب النفسي', 'years in psychiatry')], ['+50', $t('دورة وبرنامج', 'courses')], ['+12', $t('سنة لمركز مطمئنة', 'years of Motmaena')]] as [$n, $l])
                     <div><p class="text-3xl sm:text-4xl font-extrabold lx-wine" dir="ltr">{{ $n }}</p><p class="text-sm lx-muted font-semibold mt-1">{{ $l }}</p></div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </section>

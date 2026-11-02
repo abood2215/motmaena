@@ -49,8 +49,17 @@ Route::redirect('/privacy', '/policies#privacy');
 Route::redirect('/refund-policy', '/policies#refund');
 
 Route::get('/sitemap.xml', function () {
-    $urls = collect(['home', 'courses', 'packages', 'sessions', 'consultations', 'policies'])->map(fn ($r) => route($r))
-        ->merge(\App\Models\CourseOffer::where('is_active', true)->pluck('slug')->map(fn ($k) => route('course.register', $k)));
+    // Static pages have no reliable edit date, so they go in without <lastmod>
+    $urls = collect(['home', 'courses', 'packages', 'sessions', 'consultations', 'policies'])
+        ->map(fn ($r) => ['loc' => route($r), 'lastmod' => null]);
+
+    // Only courses that are open for registration (active and not yet held); ended ones are left out
+    $urls = $urls->merge(\App\Models\CourseOffer::open()->orderBy('date')->get()
+        ->map(fn ($o) => ['loc' => route('course.register', $o->slug), 'lastmod' => $o->updated_at?->toAtomString()]));
+
+    if ($bundle = \App\Models\CourseBundle::current()) {
+        $urls->push(['loc' => route('bundle.register', $bundle->slug), 'lastmod' => $bundle->updated_at?->toAtomString()]);
+    }
 
     return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml');
 })->name('sitemap');

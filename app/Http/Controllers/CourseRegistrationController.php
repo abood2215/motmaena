@@ -28,10 +28,32 @@ class CourseRegistrationController extends Controller
 
     public function show(string $offerKey)
     {
+        if (!CourseOffer::findActive($offerKey)) {
+            return $this->ended($offerKey);
+        }
+
         $offer = $this->offerOrFail($offerKey);
         $deemaEnabled = $this->deema->enabled() && $offer['show_installments'];
 
         return view('course-register', compact('offer', 'offerKey', 'deemaEnabled'));
+    }
+
+    /**
+     * A course that has been held or closed: old links (posters, ads, Google) get a clear
+     * "this course has ended" page with "notify me" instead of a 404. Served as 410 Gone so
+     * search engines drop it; registering and paying for it stay blocked as before.
+     */
+    private function ended(string $offerKey)
+    {
+        $course = CourseOffer::where('slug', $offerKey)->first();
+        abort_unless($course, 404);
+
+        return response()->view('course-ended', [
+            'offer'    => $course->toOfferArray(),
+            'offerKey' => $offerKey,
+            'held'     => $course->date->lt(today()),
+            'upcoming' => CourseOffer::upcoming()->map->toOfferArray(),
+        ], 410);
     }
 
     public function checkCode(Request $request, string $offerKey)

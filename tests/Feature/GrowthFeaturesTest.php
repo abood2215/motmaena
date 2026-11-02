@@ -63,7 +63,7 @@ class GrowthFeaturesTest extends TestCase
         CourseOffer::create(['slug' => 'old', 'title_ar' => 'دورة قديمة', 'price' => 20, 'date' => '2026-10-01', 'is_active' => true]);
 
         $this->get('/')->assertSee('الدورات القادمة')->assertSee('دورة التربية')->assertDontSee('دورة قديمة');
-        $this->get('/register/old')->assertNotFound();
+        $this->get('/register/old')->assertStatus(410)->assertSee('انتهت هذه الدورة')->assertDontSee('id="reg-form"', false);
         $this->get('/register/parenting')->assertOk();
     }
 

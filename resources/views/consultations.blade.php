@@ -1051,6 +1051,8 @@
         <p class="bio">
           {{ config('doctor.bio.' . (app()->getLocale() === 'ar' ? 'ar' : 'en')) }}
         </p>
+        {{-- Unconfirmed figures: hidden until the center confirms them (config/claims.php) --}}
+        @if(config('claims.show_unverified'))
         <div class="dr-stats">
           <div class="dr-stat">
             <span class="num" dir="ltr" data-target="100000" data-prefix="+">0</span>
@@ -1065,6 +1067,7 @@
             <span class="lbl">{{ app()->getLocale() === 'ar' ? 'رضا المراجعين' : 'Client Satisfaction' }}</span>
           </div>
         </div>
+        @endif
       </div>
       <div class="dr-img-wrap reveal">
         <div class="ring">
@@ -1078,7 +1081,8 @@
   {{-- ── Thursday with Dr. Tariq (request → center system) ── --}}
   @include('partials.dr-tariq-thursday')
 
-  {{-- ── Stats Bar ── --}}
+  {{-- ── Stats Bar + Testimonials: unconfirmed figures and quotes, hidden until the center confirms them (config/claims.php) ── --}}
+  @if(config('claims.show_unverified'))
   <section class="stats-bar">
     <div class="stats-inner">
       <div class="stat-item reveal">
@@ -1157,6 +1161,7 @@
       </div>
     </div>
   </section>
+  @endif
 
   {{-- ── Outcomes ── --}}
   <section class="outcomes-section">

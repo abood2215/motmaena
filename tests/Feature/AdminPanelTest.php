@@ -55,9 +55,9 @@ class AdminPanelTest extends TestCase
         $this->get('/')->assertSee('دورة الثقة بالنفس')->assertSee('محور ثاني')->assertSee('/register/self-confidence', false);
         $this->get('/register/self-confidence')->assertOk()->assertSee('25.000');
 
-        // Closing registration hides it
+        // Closing registration hides the form: the old link now says registration is closed
         $this->post("/admin/courses/{$offer->id}/toggle/is_active");
-        $this->get('/register/self-confidence')->assertNotFound();
+        $this->get('/register/self-confidence')->assertStatus(410)->assertSee('التسجيل مغلق')->assertDontSee('id="reg-form"', false);
     }
 
     public function test_next_course_is_set_up_from_admin_without_code_changes(): void

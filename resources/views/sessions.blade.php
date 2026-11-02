@@ -693,7 +693,8 @@
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section class="hero">
-  <div class="hero-inner reveal">
+  {{-- Without the stats card the text takes the full width (no empty column) --}}
+  <div class="hero-inner reveal" @unless(config('claims.show_unverified')) style="grid-template-columns: 1fr" @endunless>
 
     <div>
       <div class="hero-tag">
@@ -717,7 +718,8 @@
       </div>
     </div>
 
-    <!-- Stats Card -->
+    <!-- Stats Card: unconfirmed figures and rating, hidden until the center confirms them (config/claims.php) -->
+    @if(config('claims.show_unverified'))
     <div class="hero-stats">
       <p class="stats-label">{{ __('Our Achievements in Numbers') }}</p>
       <div class="stat-row">
@@ -742,6 +744,7 @@
         </div>
       </div>
     </div>
+    @endif
 
   </div>
 </section>
