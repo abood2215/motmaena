@@ -87,7 +87,7 @@
 
 {{-- ═══════════════ ANNOUNCEMENT STRIP ═══════════════ --}}
 @if($customAnnouncement || $bundle || $featured)
-<a href="{{ $bundle ? route('bundle.register', $bundle->slug) : ($featured && !$featured['is_full'] ? route('course.register', $featured['slug']) : route('courses')) }}" class="block lx-ink">
+<a href="{{ $bundle ? route('bundle.register', $bundle->slug) : ($featured && !$featured['is_full'] ? route('course.register', $featured['slug']) : route('courses')) }}" class="block lx-ink" data-track-location="top-banner">
     <div class="container mx-auto px-4 py-2.5 flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold text-center">
         <span>
             @if($customAnnouncement)
@@ -105,7 +105,7 @@
 @endif
 
 {{-- ═══════════════ HERO ═══════════════ --}}
-<section class="lx-ivory">
+<section class="lx-ivory" data-track-location="november-courses">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
         <div class="grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
 
@@ -407,7 +407,7 @@
 @endif
 
 {{-- ═══════════════ THE CENTER ═══════════════ --}}
-<section class="lx-ivory py-16 sm:py-24">
+<section class="lx-ivory py-16 sm:py-24" data-track-location="visit-center">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div class="lg:col-span-7">
             <img src="{{ asset('photos/center-reception.webp') }}" alt="{{ $t('استقبال مركز مطمئنة', 'Motmaena Center reception') }}" loading="lazy" width="1800" height="1200" class="w-full aspect-[3/2] object-cover rounded-[6px]">
@@ -493,7 +493,7 @@
 
 {{-- ═══════════════ STICKY BOOKING BAR (phones) ═══════════════ --}}
 @if($canBook)
-<div id="mh-bar" class="mh-bar lg:hidden fixed inset-x-0 bottom-0 z-[70] lx-paper border-t shadow-[0_-12px_30px_-18px_rgba(0,0,0,.35)]" style="border-color: var(--line); padding-bottom: max(12px, env(safe-area-inset-bottom))">
+<div id="mh-bar" data-track-location="sticky-bar" class="mh-bar lg:hidden fixed inset-x-0 bottom-0 z-[70] lx-paper border-t shadow-[0_-12px_30px_-18px_rgba(0,0,0,.35)]" style="border-color: var(--line); padding-bottom: max(12px, env(safe-area-inset-bottom))">
     <div class="container mx-auto px-4 pt-3 flex items-center gap-3">
         <div class="min-w-0 flex-1">
             @if($bundle)

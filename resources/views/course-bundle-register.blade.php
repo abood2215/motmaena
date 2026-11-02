@@ -141,6 +141,9 @@
 </section>
 
 <script>
+    // The bundle page was seen (bundle name and price only)
+    window.trackEvent && trackEvent('ViewContent', { content_type: 'bundle', content_name: @json($bundle->slug), content_ids: [@json($bundle->slug)], value: {{ $price }}, currency: 'KWD' });
+
     document.getElementById('bundle-form').addEventListener('submit', function () {
         window.trackEvent && trackEvent('InitiateCheckout', { value: {{ $price }}, currency: 'KWD', content_name: @json($bundle->slug) });
         var btn = document.getElementById('bundle-pay');

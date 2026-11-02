@@ -419,6 +419,7 @@
         <!-- Floating WhatsApp Button -->
         <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank"
            id="global-float-wa"
+           data-track-location="floating"
            rel="noopener"
            aria-label="{{ app()->getLocale() == 'ar' ? 'تواصل معنا على واتساب (يفتح في نافذة جديدة)' : 'Contact us on WhatsApp (opens in a new tab)' }}"
            class="fixed bottom-5 sm:bottom-8 {{ app()->getLocale() == 'ar' ? 'left-4 sm:left-8' : 'right-4 sm:right-8' }} z-[60] group flex items-center gap-3"

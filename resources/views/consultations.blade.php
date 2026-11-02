@@ -942,7 +942,7 @@
   </div>
 
   {{-- ── Hero ── --}}
-  <section class="hero-consult">
+  <section class="hero-consult" data-track-location="hero">
     <div style="max-width:700px;margin:0 auto;position:relative;z-index:1;">
       <div class="badge-urgent">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
@@ -1258,7 +1258,7 @@
   </section>
 
   {{-- ── Booking Steps ── --}}
-  <section class="steps-section">
+  <section class="steps-section" data-track-location="steps">
     <div style="max-width:900px;margin:0 auto;">
       <div class="section-header">
         <h2 class="reveal">{{ app()->getLocale() === 'ar' ? 'كيف تحجز في 3 خطوات؟' : 'How to Book in 3 Steps?' }}</h2>
@@ -1483,7 +1483,7 @@
   </section>
 
   {{-- ── Final CTA ── --}}
-  <section class="final-cta">
+  <section class="final-cta" data-track-location="final-cta">
     <div style="max-width:700px;margin:0 auto;position:relative;z-index:1;">
       <h2 class="reveal">
         @if(app()->getLocale() === 'ar')
@@ -1521,7 +1521,7 @@
   </section>
 
   {{-- ── Sticky Bottom Bar ── --}}
-  <div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar" id="sticky-bar" data-track-location="sticky-bar">
     <div class="sticky-text">
       {{ app()->getLocale() === 'ar' ? 'احجز استشارتك الآن' : 'Book Your Consultation Now' }}
       <span>{{ app()->getLocale() === 'ar' ? 'تواصل معنا عبر واتساب' : 'Message us on WhatsApp' }}</span>
@@ -1534,7 +1534,7 @@
 
   {{-- ── Floating WhatsApp ── --}}
   <a href="https://wa.me/{{ $site['whatsapp'] }}?text={{ urlencode(app()->getLocale() === 'ar' ? 'مرحباً، أريد حجز استشارة' : 'Hello, I want to book a consultation') }}"
-     target="_blank" class="float-wa" id="float-wa" title="">
+     target="_blank" class="float-wa" id="float-wa" data-track-location="floating" title="">
     <span class="wa-label">{{ app()->getLocale() === 'ar' ? 'احجز الآن' : 'Book Now' }}</span>
     <svg fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.541 5.876L.057 23.272a.5.5 0 00.616.632l5.57-1.453A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.99 0-3.851-.523-5.461-1.436l-.393-.228-4.076 1.064 1.1-3.98-.255-.407A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
   </a>

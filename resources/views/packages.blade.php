@@ -464,7 +464,7 @@
 <div class="pk">
 
 {{-- ════════════════ HERO ════════════════ --}}
-<section class="relative overflow-hidden bg-[#fbf6ee] dark:bg-dark-surface border-b border-[#efe4d6] dark:border-dark-border">
+<section data-track-location="hero" class="relative overflow-hidden bg-[#fbf6ee] dark:bg-dark-surface border-b border-[#efe4d6] dark:border-dark-border">
     <div class="container mx-auto px-4 py-14 sm:py-20 text-center">
         <span class="pk-eyebrow">{{ $isAr ? 'باقات متكاملة للأطفال' : 'Complete programs for children' }}</span>
 

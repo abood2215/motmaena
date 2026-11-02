@@ -693,7 +693,7 @@
 
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
-<section class="hero">
+<section class="hero" data-track-location="hero">
   {{-- Without the stats card the text takes the full width (no empty column) --}}
   <div class="hero-inner reveal" @unless(config('claims.show_unverified')) style="grid-template-columns: 1fr" @endunless>
 
@@ -945,7 +945,7 @@
                                 {{ app()->getLocale() == 'ar' ? 'آمن 100%' : '100% Secure' }}
                             </span>
                         </div>
-                        <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank"
+                        <a href="https://wa.me/{{ $site['whatsapp'] }}" target="_blank" data-track-location="installments"
                            class="shimmer-btn inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-1"
                            style="background:#fff;color:#4a0f1b;box-shadow:0 10px 30px -8px rgba(0,0,0,0.35);">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -1042,7 +1042,7 @@
 
 
 <!-- ══════════════════════ SPECIALIZED ══════════════════════ -->
-<section class="specialized-bg">
+<section class="specialized-bg" data-track-location="special-needs">
   <div class="s-container">
     <div class="sec-header reveal" style="text-align:center;">
       <div class="sec-tag" style="justify-content:center;color:rgba(255,255,255,.45)">
@@ -1144,7 +1144,7 @@
 
 
 <!-- ══════════════════════ CTA ══════════════════════ -->
-<section class="cta-section">
+<section class="cta-section" data-track-location="final-cta">
   <div class="cta-inner reveal">
     <div class="cta-badge">
       <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

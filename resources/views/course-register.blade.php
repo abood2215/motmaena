@@ -79,7 +79,7 @@
     .dark .co-wa-hint { color: #9fd8b3; }
 </style>
 
-<section class="co-page py-8 sm:py-12" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
+<section class="co-page py-8 sm:py-12" data-track-location="course-page" dir="{{ $isAr ? 'rtl' : 'ltr' }}" style="{{ \App\Models\CourseOffer::paletteCss(\App\Models\CourseOffer::CHECKOUT_THEME) }}">
     <div class="container mx-auto px-4 max-w-6xl">
 
         {{-- Where you are, and the way back to all courses (matches the BreadcrumbList data) --}}
@@ -351,6 +351,10 @@
 </section>
 
 <script>
+    // The course page was seen (course name and price only)
+    window.trackEvent && trackEvent('ViewContent', { content_type: 'course', content_name: @json($offer['title']['ar']), content_ids: [@json($offerKey)], value: {{ (float) $offer['price'] }}, currency: 'KWD' });
+</script>
+<script>
 (function () {
     if (!document.getElementById('reg-form')) return;
     const codeInput = document.getElementById('code');
@@ -437,7 +441,7 @@
     codeInput.addEventListener('input', () => { resetPrice(); msg.classList.add('hidden'); });
 
     document.getElementById('reg-form').addEventListener('submit', () => {
-        window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD' });
+        window.trackEvent && trackEvent('InitiateCheckout', { value: parseFloat(document.getElementById('p-final').textContent) || 0, currency: 'KWD', content_type: 'course', content_name: @json($offer['title']['ar']), content_ids: [@json($offerKey)] });
         document.getElementById('pay-btn').disabled = true;
         document.getElementById('pay-label').textContent = viaDeema()
             ? @json($isAr ? 'جاري التحويل لصفحة deema...' : 'Redirecting to deema...')

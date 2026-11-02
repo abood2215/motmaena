@@ -45,22 +45,43 @@
 
 <script>
     // One call for conversion events across whichever trackers are installed
-    // name: Purchase | InitiateCheckout | Lead | Contact — each platform gets its own standard event name
+    // name: Purchase | InitiateCheckout | Lead | Contact | ViewContent | RegisterClick — each platform gets its own event name.
+    // Params carry course names, prices and page places only: never a name, phone, email or note.
     window.trackEvent = function (name, params) {
         params = params || {};
-        var ga = { Purchase: 'purchase', InitiateCheckout: 'begin_checkout', Lead: 'generate_lead', Contact: 'contact' };
-        var tt = { Purchase: 'CompletePayment', InitiateCheckout: 'InitiateCheckout', Lead: 'SubmitForm', Contact: 'Contact' };
-        var sc = { Purchase: 'PURCHASE', InitiateCheckout: 'START_CHECKOUT', Lead: 'SIGN_UP' };
+        var ga = { Purchase: 'purchase', InitiateCheckout: 'begin_checkout', Lead: 'generate_lead', Contact: 'contact', ViewContent: 'view_item', RegisterClick: 'register_click' };
+        var tt = { Purchase: 'CompletePayment', InitiateCheckout: 'InitiateCheckout', Lead: 'SubmitForm', Contact: 'Contact', ViewContent: 'ViewContent', RegisterClick: 'ClickButton' };
+        var sc = { Purchase: 'PURCHASE', InitiateCheckout: 'START_CHECKOUT', Lead: 'SIGN_UP', ViewContent: 'VIEW_CONTENT' };
+        var fbStandard = { Purchase: 1, InitiateCheckout: 1, Lead: 1, Contact: 1, ViewContent: 1 };
+        var fbMethod = fbStandard[name] ? 'track' : 'trackCustom';
         var id = params.transaction_id;
         try { if (window.gtag) gtag('event', ga[name] || name, params); } catch (e) {}
-        try { if (window.fbq) { id ? fbq('track', name, params, { eventID: id }) : fbq('track', name, params); } } catch (e) {}
+        try { if (window.fbq) { id ? fbq(fbMethod, name, params, { eventID: id }) : fbq(fbMethod, name, params); } } catch (e) {}
         try { if (window.ttq) ttq.track(tt[name] || name, params); } catch (e) {}
         try { if (window.snaptr && sc[name]) snaptr('track', sc[name], { price: params.value, currency: params.currency, transaction_id: id }); } catch (e) {}
     };
 
-    // Every WhatsApp tap counts as a contact for the ad platforms
+    // Where on the page a button sits: a marked area, the header, the footer, the section, or the page body
+    window.trackLocation = function (el) {
+        var marked = el.closest('[data-track-location]');
+        if (marked) return marked.getAttribute('data-track-location');
+        if (el.closest('header')) return 'header';
+        if (el.closest('footer')) return 'footer';
+        var section = el.closest('section[id]');
+        return section ? section.id : 'content';
+    };
+
     document.addEventListener('click', function (e) {
-        var a = e.target.closest && e.target.closest('a[href*="wa.me"]');
-        if (a) window.trackEvent('Contact', { content_name: 'whatsapp' });
+        if (!e.target.closest) return;
+
+        // Every WhatsApp tap counts as a contact, with the place of the button (never the message text)
+        var wa = e.target.closest('a[href*="wa.me"]');
+        if (wa) { window.trackEvent('Contact', { content_name: 'whatsapp', link_location: window.trackLocation(wa) }); return; }
+
+        // A tap on any link to a course or bundle registration page
+        var reg = e.target.closest('a[href*="/register/"]');
+        if (!reg) return;
+        var m = (reg.pathname || '').match(/^\/register\/(bundle\/)?([^\/]+)\/?$/);
+        if (m) window.trackEvent('RegisterClick', { content_type: m[1] ? 'bundle' : 'course', content_name: decodeURIComponent(m[2]), content_ids: [decodeURIComponent(m[2])], link_location: window.trackLocation(reg) });
     }, true);
 </script>
