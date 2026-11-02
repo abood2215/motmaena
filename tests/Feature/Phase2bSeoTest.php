@@ -38,7 +38,7 @@ class Phase2bSeoTest extends TestCase
     public function test_titles_and_descriptions_in_arabic_and_english(): void
     {
         $expect = [
-            '/'               => ['استشارات أسرية وتربوية ودورات في الكويت | مركز مطمئنة', 'Family & Parenting Consultations and Courses in Kuwait | Motmaena Center'],
+            '/'               => ['استشارات زوجية وتربوية واجتماعية في الكويت | مركز مطمئنة', 'Marital, Parenting & Social Consultations in Kuwait | Motmaena Center'],
             '/courses'        => ['دورات حضورية ومسجّلة في الكويت | مركز مطمئنة', 'In-person and Recorded Courses in Kuwait | Motmaena Center'],
             '/consultations'  => ['استشارات أسرية وزوجية وتربوية في الكويت | مركز مطمئنة', 'Family, Marital & Parenting Consultations in Kuwait | Motmaena Center'],
             '/sessions'       => ['جلسات وتقييم الأطفال في الكويت | مركز مطمئنة', "Children's Sessions & Assessments in Kuwait | Motmaena Center"],

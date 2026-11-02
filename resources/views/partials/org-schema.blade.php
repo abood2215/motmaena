@@ -31,8 +31,8 @@
             'jobTitle' => config('doctor.title.' . ($orgAr ? 'ar' : 'en')),
         ],
         'knowsAbout'  => $orgAr
-            ? ['استشارات أسرية', 'استشارات تربوية', 'استشارات اجتماعية', 'تطوير الذات', 'جلسات الأطفال', 'دورات تدريبية']
-            : ['Family counselling', 'Parenting guidance', 'Social counselling', 'Self-development', 'Children\'s sessions', 'Training courses'],
+            ? ['استشارات زوجية', 'استشارات أسرية', 'استشارات تربوية', 'استشارات اجتماعية', 'تطوير الذات', 'جلسات الأطفال', 'دورات تدريبية']
+            : ['Marital counselling', 'Family counselling', 'Parenting guidance', 'Social counselling', 'Self-development', 'Children\'s sessions', 'Training courses'],
         'sameAs'      => [
             'https://www.instagram.com/motmaena_kw/',
             'https://www.facebook.com/motmaenakw',

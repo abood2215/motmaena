@@ -74,7 +74,7 @@ class MeasurementEventsTest extends TestCase
     public function test_the_main_buttons_name_their_place_on_the_page(): void
     {
         $expected = [
-            '/'              => ['top-banner', 'november-courses', 'visit-center', 'sticky-bar', 'floating'],
+            '/'              => ['top-banner', 'hero', 'choose-help', 'visit-center', 'sticky-bar', 'floating'],
             '/consultations' => ['hero', 'steps', 'final-cta', 'sticky-bar', 'floating'],
             '/sessions'      => ['hero', 'installments', 'special-needs', 'final-cta'],
             '/packages'      => ['hero'],

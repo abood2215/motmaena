@@ -20,6 +20,7 @@
     $faqs = \App\Models\Faq::where('is_active', true)->orderBy('sort')->get();
     $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('sort')->get();
     $waLink = fn ($text) => 'https://wa.me/' . $site['whatsapp'] . '?text=' . rawurlencode($text);
+    $helpText = $t('مرحبًا مركز مطمئنة، أرغب في معرفة نوع الاستشارة المناسبة لاحتياجي.', 'Hello Motmaena Center, I would like to know which consultation suits my needs.');
 
     // Gift code for paying a full price without a code (Admin → Content → gift amount; 0 hides every mention)
     $gift = \App\Models\CourseRegistration::giftAmount();
@@ -29,10 +30,10 @@
 @endphp
 
 {{-- Title and description describe the center itself (stable for search), not the offer of the month --}}
-@section('title', $t('استشارات أسرية وتربوية ودورات في الكويت | مركز مطمئنة', 'Family & Parenting Consultations and Courses in Kuwait | Motmaena Center'))
+@section('title', $t('استشارات زوجية وتربوية واجتماعية في الكويت | مركز مطمئنة', 'Marital, Parenting & Social Consultations in Kuwait | Motmaena Center'))
 @section('meta_description', $t(
-    'مركز مطمئنة في الكويت بإشراف أ.د. طارق الحبيب: استشارات أسرية وزوجية وتربوية، وجلسات وباقات للأطفال، ودورات حضورية ومسجّلة.',
-    'Motmaena Center in Kuwait, supervised by Prof. Dr. Tariq Al-Habib: family, marital and parenting consultations, sessions and packages for children, and in-person and recorded courses.'
+    'مركز مطمئنة في الكويت يقدم استشارات اجتماعية وتربوية وزوجية لمساعدة الأفراد والأزواج والأسر على التعامل مع تحدياتهم بخطوات عملية ومتزنة.',
+    'Motmaena Center in Kuwait offers social, parenting and marital consultations that help individuals, couples and families handle their challenges with practical, steady steps.'
 ))
 @if($featured && $featured['share_image'])
     @section('og_image', asset($featured['share_image']))
@@ -96,76 +97,37 @@
 </a>
 @endif
 
-{{-- ═══════════════ HERO ═══════════════ --}}
-<section class="lx-ivory" data-track-location="november-courses">
+{{-- ═══════════════ HERO: the consultations the center offers today ═══════════════
+     Psychological consultations are not open yet: they appear only as "coming soon" (the card further down). --}}
+<section class="lx-ivory" data-track-location="hero">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
         <div class="grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
 
             <div class="lg:col-span-7">
-                @if($heroCourses->isNotEmpty())
-                    <p class="lx-label mb-5">{{ $bundle ? $t('برنامج ' . $when($heroCourses->first())->translatedFormat('F') . ' · مركز مطمئنة', $when($heroCourses->first())->translatedFormat('F') . ' programme · Motmaena Center') : $featured['badge'][$lang] }}</p>
-                    <h1 class="lx-h1 mb-5">
-                        @if($bundle)
-                            {{ $t('دورتان حضوريتان مع', 'Two in-person courses with') }} <span class="lx-wine whitespace-nowrap">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</span>
-                        @else
-                            {{ $featured['title'][$lang] }}
-                        @endif
-                    </h1>
-                    <p class="lx-text text-lg mb-8 max-w-2xl">
-                        @if($bundle)
-                            {{ $t(config('doctor.title.ar') . '. برنامج عملي بشهادة معتمدة، في مقر مركز مطمئنة بالكويت.', config('doctor.title.en') . '. A practical programme with an accredited certificate, at Motmaena Center in Kuwait.') }}
-                        @else
-                            {{ $t('مع ', 'with ') }}{{ $featured['trainer'][$lang] }}{{ $featured['certificate'][$lang] ? ' · ' . $featured['certificate'][$lang] : '' }}
-                        @endif
-                    </p>
+                <p class="lx-label mb-5">{{ $t('مركز مطمئنة · الكويت', 'Motmaena Center · Kuwait') }}</p>
+                <h1 class="lx-h1 mb-5">{{ $t('نحو علاقات أكثر اتزانًا وحياة أسرية أكثر طمأنينة', 'Towards steadier relationships and a calmer family life') }}</h1>
+                <p class="lx-text text-lg mb-8 max-w-2xl">{{ $t('نقدم في مركز مطمئنة بالكويت استشارات زوجية وتربوية واجتماعية تساعدك على فهم التحديات التي تمر بها واتخاذ خطوات عملية تناسبك، بإشراف أ.د. طارق الحبيب.', 'At Motmaena Center in Kuwait we offer marital, parenting and social consultations that help you understand what you are facing and take practical steps that suit you, supervised by Prof. Dr. Tariq Al-Habib.') }}</p>
 
-                    {{-- The schedule --}}
-                    <div class="lx-card px-5 sm:px-6 mb-8">
-                        @foreach($heroCourses as $c)
-                            <a href="{{ route('course.register', $c['slug']) }}" class="lx-course-row group">
-                                <div class="lx-date"><b>{{ $when($c)->format('j') }}</b><span>{{ $when($c)->translatedFormat('F') }}</span></div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="font-extrabold group-hover:underline underline-offset-4" style="color: var(--ink)">{{ $c['title'][$lang] }}</p>
-                                    <p class="text-sm lx-muted font-semibold mt-1">{{ $c['day'][$lang] }} · {{ $c['time'][$lang] }} · {{ $t('حضوري', 'In person') }}@if($c['seats_left'] !== null) · {{ $c['is_full'] ? $t('اكتمل العدد', 'Full') : $t('متبقي ' . $c['seats_left'] . ' مقعد', $c['seats_left'] . ' seats left') }}@endif</p>
-                                </div>
-                                <span class="font-extrabold whitespace-nowrap" style="color: var(--ink)">{{ $c['price'] }} <small class="text-xs lx-muted">{{ $kwd }}</small></span>
-                            </a>
-                        @endforeach
-                    </div>
+                <div id="hero-cta" class="flex flex-col sm:flex-row gap-3">
+                    <a href="{{ route('consultations') }}#book" class="lx-btn lx-btn-primary">{{ $t('احجز استشارتك', 'Book your consultation') }}</a>
+                    <a href="{{ $waLink($helpText) }}" target="_blank" rel="noopener" class="lx-btn lx-btn-outline">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5']){{ $t('ساعدني في اختيار الخدمة', 'Help me choose a service') }}</a>
+                </div>
 
-                    <div id="hero-cta" class="flex flex-col sm:flex-row gap-3">
-                        @if($bundle)
-                            <a href="{{ route('bundle.register', $bundle->slug) }}" class="lx-btn lx-btn-primary">
-                                {{ $t('الدورتان معاً · ' . $fmt($bundle->price) . ' د.ك', 'Both courses · ' . $fmt($bundle->price) . ' KWD') }}
-                                <span class="lx-old !text-white/60 text-sm">{{ $fmt($bundle->fullPrice()) }}</span>
-                            </a>
-                            <a href="#courses" class="lx-btn lx-btn-outline">{{ $t('التسجيل في دورة واحدة', 'Register for one course') }}</a>
-                        @elseif($featured['is_full'])
-                            <div class="w-full max-w-md">@include('partials.notify-form', ['courseKey' => $featured['slug']])</div>
-                        @else
-                            <a href="{{ route('course.register', $featured['slug']) }}" class="lx-btn lx-btn-primary">{{ $t('التسجيل في الدورة · ', 'Register · ') }}{{ $featured['price'] }} {{ $kwd }}</a>
-                            <a href="#courses" class="lx-btn lx-btn-outline">{{ $t('محاور الدورة', 'Course outline') }}</a>
-                        @endif
-                    </div>
-                    <p class="text-sm lx-muted font-semibold mt-4">{{ $t('دفع آمن بالكي نت والبطاقات، أو تقسيط على 4 دفعات مع deema.', 'Secure payment by KNET or card, or 4 payments with deema.') }}</p>
-                @else
-                    <p class="lx-label mb-5">{{ $t('مركز مطمئنة · الكويت', 'Motmaena Center · Kuwait') }}</p>
-                    <h1 class="lx-h1 mb-5">{{ $t('حياة أهدأ، وعلاقات أقوى', 'A calmer life, stronger relationships') }}</h1>
-                    <p class="lx-text text-lg mb-8 max-w-2xl">{{ $t('دورات وجلسات واستشارات اجتماعية وتربوية بإشراف أ.د. طارق الحبيب، بروفيسور واستشاري الطب النفسي.', 'Courses, sessions and social & educational consultations supervised by Prof. Dr. Tariq Al-Habib, professor & consultant psychiatrist.') }}</p>
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="{{ route('consultations') }}" class="lx-btn lx-btn-primary">{{ $t('احجز استشارة', 'Book a consultation') }}</a>
-                        <a href="{{ route('courses') }}" class="lx-btn lx-btn-outline">{{ $t('تصفّح الدورات', 'Browse courses') }}</a>
-                    </div>
+                @if(($site['psych_soon'] ?? '1') === '1')
+                    <a href="#psych-center" class="inline-flex items-center gap-2 mt-6 text-sm font-bold lx-muted hover:underline underline-offset-4">
+                        <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full" style="border: 1px solid var(--gold); color: var(--gold)">{{ $t('قريبًا', 'Soon') }}</span>
+                        {{ $t('الاستشارات النفسية قريبًا في مركز مطمئنة', 'Psychological consultations are coming soon to Motmaena Center') }}
+                    </a>
                 @endif
             </div>
 
             <div class="lg:col-span-5">
                 <figure class="max-w-[320px] sm:max-w-[380px] mx-auto">
                     <div class="lx-photo">
-                        <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}" width="900" height="1441" class="aspect-[4/5] object-top">
+                        <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}" width="900" height="1441" class="aspect-[4/5] object-top" fetchpriority="high">
                     </div>
                     <figcaption class="mt-8 text-center">
-                        <p class="font-extrabold text-lg" style="color: var(--ink)">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</p>
+                        <p class="font-extrabold text-lg" style="color: var(--ink)">{{ $t('بإشراف أ.د. طارق الحبيب', 'Supervised by Prof. Dr. Tariq Al-Habib') }}</p>
                         <p class="text-sm lx-muted font-semibold mt-1">{{ config('doctor.title.' . $lang) }}</p>
                     </figcaption>
                 </figure>
@@ -173,43 +135,81 @@
         </div>
     </div>
 
-    {{-- Trust row --}}
+    {{-- What a visitor can rely on (all confirmed facts) --}}
     <div class="border-t" style="border-color: var(--line)">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-7 grid grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach([
-                ['award', $t('شهادة معتمدة', 'Accredited certificate'), $t('ديوان الخدمة المدنية والتطبيقي', 'Civil Service Commission & PAAET')],
-                ['building', $t('حضوري في المركز', 'In person'), $t('برج أحمد، بجوار المستشفى الأميري', 'Burj Ahmed, near Al-Amiri Hospital')],
-                ['lock', $t('دفع آمن', 'Secure payment'), 'KNET · Visa · Apple Pay'],
-                ['split', $t('تقسيط بدون تعقيد', 'Easy instalments'), $t('4 دفعات مع deema', '4 payments with deema')],
+                ['people', $t('أخصائيون', 'Specialists'), $t('تربوي · اجتماعي · تطوير ذات', 'Educational · social · self-development')],
+                ['building', $t('في المركز', 'At the center'), $t('برج أحمد، بجوار المستشفى الأميري', 'Burj Ahmed, near Al-Amiri Hospital')],
+                ['compass', $t('نساعدك في الاختيار', 'We help you choose'), $t('الفريق يرشدك للاستشارة المناسبة', 'The team points you to the right consultation')],
+                ['whatsapp', $t('واتساب وهاتف', 'WhatsApp & phone'), \App\Models\SiteSetting::pretty($site['whatsapp'])],
             ] as [$icon, $title, $sub])
                 <div class="flex items-start gap-3">
                     @include('partials.lx-icon', ['i' => $icon, 'class' => 'mt-0.5'])
-                    <div><p class="font-bold text-sm" style="color: var(--ink)">{{ $title }}</p><p class="text-xs lx-muted font-semibold mt-0.5">{{ $sub }}</p></div>
+                    <div><p class="font-bold text-sm" style="color: var(--ink)">{{ $title }}</p><p class="text-xs lx-muted font-semibold mt-0.5" @if($icon === 'whatsapp') dir="ltr" @endif>{{ $sub }}</p></div>
                 </div>
             @endforeach
         </div>
     </div>
 </section>
 
-{{-- ═══════════════ SERVICES: the way to the right service, right after the hero ═══════════════ --}}
+{{-- ═══════════════ SERVICES: the consultations available today, then the other services ═══════════════ --}}
 <section class="lx-paper py-14 sm:py-20 border-b" style="border-color: var(--line)">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mb-12">
+        <div class="max-w-2xl mb-10">
             <p class="lx-label mb-3">{{ $t('خدماتنا', 'Our services') }}</p>
-            <h2 class="lx-h2">{{ $t('كيف نقدر نساعدك؟', 'How can we help?') }}</h2>
+            <h2 class="lx-h2 mb-3">{{ $t('كيف نقدر نساعدك؟', 'How can we help?') }}</h2>
+            <p class="lx-text">{{ $t('الاستشارات المتاحة حاليًا في المركز:', 'Consultations available at the center today:') }}</p>
         </div>
+
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             @foreach([
-                [route('consultations'), 'chat', $t('الاستشارات', 'Consultations'), $t('جلسة خاصة وسرية مع أخصائي، أو جلسة مع الدكتور طارق.', 'A private session with a specialist, or with Dr. Tariq.')],
-                [route('sessions'), 'child', $t('جلسات الأطفال', 'Child sessions'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف أخصائيين.', 'Programmes to develop your child\'s skills and behaviour.')],
-                [route('packages'), 'layers', $t('الباقات', 'Packages'), $t('باقات متكاملة للتواصل وصعوبات التعلم والثقة بالنفس.', 'Complete packages for communication, learning difficulties and confidence.')],
-                [route('courses'), 'play', $t('الدورات المسجّلة', 'Recorded courses'), $t('أكثر من 50 دورة تتابعها في أي وقت.', '50+ courses you can watch anytime.')],
-            ] as [$href, $icon, $title, $desc])
-            <a href="{{ $href }}" class="lx-card p-6 group flex flex-col">
-                <span class="w-11 h-11 rounded-full flex items-center justify-center mb-5" style="border: 1px solid var(--line)">@include('partials.lx-icon', ['i' => $icon])</span>
+                ['rings',  $t('استشارات زوجية', 'Marital consultations'), $t('لمساعدة الأزواج على فهم التحديات في العلاقة، وتحسين الحوار والتعامل مع الخلافات بصورة أكثر وعيًا.', 'Helping couples understand the challenges in their relationship, improve how they talk and handle disagreements more mindfully.')],
+                ['family', $t('استشارات تربوية', 'Parenting consultations'), $t('لمساعدة الوالدين على فهم احتياجات الأبناء والتعامل مع التحديات التربوية والسلوكية بأساليب عملية.', 'Helping parents understand their children\'s needs and handle parenting and behaviour challenges with practical methods.')],
+                ['people', $t('استشارات اجتماعية', 'Social consultations'), $t('لمساعدتك على فهم التحديات الاجتماعية والأسرية واتخاذ خطوات أكثر اتزانًا في التعامل معها.', 'Helping you understand social and family challenges and take steadier steps in dealing with them.')],
+            ] as [$icon, $title, $desc])
+            <article class="lx-card p-6 flex flex-col">
+                <span class="lx-icon-ring mb-5">@include('partials.lx-icon', ['i' => $icon])</span>
                 <h3 class="lx-h3 mb-2">{{ $title }}</h3>
-                <p class="text-sm lx-muted font-semibold leading-relaxed mb-5">{{ $desc }}</p>
-                <span class="mt-auto text-sm font-bold lx-wine group-hover:underline underline-offset-4">{{ $t('اعرف أكثر', 'Learn more') }}</span>
+                <p class="text-sm lx-muted font-semibold leading-relaxed mb-6">{{ $desc }}</p>
+                <a href="{{ route('consultations') }}#book" class="mt-auto lx-btn lx-btn-outline w-full !py-3 text-sm">{{ $t('احجز استشارتك', 'Book a consultation') }}</a>
+            </article>
+            @endforeach
+
+            {{-- Not open yet: no booking, only "tell me when it opens" --}}
+            <article class="lx-card p-6 flex flex-col" style="background: var(--ivory); border-style: dashed">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="lx-icon-ring">@include('partials.lx-icon', ['i' => 'heart'])</span>
+                    <span class="text-xs font-extrabold px-2.5 py-1 rounded-full" style="border: 1px solid var(--gold); color: var(--gold)">{{ $t('قريبًا', 'Coming soon') }}</span>
+                </div>
+                <h3 class="lx-h3 mb-2">{{ $t('استشارات نفسية', 'Psychological consultations') }}</h3>
+                <p class="text-sm lx-muted font-semibold leading-relaxed mb-6">{{ $t('نعمل حاليًا على تجهيز خدمة الاستشارات النفسية، وسيتم الإعلان عن تفاصيلها عند الإطلاق.', 'We are preparing the psychological consultation service; details will be announced at launch.') }}</p>
+                <a href="{{ ($site['psych_soon'] ?? '1') === '1' ? '#psych-center' : $waLink($t('مرحبًا مركز مطمئنة، أرغب في معرفة موعد إطلاق الاستشارات النفسية.', 'Hello Motmaena Center, I would like to know when psychological consultations open.')) }}" @if(($site['psych_soon'] ?? '1') !== '1') target="_blank" rel="noopener" @endif class="mt-auto lx-btn lx-btn-outline w-full !py-3 text-sm">{{ $t('اعرف عند الإطلاق', 'Tell me when it opens') }}</a>
+            </article>
+        </div>
+
+        {{-- Not sure which one? --}}
+        <div class="lx-ink rounded-[14px] mt-6 p-7 sm:p-9 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10" data-track-location="choose-help">
+            <div class="flex-1">
+                <p class="text-2xl font-extrabold text-white mb-2">{{ $t('لست متأكدًا من الاستشارة المناسبة؟', 'Not sure which consultation fits?') }}</p>
+                <p class="text-white/70 font-semibold">{{ $t('أخبر فريق المواعيد باحتياجك بصورة مختصرة، وسنساعدك في اختيار نوع الاستشارة المناسب من الخدمات المتاحة.', 'Tell the appointments team briefly what you need, and we will help you choose the right consultation from the services available.') }}</p>
+            </div>
+            <a href="{{ $waLink($helpText) }}" target="_blank" rel="noopener" class="lx-btn lx-btn-light shrink-0">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5']){{ $t('ساعدني في اختيار الاستشارة', 'Help me choose a consultation') }}</a>
+        </div>
+
+        {{-- The center's other services --}}
+        <div class="grid sm:grid-cols-3 gap-5 mt-6">
+            @foreach([
+                [route('sessions'), 'child', $t('جلسات وتقييم الأطفال', 'Children\'s sessions & assessment'), $t('برامج لتنمية مهارات طفلك وسلوكه بإشراف أخصائيين.', 'Programmes to develop your child\'s skills and behaviour.')],
+                [route('packages'), 'layers', $t('باقات دعم الطفل', 'Child support packages'), $t('باقات متكاملة للتواصل وصعوبات التعلم والثقة بالنفس.', 'Complete packages for communication, learning difficulties and confidence.')],
+                [route('courses'), 'play', $t('الدورات', 'Courses'), $t('دورات حضورية في المركز، ودورات مسجّلة تتابعها في أي وقت.', 'In-person courses at the center, and recorded courses to watch anytime.')],
+            ] as [$href, $icon, $title, $desc])
+            <a href="{{ $href }}" class="lx-card p-5 flex items-start gap-4 group">
+                <span class="lx-icon-ring">@include('partials.lx-icon', ['i' => $icon])</span>
+                <span class="min-w-0">
+                    <span class="block font-extrabold group-hover:underline underline-offset-4" style="color: var(--ink)">{{ $title }}</span>
+                    <span class="block text-sm lx-muted font-semibold leading-relaxed mt-1">{{ $desc }}</span>
+                </span>
             </a>
             @endforeach
         </div>
@@ -231,6 +231,7 @@
                 <div class="flex items-start gap-4 mb-6">
                     <div class="lx-date"><b>{{ $when($c)->format('j') }}</b><span>{{ $when($c)->translatedFormat('F') }}</span></div>
                     <div class="min-w-0">
+                        @if($c['badge'][$lang])<p class="text-xs font-bold mb-1" style="color: var(--gold)">{{ $c['badge'][$lang] }}</p>@endif
                         <h3 class="lx-h3">{{ $c['title'][$lang] }}</h3>
                         <p class="text-sm lx-muted font-semibold mt-1">{{ $c['trainer'][$lang] }}</p>
                     </div>
@@ -303,11 +304,13 @@
 <section class="lx-ivory py-16 sm:py-24 border-t" style="border-color: var(--line)">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
         <div class="lg:col-span-4">
-            <p class="lx-label mb-3">{{ $t('عن الدكتور', 'About the doctor') }}</p>
+            <p class="lx-label mb-3">{{ $t('الإشراف', 'Supervision') }}</p>
             <h2 class="lx-h2 mb-2">{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}</h2>
             <p class="lx-muted font-semibold">{{ config('doctor.title.' . $lang) }}</p>
         </div>
         <div class="lg:col-span-8">
+            <p class="text-xl font-extrabold mb-4" style="color: var(--ink)">{{ $t('إشراف يجمع بين الخبرة والفهم الإنساني', 'Supervision that joins expertise with human understanding') }}</p>
+            <p class="lx-text text-lg mb-5">{{ $t('يعمل مركز مطمئنة بإشراف أ.د. طارق الحبيب، لتقديم خدمات إرشادية تجمع بين المعرفة المتخصصة والفهم الإنساني للتحديات الاجتماعية والتربوية والزوجية.', 'Motmaena Center works under the supervision of Prof. Dr. Tariq Al-Habib, offering guidance that joins specialist knowledge with a human understanding of social, parenting and marital challenges.') }}</p>
             <p class="lx-text text-lg {{ config('claims.show_unverified') ? 'mb-10' : '' }}">{{ config('doctor.bio.' . $lang) }}</p>
             {{-- Figures awaiting the center's confirmation (config/claims.php) --}}
             @if(config('claims.show_unverified'))
@@ -445,8 +448,16 @@
 </section>
 @endif
 
-{{-- ═══════════════ FAQ ═══════════════ --}}
-@if($faqs->isNotEmpty())
+{{-- ═══════════════ FAQ: what is available today first, then the questions from Admin → Content ═══════════════ --}}
+@php
+    $serviceFaqs = [
+        [$t('ما الاستشارات المتاحة حاليًا؟', 'Which consultations are available now?'), $t('يقدم المركز حاليًا الاستشارات الزوجية والأسرية والتربوية والاجتماعية. أما خدمة الاستشارات النفسية فغير متاحة حاليًا، وسيُعلن عنها عند افتتاحها.', 'The center currently offers marital, family, parenting and social consultations. Psychological consultations are not available yet and will be announced when they open.')],
+        [$t('كيف أعرف نوع الاستشارة المناسبة؟', 'How do I know which consultation suits me?'), $t('تواصل مع فريق المواعيد واشرح احتياجك بصورة مختصرة، وسيساعدك الفريق في اختيار الخدمة المناسبة من الخدمات المتاحة.', 'Contact the appointments team and describe what you need briefly; they will help you choose the right service from those available.')],
+        [$t('هل تتوفر استشارات نفسية؟', 'Are psychological consultations available?'), $t('خدمة الاستشارات النفسية غير متاحة حاليًا، ويعمل المركز على تجهيزها وسيتم الإعلان عن موعد إطلاقها قريبًا.', 'Psychological consultations are not available yet; the center is preparing the service and will announce its launch date soon.')],
+        [$t('هل معلومات الاستشارة خاصة؟', 'Is what I share kept private?'), $t('يحرص المركز على التعامل مع معلومات العملاء بخصوصية وفق السياسات والإجراءات المعتمدة لديه.', 'The center handles the information you share privately, according to its approved policies and procedures.')],
+    ];
+@endphp
+@if(count($serviceFaqs) || $faqs->isNotEmpty())
 <section class="{{ $testimonials->isNotEmpty() ? 'lx-ivory' : 'lx-paper' }} py-16 sm:py-24">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10">
         <div class="lg:col-span-4">
@@ -454,6 +465,15 @@
             <h2 class="lx-h2">{{ $t('عندك سؤال؟', 'Questions?') }}</h2>
         </div>
         <div class="lg:col-span-8 border-t" style="border-color: var(--line)">
+            @foreach($serviceFaqs as [$q, $a])
+            <details class="group border-b" style="border-color: var(--line)">
+                <summary class="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-bold" style="color: var(--ink)">
+                    {{ $q }}
+                    <span class="text-xl lx-wine transition group-open:rotate-45">+</span>
+                </summary>
+                <p class="pb-6 lx-text">{{ $a }}</p>
+            </details>
+            @endforeach
             @foreach($faqs as $faq)
             <details class="group border-b" style="border-color: var(--line)">
                 <summary class="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-bold" style="color: var(--ink)">

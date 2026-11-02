@@ -34,7 +34,7 @@ class TeamNamingTest extends TestCase
     public function test_other_pages_say_specialist(): void
     {
         $this->withSession(['locale' => 'ar'])->get('/')->assertOk()
-            ->assertSee('جلسة خاصة وسرية مع أخصائي')->assertSee('بإشراف أخصائيين');
+            ->assertSee('تربوي · اجتماعي · تطوير ذات')->assertSee('بإشراف أخصائيين');
 
         $this->withSession(['locale' => 'ar'])->get('/sessions')->assertOk()
             ->assertSee('تحدث مع أخصائي')->assertSee('أخصائيونا مستعدون')->assertDontSee('استشاريونا');

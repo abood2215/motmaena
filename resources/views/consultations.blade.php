@@ -43,21 +43,27 @@
     ];
 
     $faqs = $isAr ? [
+        ['q' => 'ما الاستشارات المتاحة حاليًا؟', 'a' => 'يقدم المركز حاليًا الاستشارات الزوجية والأسرية والتربوية والاجتماعية، وجلسات تطوير الذات. أما خدمة الاستشارات النفسية فغير متاحة حاليًا، وسيُعلن عنها عند افتتاحها.'],
+        ['q' => 'كيف أعرف نوع الاستشارة المناسبة؟', 'a' => 'تواصل مع فريق المواعيد واشرح احتياجك بصورة مختصرة، وسيساعدك الفريق في اختيار الخدمة المناسبة من الخدمات المتاحة.'],
         ['q' => 'ما الفرق بين الاستشارة هنا وعند أي أخصائي آخر؟', 'a' => 'الأخصائيون في مركز مطمئنة يجمعون بين الخبرة الأكاديمية والتطبيق الميداني. الجلسة مبنية على فهم وضعك تحديداً — ليست نصائح عامة بل خطة عمل مخصصة لك أنت.'],
-        ['q' => 'هل الجلسة سرية؟', 'a' => 'نعم تماماً. جميع ما يُقال في الجلسة يبقى بيننا وبينك بشكل كامل. لا يُشارك أي معلومة مع أي طرف ثالث تحت أي ظرف.'],
+        ['q' => 'هل معلومات الاستشارة خاصة؟', 'a' => 'يحرص المركز على التعامل مع معلومات العملاء بخصوصية وفق السياسات والإجراءات المعتمدة لديه.'],
         ['q' => 'كيف يتم اختيار الأخصائي المناسب لي؟', 'a' => 'عند التواصل عبر واتساب سيسألك الفريق بعض الأسئلة البسيطة ثم يرشدك إلى الأخصائي الأنسب لطبيعة استشارتك سواء كانت أسرية أو تربوية أو اجتماعية.'],
         ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك حجز جلسة هاتفية مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الموعد المتاح.'],
-        ['q' => 'كم مدة الجلسة؟', 'a' => 'الجلسة الاعتيادية مدتها 50 دقيقة. في بعض الحالات قد تُعقد جلسة أولية للتقييم تكون أقصر.'],
+        ['q' => 'كم مدة الجلسة؟', 'a' => 'مدة الجلسة من 45 دقيقة إلى ساعة.'],
         ['q' => 'هل يمكن الحجز عن بعد (أونلاين)؟', 'a' => 'نعم، نوفر جلسات عن بعد لمن لا يستطيع الحضور الشخصي. تتم الجلسات عبر منصات تواصل مشفّرة وآمنة.'],
         ['q' => 'ما سياسة الإلغاء؟', 'a' => 'يمكن تأجيل الموعد دون أي رسوم قبل 24 ساعة على الأقل من موعده. لا يوجد استرجاع نقدي للمبالغ المدفوعة، ويمكنك استخدام المبلغ في أي خدمة أخرى داخل المركز.'],
+        ['q' => 'هل تتوفر استشارات نفسية؟', 'a' => 'خدمة الاستشارات النفسية غير متاحة حاليًا، ويعمل المركز على تجهيزها وسيتم الإعلان عن موعد إطلاقها قريبًا.'],
     ] : [
+        ['q' => 'Which consultations are available now?', 'a' => 'The center currently offers marital, family, parenting and social consultations, and self-development sessions. Psychological consultations are not available yet and will be announced when they open.'],
+        ['q' => 'How do I know which consultation suits me?', 'a' => 'Contact the appointments team and describe what you need briefly; they will help you choose the right service from those available.'],
         ['q' => 'What makes your consultations different?', 'a' => 'Motmaena\'s specialists combine academic expertise with real-world application. The session is built around your specific situation — not generic advice, but a personalized action plan made for you.'],
-        ['q' => 'Is the session confidential?', 'a' => 'Absolutely. Everything discussed in your session remains strictly between you and your specialist. No information is shared with any third party under any circumstances.'],
+        ['q' => 'Is what I share kept private?', 'a' => 'The center handles the information you share privately, according to its approved policies and procedures.'],
         ['q' => 'How is the right specialist chosen for me?', 'a' => 'When you contact us via WhatsApp, the team will ask a few simple questions and then guide you to the specialist best suited for your consultation type — family, educational, or social.'],
         ['q' => 'Can I book directly with Dr. Tariq?', 'a' => 'Yes, you can book a phone session with Dr. Tariq Al-Habib directly, based on appointment availability. Contact the team and they\'ll confirm an available time.'],
-        ['q' => 'How long is a session?', 'a' => 'A standard session is 50 minutes. In some cases, a shorter initial evaluation session may be arranged first.'],
+        ['q' => 'How long is a session?', 'a' => 'A session lasts from 45 minutes to an hour.'],
         ['q' => 'Can I book online (remote sessions)?', 'a' => 'Yes, we offer remote sessions for those who cannot attend in person. Sessions are conducted via secure, encrypted communication platforms.'],
         ['q' => 'What is the cancellation policy?', 'a' => 'Appointments can be rescheduled free of charge at least 24 hours in advance. Payments are not refunded in cash, but you can use the amount for any other service at the Center.'],
+        ['q' => 'Are psychological consultations available?', 'a' => 'Psychological consultations are not available yet; the center is preparing the service and will announce its launch date soon.'],
     ];
 
     $terms = [
@@ -70,8 +76,8 @@
     ];
 
     $types = $isAr
-        ? ['استشارة أسرية', 'استشارة تربوية', 'استشارة اجتماعية', 'تطوير الذات', 'استشارة هاتفية مع د. طارق']
-        : ['Family Consultation', 'Educational Consultation', 'Social Consultation', 'Self Development', 'Phone session with Dr. Tariq'];
+        ? ['استشارة زوجية', 'استشارة أسرية', 'استشارة تربوية', 'استشارة اجتماعية', 'تطوير الذات', 'استشارة هاتفية مع د. طارق']
+        : ['Marital Consultation', 'Family Consultation', 'Educational Consultation', 'Social Consultation', 'Self Development', 'Phone session with Dr. Tariq'];
     $typeLabels = ['استشارة هاتفية مع د. طارق' => 'استشارة هاتفية مع د. طارق الحبيب'];
     $countries = [
         ['965', $t('الكويت', 'Kuwait')], ['966', $t('السعودية', 'Saudi Arabia')], ['971', $t('الإمارات', 'UAE')], ['974', $t('قطر', 'Qatar')],
@@ -130,9 +136,9 @@
     <div class="border-t" style="border-color: var(--line)">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-7 grid grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach([
-                ['lock', $t('سرية تامة', 'Fully confidential'), $t('ما يُقال في الجلسة يبقى بيننا', 'What is said stays between us')],
-                ['building', $t('حضوري أو عن بُعد', 'In person or remote'), $t('في المركز أو عبر منصة آمنة', 'At the center or on a secure platform')],
-                ['clock', $t('50 دقيقة', '50 minutes'), $t('مدة الجلسة الاعتيادية', 'A standard session')],
+                ['lock', $t('خصوصية معلوماتك', 'Your privacy'), $t('وفق سياسات المركز وإجراءاته', 'Under the center policies')],
+                ['building', $t('في المركز', 'At the center'), $t('برج أحمد، بجوار المستشفى الأميري', 'Burj Ahmed, near Al-Amiri Hospital')],
+                ['compass', $t('نساعدك في الاختيار', 'We help you choose'), $t('الفريق يرشدك للاستشارة المناسبة', 'The team points you to the right one')],
                 ['people', $t('أخصائيون', 'Specialists'), $t('تربوي · اجتماعي · تطوير ذات', 'Educational · social · self-development')],
             ] as [$icon, $title, $sub])
                 <div class="flex items-start gap-3">
@@ -315,6 +321,7 @@
                     <button type="submit" class="lx-btn lx-btn-primary w-full">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5 !stroke-white']){{ $t('تأكيد وإرسال عبر واتساب', 'Confirm & Send via WhatsApp') }}</button>
                 </form>
 
+                <p class="text-sm font-semibold mt-6 text-center"><a href="https://wa.me/{{ $site['whatsapp'] }}?text={{ rawurlencode($t('مرحبًا مركز مطمئنة، أرغب في معرفة نوع الاستشارة المناسبة لاحتياجي.', 'Hello Motmaena Center, I would like to know which consultation suits my needs.')) }}" target="_blank" rel="noopener" class="lx-link">{{ $t('لست متأكدًا؟ ساعدني في اختيار الاستشارة', 'Not sure? Help me choose a consultation') }}</a></p>
                 <p class="text-sm lx-muted font-semibold mt-5 text-center">
                     {{ $t('تفضّل الاتصال؟', 'Prefer to call?') }}
                     <a href="tel:+{{ $site['whatsapp'] }}" class="lx-link" dir="ltr">{{ $waPretty }}</a>
@@ -369,7 +376,7 @@
         @if(config('claims.show_unverified'))
             <p class="text-white/70 font-semibold mb-2">{{ $t('انضم إلى آلاف الأشخاص الذين وجدوا وضوحاً وتغييراً حقيقياً في حياتهم بعد جلسة واحدة مع أخصائيينا', 'Join thousands who found real clarity and change in their lives after just one session with our specialists') }}</p>
         @endif
-        <p class="text-white/60 font-semibold mb-8">{{ $t('جلساتنا سرية تماماً — معلوماتك لن تُشارك أبداً', 'Our sessions are fully confidential — your information will never be shared') }}</p>
+        <p class="text-white/60 font-semibold mb-8">{{ $t('نتعامل مع معلوماتك بخصوصية وفق سياسات المركز', 'We handle your information privately, under the center policies') }}</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="{{ $waBook }}" target="_blank" rel="noopener" class="lx-btn lx-btn-light">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5']){{ $t('احجز عبر واتساب', 'Book via WhatsApp') }}</a>
             <a href="tel:+{{ $site['whatsapp'] }}" class="lx-btn border border-white/30 text-white hover:bg-white/10">@include('partials.lx-icon', ['i' => 'phone', 'class' => '!w-5 !h-5 !stroke-white']){{ $t('اتصل بنا مباشرة', 'Call Us Directly') }}</a>
@@ -382,7 +389,7 @@
     <div class="container mx-auto px-4 pt-3 flex items-center gap-3">
         <div class="min-w-0 flex-1">
             <p class="font-extrabold text-sm truncate" style="color: var(--ink)">{{ $t('احجز استشارتك الآن', 'Book Your Consultation Now') }}</p>
-            <p class="text-xs font-semibold lx-muted truncate">{{ $t('سرية تامة · حضوري أو عن بُعد', 'Confidential · in person or remote') }}</p>
+            <p class="text-xs font-semibold lx-muted truncate">{{ $t('زوجية · أسرية · تربوية · اجتماعية', 'Marital · family · parenting · social') }}</p>
         </div>
         <a href="{{ $waBook }}" target="_blank" rel="noopener" class="lx-btn lx-btn-outline !py-3 !px-3.5" aria-label="{{ $t('واتساب', 'WhatsApp') }}">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5'])</a>
         <a href="#book" class="lx-btn lx-btn-primary !py-3 !px-5 text-sm">{{ $t('احجز الآن', 'Book Now') }}</a>
