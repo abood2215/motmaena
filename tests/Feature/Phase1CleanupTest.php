@@ -62,6 +62,18 @@ class Phase1CleanupTest extends TestCase
         $this->withSession(['locale' => 'en'])->get('/sessions')->assertDontSee('Best Value');
     }
 
+    public function test_the_wrong_per_month_price_line_stays_gone(): void
+    {
+        // It said "≈ 31 KD per person / month only" under 750 KD / 24 sessions / 3 months:
+        // 31 is per session (750 / 24), a month is about 250 KD
+        $this->get('/sessions')->assertOk()
+            ->assertSee('750')->assertSee('بكج 24 جلسة')->assertSee('مدة 3 أشهر') // package data unchanged
+            ->assertDontSee('للشخص خلال شهر فقط')->assertDontSee('≈ 31')->assertDontSee('plan-per-session">', false);
+
+        $this->withSession(['locale' => 'en'])->get('/sessions')->assertOk()
+            ->assertDontSee('Per person / Month only')->assertDontSee('≈ 31');
+    }
+
     public function test_sitemap_lists_only_working_pages_and_leaves_out_ended_courses(): void
     {
         $this->travelTo('2026-11-02 12:00:00'); // anger-management (28 Oct) has been held

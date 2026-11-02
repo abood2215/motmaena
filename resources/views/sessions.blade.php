@@ -841,7 +841,8 @@
           <span class="plan-kd" style="color:rgba(255,255,255,.6)">{{ __('KD') }}</span>
           <span class="plan-price">750</span>
         </div>
-        <p class="plan-per-session">≈ 31 {{ __('KD') }} {{ __('Per person / Month only') }}</p>
+        {{-- Removed "≈ 31 KD per person / month only": 31 is the price per SESSION (750 / 24 = 31.25);
+             this 3-month package is about 250 KD a month. No replacement until the center confirms the wording. --}}
         <div class="plan-divider" style="margin-top:16px;margin-bottom:24px;"></div>
         <ul class="plan-features">
           <li class="plan-feature"><span class="plan-check"><span class="check-icon">✓</span></span>{{ __('Significant Behavioral Change') }}</li>
