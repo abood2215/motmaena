@@ -20,6 +20,13 @@
     $faqs = \App\Models\Faq::where('is_active', true)->orderBy('sort')->get();
     $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('sort')->get();
     $waLink = fn ($text) => 'https://wa.me/' . $site['whatsapp'] . '?text=' . rawurlencode($text);
+    // "Registration open: 2 upcoming courses · both for 45 KWD" (Arabic counts: 1 / 2 / 3–10 / 11+)
+    $nOpen = $courses->count();
+    $openLabel = $t(
+        'التسجيل مفتوح: ' . match (true) { $nOpen === 1 => 'دورة قادمة', $nOpen === 2 => 'دورتان قادمتان', $nOpen <= 10 => $nOpen . ' دورات قادمة', default => $nOpen . ' دورة قادمة' }
+            . ($bundle ? ' · الدورتان معاً بـ ' . $fmt($bundle->price) . ' د.ك' : ''),
+        'Registration open: ' . $nOpen . ' upcoming ' . ($nOpen === 1 ? 'course' : 'courses') . ($bundle ? ' · both for ' . $fmt($bundle->price) . ' KWD' : '')
+    );
     $helpText = $t('مرحبًا مركز مطمئنة، أرغب في معرفة نوع الاستشارة المناسبة لاحتياجي.', 'Hello Motmaena Center, I would like to know which consultation suits my needs.');
 
     // Gift code for paying a full price without a code (Admin → Content → gift amount; 0 hides every mention)
@@ -113,6 +120,12 @@
                     <a href="{{ $waLink($helpText) }}" target="_blank" rel="noopener" class="lx-btn lx-btn-outline">@include('partials.lx-icon', ['i' => 'whatsapp', 'class' => '!w-5 !h-5']){{ $t('ساعدني في اختيار الخدمة', 'Help me choose a service') }}</a>
                 </div>
 
+                @if($courses->isNotEmpty())
+                    <a href="#open-courses" class="flex items-center justify-between gap-3 mt-6 lx-card px-4 py-3 group">
+                        <span class="text-sm font-bold" style="color: var(--ink)">{{ $openLabel }}</span>
+                        <span class="text-sm lx-link group-hover:underline whitespace-nowrap">{{ $t('اعرض ↓', 'See ↓') }}</span>
+                    </a>
+                @endif
                 @if(($site['psych_soon'] ?? '1') === '1')
                     <a href="#psych-center" class="inline-flex items-center gap-2 mt-6 text-sm font-bold lx-muted hover:underline underline-offset-4">
                         <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full" style="border: 1px solid var(--gold); color: var(--gold)">{{ $t('قريبًا', 'Soon') }}</span>
@@ -121,7 +134,8 @@
                 @endif
             </div>
 
-            <div class="lg:col-span-5">
+            {{-- Phones skip the portrait here (it is in the Dr. Tariq section below), so the open courses come sooner --}}
+            <div class="hidden lg:block lg:col-span-5">
                 <figure class="max-w-[320px] sm:max-w-[380px] mx-auto">
                     <div class="lx-photo">
                         <img src="{{ asset('photos/dr-tariq-formal.webp') }}" alt="{{ $t('أ.د. طارق الحبيب', 'Prof. Dr. Tariq Al-Habib') }}" width="900" height="1441" class="aspect-[4/5] object-top" fetchpriority="high">
@@ -152,6 +166,51 @@
         </div>
     </div>
 </section>
+
+{{-- ═══════════════ OPEN COURSES, right under the hero ═══════════════
+     People who come from a course message find the dates, prices and the register button without scrolling far. --}}
+@if($courses->isNotEmpty())
+<section id="open-courses" class="lx-paper border-b scroll-mt-20" style="border-color: var(--line)" data-track-location="courses-strip">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
+            <div>
+                <p class="lx-label mb-2">{{ $t('التسجيل مفتوح', 'Registration open') }}</p>
+                <h2 class="lx-h2 !text-[1.5rem] sm:!text-[1.8rem]">{{ $t('الدورات القادمة مع أ.د. طارق الحبيب', 'Upcoming courses with Prof. Dr. Tariq Al-Habib') }}</h2>
+            </div>
+            <a href="#courses" class="text-sm lx-link">{{ $t('محاور كل دورة ↓', 'Each course outline ↓') }}</a>
+        </div>
+
+        <div class="lx-card px-5 sm:px-6">
+            @foreach($courses as $c)
+                <div class="lx-course-row">
+                    <div class="lx-date"><b>{{ $when($c)->format('j') }}</b><span>{{ $when($c)->translatedFormat('F') }}</span></div>
+                    <div class="flex-1 min-w-0">
+                        <a href="{{ route('course.register', $c['slug']) }}" class="font-extrabold hover:underline underline-offset-4" style="color: var(--ink)">{{ $c['title'][$lang] }}</a>
+                        <p class="text-sm lx-muted font-semibold mt-1">{{ $c['day'][$lang] }} · {{ $c['time'][$lang] }} · {{ $t('حضوري', 'In person') }}@if($c['seats_left'] !== null) · {{ $c['is_full'] ? $t('اكتمل العدد', 'Full') : $t('متبقي ' . $c['seats_left'] . ' مقعد', $c['seats_left'] . ' seats left') }}@endif</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-4 shrink-0">
+                        <span class="font-extrabold whitespace-nowrap" style="color: var(--ink)">{{ $c['price'] }} <small class="text-xs lx-muted">{{ $kwd }}</small></span>
+                        <a href="{{ route('course.register', $c['slug']) }}" class="lx-btn {{ $c['is_full'] ? 'lx-btn-outline' : 'lx-btn-primary' }} !py-2.5 !px-4 text-sm">{{ $c['is_full'] ? $t('بلّغني', 'Notify me') : $t('سجّل', 'Register') }}</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        @if($bundle)
+        <a href="{{ route('bundle.register', $bundle->slug) }}" class="lx-ink rounded-[14px] mt-4 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 group">
+            <div class="flex-1">
+                <p class="text-lg font-extrabold text-white">
+                    {{ $t('الدورتان معاً بـ ' . $fmt($bundle->price) . ' د.ك', 'Both courses for ' . $fmt($bundle->price) . ' KWD') }}
+                    <span class="text-white/45 line-through font-semibold text-base mx-1">{{ $fmt($bundle->fullPrice()) }}</span>
+                </p>
+                <p class="text-sm text-white/65 font-semibold mt-1">{{ $bundleCourses->pluck('title.' . $lang)->implode(' + ') }} · {{ $t('حتى ' . $when($bundleCourses->first())->translatedFormat('j F'), 'until ' . $when($bundleCourses->first())->translatedFormat('j F')) }}</p>
+            </div>
+            <span class="lx-btn lx-btn-light shrink-0 !py-3 text-sm">{{ $t('احجز العرض', 'Book the offer') }}</span>
+        </a>
+        @endif
+    </div>
+</section>
+@endif
 
 {{-- ═══════════════ SERVICES: the consultations available today, then the other services ═══════════════ --}}
 <section class="lx-paper py-14 sm:py-20 border-b" style="border-color: var(--line)">

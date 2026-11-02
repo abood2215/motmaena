@@ -25,6 +25,22 @@ class AvailableServicesTest extends TestCase
         $this->assertSame('<title>استشارات زوجية وتربوية واجتماعية في الكويت | مركز مطمئنة</title>', $this->title($html));
     }
 
+    public function test_open_courses_sit_right_under_the_hero(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $strip = strpos($html, 'id="open-courses"');
+        $services = strpos($html, 'كيف نقدر نساعدك؟');
+        $this->assertNotFalse($strip);
+        $this->assertLessThan($services, $strip, 'the open courses come before the services');
+
+        // A link in the hero jumps to them, and each course row links to its own page
+        $this->assertStringContainsString('href="#open-courses"', $html);
+        $this->assertMatchesRegularExpression('/التسجيل مفتوح: (دورة قادمة|دورتان قادمتان|\d+ دورات قادمة|\d+ دورة قادمة)/u', $html);
+        $section = substr($html, $strip, $services - $strip);
+        $this->assertStringContainsString(route('course.register', 'anger-management'), $section);
+    }
+
     public function test_psychological_consultations_are_only_coming_soon(): void
     {
         $html = $this->get('/')->assertOk()->getContent();
