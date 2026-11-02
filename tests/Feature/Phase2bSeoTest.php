@@ -59,6 +59,51 @@ class Phase2bSeoTest extends TestCase
         $this->assertStringContainsString('أ.د. طارق الحبيب', $this->meta($this->get('/register/anger-management')->getContent(), '#<meta name="description" content="([^"]*)"#'));
     }
 
+    private function description(string $page, string $locale): string
+    {
+        $html = $this->withSession(['locale' => $locale])->get($page)->assertOk()->getContent();
+        return $this->meta($html, '#<meta name="description" content="([^"]*)"#');
+    }
+
+    public function test_consultations_description_speaks_of_requesting_an_appointment(): void
+    {
+        $ar = $this->description('/consultations', 'ar');
+        $this->assertStringContainsString('طلب موعد حضوري أو هاتفي مع أ.د. طارق الحبيب.', $ar);
+        $this->assertStringNotContainsString('مواعيد حضورية', $ar);
+
+        $en = $this->description('/consultations', 'en');
+        $this->assertStringContainsString('requesting an in-person or phone appointment with Prof. Dr. Tariq Al-Habib.', $en);
+    }
+
+    public function test_course_description_is_built_from_the_course_data_only(): void
+    {
+        // Seeded course: Wednesday 28 October 2026, 7-9 pm, a recorded place, 30 KWD; deema not configured
+        $this->assertSame(
+            'دورة إدارة الغضب مع أ.د. طارق الحبيب — الأربعاء 28 أكتوبر 2026، 7:00 - 9:00 مساءً، في مركز مطمئنة بالكويت. الرسوم 30 د.ك.',
+            $this->description('/register/anger-management', 'ar')
+        );
+        $this->assertSame(
+            'Anger Management Course with Prof. Dr. Tariq Al-Habib — Wednesday 28 October 2026, 7:00 - 9:00 PM. Fee 30 KWD.',
+            $this->description('/register/anger-management', 'en')
+        );
+
+        // deema is mentioned only when it is really offered for this course
+        config(['services.deema.api_key' => 'deema-key']);
+        $ar = $this->description('/register/anger-management', 'ar');
+        $this->assertStringEndsWith('الرسوم 30 د.ك أو 4 دفعات مع deema.', $ar);
+        $this->assertLessThanOrEqual(160, mb_strlen($ar));
+        $this->assertStringEndsWith('Fee 30 KWD or 4 payments with deema.', $this->description('/register/anger-management', 'en'));
+
+        \App\Models\CourseOffer::where('slug', 'anger-management')->update(['show_installments' => false]);
+        $this->assertStringNotContainsString('deema', $this->description('/register/anger-management', 'ar'));
+        $this->assertStringNotContainsString('deema', $this->description('/register/anger-management', 'en'));
+
+        // No recorded place, no time: neither is invented
+        \App\Models\CourseOffer::where('slug', 'anger-management')->update(['location_ar' => null, 'location_en' => null, 'time_ar' => null, 'time_en' => null]);
+        $this->assertSame('دورة إدارة الغضب مع أ.د. طارق الحبيب — الأربعاء 28 أكتوبر 2026. الرسوم 30 د.ك.', $this->description('/register/anger-management', 'ar'));
+        $this->assertSame('Anger Management Course with Prof. Dr. Tariq Al-Habib — Wednesday 28 October 2026. Fee 30 KWD.', $this->description('/register/anger-management', 'en'));
+    }
+
     public function test_no_unproven_claims_in_titles_or_descriptions(): void
     {
         foreach (self::PAGES as $page) {

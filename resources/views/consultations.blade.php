@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', app()->getLocale() == 'ar' ? 'استشارات أسرية وزوجية وتربوية في الكويت | مركز مطمئنة' : 'Family, Marital & Parenting Consultations in Kuwait | Motmaena Center')
-@section('meta_description', app()->getLocale() == 'ar' ? 'استشارات اجتماعية وتربوية وأسرية خاصة في مركز مطمئنة بالكويت، ومواعيد حضورية أو هاتفية مع أ.د. طارق الحبيب. احجز عبر الموقع أو واتساب.' : 'Private social, parenting and family consultations at Motmaena Center in Kuwait, plus in-person or phone appointments with Prof. Dr. Tariq Al-Habib. Book on the site or WhatsApp.')
+@section('meta_description', app()->getLocale() == 'ar' ? 'استشارات اجتماعية وتربوية وأسرية خاصة في مركز مطمئنة بالكويت، وطلب موعد حضوري أو هاتفي مع أ.د. طارق الحبيب. احجز عبر الموقع أو واتساب.' : 'Private social, parenting and family consultations at Motmaena Center in Kuwait, and requesting an in-person or phone appointment with Prof. Dr. Tariq Al-Habib. Book on the site or WhatsApp.')
 @include('partials.breadcrumb-schema', ['items' => [[app()->getLocale() == 'ar' ? 'الاستشارات' : 'Consultations', route('consultations')]]])
 
 @section('content')

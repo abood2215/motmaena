@@ -14,14 +14,16 @@
 @if($offer['share_image'])
     @section('og_image', asset($offer['share_image']))
 @endif
-{{-- Built only from the course's own data: trainer, date, time, place, price (and deema when it is offered) --}}
+{{-- Built only from the course's own data (about 155 characters): name, trainer, date, time, price.
+     The place is added only when the course has one recorded, and deema only when it is offered for this course. --}}
 @php
-    $metaWhen = $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->locale($lang)->translatedFormat('j F Y') . ($offer['time'][$lang] ? '، ' . $offer['time'][$lang] : '');
-    $metaWhere = trim((string) $offer['location'][$lang]);
+    $metaDate = $offer['day'][$lang] . ' ' . \Carbon\Carbon::parse($offer['date'])->locale($lang)->translatedFormat('j F Y');
+    $metaTime = trim((string) $offer['time'][$lang]);
+    $hasPlace = trim((string) $offer['location']['ar']) !== '';
 @endphp
 @section('meta_description', $isAr
-    ? $offer['title']['ar'] . ' مع ' . $offer['trainer']['ar'] . ' — ' . $metaWhen . '.' . ($metaWhere ? ' ' . $metaWhere . '.' : '') . ' الرسوم ' . $offer['price'] . ' د.ك' . ($deemaEnabled ? ' أو 4 دفعات مع deema.' : '.')
-    : $offer['title']['en'] . ' with ' . $offer['trainer']['en'] . ' — ' . str_replace('، ', ', ', $metaWhen) . '.' . ($metaWhere ? ' ' . $metaWhere . '.' : '') . ' Fee ' . $offer['price'] . ' KWD' . ($deemaEnabled ? ' or 4 payments with deema.' : '.'))
+    ? $offer['title']['ar'] . ' مع ' . $offer['trainer']['ar'] . ' — ' . $metaDate . ($metaTime ? '، ' . $metaTime : '') . ($hasPlace ? '، في مركز مطمئنة بالكويت' : '') . '. الرسوم ' . $offer['price'] . ' د.ك' . ($deemaEnabled ? ' أو 4 دفعات مع deema.' : '.')
+    : $offer['title']['en'] . ' with ' . $offer['trainer']['en'] . ' — ' . $metaDate . ($metaTime ? ', ' . $metaTime : '') . '. Fee ' . $offer['price'] . ' KWD' . ($deemaEnabled ? ' or 4 payments with deema.' : '.'))
 @include('partials.breadcrumb-schema', ['items' => [
     [$isAr ? 'الدورات' : 'Courses', route('courses')],
     [$offer['title'][$lang], route('course.register', $offerKey)],
