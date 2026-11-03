@@ -231,6 +231,7 @@
                 <span class="lx-icon-ring mb-5">@include('partials.lx-icon', ['i' => $icon])</span>
                 <h3 class="lx-h3 mb-2">{{ $title }}</h3>
                 <p class="text-sm lx-muted font-semibold leading-relaxed mb-6">{{ $desc }}</p>
+                <p class="text-sm font-bold mb-5" style="color: var(--ink)">{{ $t('جلسة فردية مع أخصائي · ' . config('center.prices.specialist') . ' د.ك', 'One-to-one session · ' . config('center.prices.specialist') . ' KWD') }}</p>
                 <a href="{{ route('consultations') }}#book" class="mt-auto lx-btn lx-btn-outline w-full !py-3 text-sm">{{ $t('احجز استشارتك', 'Book a consultation') }}</a>
             </article>
             @endforeach
@@ -513,6 +514,7 @@
         [$t('ما الاستشارات المتاحة حاليًا؟', 'Which consultations are available now?'), $t('يقدم المركز حاليًا الاستشارات الزوجية والأسرية والتربوية والاجتماعية. أما خدمة الاستشارات النفسية فغير متاحة حاليًا، وسيُعلن عنها عند افتتاحها.', 'The center currently offers marital, family, parenting and social consultations. Psychological consultations are not available yet and will be announced when they open.')],
         [$t('كيف أعرف نوع الاستشارة المناسبة؟', 'How do I know which consultation suits me?'), $t('تواصل مع فريق المواعيد واشرح احتياجك بصورة مختصرة، وسيساعدك الفريق في اختيار الخدمة المناسبة من الخدمات المتاحة.', 'Contact the appointments team and describe what you need briefly; they will help you choose the right service from those available.')],
         [$t('هل تتوفر استشارات نفسية؟', 'Are psychological consultations available?'), $t('خدمة الاستشارات النفسية غير متاحة حاليًا، ويعمل المركز على تجهيزها وسيتم الإعلان عن موعد إطلاقها قريبًا.', 'Psychological consultations are not available yet; the center is preparing the service and will announce its launch date soon.')],
+        [$t('كم سعر الاستشارة؟', 'How much is a consultation?'), $t('الجلسة الفردية مع أخصائي ' . config('center.prices.specialist') . ' د.ك. ومع أ.د. طارق الحبيب: الجلسة الأولى ' . config('center.prices.dr_tariq_first') . ' د.ك، وجلسة المتابعة ' . config('center.prices.dr_tariq_follow_up') . ' د.ك.', 'A one-to-one session with a specialist is ' . config('center.prices.specialist') . ' KWD. With Prof. Dr. Tariq Al-Habib: ' . config('center.prices.dr_tariq_first') . ' KWD for the first session and ' . config('center.prices.dr_tariq_follow_up') . ' KWD for a follow-up.')],
         [$t('هل معلومات الاستشارة خاصة؟', 'Is what I share kept private?'), $t('يحرص المركز على التعامل مع معلومات العملاء بخصوصية وفق السياسات والإجراءات المعتمدة لديه.', 'The center handles the information you share privately, according to its approved policies and procedures.')],
     ];
 @endphp

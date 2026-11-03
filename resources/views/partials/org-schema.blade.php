@@ -25,6 +25,14 @@
         // The point on the map embedded in the footer
         'geo'         => ['@type' => 'GeoCoordinates', 'latitude' => 29.3901935, 'longitude' => 47.9907505],
         'areaServed'  => ['@type' => 'Country', 'name' => $orgAr ? 'الكويت' : 'Kuwait'],
+        // Opening hours and price range as given by the center (config/center.php)
+        'openingHoursSpecification' => [[
+            '@type'     => 'OpeningHoursSpecification',
+            'dayOfWeek' => config('center.hours.days'),
+            'opens'     => config('center.hours.opens'),
+            'closes'    => config('center.hours.closes'),
+        ]],
+        'priceRange'  => config('center.prices.specialist') . '–' . config('center.prices.dr_tariq_first') . ' KWD',
         'founder'     => [
             '@type'    => 'Person',
             'name'     => config('doctor.name.' . ($orgAr ? 'ar' : 'en')),

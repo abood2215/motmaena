@@ -42,9 +42,15 @@ class SearchAndConversionTest extends TestCase
         $this->assertSame('أ.د. طارق الحبيب', $org['founder']['name']);
         $this->assertContains('https://www.instagram.com/motmaena_kw/', $org['sameAs']);
         // Nothing the center has not confirmed
-        foreach (['aggregateRating', 'review', 'openingHours', 'priceRange'] as $unconfirmed) {
+        foreach (['aggregateRating', 'review'] as $unconfirmed) {
             $this->assertArrayNotHasKey($unconfirmed, $org);
         }
+
+        // Hours and prices the center confirmed (config/center.php)
+        $this->assertSame(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], $org['openingHoursSpecification'][0]['dayOfWeek']);
+        $this->assertSame('09:00', $org['openingHoursSpecification'][0]['opens']);
+        $this->assertSame('21:00', $org['openingHoursSpecification'][0]['closes']);
+        $this->assertSame('50–80 KWD', $org['priceRange']);
 
         $en = $this->ofType($this->withSession(['locale' => 'en'])->get('/')->getContent(), 'ProfessionalService');
         $this->assertSame('Motmaena Center', $en['name']);

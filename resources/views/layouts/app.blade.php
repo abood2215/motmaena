@@ -250,6 +250,10 @@
                                     <svg class="w-4 h-4 mt-0.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.66 16.66L13.41 20.9a2 2 0 01-2.82 0l-4.25-4.24a8 8 0 1111.32 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     {{ $site[$isArF ? 'address_ar' : 'address_en'] }}
                                 </li>
+                                <li class="flex items-start gap-2 text-[var(--muted-color)]">
+                                    <svg class="w-4 h-4 mt-0.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>
+                                    <span>{{ config('center.hours.' . ($isArF ? 'ar' : 'en')) }}</span>
+                                </li>
                             </ul>
                         </div>
 

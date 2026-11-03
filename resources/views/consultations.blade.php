@@ -10,6 +10,7 @@
     $isAr = app()->getLocale() === 'ar';
     $lang = $isAr ? 'ar' : 'en';
     $t = fn ($ar, $en) => $isAr ? $ar : $en;
+    $price = config('center.prices');
     $bookText = $t('مرحباً، أريد حجز استشارة', 'Hello, I want to book a consultation');
     $waBook = 'https://wa.me/' . $site['whatsapp'] . '?text=' . urlencode($bookText);
     $waPretty = \App\Models\SiteSetting::pretty($site['whatsapp']);
@@ -50,6 +51,7 @@
         ['q' => 'كيف يتم اختيار الأخصائي المناسب لي؟', 'a' => 'عند التواصل عبر واتساب سيسألك الفريق بعض الأسئلة البسيطة ثم يرشدك إلى الأخصائي الأنسب لطبيعة استشارتك سواء كانت أسرية أو تربوية أو اجتماعية.'],
         ['q' => 'هل يمكن الحجز لجلسة مع الدكتور طارق مباشرة؟', 'a' => 'نعم، يمكنك حجز جلسة هاتفية مع الدكتور طارق الحبيب مباشرة حسب توافر المواعيد. تواصل مع الفريق وسيؤكدون لك الموعد المتاح.'],
         ['q' => 'كم مدة الجلسة؟', 'a' => 'مدة الجلسة من 45 دقيقة إلى ساعة.'],
+        ['q' => 'كم سعر الاستشارة؟', 'a' => 'الجلسة الفردية مع أخصائي ' . $price['specialist'] . ' د.ك. ومع أ.د. طارق الحبيب: الجلسة الأولى ' . $price['dr_tariq_first'] . ' د.ك، وجلسة المتابعة ' . $price['dr_tariq_follow_up'] . ' د.ك.'],
         ['q' => 'هل يمكن الحجز عن بعد (أونلاين)؟', 'a' => 'نعم، نوفر جلسات عن بعد لمن لا يستطيع الحضور الشخصي. تتم الجلسات عبر منصات تواصل مشفّرة وآمنة.'],
         ['q' => 'ما سياسة الإلغاء؟', 'a' => 'يمكن تأجيل الموعد دون أي رسوم قبل 24 ساعة على الأقل من موعده. لا يوجد استرجاع نقدي للمبالغ المدفوعة، ويمكنك استخدام المبلغ في أي خدمة أخرى داخل المركز.'],
         ['q' => 'هل تتوفر استشارات نفسية؟', 'a' => 'خدمة الاستشارات النفسية غير متاحة حاليًا، ويعمل المركز على تجهيزها وسيتم الإعلان عن موعد إطلاقها قريبًا.'],
@@ -61,6 +63,7 @@
         ['q' => 'How is the right specialist chosen for me?', 'a' => 'When you contact us via WhatsApp, the team will ask a few simple questions and then guide you to the specialist best suited for your consultation type — family, educational, or social.'],
         ['q' => 'Can I book directly with Dr. Tariq?', 'a' => 'Yes, you can book a phone session with Dr. Tariq Al-Habib directly, based on appointment availability. Contact the team and they\'ll confirm an available time.'],
         ['q' => 'How long is a session?', 'a' => 'A session lasts from 45 minutes to an hour.'],
+        ['q' => 'How much is a consultation?', 'a' => 'A one-to-one session with a specialist is ' . $price['specialist'] . ' KWD. With Prof. Dr. Tariq Al-Habib: ' . $price['dr_tariq_first'] . ' KWD for the first session and ' . $price['dr_tariq_follow_up'] . ' KWD for a follow-up.'],
         ['q' => 'Can I book online (remote sessions)?', 'a' => 'Yes, we offer remote sessions for those who cannot attend in person. Sessions are conducted via secure, encrypted communication platforms.'],
         ['q' => 'What is the cancellation policy?', 'a' => 'Appointments can be rescheduled free of charge at least 24 hours in advance. Payments are not refunded in cash, but you can use the amount for any other service at the Center.'],
         ['q' => 'Are psychological consultations available?', 'a' => 'Psychological consultations are not available yet; the center is preparing the service and will announce its launch date soon.'],
@@ -136,10 +139,10 @@
     <div class="border-t" style="border-color: var(--line)">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-7 grid grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach([
-                ['lock', $t('خصوصية معلوماتك', 'Your privacy'), $t('وفق سياسات المركز وإجراءاته', 'Under the center policies')],
+                ['card', $t('جلسة فردية ' . $price['specialist'] . ' د.ك', 'One-to-one session ' . $price['specialist'] . ' KWD'), $t('مع أخصائي · ' . config('center.session_length.ar'), 'With a specialist · ' . config('center.session_length.en'))],
+                ['clock', $t('السبت – الخميس', 'Saturday – Thursday'), $t('9 صباحًا – 9 مساءً · الجمعة مغلق', '9 am – 9 pm · closed Friday')],
                 ['building', $t('في المركز', 'At the center'), $t('برج أحمد، بجوار المستشفى الأميري', 'Burj Ahmed, near Al-Amiri Hospital')],
-                ['compass', $t('نساعدك في الاختيار', 'We help you choose'), $t('الفريق يرشدك للاستشارة المناسبة', 'The team points you to the right one')],
-                ['people', $t('أخصائيون', 'Specialists'), $t('تربوي · اجتماعي · تطوير ذات', 'Educational · social · self-development')],
+                ['lock', $t('خصوصية معلوماتك', 'Your privacy'), $t('وفق سياسات المركز وإجراءاته', 'Under the center policies')],
             ] as [$icon, $title, $sub])
                 <div class="flex items-start gap-3">
                     @include('partials.lx-icon', ['i' => $icon, 'class' => 'mt-0.5'])
@@ -268,6 +271,21 @@
                     <div><h3 class="font-extrabold mb-1" style="color: var(--ink)">{{ $title }}</h3><p class="lx-text text-[15px]">{{ $desc }}</p></div>
                 </div>
             @endforeach
+            {{-- Prices and hours, as given by the center (config/center.php) --}}
+            <div class="lx-card mt-10 px-5">
+                <div class="flex items-center justify-between gap-4 py-4">
+                    <span class="font-bold" style="color: var(--ink)">{{ $t('جلسة فردية مع أخصائي', 'One-to-one session with a specialist') }}</span>
+                    <span class="font-extrabold whitespace-nowrap" style="color: var(--ink)">{{ $price['specialist'] }} <small class="lx-muted">{{ $t('د.ك', 'KWD') }}</small></span>
+                </div>
+                <div class="flex items-center justify-between gap-4 py-4 border-t" style="border-color: var(--line)">
+                    <span class="font-bold" style="color: var(--ink)">{{ $t('مع أ.د. طارق الحبيب', 'With Prof. Dr. Tariq Al-Habib') }}<small class="block text-xs lx-muted font-semibold mt-0.5">{{ $t('جلسة المتابعة ' . $price['dr_tariq_follow_up'] . ' د.ك', 'Follow-up session ' . $price['dr_tariq_follow_up'] . ' KWD') }}</small></span>
+                    <span class="font-extrabold whitespace-nowrap text-end" style="color: var(--ink)">{{ $price['dr_tariq_first'] }} <small class="lx-muted">{{ $t('د.ك', 'KWD') }}</small><small class="block text-xs lx-muted font-semibold">{{ $t('الجلسة الأولى', 'first session') }}</small></span>
+                </div>
+                <div class="flex items-start gap-3 py-4 border-t text-sm font-semibold" style="border-color: var(--line)">
+                    @include('partials.lx-icon', ['i' => 'clock', 'class' => '!w-5 !h-5 mt-0.5'])
+                    <span>{{ config('center.hours.' . $lang) }}<span class="block lx-muted mt-0.5">{{ $t('مدة الجلسة ', 'Session length: ') }}{{ config('center.session_length.' . $lang) }}</span></span>
+                </div>
+            </div>
             <div class="lx-notice p-5 mt-10 flex gap-3">
                 @include('partials.lx-icon', ['i' => 'alert', 'class' => 'mt-0.5'])
                 <p class="text-sm font-semibold leading-relaxed">

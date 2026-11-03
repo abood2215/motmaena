@@ -86,6 +86,25 @@ class AvailableServicesTest extends TestCase
         $this->assertStringNotContainsString('50 دقيقة', $consult);
     }
 
+    public function test_prices_and_hours_given_by_the_center_are_shown(): void
+    {
+        $consult = $this->get('/consultations')->assertOk()->getContent();
+        foreach (['جلسة فردية 50 د.ك', 'كم سعر الاستشارة؟', 'الجلسة الفردية مع أخصائي 50 د.ك', 'الجلسة الأولى 80 د.ك، وجلسة المتابعة 60 د.ك', 'السبت – الخميس: 9 صباحًا – 9 مساءً · الجمعة مغلق'] as $text) {
+            $this->assertStringContainsString($text, $consult, $text);
+        }
+        // Dr. Tariq request box (homepage and consultations) states his prices
+        $this->assertStringContainsString('الجلسة الأولى 80 د.ك · جلسة المتابعة 60 د.ك', $consult);
+
+        $home = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('جلسة فردية مع أخصائي · 50 د.ك', $home);
+        $this->assertStringContainsString('كم سعر الاستشارة؟', $home);
+
+        // Opening hours in the footer of every page
+        foreach (['/', '/courses', '/sessions', '/packages', '/policies'] as $page) {
+            $this->get($page)->assertSee('السبت – الخميس: 9 صباحًا – 9 مساءً · الجمعة مغلق');
+        }
+    }
+
     private function title(string $html): string
     {
         preg_match('#<title>.*?</title>#su', $html, $m);

@@ -42,6 +42,7 @@
                         {{ $drtT('جلسة خاصة مع الدكتور طارق، حضورياً في المركز أو هاتفياً. المواعيد محدودة؛ اترك بياناتك ويتواصل معك قسم المواعيد لتحديد الوقت المناسب.', 'A private session with Dr. Tariq, at the center or by phone. Appointments are limited — leave your details and our team will arrange a time with you.') }}
                     @endif
                 </p>
+                <p class="text-sm font-bold mb-7 -mt-4" style="color: var(--ink)">{{ $drtT('الجلسة الأولى ' . config('center.prices.dr_tariq_first') . ' د.ك · جلسة المتابعة ' . config('center.prices.dr_tariq_follow_up') . ' د.ك', 'First session ' . config('center.prices.dr_tariq_first') . ' KWD · follow-up ' . config('center.prices.dr_tariq_follow_up') . ' KWD') }}</p>
 
                 <p class="text-sm font-bold mb-3" style="color: var(--ink)">{{ $drtT('في الجوانب', 'Areas') }}</p>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
